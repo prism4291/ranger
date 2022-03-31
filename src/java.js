@@ -84,15 +84,15 @@ function ajax(u,c){
 }
 function dust12_view(v,l,d){
 	var w='',pt=d[2];
-	var vt=['逾ｨ','vote'];
-	var vn=[['窶ｻ閾ｪ蛻��菴懷刀縺ｫ縺ｯ謚慕･ｨ蜃ｺ譚･縺ｾ縺帙ｓ縲�',	'* You can\'t vote for your own artwork.'],
-			['窶ｻ3繝ｶ譛亥燕縺ｮ菴懷刀縺ｫ縺ｯ謚慕･ｨ蜃ｺ譚･縺ｾ縺帙ｓ縲�',	'* You can\'t vote for works older than 3 months.'],
-			['窶ｻ1菴懷刀縺ｫ1蝗槭�縺ｿ隧穂ｾ｡蜃ｺ譚･縺ｾ縺吶�',		'* You can evaluation only 1 time for each work.'],
-			['窶ｻ謚慕･ｨ縺ゅｊ縺後→縺�ｾ｡蠎ｧ縺�∪縺吶�',		'* Thank you for voting.'],
-			['窶ｻ蜑企勁萓晞�ｼ縺輔ｌ縺ｾ縺励◆縲�',				'* Your deletion request is sent.']];
-	var gn=['髱｢逋ｽ縺��縺ｧ諡肴焔','   Vote   ']	,gm=['76','56'];
-	var dn=['蜑企勁萓晞�ｼ'		,'Delete']		,dw=['70','50'];
-	w+='<H1 CLASS="F0 bttl" STYLE="MARGIN:0;">�｢'+utf8_hex(d[1])+'�｣<\/H1>';
+	var vt=['票','vote'];
+	var vn=[['※自分の作品には投票出来ません。',	'* You can\'t vote for your own artwork.'],
+			['※3ヶ月前の作品には投票出来ません。',	'* You can\'t vote for works older than 3 months.'],
+			['※1作品に1回のみ評価出来ます。',		'* You can evaluation only 1 time for each work.'],
+			['※投票ありがとう御座います。',		'* Thank you for voting.'],
+			['※削除依頼されました。',				'* Your deletion request is sent.']];
+	var gn=['面白いので拍手','   Vote   ']	,gm=['76','56'];
+	var dn=['削除依頼'		,'Delete']		,dw=['70','50'];
+	w+='<H1 CLASS="F0 bttl" STYLE="MARGIN:0;">｢'+utf8_hex(d[1])+'｣<\/H1>';
 	w+='<DIV ALIGN="CENTER" STYLE="WHITE-SPACE:pre;">';
 		w+='<DIV CLASS="star" STYLE="DISPLAY:inline-block;"><DIV CLASS="star_c';
 			if(pt<10)		w+='0" STYLE="LEFT:'+(Math.round((pt- 0)*6.11)-55)+'px;">';
@@ -124,7 +124,7 @@ function dust12_vote(v,a,l,d){
 }
 function dust12_search(v,l,d,c){
 	var w='',no,hr,sr,pt,ct,nm;
-	var ul=['\/','\/en\/'],wh=['','WIDTH="100" HEIGHT="75"','WIDTH="124" HEIGHT="70"'],vt=['逾ｨ','vote'];
+	var ul=['\/','\/en\/'],wh=['','WIDTH="100" HEIGHT="75"','WIDTH="124" HEIGHT="70"'],vt=['票','vote'];
 	var nw=['','<SPAN>new<\/SPAN><BR>','<BR>'];
 	for(var i=0; i<c; i++){
 		no=d[(i*6+0)];
@@ -140,8 +140,8 @@ function dust12_search(v,l,d,c){
 		}
 		w+='<DIV CLASS="save_div">';
 			w+=nw[d[(i*6+5)]];
-			w+='<A HREF="'+hr+'" TITLE="No.'+no+' �｢'+ct+'�｣ '+nm+'">';
-				w+='<IMG SRC="'+sr+'" '+wh[v]+' CLASS="save_img" ALT="No.'+no+' �｢'+ct+'�｣ '+nm+'"><BR>';
+			w+='<A HREF="'+hr+'" TITLE="No.'+no+' ｢'+ct+'｣ '+nm+'">';
+				w+='<IMG SRC="'+sr+'" '+wh[v]+' CLASS="save_img" ALT="No.'+no+' ｢'+ct+'｣ '+nm+'"><BR>';
 				w+=ct;
 			w+='<\/A><BR>';
 			w+='<DIV CLASS="star"><DIV CLASS="star_c';
@@ -161,9 +161,9 @@ function dust12_search(v,l,d,c){
 	document.write(w);
 }
 function ranger_party(l,m,d,o,c){
-	var nm=['蜷榊燕','Name'],me=['螟画峩','Edit'],pa=['繝代�繝�ぅ繝ｼ','Party'],cm=['繧ｳ繝｡繝ｳ繝�','Comment'],wi=['蜍�','Win'];
-	var lo=['謨�','Lose'],ra=['蜍晉紫','Rate'],da=['譌･莉�','Date'],ur=['\/','\/en\/'],sd=['迴ｾ蝨ｨ縺ｮ繧ｻ繝ｼ繝悶ョ繝ｼ繧ｿ','Current saved data'];
-	var ed=['螟画峩','Edit'],de=['蜑企勁','Delete'],rs=['1','2','3','4','5','6','7','8','9','S','-'];
+	var nm=['名前','Name'],me=['変更','Edit'],pa=['パーティー','Party'],cm=['コメント','Comment'],wi=['勝','Win'];
+	var lo=['敗','Lose'],ra=['勝率','Rate'],da=['日付','Date'],ur=['\/','\/en\/'],sd=['現在のセーブデータ','Current saved data'];
+	var ed=['変更','Edit'],de=['削除','Delete'],rs=['1','2','3','4','5','6','7','8','9','S','-'];
 	var w='<DIV CLASS="retbl" STYLE="MARGIN:0 -9px 14px;"><TABLE STYLE="TEXT-ALIGN:left;MARGIN:0 auto;MAX-WIDTH:100%;">';
 		w+='<TR STYLE="BORDER-BOTTOM:1px solid #d86a24;">';
 			w+='<TD CLASS="w1">';
@@ -255,8 +255,8 @@ function ranger_party(l,m,d,o,c){
 	document.write(w);
 }
 function logibox_search(v,l,d,c,p){
-	var nm=['菴懆�','Author'],ct=['繧ｿ繧､繝医Ν','Title'],wi=['蟷�','W'],he=['鬮�','H'],le=['髮｣譏灘ｺｦ','Level'],pt=['逾ｨ謨ｰ','Vote'];
-	var cl=['繧ｯ繝ｪ繧｢','Clear'],tm=['譌･莉�','Date'],pb=['繝励Ξ繧､','Play'],ur=['\/','\/en\/'],j,b,k;
+	var nm=['作者','Author'],ct=['タイトル','Title'],wi=['幅','W'],he=['高','H'],le=['難易度','Level'],pt=['票数','Vote'];
+	var cl=['クリア','Clear'],tm=['日付','Date'],pb=['プレイ','Play'],ur=['\/','\/en\/'],j,b,k;
 	var w='<TABLE CELLSPACING="0" STYLE="MARGIN:0 auto 1em;">';
 		w+='<TR STYLE="BORDER-BOTTOM:1px solid #d86a24;TEXT-ALIGN:left;">';
 			w+='<TD STYLE="TEXT-ALIGN:center;MIN-WIDTH:5ch;MAX-WIDTH:5ch;PADDING:0 4px 0 0;">No<\/TD>';
@@ -310,7 +310,7 @@ function logibox_search(v,l,d,c,p){
 						}
 					w+='<\/TD>';
 					w+='<TD STYLE="FONT-SIZE:16px;LINE-HEIGHT:18px;FONT-WEIGHT:bold;COLOR:#00F;WIDTH:3em;TEXT-ALIGN:center;WHITE-SPACE:pre;PADDING:0;">';
-						w+='<A HREF="'+ur[l]+'javagame\/logibox\/?no='+d[(i*11+0)]+'" TITLE="No.'+d[(i*11+0)]+' �｢'+d[(i*11+2)]+'�｣ '+d[(i*11+1)]+'" ONCLICK="post_u=[\''+ur[l]+'javagame\/logibox\/?no='+d[(i*11+0)]+'\'];post(0,0,{p:\''+p+'\'});return false;"';
+						w+='<A HREF="'+ur[l]+'javagame\/logibox\/?no='+d[(i*11+0)]+'" TITLE="No.'+d[(i*11+0)]+' ｢'+d[(i*11+2)]+'｣ '+d[(i*11+1)]+'" ONCLICK="post_u=[\''+ur[l]+'javagame\/logibox\/?no='+d[(i*11+0)]+'\'];post(0,0,{p:\''+p+'\'});return false;"';
 							if(1==d[(i*11+9)])	w+=' STYLE="COLOR:#F00;">'+cl[l];
 							else				w+='>'+pb[l];
 						w+='<\/A>';
@@ -367,14 +367,14 @@ function hrc2(r){
 }
 function hu_tag(id,lg){
 	var w='',ck=cookie_get('user');
-	var v=[['蠕ｩ豢ｻ縺ｮ蜻ｪ譁�','Save game'],['繧ｲ繝�ヨ','Get'],['繧ｻ繝�ヨ','Set'],['繝ｦ繝ｼ繧ｶ繝ｼ逋ｻ骭ｲ縺悟ｿ�ｦ√〒縺吶�','User registration is required.']];
+	var v=[['復活の呪文','Save game'],['ゲット','Get'],['セット','Set'],['ユーザー登録が必要です。','User registration is required.']];
 	if(ck[3]!=''){
 		w+='<TABLE ID="htbl"><TR><TH>'+v[0][lg]+'<\/TH><TD><TEXTAREA ID="bun" ONCLICK="this.select();"><\/TEXTAREA><\/TD><TH>';
 			w+='<INPUT TYPE="SUBMIT" VALUE="'+v[1][lg]+'" ONCLICK="save(\''+id+'\')" ONMOUSEDOWN="';
-				w+='document.getElementById(\'bun\').value=\'\';document.getElementById(\'pass\').innerHTML=\'縲\';';
+				w+='document.getElementById(\'bun\').value=\'\';document.getElementById(\'pass\').innerHTML=\'　\';';
 			w+='">';
 			w+='<INPUT TYPE="SUBMIT" VALUE="'+v[2][lg]+'" ONCLICK="load(\''+id+'\')" ONMOUSEDOWN="';
-				w+='document.getElementById(\'pass\').innerHTML=\'縲\';';
+				w+='document.getElementById(\'pass\').innerHTML=\'　\';';
 			w+='">';
 		w+='<\/TH><\/TR><\/TABLE><DIV id="pass" STYLE="HEIGHT:14px;"><\/DIV><BR>';
 	}else{
