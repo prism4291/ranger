@@ -6328,7 +6328,7 @@ var lg = document,
     hf = String.fromCharCode,
     Ld = setTimeout,
     qg = location.hostname;
-qg = '';
+qg = '___________';
 aa.fff = rg;
 
 function rg(a, b, c) { try { vd = lg.getElementById("cv"), mg = vd.getContext("2d"), mg.putImageData(a, b, c) } catch (d) {} }
@@ -6352,7 +6352,7 @@ var tg = hf(99, 97, 110, 118, 97, 115),
     cg = new Float32Array(384),
     fg = new Float32Array(384),
     eg = new Float32Array(384);
-wg = '';
+wg = '___________';
 
 function Od() {
     if (xg) {
