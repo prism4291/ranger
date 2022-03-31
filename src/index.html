@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<HTML LANG="ja">
+ 
+<HEAD>
+    <TITLE>アクションRPG【棒レンジャー】 - 無料ゲームサイト ダンボール</TITLE>
+    <SCRIPT SRC="/java.js?105"></SCRIPT>
+</HEAD>
+ 
+<BODY>
+   
+    <DIV ID="middle">
+        <DIV ID="middle_l">
+            <H1 CLASS="F2 bttl">棒レンジャー ver19.2</H1>
+            <DIV CLASS="tt"><B>ゲーム概要</B>：<BR>
+                <H2 CLASS="hinl">4人の棒人間がモンスターを倒してステージを攻略していくアクションRPGゲーム！<BR>職業やステータス、アイテムのカスタマイズで自分だけのパーティーを作ろう！<BR>VSモードで世界中のプレイヤーと対戦が出来ます。</H2><BR><B>ジャンル　</B>：<H2 CLASS="hinl">アクションRPG</H2><BR><B>操作方法　</B>：左クリック＆ドラッグ
+            </DIV>
+            <DIV ID="hu_tag"></DIV>
+            <SCRIPT>
+                hu_tag('ranger', 0);
+            </SCRIPT>
+            <CANVAS ID="cv" STYLE="DISPLAY:inline-block;MARGIN:0 -50% 150px;WIDTH:512px;HEIGHT:384px;"></CANVAS>
+            <SCRIPT ASYNC SRC="ranger.js" ONLOAD="var src_ck=cookie_get('user'),src_sv=cookie_get('save');Init(src_ck[2],src_ck[3],0,src_sv[0]);cvs_mv2(512,384,900,1,0,1);"></SCRIPT>
+            <HR><B CLASS="bttl">ゲームの説明</B>
+            <DIV CLASS="tt">操作方法<BR>
+                <TABLE CLASS="ctbl">
+                    <TR>
+                        <TH>移動</TH>
+                        <TD>棒人間をドラッグ</TD>
+                    </TR>
+                    <TR>
+                        <TH>攻撃</TH>
+                        <TD>全自動</TD>
+                    </TR>
+                    <TR>
+                        <TH>アイテム</TH>
+                        <TD>ドラッグ＆ドロップ</TD>
+                    </TR>
+                    <TR>
+                        <TH>ポーズ＆オプション</TH>
+                        <TD>Spaceキー</TD>
+                    </TR>
+                </TABLE><BR>
+                <TABLE CLASS="ctbl">
+                    <TR>
+                        <TH>LP</TH>
+                        <TD>ライフポイント</TD>
+                    </TR>
+                    <TR>
+                        <TH>STR</TH>
+                        <TD>強さ</TD>
+                    </TR>
+                    <TR>
+                        <TH>DEX</TH>
+                        <TD>器用さ</TD>
+                    </TR>
+                    <TR>
+                        <TH>MAG</TH>
+                        <TD STYLE="PADDING-BOTTOM:14px;">魔力</TD>
+                    </TR>
+                    <TR>
+                        <TH>AT</TH>
+                        <TD>最小攻撃力 - 最大攻撃力</TD>
+                    </TR>
+                    <TR>
+                        <TH>AGI</TH>
+                        <TD>最小攻撃速度 - 最大攻撃速度</TD>
+                    </TR>
+                    <TR>
+                        <TH>RANGE</TH>
+                        <TD STYLE="PADDING-BOTTOM:14px;">攻撃範囲</TD>
+                    </TR>
+                    <TR>
+                        <TH>AURA</TH>
+                        <TD>攻撃のオーラ(AT)、防御のオーラ(DF)<BR>自分と範囲内の仲間に適用</TD>
+                    </TR>
+                    <TR>
+                        <TH>BULLET</TH>
+                        <TD>追加攻撃の追加数</TD>
+                    </TR>
+                    <TR>
+                        <TH>RING</TH>
+                        <TD STYLE="PADDING-BOTTOM:14px;">連続攻撃の追加数</TD>
+                    </TR>
+                    <TR>
+                        <TH>TYPE</TH>
+                        <TD>武器の属性</TD>
+                    </TR>
+                    <TR>
+                        <TH>MP</TH>
+                        <TD>追加攻撃に必要な魔力</TD>
+                    </TR>
+                    <TR>
+                        <TH>\$\$</TH>
+                        <TD>攻撃に消費するお金</TD>
+                    </TR>
+                    <TR>
+                        <TH>TIME</TH>
+                        <TD>効果時間</TD>
+                    </TR>
+                    <TR>
+                        <TH>SLOW</TH>
+                        <TD STYLE="PADDING-BOTTOM:14px;">冷気効果</TD>
+                    </TR>
+                    <TR>
+                        <TH>LV</TH>
+                        <TD>レベル</TD>
+                    </TR>
+                    <TR>
+                        <TH>SP</TH>
+                        <TD>スキルポイント(1LVにつき2ポイント)</TD>
+                    </TR>
+                    <TR>
+                        <TH>EXP</TH>
+                        <TD>経験値</TD>
+                    </TR>
+                    <TR>
+                        <TH>\$\$\$</TH>
+                        <TD>お金</TD>
+                    </TR>
+                    <TR>
+                        <TH>FP</TH>
+                        <TD>戦闘力(FP = LV + WEAPONx2 + COMPO + COMPO)</TD>
+                    </TR>
+                </TABLE><BR>Revival：お金を支払って復活<BR><BR>Compo Item：武器(COMPO)に上書きで合成するアイテム<BR><BR>Option<BR>
+                <TABLE CLASS="ctbl">
+                    <TR>
+                        <TH>Auto move</TH>
+                        <TD>自動歩行</TD>
+                    </TR>
+                    <TR>
+                        <TH>Move of dying</TH>
+                        <TD>瀕死時の移動</TD>
+                    </TR>
+                    <TR>
+                        <TH>Damage Effect</TH>
+                        <TD>ダメージの表示</TD>
+                    </TR>
+                    <TR>
+                        <TH>LP Bar</TH>
+                        <TD>LPバーの表示</TD>
+                    </TR>
+                    <TR>
+                        <TH>PL Symbol</TH>
+                        <TD>選択中のプレイヤーのデザイン（クリック可能）</TD>
+                    </TR>
+                    <TR>
+                        <TH>Drag DeadBody</TH>
+                        <TD>死体のドラッグ操作</TD>
+                    </TR>
+                </TABLE><BR>最初の地点に町があります。<BR>各ステージのボスを倒すとステージクリアです。<BR>全員死ぬとゲームオーバー。
+            </DIV><B CLASS="tt bttl">セーブ機能について</B>
+            <P CLASS="tt">エリアを移動すると自動的にセーブされます。<BR>セーブされない場合はJavaScriptおよびCookieを有効にして下さい。<BR>ブラウザの「戻る」「進む」ボタンを押してサイトを移動すると、<BR>最新のデータがロードされない場合があります。<BR>クリックで移動するか、「更新」ボタンを押して下さい。</P>
+        </DIV>
+        <SCRIPT>
+            setTimeout("timer('ranger','/javagame/ranger/',1000)", 10000);
+        </SCRIPT>
+    </DIV>
+    <SCRIPT>
+        top_blank();
+    </SCRIPT>
+</BODY>
+ 
+</HTML>
