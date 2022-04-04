@@ -2,32 +2,32 @@ var aa = window,
     ba = 0,
     da, ea, fa, ga, ha, ja, la, ma, na, oa = 0,
     qa = 0,
-    sa = new ra,
-    va = new ra,
-    wa = new ra,
-    xa = new ra,
-    ya = new ra,
-    Da = new ra,
+    sa = new SR_Image,
+    va = new SR_Image,
+    wa = new SR_Image,
+    xa = new SR_Image,
+    ya = new SR_Image,
+    Da = new SR_Image,
     Ea, Fa, Ga = [0, 0, 0, 0, 0, 0, 0, 0],
-    Ia, Ja = new ra,
-    Ka = new ra,
-    La = Array(13),
-    Ma = new ra,
-    Na = new ra,
-    Oa = new ra,
-    Qa = new ra,
-    Ra = new ra,
-    Sa = new ra,
-    Ta = new ra,
-    Xa = new ra,
-    Ya = new ra,
-    Za = new ra,
-    $a = new ra,
-    bb = new ra,
-    cb = new ra,
-    db = new ra,
-    fb = new ra,
-    gb = new ra,
+    Ia, Ja = new SR_Image,
+    Ka = new SR_Image,
+    Terrain_Textures = Array(13),
+    Player_Img = new SR_Image,
+    Drop_Img = new SR_Image,
+    Item_Img = new SR_Image,
+    Enemy_Head_Img = new SR_Image,
+    Sign_Img = new SR_Image,
+    Projectiles_Img = new SR_Image,
+    Title_Img = new SR_Image,
+    Effect_Img = new SR_Image,
+    Hut_Img = new SR_Image,
+    Water_Img = new SR_Image,
+    Water_Red_Img = new SR_Image,
+    Forget_Tree_Img = new SR_Image,
+    Map_Elev_Index = new SR_Image,
+    Map_Tiles_Img = new SR_Image,
+    Map_Feature_Index = new SR_Image,
+    Map_Features_Img = new SR_Image,
     f = 0,
     hb = 0,
     k = 0,
@@ -86,9 +86,9 @@ var aa = window,
     ],
     zc = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     Ac = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    Bc = "Stickman Boxer Gladiator Sniper Magician Priest Gunner Whipper Angel".split(" "),
-    Cc = "123456789S".split(""),
-    Dc = [
+    Class_Name_List = "Stickman Boxer Gladiator Sniper Magician Priest Gunner Whipper Angel".split(" "),
+    Rank_List = "123456789S".split(""),
+    Shop_Items = [
         [
             [3, 7, 11, 15, 54, 64, 68, 72, 116, 121, 131, 137, 153, 178, 202, 214, 226, 253, 312, 328, 345, 360, 394, 410, 429, 451, 471, 479, 496, 504, 512, 520, 549],
             [4, 8, 12,
@@ -915,9 +915,9 @@ function kd() {
             for (c = 0; c < ld[a][b].length; c++) hd += ld[a][b][c];
     for (a = id = 0; a < D.length; a++)
         for (b = 0; b < D[a].length; b++) id += D[a][b] & 65535;
-    for (c = jd = 0; c < Dc.length; c++)
-        for (a = 0; a < Dc[c].length; a++)
-            for (b = 0; b < Dc[c][a].length; b++) jd += Dc[c][a][b] * b & 65535
+    for (c = jd = 0; c < Shop_Items.length; c++)
+        for (a = 0; a < Shop_Items[c].length; a++)
+            for (b = 0; b < Shop_Items[c][a].length; b++) jd += Shop_Items[c][a][b] * b & 65535
 }
 
 function md() {
@@ -1017,9 +1017,9 @@ function md() {
     }
     if (1 > C(100)) {
         for (c =
-            d = 0; c < Dc.length; c++)
-            for (a = 0; a < Dc[c].length; a++)
-                for (b = 0; b < Dc[c][a].length; b++) d += Dc[c][a][b] * b & 65535;
+            d = 0; c < Shop_Items.length; c++)
+            for (a = 0; a < Shop_Items[c].length; a++)
+                for (b = 0; b < Shop_Items[c][a].length; b++) d += Shop_Items[c][a][b] * b & 65535;
         d != jd && (E = null)
     }
 }
@@ -1142,46 +1142,46 @@ function sd(a, b, c, d, e, g, h, q, m, l, A, z, Z, B) {
         for (a = 0; 196608 > a; a++) E[a] = 0;
         F.o("font.gif", 8, 12);
         Gd.o("font_s.gif", 5, 7);
-        for (a = 0; 13 > a; a++) La[a] = new ra, La[a].o("gt" +
+        for (a = 0; 13 > a; a++) Terrain_Textures[a] = new SR_Image, Terrain_Textures[a].IGset("gt" +
             a + ".gif");
-        Ma.o("pl.gif");
-        Na.o("icon.gif");
-        Oa.o("item.gif");
-        Qa.o("en.gif");
-        Ra.o("next.gif");
-        Sa.o("mag.gif");
-        Ta.o("title.gif");
-        Xa.o("ef.gif");
-        Ya.o("town.gif");
-        Za.o("water.gif");
-        $a.o("water2.gif");
-        bb.o("tree.gif");
-        cb.o("map.gif");
-        db.o("mt.gif");
-        fb.o("map2.gif");
-        gb.o("mt2.gif");
+        Player_Img.IGset("pl.gif");
+        Drop_Img.IGset("icon.gif");
+        Item_Img.IGset("item.gif");
+        Enemy_Head_Img.IGset("en.gif");
+        Sign_Img.IGset("next.gif");
+        Projectiles_Img.IGset("mag.gif");
+        Title_Img.IGset("title.gif");
+        Effect_Img.IGset("ef.gif");
+        Hut_Img.IGset("town.gif");
+        Water_Img.IGset("water.gif");
+        Water_Red_Img.IGset("water2.gif");
+        Forget_Tree_Img.IGset("tree.gif");
+        Map_Elev_Index.IGset("map.gif");
+        Map_Tiles_Img.IGset("mt.gif");
+        Map_Feature_Index.IGset("map2.gif");
+        Map_Features_Img.IGset("mt2.gif");
         Id() ? rd-- : rd++
     }
     if (1 == rd) {
         Jd(F.f);
         Jd(Gd.f);
-        for (a = 0; 13 > a; a++) Jd(La[a]);
-        Jd(Ma);
-        Jd(Na);
-        Jd(Oa);
-        Jd(Qa);
-        Jd(Ra);
-        Jd(Sa);
-        Jd(Ta);
-        Jd(Xa);
-        Jd(Ya);
-        Jd(Za);
-        Jd($a);
-        Jd(bb);
-        Jd(cb);
-        Jd(db);
-        Jd(fb);
-        Jd(gb);
+        for (a = 0; 13 > a; a++) Jd(Terrain_Textures[a]);
+        Jd(Player_Img);
+        Jd(Drop_Img);
+        Jd(Item_Img);
+        Jd(Enemy_Head_Img);
+        Jd(Sign_Img);
+        Jd(Projectiles_Img);
+        Jd(Title_Img);
+        Jd(Effect_Img);
+        Jd(Hut_Img);
+        Jd(Water_Img);
+        Jd(Water_Red_Img);
+        Jd(Forget_Tree_Img);
+        Jd(Map_Elev_Index);
+        Jd(Map_Tiles_Img);
+        Jd(Map_Feature_Index);
+        Jd(Map_Features_Img);
         Kd ? Ld(sd, Md()) : rd++
     }
     2 == rd && (u.o(), Mc.o(), Nc.o(),
@@ -1214,7 +1214,7 @@ function Rd() {
         Xd();
         Yd();
         u.B();
-        I(Ta, 256, 100, 365, 121, 0, Ia ? 0 : 121, 365, 121, 16777215);
+        I(Title_Img, 256, 100, 365, 121, 0, Ia ? 0 : 121, 365, 121, 16777215);
         var b = 100;
         for (a = 4; 40 > a; a++) 48 == v(r[a], 7) && (b += v(r[a], 8)), 48 == v(zc[a], 7) && (b += v(zc[a], 8)), 48 == v(Ac[a], 7) && (b += v(Ac[a], 8)), 49 == v(r[a], 7) && (b += 1), 49 == v(zc[a], 7) && (b += 1), 49 == v(Ac[a], 7) && (b += 1);
         b = J(b, 100, 300);
@@ -1240,19 +1240,19 @@ function Rd() {
         Yd();
         u.B();
         be(F, 256, 50, "Player's Class Selection", 204, 148, 73, 255, 100, 0, 0, 255, 16, 24);
-        for (a = 0; 4 > a; a++) Zd(160 + 64 * a, 140, 24, 24) && ($d && (kb = n = a), ce(160 + 64 * a, 140, 24, 24, 8388608)), fe(160 + 64 * a, 140, 25, 25, 16777215), I(Ma, 160 + 64 * a, 140, 24, 24, 24 * bc[a], 0, 24, 24, 16777215);
+        for (a = 0; 4 > a; a++) Zd(160 + 64 * a, 140, 24, 24) && ($d && (kb = n = a), ce(160 + 64 * a, 140, 24, 24, 8388608)), fe(160 + 64 * a, 140, 25, 25, 16777215), I(Player_Img, 160 + 64 * a, 140, 24, 24, 24 * bc[a], 0, 24, 24, 16777215);
         fe(160 + 64 * n, 140, 25, 25, 16711680);
         md();
         for (a = 0; 8 > a; a++) {
             var b = 46 + 60 * a,
-                c = Bc[a + 1],
+                c = Class_Name_List[a + 1],
                 d = F;
             d.b = -1;
             Vd(d, b, 220, c, 13407305, 6553600);
             d.b = 0;
             Zd(46 + 60 * a, 240, 24, 24) && ($d && (bc[n] = a + 1, r[4 + n] = [3, 4, 5, 6, 58, 76, 188, 289][a], zc[4 + n] = 0, Ac[4 + n] = 0), ce(46 + 60 * a, 240, 24, 24, 8388608));
             fe(46 + 60 * a, 240, 25, 25, 16777215);
-            I(Ma, 46 + 60 * a, 240, 24, 24, 24 * (a + 1), 0, 24, 24, 16777215)
+            I(Player_Img, 46 + 60 * a, 240, 24, 24, 24 * (a + 1), 0, 24, 24, 16777215)
         }
         0 != bc[0] && 0 != bc[1] && 0 != bc[2] && 0 != bc[3] && (Vd(F, 464, 300, "START", 16777215, 10053171), Zd(464, 300, 128, 24) && ($d && f++, K(416, 308, 512, 308, 11141120)));
         Vd(F, 48, 300, "RETURN", 16777215, 10053171);
@@ -1298,7 +1298,7 @@ function Rd() {
             h = new ge;
         20 > he && 256 > ie ? a.a = J(a.a + 4, -720, 0) : 492 < he && 256 > ie && (a.a = J(a.a - 4, -720, 0));
         for (g = 0; 16 > g; g++)
-            for (e = 0; e < a.m; e++) - 1 != a.b[g][e] && je(db, a.a + 16 * e, 16 * g, 16, 16, a.b[g][e] % 5 * 16, 16 * y(a.b[g][e] / 5), 16, 16);
+            for (e = 0; e < a.m; e++) - 1 != a.b[g][e] && je(Map_Tiles_Img, a.a + 16 * e, 16 * g, 16, 16, a.b[g][e] % 5 * 16, 16 * y(a.b[g][e] / 5), 16, 16);
         for (b = 0; b < Zc; b++)
             if ($c[b] & ad)
                 for (e = 3; 4 >=
@@ -1306,24 +1306,24 @@ function Rd() {
                     if (!(0 >= cd[b][e]) && 32 != b && 70 != b && 88 != b)
                         for (d.x = 8 * cd[b][0], d.y = 8 * cd[b][1], h.x = 8 * (cd[cd[b][e]][0] - cd[b][0]), h.y = 8 * (cd[cd[b][e]][1] - cd[b][1]), g = ke(h) / 8 - 1, le(h, 8), d.add(h), c = 0; c < g; c++) ce(a.a + d.x, d.y, 2, 2, 13421772), d.add(h);
         for (g = 0; 16 > g; g++)
-            for (e = 0; e < a.m; e++) - 1 != a.c[g][e] && je(gb, a.a + 16 * e + 8, 16 * g + 8, 16, 16, 16 * a.c[g][e], 0, 16, 16);
-        me(gb, a.a + 384 - 8, 124, 16, 16, 16, 0, 16, 16, 8421631);
-        me(gb, a.a + 504 - 8, 116, 16, 16, 48, 0, 16, 16, 16777215);
-        me(gb, a.a + 552 - 8, 116, 16, 16, 64, 0, 16, 16, 16777215);
-        me(gb, a.a + 592 - 8, 100, 16, 16, 32, 0, 16, 16,
+            for (e = 0; e < a.m; e++) - 1 != a.c[g][e] && je(Map_Features_Img, a.a + 16 * e + 8, 16 * g + 8, 16, 16, 16 * a.c[g][e], 0, 16, 16);
+        me(Map_Features_Img, a.a + 384 - 8, 124, 16, 16, 16, 0, 16, 16, 8421631);
+        me(Map_Features_Img, a.a + 504 - 8, 116, 16, 16, 48, 0, 16, 16, 16777215);
+        me(Map_Features_Img, a.a + 552 - 8, 116, 16, 16, 64, 0, 16, 16, 16777215);
+        me(Map_Features_Img, a.a + 592 - 8, 100, 16, 16, 32, 0, 16, 16,
             16777215);
-        me(gb, a.a + 672 - 8, 68, 16, 16, 32, 0, 16, 16, 16777215);
-        me(gb, a.a + 808 - 8, 132, 16, 16, 16, 0, 16, 16, 13434879);
-        me(gb, a.a + 904 - 8, 164, 16, 16, 112, 0, 16, 16, 13434879);
-        me(gb, a.a + 1040 - 8, 172, 16, 16, 128, 0, 16, 16, 13434879);
-        me(gb, a.a + 1088 - 8, 100, 16, 16, 32, 0, 16, 16, 16777215);
-        me(gb, a.a + 1160 - 8, 84, 16, 16, 32, 0, 16, 16, 16777215);
-        me(gb, a.a + 1112 - 8, 44, 32, 16, 144, 0, 32, 16, 16777215);
+        me(Map_Features_Img, a.a + 672 - 8, 68, 16, 16, 32, 0, 16, 16, 16777215);
+        me(Map_Features_Img, a.a + 808 - 8, 132, 16, 16, 16, 0, 16, 16, 13434879);
+        me(Map_Features_Img, a.a + 904 - 8, 164, 16, 16, 112, 0, 16, 16, 13434879);
+        me(Map_Features_Img, a.a + 1040 - 8, 172, 16, 16, 128, 0, 16, 16, 13434879);
+        me(Map_Features_Img, a.a + 1088 - 8, 100, 16, 16, 32, 0, 16, 16, 16777215);
+        me(Map_Features_Img, a.a + 1160 - 8, 84, 16, 16, 32, 0, 16, 16, 16777215);
+        me(Map_Features_Img, a.a + 1112 - 8, 44, 32, 16, 144, 0, 32, 16, 16777215);
         for (b = 0; b < Zc; b++) 0 != $c[b] && (e = 8 * cd[b][0], g = 8 * cd[b][1], c = b && 20 != b && 47 != b && 77 != b ? 33 == b ? 0 : 71 == b ? 0 : $c[b] & ad ? 10027008 : 13421568 : 16777215, 0 == cd[b][2] && ce(a.a + e, g, 6, 6,
             c), c = 71 == b ? 3 : 24, Zd(a.a + e, g, c, c) && fe(a.a + e, g, c, c, 13369344));
         e = 8 * cd[k][0];
         g = 8 * cd[k][1];
-        je(Ma, a.a + e + 1 - 12, g - 14 - 11, 24, 22, 0, 0, 24, 22);
+        je(Player_Img, a.a + e + 1 - 12, g - 14 - 11, 24, 22, 0, 0, 24, 22);
         for (b = 0; b < Zc; b++) 0 != $c[b] && (e = 8 * cd[b][0], g = 8 * cd[b][1], c = 71 == b ? 3 : 24, Zd(a.a + e, g, c, c)) && (!$d || b && 20 != b && 47 != b && 70 != b && 77 != b ? $d && b && (k = b, ib = 0, f = 10) : (k = b, ib = 1, f = 50), e = J(he, 1 + 4 * ne[b].length, 510 - 4 * ne[b].length), g = J(ie - 24, 8, 256), Vd(F, e, g, ne[b], 16777215, 5263440));
         b = F;
         b.b = 4;
@@ -1399,7 +1399,7 @@ function Sd() {
         U(128, 42, 256, 151, 3425907507);
         Ce = 0;
         Vd(F, 256, 58, "OPTION", 16777215, 0);
-        for (a = 0; 4 > a; a++) I(Ma, 256 + 32 * a, 78, 24, 24, 24 * v(r[4 + a], 5), 0, 24, 24, 16777215), De(256 + 32 * a - 12, 66, 24 * v(r[4 + a], 5), v(r[4 + a], 6));
+        for (a = 0; 4 > a; a++) I(Player_Img, 256 + 32 * a, 78, 24, 24, 24 * v(r[4 + a], 5), 0, 24, 24, 16777215), De(256 + 32 * a - 12, 66, 24 * v(r[4 + a], 5), v(r[4 + a], 6));
         Vd(F, 180, 98, "Auto move", 16777215, 0);
         b = ["OFF", "ON"];
         for (a = 0; 4 > a; a++) Vd(F, 256 + 32 * a, 98, b[qc[a]], 16777215, 0), Zd(256 + 32 * a, 98, 32, 13) && (Vd(F, 256 + 32 * a, 98, b[qc[a]], 16711680, 0), $d && (qc[a] = 1 - qc[a]));
@@ -1435,7 +1435,7 @@ function Sd() {
             c = 166 + 60 * a - u.a[a][2].x;
             d = 224 - u.a[a][2].y;
             for (b = 0; 21 > b; b++) u.a[a][b].x += c, u.a[a][b].y += d;
-            je(La[12], 166 + 60 * a - 12, 233, 24, 8, 0, 0, 24, 8)
+            je(Terrain_Textures[12], 166 + 60 * a - 12, 233, 24, 8, 0, 0, 24, 8)
         }
         u.B();
         if ($d) {
@@ -1501,15 +1501,15 @@ function Td() {
         Ce = 0;
         Ge(c + 0, d +
             0, 236, 161, 16777215);
-        Be(c + 8, d + 4, 16 * h[e].length, 12) && (b = y((he - (c + 8)) / 16), $d && (mb = b, nb = J(nb, 0, y(Dc[e][mb].length / 3) - 1)), U(c + 8 + 16 * b, d + 4, 12, 12, 10027008));
+        Be(c + 8, d + 4, 16 * h[e].length, 12) && (b = y((he - (c + 8)) / 16), $d && (mb = b, nb = J(nb, 0, y(Shop_Items[e][mb].length / 3) - 1)), U(c + 8 + 16 * b, d + 4, 12, 12, 10027008));
         He = 2;
-        for (a = 0; a < h[e].length; a++) me(Na, c + 8 + 16 * a, d + 4, 12, 12, 12 * h[e][a], 0, 12, 12, 16777215);
+        for (a = 0; a < h[e].length; a++) me(Drop_Img, c + 8 + 16 * a, d + 4, 12, 12, 12 * h[e][a], 0, 12, 12, 16777215);
         He = 0;
         Ge(c + 8 + 16 * mb - 1, d + 4 - 1, 14, 14, 10027008);
         K(c + 0, d + 20 - 1, c + 235, d + 20 - 1, 16777215);
         Be(c + 120, d + 24, 84, 84) && (b = y((he - (c + 120)) / 28), a = y((ie - (d + 24)) / 28), $d && (ob = 3 * a + b), U(c + 120 + 28 * b, d + 24 + 28 * a, 24, 24, 10027008));
-        b = (3 * nb + ob) % Dc[e][mb].length;
-        h = Dc[e][mb][b];
+        b = (3 * nb + ob) % Shop_Items[e][mb].length;
+        h = Shop_Items[e][mb][b];
         g = 1;
         for (a = 0; a < Zc; a++) 0 < ($c[a] &
             ad) && g < Ie[a] && (g = Ie[a]);
@@ -1533,8 +1533,8 @@ function Td() {
             6 == a ? G(F, c + 8, d + 104, "$$ " + l, 16777215, 0) : G(F, c + 8, d + 104, "MP " + l, 16777215, 0);
             2 == q ? G(F, c + 8, d + 116, "SLOW " + m + "%", 16777215, 0) : 4 == q ? G(F, c + 8, d + 116, "TIME " + m / 50 + "s", 16777215, 0) : 5 == q && G(F, c + 8, d + 116, "TIME " + m / 50 + "s", 16777215, 0)
         }
-        for (a = 0; 9 > a; a++) q = (3 * nb + a) % Dc[e][mb].length, !k && g <= q || (He = 2, me(Oa, c + 120 + a % 3 * 28, d + 24 + 28 *
-            y(a / 3), 24, 24, 24 * v(Dc[e][mb][q], 4), 0, 24, 24, v(Dc[e][mb][q], 6)), He = 0, t[Dc[e][mb][q]][1] && G(Gd, c + 120 + a % 3 * 28 + 19, d + 24 + 28 * y(a / 3) + 17, "" + t[Dc[e][mb][q]][1], 16777215, -1));
+        for (a = 0; 9 > a; a++) q = (3 * nb + a) % Shop_Items[e][mb].length, !k && g <= q || (He = 2, me(Item_Img, c + 120 + a % 3 * 28, d + 24 + 28 *
+            y(a / 3), 24, 24, 24 * v(Shop_Items[e][mb][q], 4), 0, 24, 24, v(Shop_Items[e][mb][q], 6)), He = 0, t[Shop_Items[e][mb][q]][1] && G(Gd, c + 120 + a % 3 * 28 + 19, d + 24 + 28 * y(a / 3) + 17, "" + t[Shop_Items[e][mb][q]][1], 16777215, -1));
         Ge(c + 120 + ob % 3 * 28, d + 24 + 28 * y(ob / 3), 24, 24, 10027008);
         g = v(h, 2);
         2 == e && 1 == b && (g *= 10);
@@ -1553,7 +1553,7 @@ function Td() {
         Ge(c + 176 - 56, d + 120 - 10, 108, 20, 10027008);
         h = 16777215;
         Be(c + 216 - 12, d + 36 - 12,
-            24, 24) && ($d && (nb = Ee(nb - 1, 0, y(Dc[e][mb].length / 3) - 1)), h = 10027008);
+            24, 24) && ($d && (nb = Ee(nb - 1, 0, y(Shop_Items[e][mb].length / 3) - 1)), h = 10027008);
         Ge(c + 216 - 12, d + 36 - 12, 24, 24, 16777215);
         U(c + 216 - 1, d + 36 - 8, 2, 2, h);
         U(c + 216 - 2, d + 36 - 6, 4, 2, h);
@@ -1564,7 +1564,7 @@ function Td() {
         U(c + 216 - 7, d + 40, 14, 2, h);
         U(c + 216 - 8, d + 42, 16, 2, h);
         h = 16777215;
-        Be(c + 216 - 12, d + 92 - 12, 24, 24) && ($d && (nb = Ee(nb + 1, 0, y(Dc[e][mb].length / 3) - 1)), h = 10027008);
+        Be(c + 216 - 12, d + 92 - 12, 24, 24) && ($d && (nb = Ee(nb + 1, 0, y(Shop_Items[e][mb].length / 3) - 1)), h = 10027008);
         Ge(c + 216 - 12, d + 92 - 12, 24, 24, 16777215);
         U(c + 216 - 8, d + 92 - 8, 16, 2, h);
         U(c + 216 - 7, d + 92 - 6, 14, 2, h);
@@ -1618,7 +1618,7 @@ function Td() {
                 U(g + 160 + 32 * ob + 2,
                     d + 50, 28, 4, 10027008);
                 ob = J(ob, 0, h - 1);
-                for (a = 0; a < h; a++) je(La[ld[e][ld[e].length - 1][0]], g + 164 + 32 * a, d + 44, 24, 8, 0, 0, 24, 8);
+                for (a = 0; a < h; a++) je(Terrain_Textures[ld[e][ld[e].length - 1][0]], g + 164 + 32 * a, d + 44, 24, 8, 0, 0, 24, 8);
                 h = od[e + 1] - od[e];
                 for (b = a = 0; a < h; a++, b++) Ne(od[e] + a, g + 176 + 32 * b, d + 44 - 1, 0), a += D[od[e] + a][qd];
                 e = od[e] + ob;
@@ -1627,7 +1627,7 @@ function Td() {
                 G(F, c + 164, d + 80, "GOLD " + D[e][Pe], 16777215, 0);
                 G(F, c + 164, d + 92, "EXP  " + D[e][Qe], 16777215, 0);
                 G(F, c + 164, d + 108, "Drop Item", 16777215, 0);
-                for (b = a = 0; 6 > a; a += 2) h = D[e][Re + a], 0 != h && (He = 2, me(Na, c + 164, d + 4 * (30 + 3 * b), 12,
+                for (b = a = 0; 6 > a; a += 2) h = D[e][Re + a], 0 != h && (He = 2, me(Drop_Img, c + 164, d + 4 * (30 + 3 * b), 12,
                     12, 12 * v(h, 3), 0, 12, 12, v(h, 6)), He = 0, Je(c + 164, d + 4 * (30 + 3 * b), "  " + t[h][0] + " " + (t[h][1] ? t[h][1] : ""), 16777215, 0, -1), b++);
                 G(F, c + 256, d + 56, "strong", 16777215, 0);
                 0 < D[e][Se] && G(Gd, c + 256, d + 70, "Ph          ", 8421504, 0);
@@ -1659,9 +1659,9 @@ function Td() {
         K(c + 160, d + 0, c + 160, d + 160, 16777215);
         c = 100;
         d = 60;
-        for (a = 0; 4 > a; a++) Be(c + 32 * a - 4, d + 0 - 4, 32, 32) ? (U(c + 32 * a, d + 0, 24, 24, 10027008), $d && (mb = a)) : U(c + 32 * a, d + 0, 24, 24, 0), me(Ma, c + 32 * a, d, 24, 24, 24 * v(r[4 + a], 5), 0, 24, 24, 16777215), De(c + 32 * a, d, 24 * v(r[4 + a], 5), v(r[4 + a], 6));
+        for (a = 0; 4 > a; a++) Be(c + 32 * a - 4, d + 0 - 4, 32, 32) ? (U(c + 32 * a, d + 0, 24, 24, 10027008), $d && (mb = a)) : U(c + 32 * a, d + 0, 24, 24, 0), me(Player_Img, c + 32 * a, d, 24, 24, 24 * v(r[4 + a], 5), 0, 24, 24, 16777215), De(c + 32 * a, d, 24 * v(r[4 + a], 5), v(r[4 + a], 6));
         Ge(c + 32 * mb - 1, d - 1, 26, 26, 16711680);
-        G(F, c, d - 16, Bc[v(r[4 + mb], 5)], 16777215, 0);
+        G(F, c, d - 16, Class_Name_List[v(r[4 + mb], 5)], 16777215, 0);
         c = 100;
         d = 74;
         G(F, c, d + 16, "LP  " + dc[mb], 16777215, 0);
@@ -1753,8 +1753,8 @@ function Ud() {
                 115, 46, 112, 104, 112, 63, 97, 61), c += da, c += jf + (Ia ? "0" : "1"), c += kf + fa, c += lf + ja, 0 != r[4] && 0 != r[5] && 0 != r[6] && 0 != r[7] && (c += pf + dd(na)), td(c), mf(c)), f++) : 64 == f && (hb = J(hb + 1, 0, 50), a = y(255 * hb / 50), Zd(256, 128, 96, 32) && 50 == hb && ($d && (f = 60), ce(256, 128, 96, 32, 8388608)), fe(256, 128, 96, 32, 0 | y(a / 2) << 16), be(F, 256, 129, "RETRY", 255, 255, 255, a, 0, 0, 0, a, 16, 24), b = 60, c = 72, Ce = 1, me(sa, b, c + 0 - 2, sa.a, 16, 0, 0, sa.a, 16, a << 24 | 16777215), Ce = 0, be(F, b + 60, c + 40, 1 == na ? "WIN" : "LOSE", 255, 255, 255, a, 1 == na ? 255 : 0, 0, 1 == na ? 0 : 255, a, 32, 48), nf && ("ok" == of[0] ? (qf(F,
                 b, c + 64, "" + of[1] + " win " + of[2] + " lose", 255, 255, 255, a, 0, 0, 0, a, 8, 12), qf(F, b, c + 80, "Winning per " + of[3] + "%", 255, 255, 255, a, 0, 0, 0, a, 8, 12)) : qf(F, b, c + 64, " RANKING ERROR", 255, 255, 255, a, 0, 0, 0, a, 8, 12)), b = 332, Ce = 1, me(wa, b, c + 0 - 2, wa.a, 16, 0, 0, wa.a, 16, a << 24 | 16777215), Ce = 0, be(F, b + 60, c + 40, 2 == na ? "WIN" : "LOSE", 255, 255, 255, a, 2 == na ? 255 : 0, 0, 2 == na ? 0 : 255, a, 32, 48), nf && ("ok" == of[0] ? (qf(F, b, c + 64, "" + of[4] + " win " + of[5] + " lose", 255, 255, 255, a, 0, 0, 0, a, 8, 12), qf(F, b, c + 80, "Winning per " + of[6] + "%", 255, 255, 255, a, 0, 0, 0, a, 8, 12)) : qf(F, b,
                 c + 64, " RANKING ERROR", 255, 255, 255, a, 0, 0, 0, a, 8, 12))), U(0, 257, 512, 126, [13407305, 9480368, 7241784, 10993609, 11302740, 24586, 7297069, 7297069, 10053120][ld[k][ib][0]]), qf(Gd, 10, 374, rf, 0, 0, 0, 0, 0, 0, 0, 128, 5, 7), be(F, 256, 328, "VS", 255, 255, 255, 255, 0, 0, 0, 255, 16, 24), b = 40, c = 268, me(sa, b, c + 0 - 2, sa.a, 16, 0, 0, sa.a, 16, 0), G(F, b, c + 16, "LV " + Fb[0], 16777215, 0), G(F, b, c + 16, "        FP " + Gb[0], 16777215, 0), df(ya, "\u300c " + ha + " \u300d"), I(ya, b + 60, c + 88, ya.a, 16, 0, 0, ya.a, 16, 0), b = 206, be(F, b, c + 22, "Rank", 0, 0, 0, 0, 0, 0, 0, 128, 8, 12), be(F, b, c +
-                60, "" + Cc[Wb[0]], 0, 0, 0, 0, 0, 0, 0, 80, 32, 48), b = 352, me(wa, b, c + 0 - 2, wa.a, 16, 0, 0, wa.a, 16, 0), G(F, b, c + 16, "LV " + Fb[1], 16777215, 0), G(F, b, c + 16, "        FP " + Gb[1], 16777215, 0), df(Da, "\u300c " + ma + " \u300d"), I(Da, b + 60, c + 88, Da.a, 16, 0, 0, Da.a, 16, 0), b = 306, be(F, b, c + 22, "Rank", 0, 0, 0, 0, 0, 0, 0, 128, 8, 12), be(F, b, c + 60, "" + Cc[Wb[1]], 0, 0, 0, 0, 0, 0, 0, 80, 32, 48), b = 40, c = 316, a = 0; 8 > a; a++) 4 <= a && (b = 224), U(b + 32 * a, c - 12, y(24 * p[a] / hc[a]), 4, 8388608), d = Ke(v(r[4 + a], 36), 1), e = v(r[4 + a], 5), 4 != e && 5 != e && 6 != e && U(b + 32 * a, c - 6, y(23 * cc[a] / d) + 1, 2, 128), U(b + 32 *
-            a, c + 0, 24, 24, 0), me(Ma, b + 32 * a, c, 24, 24, 24 * v(r[4 + a], 5), 0, 24, 24, 16777215), De(b + 32 * a, c, 24 * v(r[4 + a], 5), v(r[4 + a], 6))
+                60, "" + Rank_List[Wb[0]], 0, 0, 0, 0, 0, 0, 0, 80, 32, 48), b = 352, me(wa, b, c + 0 - 2, wa.a, 16, 0, 0, wa.a, 16, 0), G(F, b, c + 16, "LV " + Fb[1], 16777215, 0), G(F, b, c + 16, "        FP " + Gb[1], 16777215, 0), df(Da, "\u300c " + ma + " \u300d"), I(Da, b + 60, c + 88, Da.a, 16, 0, 0, Da.a, 16, 0), b = 306, be(F, b, c + 22, "Rank", 0, 0, 0, 0, 0, 0, 0, 128, 8, 12), be(F, b, c + 60, "" + Rank_List[Wb[1]], 0, 0, 0, 0, 0, 0, 0, 80, 32, 48), b = 40, c = 316, a = 0; 8 > a; a++) 4 <= a && (b = 224), U(b + 32 * a, c - 12, y(24 * p[a] / hc[a]), 4, 8388608), d = Ke(v(r[4 + a], 36), 1), e = v(r[4 + a], 5), 4 != e && 5 != e && 6 != e && U(b + 32 * a, c - 6, y(23 * cc[a] / d) + 1, 2, 128), U(b + 32 *
+            a, c + 0, 24, 24, 0), me(Player_Img, b + 32 * a, c, 24, 24, 24 * v(r[4 + a], 5), 0, 24, 24, 16777215), De(b + 32 * a, c, 24 * v(r[4 + a], 5), v(r[4 + a], 6))
 }
 
 function ae() {
@@ -1766,15 +1766,15 @@ aa.fff = ye;
 function ye(a) {
     var b;
     Yd();
-    if (!k && 1 == ib || 20 == k && 1 == ib || 47 == k && 1 == ib || 77 == k && 1 == ib) I(Ya, 400, 183, 117, 84, 0, 0, 78, 56, 16777215), I(Ya, 40, 170, 156, 112, 0, 0, 78, 56, 16777215), Vd(F, 400, 168, "INN", 16777215, 13800762), k ? 20 == k ? Vd(F, 40, 152, " COMPO SHOP", 16777215, 13800762) : 47 == k ? Vd(F, 40, 152, " JUNK SHOP", 16777215, 13800762) : 77 == k && Vd(F, 40, 152, " COMPO SHOP", 16777215, 13800762) : Vd(F, 40, 152, "SHOP", 16777215, 13800762), Vd(F, 40, 184, "BOOK", 16777215, 13800762);
-    70 == k && 1 == ib && (me(bb, 0, -288, 512, 512, 0, 0, 64, 64, 16777215), 52 == f && (Vd(F, 256,
+    if (!k && 1 == ib || 20 == k && 1 == ib || 47 == k && 1 == ib || 77 == k && 1 == ib) I(Hut_Img, 400, 183, 117, 84, 0, 0, 78, 56, 16777215), I(Hut_Img, 40, 170, 156, 112, 0, 0, 78, 56, 16777215), Vd(F, 400, 168, "INN", 16777215, 13800762), k ? 20 == k ? Vd(F, 40, 152, " COMPO SHOP", 16777215, 13800762) : 47 == k ? Vd(F, 40, 152, " JUNK SHOP", 16777215, 13800762) : 77 == k && Vd(F, 40, 152, " COMPO SHOP", 16777215, 13800762) : Vd(F, 40, 152, "SHOP", 16777215, 13800762), Vd(F, 40, 184, "BOOK", 16777215, 13800762);
+    70 == k && 1 == ib && (me(Forget_Tree_Img, 0, -288, 512, 512, 0, 0, 64, 64, 16777215), 52 == f && (Vd(F, 256,
         128, "FORGET", 16777215, 1054740), Vd(F, 256, 160, "INN", 16777215, 1054740), Vd(F, 256, 184, "BOOK", 16777215, 1054740)));
     0 == a && (u.G(), Wd.L(), Ye(), Ze(), $e());
     b = H;
     if (55 != b.c && 89 != b.c && ib != ld[b.c].length - 1 || 0 == Wd.i) {
         var c;
         c = 7 == ld[k][ib][1] ? 8 * b.b[63] - 16 : 8 * b.g[63] - 16;
-        je(Ra, 480, c, 32, 24, 0, 0, 32, 24);
+        je(Sign_Img, 480, c, 32, 24, 0, 0, 32, 24);
         ib == ld[b.c].length - 1 ? 88 == b.c ? Vd(Gd, 496, c + 8, "END", 0, -1) : Vd(Gd, 496, c + 8, "MAP", 0, -1) : ib == ld[b.c].length - 2 ? Vd(Gd, 496, c + 8, "BOSS", 0, -1) : Vd(Gd, 496, c + 8, "NEXT", 0, -1)
     }
     Wd.K();
@@ -1801,7 +1801,7 @@ function ye(a) {
             E = Ja.l;
             b = L(1.7, 3.69);
             b = b * b * b * b;
-            I(Sa, L(0, 512), 256 - b, 256, 32, 96, 0, 16, 16, 150994943);
+            I(Projectiles_Img, L(0, 512), 256 - b, 256, 32, 96, 0, 16, 16, 150994943);
             e = 131072;
             if (3 > C(100))
                 for (b = 32768; b < e; b++) E[b] = 250 * E[b] >> 8;
@@ -1821,14 +1821,14 @@ function ye(a) {
             e = 131072;
             for (b = 0; b < e; b++) E[b] = 255;
             Ce = He = 3;
-            for (b = 0; 4 > b; b++) I(Sa, u.a[b][0].x, u.a[b][0].y, 80, 80, 33, 1, 14, 14, 3238002687);
+            for (b = 0; 4 > b; b++) I(Projectiles_Img, u.a[b][0].x, u.a[b][0].y, 80, 80, 33, 1, 14, 14, 3238002687);
             for (b =
-                0; b < Nc.a; b++) 1 != Nc.g[b] && I(Sa, Nc.b[b].x, Nc.b[b].y, 32, 32, 33, 1, 14, 14, 2164260863);
+                0; b < Nc.a; b++) 1 != Nc.g[b] && I(Projectiles_Img, Nc.b[b].x, Nc.b[b].y, 32, 32, 33, 1, 14, 14, 2164260863);
             for (b = 0; 4 > b; b++)
                 if (8 == u.f[b])
-                    for (c = 0; 6 > c; c++) 0 != u.s[b][c] && I(Sa, u.a[b][15 + c].x, u.a[b][15 + c].y, 32, 32, 33, 1, 14, 14, 2164260863);
-            for (b = 0; b < Qc.a; b++) I(Sa, Qc.b[b].x, Qc.b[b].y - 6, 32, 32, 33, 1, 14, 14, 4294967295);
-            I(Sa, he, ie, 80, 80, 33, 1, 14, 14, 3238002687);
+                    for (c = 0; 6 > c; c++) 0 != u.s[b][c] && I(Projectiles_Img, u.a[b][15 + c].x, u.a[b][15 + c].y, 32, 32, 33, 1, 14, 14, 2164260863);
+            for (b = 0; b < Qc.a; b++) I(Projectiles_Img, Qc.b[b].x, Qc.b[b].y - 6, 32, 32, 33, 1, 14, 14, 4294967295);
+            I(Projectiles_Img, he, ie, 80, 80, 33, 1, 14, 14, 3238002687);
             E = h;
             Ce = 1;
             for (b = 0; b < e; b++) d = Ja.l[b], 255 == d ? E[b] = 251658240 : (c = E[b] >> 16 & 255, h = (-c * d >> 8) + c, c = E[b] >> 8 & 255, g = (-c * d >> 8) + c, c = E[b] & 255, c = (-c * d >> 8) + c, E[b] = h << 16 | g << 8 | c);
@@ -1891,7 +1891,7 @@ function ye(a) {
         Ne(Bb, 206, 33, 1);
         G(Gd, 216, 25, "DROP", 16777215, 0);
         for (b = a = 0; 6 > a; a += 2) c = D[Bb][Re + a], 0 !=
-            c && (He = 2, me(Na, 236 + 12 * b, 23, 12, 12, 12 * v(c, 3), 0, 12, 12, v(c, 6)), He = 0, b++);
+            c && (He = 2, me(Drop_Img, 236 + 12 * b, 23, 12, 12, 12 * v(c, 3), 0, 12, 12, v(c, 6)), He = 0, b++);
         a = tf(Wd, Bb, 1);
         G(Gd, 276, 25, "EXP " + a, 16777215, 0)
     }
@@ -1972,7 +1972,7 @@ function oe(a) {
         var q = "DEX " + jc[n],
             m = "MAG " + kc[n];
         G(F, e,
-            g + 0, Bc[v(r[4 + n], 5)], 16777215, 0);
+            g + 0, Class_Name_List[v(r[4 + n], 5)], 16777215, 0);
         G(F, e, g + 16, b, 16777215, 0);
         if (u.f[n] != wf)
             if (G(F, e, g + 28, d, 16777215, 0), G(F, e, g + 40, q, 16777215, 0), G(F, e, g + 52, m, 16777215, 0), G(Gd, e, g + 30, "              AT ", -1, 0), G(Gd, e, g + 42, "              AGI ", -1, 0), G(Gd, e, g + 54, "              RANGE ", -1, 0), G(Gd, e, g + 30, "                 " + lc[n] + "-" + mc[n], 0, -1), G(Gd, e, g + 42, "                  " + nc[n] + "-" + oc[n], 0, -1), G(Gd, e, g + 54, "                    " + pc[n], 0, -1), 5 == bc[n]) G(Gd, e, g + 66, "AURA          AURA", -1, 0), G(Gd, e, g + 66, "     (AT)" + ic[n] +
@@ -2013,8 +2013,8 @@ function oe(a) {
             U(e + 0, g + 96, 12, 12, 0);
             U(e + 75, g + 96, 12, 12, 0);
             He = 2;
-            me(Na, e + 0, g + 96, 12, 12, 12 * v(zc[n], 3), 0, 12, 12, v(zc[n], 6));
-            me(Na,
+            me(Drop_Img, e + 0, g + 96, 12, 12, 12 * v(zc[n], 3), 0, 12, 12, v(zc[n], 6));
+            me(Drop_Img,
                 e + 75, g + 96, 12, 12, 12 * v(Ac[n], 3), 0, 12, 12, v(Ac[n], 6));
             He = 0;
             G(Gd, e + 16, g + 99, t[zc[n]][0].substring(0, Ae(8, t[zc[n]][0].length)) + " " + t[zc[n]][1], -1, 0);
@@ -2029,13 +2029,13 @@ function oe(a) {
     be(Gd, e - 15, g + 68, "COMPO", 0, 0, 0, 0, 0, 0, 0, 128, 5, 7);
     be(Gd, e - 15, g + 96, "COMPO", 0,
         0, 0, 0, 0, 0, 0, 128, 5, 7);
-    for (b = 0; 4 > b; b++) U(e + 32 * b, g - 12, 24, 4, 0), U(e + 32 * b, g - 12, y(24 * p[b] / hc[b]), 4, 10027008), h = Ke(v(r[4 + b], 36), 1), c = v(r[4 + b], 5), 4 != c && 5 != c && 6 != c && U(e + 32 * b, g - 6, y(23 * cc[b] / h) + 1, 2, 128), U(e + 32 * b, g + 0, 24, 24, 0), U(e + 32 * b, g + 28, 24, 24, 0), xf(b, 0) && U(e + 32 * b, g + 56, 24, 24, 0), xf(b, 1) && U(e + 32 * b, g + 84, 24, 24, 0), me(Ma, e + 32 * b, g, 24, 24, 24 * v(r[4 + b], 5), 0, 24, 24, 16777215), De(e + 32 * b, g, 24 * v(r[4 + b], 5), v(r[4 + b], 6)), He = 2, me(Oa, e + 32 * b, g + 28, 24, 24, 24 * v(r[4 + b], 4), 0, 24, 24, v(r[4 + b], 6)), xf(b, 0) && me(Oa, e + 32 * b, g + 56, 24, 24, 24 * v(zc[4 +
-        b], 4), 0, 24, 24, v(zc[4 + b], 6)), xf(b, 1) && me(Oa, e + 32 * b, g + 84, 24, 24, 24 * v(Ac[4 + b], 4), 0, 24, 24, v(Ac[4 + b], 6)), He = 0, t[r[4 + b]][1] && G(Gd, e + 32 * b + 19, g + 45, "" + t[r[4 + b]][1], 16777215, -1), t[zc[4 + b]][1] && xf(b, 0) && G(Gd, e + 32 * b + 19, g + 73, "" + t[zc[4 + b]][1], 16777215, -1), t[Ac[4 + b]][1] && xf(b, 1) && G(Gd, e + 32 * b + 19, g + 101, "" + t[Ac[4 + b]][1], 16777215, -1);
+    for (b = 0; 4 > b; b++) U(e + 32 * b, g - 12, 24, 4, 0), U(e + 32 * b, g - 12, y(24 * p[b] / hc[b]), 4, 10027008), h = Ke(v(r[4 + b], 36), 1), c = v(r[4 + b], 5), 4 != c && 5 != c && 6 != c && U(e + 32 * b, g - 6, y(23 * cc[b] / h) + 1, 2, 128), U(e + 32 * b, g + 0, 24, 24, 0), U(e + 32 * b, g + 28, 24, 24, 0), xf(b, 0) && U(e + 32 * b, g + 56, 24, 24, 0), xf(b, 1) && U(e + 32 * b, g + 84, 24, 24, 0), me(Player_Img, e + 32 * b, g, 24, 24, 24 * v(r[4 + b], 5), 0, 24, 24, 16777215), De(e + 32 * b, g, 24 * v(r[4 + b], 5), v(r[4 + b], 6)), He = 2, me(Item_Img, e + 32 * b, g + 28, 24, 24, 24 * v(r[4 + b], 4), 0, 24, 24, v(r[4 + b], 6)), xf(b, 0) && me(Item_Img, e + 32 * b, g + 56, 24, 24, 24 * v(zc[4 +
+        b], 4), 0, 24, 24, v(zc[4 + b], 6)), xf(b, 1) && me(Item_Img, e + 32 * b, g + 84, 24, 24, 24 * v(Ac[4 + b], 4), 0, 24, 24, v(Ac[4 + b], 6)), He = 0, t[r[4 + b]][1] && G(Gd, e + 32 * b + 19, g + 45, "" + t[r[4 + b]][1], 16777215, -1), t[zc[4 + b]][1] && xf(b, 0) && G(Gd, e + 32 * b + 19, g + 73, "" + t[zc[4 + b]][1], 16777215, -1), t[Ac[4 + b]][1] && xf(b, 1) && G(Gd, e + 32 * b + 19, g + 101, "" + t[Ac[4 + b]][1], 16777215, -1);
     Ge(e + 32 * kb - 1, g - 1, 26, 26, 16711680);
     e = 344;
     g = 271;
     G(F, e, g + -12, "ITEM", 16777215, 0);
-    for (b = 0; 24 > b; b++) U(e + b % 6 * 28, g + 28 * y(b / 6), 24, 24, 0), He = 2, me(Oa, e + b % 6 * 28, g + 28 * y(b / 6), 24, 24, 24 * v(r[16 + b], 4), 0, 24, 24,
+    for (b = 0; 24 > b; b++) U(e + b % 6 * 28, g + 28 * y(b / 6), 24, 24, 0), He = 2, me(Item_Img, e + b % 6 * 28, g + 28 * y(b / 6), 24, 24, 24 * v(r[16 + b], 4), 0, 24, 24,
         v(r[16 + b], 6)), He = 0, t[r[16 + b]][1] && G(Gd, e + b % 6 * 28 + 19, g + 28 * y(b / 6) + 17, "" + t[r[16 + b]][1], 16777215, -1);
     b = -1;
     e = 192;
@@ -2053,7 +2053,7 @@ function oe(a) {
         Ac[40]), r[40] = 0, zc[40] = 0, Ac[40] = 0);
     Uc();
     n = -1 == b ? kb : b;
-    0 != r[40] && (He = 2, I(Oa, he, ie, 24, 24, 24 * v(r[40], 4), 0, 24, 24, v(r[40], 6)), He = 0);
+    0 != r[40] && (He = 2, I(Item_Img, he, ie, 24, 24, 24 * v(r[40], 4), 0, 24, 24, v(r[40], 6)), He = 0);
     1 == Cb && (c = J(he, 56, 456), d = J(ie - 8, 10, 374), 16 <= b && 40 > b ? (h = y(v(r[b], 2) / 8), Vd(F, c, d, "" + h + "$ SELL", 16777215, 0)) : Vd(F, c, d, "CLICK TO SELL", 16777215, 0))
 }
 
@@ -2770,13 +2770,13 @@ zf.prototype.B = function() {
             if (0 < Eb) {
                 Eb--;
                 var l = Ae(Eb, 64);
-                for (b = 0; 11 > b; b++) I(Xa, y(this.a[a][b].x), y(this.a[a][b].y), 24, 24, 0, 0, 12, 12, l << 24 | 16777062);
+                for (b = 0; 11 > b; b++) I(Effect_Img, y(this.a[a][b].x), y(this.a[a][b].y), 24, 24, 0, 0, 12, 12, l << 24 | 16777062);
                 120 < Eb && (b = Mf(11), Gf(u, 563, u.a[a][b].x, u.a[a][b].y,
                     0))
             } else
-                for (b = 0; 11 > b; b++) I(Xa, y(this.a[a][b].x), y(this.a[a][b].y), 12, 12, 0, 0, 12, 12, 1073741824);
+                for (b = 0; 11 > b; b++) I(Effect_Img, y(this.a[a][b].x), y(this.a[a][b].y), 12, 12, 0, 0, 12, 12, 1073741824);
         else
-            for (b = 0; 11 > b; b++) I(Xa, y(this.a[a][b].x), y(this.a[a][b].y), 12, 12, 0, 0, 12, 12, 1358888960);
+            for (b = 0; 11 > b; b++) I(Effect_Img, y(this.a[a][b].x), y(this.a[a][b].y), 12, 12, 0, 0, 12, 12, 1358888960);
         Ce = He = 0;
         8 == this.f[a] && (b = (h & 16711680) >> 17 << 16 | (h & 65280) >> 9 << 8 | (h & 255) >> 1, K(this.a[a][1].x, this.a[a][1].y, this.a[a][11].x, this.a[a][11].y, b), K(this.a[a][1].x, this.a[a][1].y, this.a[a][12].x, this.a[a][12].y, b), K(this.a[a][11].x, this.a[a][11].y, this.a[a][12].x, this.a[a][12].y, b), K(this.a[a][1].x, this.a[a][1].y, this.a[a][13].x,
             this.a[a][13].y, b), K(this.a[a][1].x, this.a[a][1].y, this.a[a][14].x, this.a[a][14].y, b), K(this.a[a][13].x, this.a[a][13].y, this.a[a][14].x, this.a[a][14].y, b));
@@ -2790,8 +2790,8 @@ zf.prototype.B = function() {
         K(this.a[a][8].x, this.a[a][8].y, this.a[a][10].x, this.a[a][10].y, m);
         Ge(y(this.a[a][0].x) - 2, y(this.a[a][0].y) - 2, 5, 5, q);
         He = 2;
-        w(4 + a, 48) && me(Na, y(this.a[a][0].x) - 6, y(this.a[a][0].y) - 6 - 6, 12, 12, 228, 0, 12, 12, 16766720);
-        w(4 + a, 49) && me(Na, y(this.a[a][0].x) - 6, y(this.a[a][0].y) - 6 - 6, 12, 12, 228, 0, 12, 12, 14540253);
+        w(4 + a, 48) && me(Drop_Img, y(this.a[a][0].x) - 6, y(this.a[a][0].y) - 6 - 6, 12, 12, 228, 0, 12, 12, 16766720);
+        w(4 + a, 49) && me(Drop_Img, y(this.a[a][0].x) - 6, y(this.a[a][0].y) - 6 - 6, 12, 12, 228, 0, 12, 12, 14540253);
         He = 0;
         if (1 == this.f[a]) g = 3, w(4 + a, 42) && (g = 5), U(y(this.a[a][5].x) - 1, y(this.a[a][5].y) - 1, g, g, h), U(y(this.a[a][6].x) - 1, y(this.a[a][6].y) - 1, g, g, h);
         else if (2 == this.f[a]) w(4 + a, 22) && (g += x(4 + a, 8)), w(4 + a, 45) && (g += x(4 + a, 9)), Bf(c, this.a[a][5], this.a[a][6]), ke(c), le(c, g), c.add(this.a[a][6]), K(this.a[a][6].x, this.a[a][6].y, c.x, c.y, h);
@@ -2808,10 +2808,10 @@ zf.prototype.B = function() {
             g = 10 > jc[a] ? 1 : 30 > jc[a] ? 2 : 60 > jc[a] ? 3 : 100 > jc[a] ? 4 : 5;
             w(4 + a, 47) && (g += 1);
             for (b = 0; b < g && 0 != this.s[a][b]; b++);
-            b != g && I(Xa, y(this.a[a][0].x), y(this.a[a][0].y) - 5, 7, 3, 33, 0, 7, 3, h);
-            for (b = 0; b < g; b++) 0 != this.s[a][b] && I(Xa, y(this.a[a][15 + b].x), y(this.a[a][15 + b].y), 7, 3, 33, 0, 7, 3, h)
+            b != g && I(Effect_Img, y(this.a[a][0].x), y(this.a[a][0].y) - 5, 7, 3, 33, 0, 7, 3, h);
+            for (b = 0; b < g; b++) 0 != this.s[a][b] && I(Effect_Img, y(this.a[a][15 + b].x), y(this.a[a][15 + b].y), 7, 3, 33, 0, 7, 3, h)
         }
-        40 != f && (0 < wc[a] + xc[a] && (Ce = 2, He = 1, h = wc[a], h < xc[a] && (h = xc[a]), h < yc[a] && (h = yc[a]), h = 4278190080 | 255 * wc[a] / h << 16 | 255 * xc[a] / h << 8 | 255 * yc[a] / h, I(Xa, y(y(this.a[a][9].x + this.a[a][10].x) / 2), y(y(this.a[a][9].y + this.a[a][10].y) /
+        40 != f && (0 < wc[a] + xc[a] && (Ce = 2, He = 1, h = wc[a], h < xc[a] && (h = xc[a]), h < yc[a] && (h = yc[a]), h = 4278190080 | 255 * wc[a] / h << 16 | 255 * xc[a] / h << 8 | 255 * yc[a] / h, I(Effect_Img, y(y(this.a[a][9].x + this.a[a][10].x) / 2), y(y(this.a[a][9].y + this.a[a][10].y) /
             2), 20, 12, 12, 0, 20, 12, h), Ce = He = 0), 0 < (tc & 1) && 0 < p[a] && (U(y(this.a[a][0].x) - 6, y(this.a[a][0].y) - 6, 13, 2, 10027008), U(y(this.a[a][0].x) - 6, y(this.a[a][0].y) - 6, y(13 * p[a] / hc[a]), 2, 52224)), a != kb || ba || (0 == uc ? U(y(this.a[a][0].x) - 1, y(this.a[a][0].y) - 8, 3, 3, 16776960) : 1 == uc && (K(y(this.a[a][0].x) - 3, y(this.a[a][0].y) - 14, y(this.a[a][0].x) + 3, y(this.a[a][0].y) - 14, 16776960), K(y(this.a[a][0].x) - 3, y(this.a[a][0].y) - 14, y(this.a[a][0].x) + .5, y(this.a[a][0].y) - 7, 16776960), K(y(this.a[a][0].x) + 3.5, y(this.a[a][0].y) - 14, y(this.a[a][0].x) +
             .5, y(this.a[a][0].y) - 7, 16776960))))
     }
@@ -4457,13 +4457,13 @@ Vf.prototype.K = function() {
             case 0:
                 fe(y(this.a[a][1].x - .5), y(this.a[a][1].y) - 2 * g, y(4 * h) + 1, y(4 * h) + 1, e);
                 fe(y(this.a[a][2].x - .5), y(this.a[a][2].y) - 2 * g, y(4 * h) + 1, y(4 * h) + 1, e);
-                I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
+                I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 1:
-                I(Qa,
+                I(Enemy_Head_Img,
                     y(this.a[a][2].x), y(this.a[a][2].y - 2 * h), y(8 * h), y(8 * h), 16 * c, 0, 16, 16, e);
-                I(Qa, y(this.a[a][1].x), y(this.a[a][1].y - 3 * h), y(12 * h), y(12 * h), 16 * c, 0, 16, 16, e);
-                I(Qa, y(this.a[a][0].x), y(this.a[a][0].y - 4 * h), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
+                I(Enemy_Head_Img, y(this.a[a][1].x), y(this.a[a][1].y - 3 * h), y(12 * h), y(12 * h), 16 * c, 0, 16, 16, e);
+                I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y - 4 * h), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 2:
                 K(this.a[a][1].x, this.a[a][1].y, this.a[a][2].x, this.a[a][2].y, e);
@@ -4473,7 +4473,7 @@ Vf.prototype.K = function() {
                 K(this.a[a][5].x,
                     this.a[a][5].y, this.a[a][6].x, this.a[a][6].y, e);
                 K(this.a[a][6].x, this.a[a][6].y, this.a[a][4].x, this.a[a][4].y, e);
-                I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
+                I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 3:
                 3 > this.b[a] && (K(this.a[a][0].x, this.a[a][0].y, this.a[a][1].x, this.a[a][1].y, e), K(this.a[a][4].x, this.a[a][4].y, this.a[a][5].x, this.a[a][5].y, e));
@@ -4482,7 +4482,7 @@ Vf.prototype.K = function() {
                 K(this.a[a][3].x, this.a[a][3].y,
                     this.a[a][4].x, this.a[a][4].y, e);
                 ce(y(this.a[a][5].x), y(this.a[a][5].y), y(2 * h), y(2 * h), d);
-                I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
+                I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 4:
             case 12:
@@ -4494,20 +4494,20 @@ Vf.prototype.K = function() {
                 3 > this.b[a] && (K(this.a[a][2].x, this.a[a][2].y, this.a[a][7].x, this.a[a][7].y, e), K(this.a[a][2].x, this.a[a][2].y, this.a[a][8].x, this.a[a][8].y, e));
                 K(this.a[a][7].x, this.a[a][7].y, this.a[a][9].x, this.a[a][9].y, e);
                 K(this.a[a][8].x, this.a[a][8].y, this.a[a][10].x, this.a[a][10].y, e);
-                I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
-                332 == this.f[a] && I(Qa, y(this.a[a][0].x), y(this.a[a][0].y - 3 * h), y(16 * h), y(16 * h), 352, 0, 16, 16, 16777215);
+                I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
+                332 == this.f[a] && I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y - 3 * h), y(16 * h), y(16 * h), 352, 0, 16, 16, 16777215);
                 break;
             case 5:
             case 18:
                 var q = 5 == this.v[a] ?
                     -2 : 2;
                 for (b = 10 > this.b[a] ? this.b[a] - 1 : this.b[a] - 11; 0 < b; b--) fe(y(this.a[a][b].x), y(this.a[a][b].y + q * h), y(4 * h) + 1, y(4 * h) + 1, e);
-                5 == this.v[a] ? I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d) : I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 15, 16, -16, d);
+                5 == this.v[a] ? I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d) : I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 15, 16, -16, d);
                 break;
             case 6:
                 for (b = 1; 6 > b; b++) K(this.a[a][b].x, this.a[a][b].y, this.a[a][b + 1].x, this.a[a][b + 1].y, e);
                 3 > this.b[a] && K(this.a[a][b].x, this.a[a][b].y, this.a[a][1].x, this.a[a][1].y, e);
-                I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 *
+                I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 *
                     h), y(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 7:
@@ -4515,22 +4515,22 @@ Vf.prototype.K = function() {
                 K(this.a[a][2].x, this.a[a][2].y, this.a[a][4].x, this.a[a][4].y, e);
                 K(this.a[a][3].x, this.a[a][3].y, this.a[a][4].x, this.a[a][4].y, e);
                 fe(y(this.a[a][1].x), y(this.a[a][1].y), y(6 * h) + 1, y(6 * h) + 1, e);
-                I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
+                I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 8:
                 fe(y(this.a[a][2].x) + y(1 * h), y(this.a[a][2].y - 2 * h), y(8 * h) + 1, y(4 * h) + 1, e);
                 fe(y(this.a[a][1].x), y(this.a[a][1].y - 2 * h), y(4 * h) +
                     1, y(4 * h) + 1, e);
-                I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
+                I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 9:
             case 13:
                 ce(y(this.a[a][5].x), y(this.a[a][5].y), y(2 * h), y(2 * h), d);
-                I(Qa, y(this.a[a][4].x), y(this.a[a][4].y), y(8 * h), y(8 * h), 16 * c, 0, 16, 16, e);
-                I(Qa, y(this.a[a][3].x), y(this.a[a][3].y), y(10 * h), y(10 * h), 16 * c, 0, 16, 16, e);
-                I(Qa, y(this.a[a][2].x), y(this.a[a][2].y), y(12 * h), y(12 * h), 16 * c, 0, 16, 16, e);
-                I(Qa, y(this.a[a][1].x), y(this.a[a][1].y), y(14 * h), y(14 * h), 16 * c, 0, 16, 16, e);
-                I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h),
+                I(Enemy_Head_Img, y(this.a[a][4].x), y(this.a[a][4].y), y(8 * h), y(8 * h), 16 * c, 0, 16, 16, e);
+                I(Enemy_Head_Img, y(this.a[a][3].x), y(this.a[a][3].y), y(10 * h), y(10 * h), 16 * c, 0, 16, 16, e);
+                I(Enemy_Head_Img, y(this.a[a][2].x), y(this.a[a][2].y), y(12 * h), y(12 * h), 16 * c, 0, 16, 16, e);
+                I(Enemy_Head_Img, y(this.a[a][1].x), y(this.a[a][1].y), y(14 * h), y(14 * h), 16 * c, 0, 16, 16, e);
+                I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h),
                     y(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 10:
@@ -4542,26 +4542,26 @@ Vf.prototype.K = function() {
                     this.a[a][7].y, e));
                 K(this.a[a][5].x, this.a[a][5].y, this.a[a][6].x, this.a[a][6].y, e);
                 K(this.a[a][7].x, this.a[a][7].y, this.a[a][8].x, this.a[a][8].y, e);
-                I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
+                I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 11:
                 fe(y(this.a[a][3].x), y(this.a[a][3].y - 7 * h), y(4 * h) + 1, y(14 * h) + 1, e);
                 fe(y(this.a[a][2].x) + 0, y(this.a[a][2].y), y(4 * h) + 1, y(9 * h) + 1, e);
                 fe(y(this.a[a][1].x) + 1, y(this.a[a][1].y), y(4 * h) + 1, y(8 * h) + 1, e);
-                I(Qa, y(this.a[a][0].x) + 1, y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
+                I(Enemy_Head_Img, y(this.a[a][0].x) + 1, y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 14:
                 K(this.a[a][1].x, this.a[a][1].y, this.a[a][2].x, this.a[a][2].y, e);
                 K(this.a[a][2].x, this.a[a][2].y, this.a[a][3].x, this.a[a][3].y, e);
                 K(this.a[a][3].x, this.a[a][3].y, this.a[a][1].x, this.a[a][1].y, e);
-                I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
+                I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 15:
                 K(this.a[a][0].x, this.a[a][0].y, this.a[a][1].x, this.a[a][1].y, e);
                 K(this.a[a][0].x, this.a[a][0].y, this.a[a][2].x, this.a[a][2].y, e);
                 K(this.a[a][1].x, this.a[a][1].y, this.a[a][2].x, this.a[a][2].y, e);
-                2 > this.b[a] ? I(Qa,
-                    y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d) : I(Qa, y(this.a[a][3].x), y(this.a[a][3].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
+                2 > this.b[a] ? I(Enemy_Head_Img,
+                    y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d) : I(Enemy_Head_Img, y(this.a[a][3].x), y(this.a[a][3].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 16:
                 if (2 > this.b[a])
@@ -4572,15 +4572,15 @@ Vf.prototype.K = function() {
                 else
                     for (b = 7; 10 > b; b++) ce(y(this.a[a][b].x) + 1, y(this.a[a][b].y) + 1, y(2 * h), y(2 *
                         h), d);
-                2 > this.b[a] ? I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * g), y(16 * g), 16 * c, 0, 16, 16, d) : I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
+                2 > this.b[a] ? I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * g), y(16 * g), 16 * c, 0, 16, 16, d) : I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 17:
                 if (10 > this.b[a]) {
                     for (b = this.b[a] - 1; 0 < b; b--) ce(y(this.a[a][b].x), y(this.a[a][b].y - 2 * g), y(4 * g), y(4 * g), e);
-                    I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * g), y(16 * g), 16 * c, 0, 16, 16, d)
+                    I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * g), y(16 * g), 16 * c, 0, 16, 16, d)
                 } else {
                     for (b = this.b[a] - 11; 0 < b; b--) fe(y(this.a[a][b].x), y(this.a[a][b].y - 2 * h), y(4 * h) + 1, y(4 * h) + 1, e);
-                    I(Qa, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 *
+                    I(Enemy_Head_Img, y(this.a[a][0].x), y(this.a[a][0].y), y(16 * h), y(16 *
                         h), 16 * c, 0, 16, 16, d)
                 }
         }
@@ -4846,13 +4846,13 @@ function Ne(a, b, c, d) {
         case 0:
             fe(y(m[1] - .5), y(l[1]) - 2 * q, y(4 * d) + 1, y(4 * d) + 1, h);
             fe(y(m[2] - .5), y(l[2]) - 2 * q, y(4 * d) + 1, y(4 * d) + 1, h);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 1:
-            I(Qa, y(m[2]), y(l[2] - 2 * d), y(8 * d), y(8 * d), 16 * e, 0, 16, 16, h);
-            I(Qa, y(m[1]), y(l[1] - 3 * d), y(12 *
+            I(Enemy_Head_Img, y(m[2]), y(l[2] - 2 * d), y(8 * d), y(8 * d), 16 * e, 0, 16, 16, h);
+            I(Enemy_Head_Img, y(m[1]), y(l[1] - 3 * d), y(12 *
                 d), y(12 * d), 16 * e, 0, 16, 16, h);
-            I(Qa, y(m[0]), y(l[0] - 4 * d), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
+            I(Enemy_Head_Img, y(m[0]), y(l[0] - 4 * d), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 2:
             K(m[1], l[1], m[2], l[2], h);
@@ -4861,7 +4861,7 @@ function Ne(a, b, c, d) {
             K(m[4], l[4], m[5], l[5], h);
             K(m[5], l[5], m[6], l[6], h);
             K(m[6], l[6], m[4], l[4], h);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 3:
             K(m[0], l[0], m[1], l[1], h);
@@ -4870,7 +4870,7 @@ function Ne(a, b, c, d) {
             K(m[2], l[2], m[3], l[3], h);
             K(m[3], l[3], m[4], l[4], h);
             ce(y(m[5]), y(l[5]), y(2 * d), y(2 * d), g);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d),
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d),
                 y(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 4:
@@ -4884,45 +4884,45 @@ function Ne(a, b, c, d) {
             K(m[2], l[2], m[8], l[8], h);
             K(m[7], l[7], m[9], l[9], h);
             K(m[8], l[8], m[10], l[10], h);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
-            332 == a && I(Qa, y(m[0]), y(l[0] - 3 * d), y(16 * d), y(16 * d), 352, 0, 16, 16, 16766720);
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
+            332 == a && I(Enemy_Head_Img, y(m[0]), y(l[0] - 3 * d), y(16 * d), y(16 * d), 352, 0, 16, 16, 16766720);
             break;
         case 5:
             for (a = 3; 0 < a; a--) fe(y(m[a]), y(l[a] - 2 * d), y(4 * d) + 1, y(4 * d) + 1, h);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 *
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 *
                 d), 16 * e, 0, 16, 16, g);
             break;
         case 18:
             d = J(d, 1, 2);
             for (a = 3; 0 < a; a--) fe(y(m[a]), y(l[a] + 2 * d), y(4 * d) + 1, y(4 * d) + 1, h);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 15, 16, -16, g);
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 15, 16, -16, g);
             break;
         case 6:
             for (a = 1; 6 > a; a++) K(m[a], l[a], m[a + 1], l[a + 1], h);
             K(m[a], l[a], m[1], l[1], h);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 7:
             K(m[2], l[2], m[3], l[3], h);
             K(m[2], l[2], m[4], l[4], h);
             K(m[3], l[3], m[4], l[4], h);
             fe(y(m[1]), y(l[1]), y(6 * d) + 1, y(6 * d) + 1, h);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 8:
             fe(y(m[2]) + y(1 *
                 d), y(l[2] - 2 * d), y(8 * d) + 1, y(4 * d) + 1, h);
             fe(y(m[1]), y(l[1] - 2 * d), y(4 * d) + 1, y(4 * d) + 1, h);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 9:
         case 13:
             ce(y(m[5]), y(l[5]), y(2 * d), y(2 * d), g);
-            I(Qa, y(m[4]), y(l[4]), y(8 * d), y(8 * d), 16 * e, 0, 16, 16, h);
-            I(Qa, y(m[3]), y(l[3]), y(10 * d), y(10 * d), 16 * e, 0, 16, 16, h);
-            I(Qa, y(m[2]), y(l[2]), y(12 * d), y(12 * d), 16 * e, 0, 16, 16, h);
-            I(Qa, y(m[1]), y(l[1]), y(14 * d), y(14 * d), 16 * e, 0, 16, 16, h);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
+            I(Enemy_Head_Img, y(m[4]), y(l[4]), y(8 * d), y(8 * d), 16 * e, 0, 16, 16, h);
+            I(Enemy_Head_Img, y(m[3]), y(l[3]), y(10 * d), y(10 * d), 16 * e, 0, 16, 16, h);
+            I(Enemy_Head_Img, y(m[2]), y(l[2]), y(12 * d), y(12 * d), 16 * e, 0, 16, 16, h);
+            I(Enemy_Head_Img, y(m[1]), y(l[1]), y(14 * d), y(14 * d), 16 * e, 0, 16, 16, h);
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 10:
             K(y(m[0]), y(l[0]), y(m[1]), y(l[1]),
@@ -4934,37 +4934,37 @@ function Ne(a, b, c, d) {
             K(y(m[0]), y(l[0]), y(m[7]), y(l[7]), h);
             K(y(m[5]), y(l[5]), y(m[6]), y(l[6]), h);
             K(y(m[7]), y(l[7]), y(m[8]), y(l[8]), h);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 11:
             fe(y(m[3]), y(l[3] - 7 * d), y(4 * d) + 1, y(14 * d) + 1, h);
             fe(y(m[2]) + 0, y(l[2]), y(4 * d) + 1, y(9 * d) + 1, h);
             fe(y(m[1]) + 1, y(l[1]), y(4 * d) + 1, y(8 * d) + 1, h);
-            I(Qa, y(m[0]) + 1, y(l[0]), y(16 * d), y(16 * d), 16 * e,
+            I(Enemy_Head_Img, y(m[0]) + 1, y(l[0]), y(16 * d), y(16 * d), 16 * e,
                 0, 16, 16, g);
             break;
         case 14:
             K(y(m[1]), y(l[1]), y(m[2]), y(l[2]), h);
             K(y(m[1]), y(l[1]), y(m[3]), y(l[3]), h);
             K(y(m[2]), y(l[2]), y(m[3]), y(l[3]), h);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 15:
             K(y(m[0]), y(l[0]), y(m[1]), y(l[1]), h);
             K(y(m[0]), y(l[0]), y(m[2]), y(l[2]), h);
             K(y(m[1]), y(l[1]), y(m[2]), y(l[2]), h);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 16:
             for (a = 1; 4 > a; a++) K(y(m[0]), y(l[0]), y(m[a]), y(l[a]), h);
             for (a = 4; 10 > a; a++) K(y(m[a - 3]), y(l[a - 3]), y(m[a]), y(l[a]), h);
             for (a = 7; 10 >
                 a; a++) ce(y(m[a]), y(l[a]), y(2 * d), y(2 * d), g);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 17:
             for (a = 3; 0 < a; a--) ce(y(m[a]), y(l[a] - 2 * d), y(4 * d), y(4 * d), h);
-            I(Qa, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g)
+            I(Enemy_Head_Img, y(m[0]), y(l[0]), y(16 * d), y(16 * d), 16 * e, 0, 16, 16, g)
     }
 }
 var Zc = 90,
@@ -6016,7 +6016,7 @@ function bf() {
                     Ua = 0,
                     eb = 16,
                     Va = 16;
-                c = Sa;
+                c = Projectiles_Img;
                 var m = m << 16,
                     l = l << 16,
                     z = z << 16,
@@ -6060,7 +6060,7 @@ function bf() {
                 A = d & 255;
                 for (ua = pa; ua <= Ha; ua++)
                     for (pa = 512 * ua + $f[ua], B = ag[ua] - $f[ua] + 1, Z = (cg[ua] - dg[ua]) / B, za = (eg[ua] - fg[ua]) / B, S = dg[ua], ia = fg[ua], B = $f[ua]; B <= ag[ua]; B++, pa++, S += Z, ia += za) 0 > B || 512 <= B || (T = c.l[(ia >> 16) * c.m + (S >> 16)], He ? (T = z * (T & 255) >> 8) && (E[pa] = gg(E[pa], d, T)) : -1 != T && (ta = m * ((T & 16711680) >> 16) >> 8, X = l * ((T & 65280) >> 8) >> 8, T = A * (T & 255) >> 8, E[pa] = Ce ? gg(E[pa], ta << 16 | X << 8 | T, z) : ta << 16 | X << 8 | T))
-            } else I(Sa, y(a.b[b].x), y(a.b[b].y), a.ga[b], a.ha[b], c, 0, 16, 16, d);
+            } else I(Projectiles_Img, y(a.b[b].x), y(a.b[b].y), a.ga[b], a.ha[b], c, 0, 16, 16, d);
             He = Ce = 0
         }
 }
@@ -6195,7 +6195,7 @@ function af() {
     var a = Qc,
         b;
     He = 2;
-    for (b = 0; b < a.a; b++)(100 == a.h[b] || a.h[b] & 6) && me(Na, y(a.b[b].x) - 6, y(a.b[b].y) - 12, 12, 12, 12 * v(a.g[b], 3), 0, 12, 12, v(a.g[b], 6));
+    for (b = 0; b < a.a; b++)(100 == a.h[b] || a.h[b] & 6) && me(Drop_Img, y(a.b[b].x) - 6, y(a.b[b].y) - 12, 12, 12, 12 * v(a.g[b], 3), 0, 12, 12, v(a.g[b], 6));
     He = 0
 }
 var H = new jg;
@@ -6216,7 +6216,7 @@ function jg() {
 jg.prototype.o = function(a) {
     var b, c;
     this.c = a;
-    this.j != ld[this.c][ib][1] && (this.j = ld[this.c][ib][1], Ka = new ra, Ka.o("st" + this.j + ".gif"));
+    this.j != ld[this.c][ib][1] && (this.j = ld[this.c][ib][1], Ka = new SR_Image, Ka.IGset("st" + this.j + ".gif"));
     Jd(Ka);
     if (Kd) return !1;
     this.f = Ka.c;
@@ -6268,7 +6268,7 @@ jg.prototype.o = function(a) {
                 He = 3;
                 E = Ja.l;
                 for (a = 0; 196608 > a; a++) E[a] = 0;
-                for (a = 0; 100 > a; a++) c = L(1.7, 3.69), c = c * c * c * c, I(Sa, y(L(0, 512)), y(256 - c), 256, 32, 96, 0, 16, 16, 419430399);
+                for (a = 0; 100 > a; a++) c = L(1.7, 3.69), c = c * c * c * c, I(Projectiles_Img, y(L(0, 512)), y(256 - c), 256, 32, 96, 0, 16, 16, 419430399);
                 E = b;
                 Ce = He = 0
         }
@@ -6280,9 +6280,9 @@ function Yd() {
     var a = H,
         b, c, d = new Int32Array([0, 8, 16, 0, 8, 16, 0, 8, 16]),
         e = new Int32Array([0, 0, 0, 8, 8, 8, 16, 16, 16]),
-        g = La[ld[a.c][ib][0]];
+        g = Terrain_Textures[ld[a.c][ib][0]];
     for (c = 0; c < a.f; c++)
-        for (b = 0; b < a.m; b++) { var h = a.a[c][b]; - 1 != h && (9 == h ? 82 == a.c ? -1 == a.a[c - 1][b] ? je($a, 8 * b, 8 * c, 8, 8, 0, 0, 8, 8) : yf(8 * b - 4, 8 * c, 16, 8, 5570560) : -1 == a.a[c - 1][b] ? je(Za, 8 * b, 8 * c, 8, 8, 0, 0, 8, 8) : yf(8 * b - 4, 8 * c, 16, 8, 21916) : je(g, 8 * b, 8 * c, 8, 8, d[h], e[h], 8, 8)) }
+        for (b = 0; b < a.m; b++) { var h = a.a[c][b]; - 1 != h && (9 == h ? 82 == a.c ? -1 == a.a[c - 1][b] ? je(Water_Red_Img, 8 * b, 8 * c, 8, 8, 0, 0, 8, 8) : yf(8 * b - 4, 8 * c, 16, 8, 5570560) : -1 == a.a[c - 1][b] ? je(Water_Img, 8 * b, 8 * c, 8, 8, 0, 0, 8, 8) : yf(8 * b - 4, 8 * c, 16, 8, 21916) : je(g, 8 * b, 8 * c, 8, 8, d[h], e[h], 8, 8)) }
 }
 var Rc = new kg;
 
@@ -6299,25 +6299,25 @@ kg.prototype.o = function() {
         for (b = 0; b < this.m; b++) this.b[c][b] = -1;
     for (c = 0; 16 > c; c++)
         for (b = 0; b < this.m; b++) {
-            a = c * cb.m + b;
+            a = c * Map_Elev_Index.m + b;
             var d = b ? -1 : 0,
                 e = b == this.m - 1 ? 0 : 1,
                 g = c ? -this.m : 0,
                 h = 15 == c ? 0 : this.m,
-                q = cb.l[a + d + g],
-                m = cb.l[a + g],
-                g = cb.l[a + e + g],
-                l = cb.l[a + d],
-                A = cb.l[a + e],
-                d = cb.l[a + d + h],
-                z = cb.l[a + h],
-                e = cb.l[a + e + h];
-            65535 == fb.l[a] ? this.b[c][b] = 15 : 6684672 == fb.l[a] ? this.b[c][b] = 17 : 0 != cb.l[a] && (13209 == cb.l[a] ? this.b[c][b] = 13 : 16764006 == fb.l[a] ? this.b[c][b] = 14 : 6710886 == fb.l[a] ? this.b[c][b] = 16 : (a = cb.l[a], m >= a && l >=
+                q = Map_Elev_Index.l[a + d + g],
+                m = Map_Elev_Index.l[a + g],
+                g = Map_Elev_Index.l[a + e + g],
+                l = Map_Elev_Index.l[a + d],
+                A = Map_Elev_Index.l[a + e],
+                d = Map_Elev_Index.l[a + d + h],
+                z = Map_Elev_Index.l[a + h],
+                e = Map_Elev_Index.l[a + e + h];
+            65535 == Map_Feature_Index.l[a] ? this.b[c][b] = 15 : 6684672 == Map_Feature_Index.l[a] ? this.b[c][b] = 17 : 0 != Map_Elev_Index.l[a] && (13209 == Map_Elev_Index.l[a] ? this.b[c][b] = 13 : 16764006 == Map_Feature_Index.l[a] ? this.b[c][b] = 14 : 6710886 == Map_Feature_Index.l[a] ? this.b[c][b] = 16 : (a = Map_Elev_Index.l[a], m >= a && l >=
                 a && A >= a && z >= a && e < a ? this.b[c][b] = 3 : m >= a && l >= a && A >= a && z >= a && d < a ? this.b[c][b] = 4 : m >= a && l >= a && A >= a && z >= a && g < a ? this.b[c][b] = 8 : m >= a && l >= a && A >= a && z >= a && q < a ? this.b[c][b] = 9 : l < a && A >= a && m < a && z >= a ? this.b[c][b] = 0 : l >= a && A >= a && m < a && z >= a ? this.b[c][b] = 1 : l >= a && A < a && m < a && z >= a ? this.b[c][b] = 2 : l < a && A >= a && m >= a && z >= a ? this.b[c][b] = 5 : l >= a && A < a && m >= a && z >= a ? this.b[c][b] = 7 : l < a && A >= a && m >= a && z < a ? this.b[c][b] = 10 : l >= a && A >= a && m >= a && z < a ? this.b[c][b] = 11 : l >= a && A < a && m >= a && z < a && (this.b[c][b] = 12)))
         }
     for (c = 0; 16 > c; c++)
         for (b = 0; b < this.m; b++) a =
-            c * fb.m + b, this.c[c][b] = -1, 26112 == fb.l[a] ? this.c[c][b] = 0 : 10066329 == fb.l[a] ? this.c[c][b] = 1 : 8404992 == fb.l[a] ? this.c[c][b] = 2 : 13434879 == fb.l[a] ? this.c[c][b] = 5 : 12288 == fb.l[a] && (this.c[c][b] = 6)
+            c * Map_Feature_Index.m + b, this.c[c][b] = -1, 26112 == Map_Feature_Index.l[a] ? this.c[c][b] = 0 : 10066329 == Map_Feature_Index.l[a] ? this.c[c][b] = 1 : 8404992 == Map_Feature_Index.l[a] ? this.c[c][b] = 2 : 13434879 == Map_Feature_Index.l[a] ? this.c[c][b] = 5 : 12288 == Map_Feature_Index.l[a] && (this.c[c][b] = 6)
 };
 var lg = document,
     vd = lg.getElementById("cv"),
@@ -6415,7 +6415,7 @@ function Md() {
 }
 var Kd = 0;
 
-function ra() {
+function SR_Image() {
     this.b = 0;
     this.i = "";
     this.j = this.f = this.h = this.a = this.g = this.l = this.c = this.m = 0
@@ -6427,7 +6427,7 @@ function Nd(a, b, c) {
     for (b = 0; 16 > b; b++);
     a.l = new Int32Array(a.m * a.c)
 }
-ra.prototype.o = function(a) { this.i != a && (Kd++, this.i = a, this.b = new Image, this.b.src = sg + a + "?18.9", delete this.l, this.g = this.l = 0) };
+SR_Image.prototype.IGset = function(a) { this.i != a && (Kd++, this.i = a, this.b = new Image, this.b.src = sg + a + "?18.9", delete this.l, this.g = this.l = 0) };
 
 function Jd(a) {
     if (!a.g && a.b.complete) {
@@ -6478,11 +6478,11 @@ var Pg = [
     Gd = new Rg;
 
 function Rg() {
-    this.f = new ra;
+    this.f = new SR_Image;
     this.a = this.b = this.g = this.c = 0
 }
 Rg.prototype.o = function(a, b, c) {
-    this.f.o(a);
+    this.f.IGset(a);
     this.c = b;
     this.g = c;
     this.a = this.b = 0
@@ -6672,7 +6672,7 @@ function De(a, b, c, d) {
         A = 512 < a + 24 ? 24 - (a + 24 - 512) : 24,
         z = 384 < b + 24 ? 24 - (b + 24 - 384) : 24;
     for (g = 0 > b ? -b : 0; g < z; g++)
-        for (h = 512 * (b + g) + (a + l), q = (0 + y(24 * g / 24)) * Ma.m + c, e = l; e < A; e++, h++) m = q + y(24 * e / 24), 16711680 == Ma.l[m] && (E[h] = d)
+        for (h = 512 * (b + g) + (a + l), q = (0 + y(24 * g / 24)) * Player_Img.m + c, e = l; e < A; e++, h++) m = q + y(24 * e / 24), 16711680 == Player_Img.l[m] && (E[h] = d)
 }
 
 function bg(a, b, c, d, e, g, h, q) {
@@ -6793,7 +6793,7 @@ lg.onkeyup = function(a) {
 };
 var Vg = !1,
     ef = "",
-    gf = new ra,
+    gf = new SR_Image,
     of = Array(100),
     nf = 0,
     Xg = hf(80, 79, 83, 84),
