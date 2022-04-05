@@ -1,4 +1,5 @@
-function cookie_get(nm){
+function cookie_get(nm) {
+	console.log('Cookie_get');
 	var r=[],dc=document.cookie;
 	if(dc){
 		var c=dc.split('; ');
@@ -18,7 +19,8 @@ function cookie_get(nm){
 	}
 	return(r);
 }
-function cvs_mv2(gw,gh,ss,as,ab,ms){
+function cvs_mv2(gw, gh, ss, as, ab, ms) {
+	console.log('cvs_mv2');
 	var d=document;
 	var c=d.getElementById('cv');
 	var s=d.getElementById('sp_info').getBoundingClientRect();
@@ -61,7 +63,8 @@ function cvs_mv2(gw,gh,ss,as,ab,ms){
 }
 var ajax_a=new Array();
 var ajax_f=new Array();
-function ajax(u,c){
+function ajax(u, c) {
+	console.log('ajax');
 	ajax_f[u]=c;
 	try{
 		ajax_a[u]=new ActiveXObject('Msxml2.XMLHTTP');
@@ -82,7 +85,8 @@ function ajax(u,c){
 	ajax_a[u].open('POST','\/'+u,true);
 	ajax_a[u].send(new Date().getTime());
 }
-function dust12_view(v,l,d){
+function dust12_view(v, l, d) {
+	console.log('dust12_view');
 	var w='',pt=d[2];
 	var vt=['票','vote'];
 	var vn=[['※自分の作品には投票出来ません。',	'* You can\'t vote for your own artwork.'],
@@ -116,13 +120,15 @@ function dust12_view(v,l,d){
 	}
 	document.getElementById('d_vote').innerHTML=w;
 }
-function dust12_vote(v,a,l,d){
+function dust12_vote(v, a, l, d) {
+	console.log('dust12_vote');
 	if(0==a)	d[2]++;
 	if(v==1)		ajax('javagame\/dust\/vote.php?vote='+a+'&code='+d[0],'');
 	else if(v==2)	ajax('javagame\/dust2\/vote.php?vote='+a+'&code='+d[0],'');
 	dust12_view(v,l,d);
 }
-function dust12_search(v,l,d,c){
+function dust12_search(v, l, d, c) {
+	console.log('dust12_search');
 	var w='',no,hr,sr,pt,ct,nm;
 	var ul=['\/','\/en\/'],wh=['','WIDTH="100" HEIGHT="75"','WIDTH="124" HEIGHT="70"'],vt=['票','vote'];
 	var nw=['','<SPAN>new<\/SPAN><BR>','<BR>'];
@@ -160,7 +166,8 @@ function dust12_search(v,l,d,c){
 	}
 	document.write(w);
 }
-function ranger_party(l,m,d,o,c){
+function ranger_party(l, m, d, o, c) {
+	console.log('ranger_party');
 	var nm=['名前','Name'],me=['変更','Edit'],pa=['パーティー','Party'],cm=['コメント','Comment'],wi=['勝','Win'];
 	var lo=['敗','Lose'],ra=['勝率','Rate'],da=['日付','Date'],ur=['\/','\/en\/'],sd=['現在のセーブデータ','Current saved data'];
 	var ed=['変更','Edit'],de=['削除','Delete'],rs=['1','2','3','4','5','6','7','8','9','S','-'];
@@ -254,7 +261,8 @@ function ranger_party(l,m,d,o,c){
 	w+='<\/TABLE><\/DIV>';
 	document.write(w);
 }
-function logibox_search(v,l,d,c,p){
+function logibox_search(v, l, d, c, p) {
+	console.log('logibox_search');
 	var nm=['作者','Author'],ct=['タイトル','Title'],wi=['幅','W'],he=['高','H'],le=['難易度','Level'],pt=['票数','Vote'];
 	var cl=['クリア','Clear'],tm=['日付','Date'],pb=['プレイ','Play'],ur=['\/','\/en\/'],j,b,k;
 	var w='<TABLE CELLSPACING="0" STYLE="MARGIN:0 auto 1em;">';
@@ -321,7 +329,8 @@ function logibox_search(v,l,d,c,p){
 	w+='<\/TABLE>'+(0==v?'<BR>':'');
 	document.write(w);
 }
-function utf8_hex(t){
+function utf8_hex(t) {
+	console.log('utf8_hex');
 	var r=[],c,l=t.length;
 	for(var i=0;i<l;i+=2)
 		r.push(parseInt(t.substr(i,2),16));
@@ -347,7 +356,8 @@ function utf8_hex(t){
 	}
 	return r;
 }
-function hrc(r){
+function hrc(r) {
+	console.log('hrc');
 	var r=r.innerHTML;
 	r=r.replace(/&amp;/g,	'&');
 	r=r.replace(/&quot;/g,	'"');
@@ -356,7 +366,8 @@ function hrc(r){
 	r=r.replace(/&gt;/g,	'>');
 	return r;
 }
-function hrc2(r){
+function hrc2(r) {
+	console.log('hrc2');
 	var r=r;
 	r=r.replace(/&amp;/g,	'&');
 	r=r.replace(/&quot;/g,	'"');
@@ -365,7 +376,8 @@ function hrc2(r){
 	r=r.replace(/&gt;/g,	'>');
 	return r;
 }
-function hu_tag(id,lg){
+function hu_tag(id, lg) {
+	console.log('hu_tag');
 	var w='',ck=cookie_get('user');
 	var v=[['復活の呪文','Save game'],['ゲット','Get'],['セット','Set'],['ユーザー登録が必要です。','User registration is required.']];
 	if(ck[3]!=''){
@@ -384,7 +396,8 @@ function hu_tag(id,lg){
 
 	document.getElementById('hu_tag').innerHTML=w;
 }
-function save(id){
+function save(id) {
+	console.log('save');
 	var s='',h='Error';
 
 	if(document.getElementById('cv'))		s=GameSave('0');
@@ -395,7 +408,8 @@ function save(id){
 	}
 	document.getElementById('pass').innerHTML=h;
 }
-function load(id){
+function load(id) {
+	console.log('load');
 	document.getElementById('bun').value=document.getElementById('bun').value.replace(/\x0D\x0A|\x0D|\x0A/g,'');
 	var s=document.getElementById('bun').value,ret=-1,h='Error';
 	if(s!=''){
@@ -405,7 +419,8 @@ function load(id){
 	if(ret!=-1)	h='Set OK';
 	document.getElementById('pass').innerHTML=h;
 }
-function timer(id,u,t){
+function timer(id, u, t) {
+	console.log('timer');
 	try{
 		var s='';
 
@@ -423,7 +438,8 @@ function timer(id,u,t){
 	}
 	setTimeout("timer('"+id+"','"+u+"',"+t+")",t);
 }
-function post(u_no,v_no,v){
+function post(u_no, v_no, v) {
+	console.log('post');
 	var i,f=document.createElement('form');
 	document.body.appendChild(f);
 	for(var k in post_v[v_no])
@@ -439,7 +455,8 @@ function post(u_no,v_no,v){
 	f.setAttribute('method','post');
 	f.submit();
 }
-function top_blank(){
+function top_blank() {
+	console.log('top_blank');
 	var i=0,l=document.links,c=document.links.length;
 	for(; i<c; i++)
 		if(l[i].target!='dframe' && l[i].target!='_blank')
