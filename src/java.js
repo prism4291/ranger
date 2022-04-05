@@ -420,7 +420,7 @@ function load(id) {
 	document.getElementById('pass').innerHTML=h;
 }
 function timer(id, u, t) {
-	console.log('timer');
+	//console.log('timer');
 	try{
 		var s='';
 
