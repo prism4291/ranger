@@ -1,7 +1,7 @@
 var aa = window,
     Game_Mode = 0,
     Game_ID_1, Game_ID_2, VS_Player_Team_ID, Player_Name, VS_Player_Team_Name, VS_Opponent_Team_ID, VS_Opponent_Name, VS_Opponent_Team_Name, VSMODECODE8, VS_Upload_Errors = 0,
-    Client_ID = 0,
+    Unix_Hour = 0,
     VSMODECODE11 = new SR_Image,
     VSMODECODE12 = new SR_Image,
     VSMODECODE13 = new SR_Image,
@@ -882,10 +882,10 @@ function vsUploadCode(a) {
     d[b++] = Rank[0];
     d[b++] = Rank[1];
     d[b++] = a;
-    d[b++] = Client_ID >> 18 & 63;
-    d[b++] = Client_ID >> 12 & 63;
-    d[b++] = Client_ID >> 6 & 63;
-    d[b++] = Client_ID & 63;
+    d[b++] = Unix_Hour >> 18 & 63;
+    d[b++] = Unix_Hour >> 12 & 63;
+    d[b++] = Unix_Hour >> 6 & 63;
+    d[b++] = Unix_Hour & 63;
     var e = 0;
     for (a = 0; a < b; a++) e += d[a] * ((a & 15) + 1);
     d[b++] = e >> 8 & 47;
@@ -1075,7 +1075,7 @@ function gameStartup(a, b, c, d, e, g, h, q, m, l, A, z, Z, B) {
         null != h ? VS_Opponent_Team_ID = h : VS_Opponent_Team_ID = "";
         null != q ? VS_Opponent_Data = q : VS_Opponent_Data = "";
         VS_Upload_Errors = null != m ? ~~m : 0;
-        Client_ID = null != l ? ~~l : 0;
+        Unix_Hour = null != l ? ~~l : 0;
         null != A ? Player_Name = A : Player_Name = "";
         null != z ? VS_Player_Team_Name = z : VS_Player_Team_Name = "";
         null != Z ? VS_Opponent_Name = Z : VS_Opponent_Name = "";
