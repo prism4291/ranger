@@ -1,4 +1,5 @@
-var aa = window,
+'use strict';
+var WIN = window,
     Game_Mode = 0,
     Game_ID_1, Game_ID_2, VS_Player_Team_ID, Player_Name, VS_Player_Team_Name, VS_Opponent_Team_ID, VS_Opponent_Name, VS_Opponent_Team_Name, VSMODECODE8, VS_Upload_Errors = 0,
     Unix_Hour = 0,
@@ -29,10 +30,10 @@ var aa = window,
     Map_Feature_Index = new SR_Image,
     Map_Features_Img = new SR_Image,
     Sequence_Step = 0,
-    hb = 0,
-    k = 0,
-    ib = 0,
-    jb = 0,
+    Text_Fade = 0,
+    Current_Stage = 0,
+    Current_Screen = 0,
+    Sign_Touched_Mode = 0,
     n = 0,
     Selected_Player = 3,
     Mouse_Up = !1,
@@ -716,7 +717,7 @@ function setSaveCode(a) {
     if (0 != a.length) return Kc = a, 0;
     if (0 == a.length) {
         if (0 == Kc.length) return -1;
-        n = jb = ib = k = hb = Sequence_Step = 0;
+        n = Sign_Touched_Mode = Current_Screen = Current_Stage = Text_Fade = Sequence_Step = 0;
         Selected_Player = 3;
         Mouse_Up = !1;
         for (a = 0; 4 > a; a++) MP_Bar[a] = 0;
@@ -770,7 +771,7 @@ function genSaveCode(a) {
     d[b++] = floor(random(64));
     d[b++] = floor(random(64));
     for (c = 0; 8 > c; c++) d[b++] = VS_Game_ID_Plain[c];
-    0 == a && (d[b++] = k >> 6 & 63, d[b++] = k >> 0 & 63);
+    0 == a && (d[b++] = Current_Stage >> 6 & 63, d[b++] = Current_Stage >> 0 & 63);
     d[b++] = LV[0] >> 6 & 63;
     d[b++] = LV[0] >> 0 & 63;
     1 == a && (d[b++] = Rank[0]);
@@ -841,7 +842,7 @@ function loadGame(a, b) {
     d++;
     d++;
     d += 8;
-    q || (k = (g[d++] << 6) + g[d++]);
+    q || (Current_Stage = (g[d++] << 6) + g[d++]);
     LV[b] = (g[d++] << 6) + g[d++];
     1 == q && (Rank[b] =
         g[d++]);
@@ -870,7 +871,7 @@ function loadGame(a, b) {
     for (e = 0; e < Stage_Count; e++) Stage_Status[e] & Beaten && (Stage_Status[e] |= Unlocked, 0 < Dot_Locations[e][3] && (Stage_Status[Dot_Locations[e][3]] |= Unlocked), 0 < Dot_Locations[e][4] && (Stage_Status[Dot_Locations[e][4]] |= Unlocked));
     return 0
 }
-aa.fff = vsUploadCode;
+WIN.fff = vsUploadCode;
 
 function vsUploadCode(a) {
     var b, c, d = new Int32Array(16);
@@ -903,7 +904,7 @@ var ed = 0,
     hd = 0,
     id = 0,
     jd = 0;
-aa.fff = dataGather;
+WIN.fff = dataGather;
 
 function dataGather() {
     var a, b, c;
@@ -1083,7 +1084,7 @@ function gameStartup(a, b, c, d, e, g, h, q, m, l, A, z, Z, B) {
         for (a = 0; 8 > a && a < Game_ID_2.length; a++)
             for (b = Game_ID_2.charAt(a), c = 0; c < Char_List.length; c++)
                 if (Char_List[c] == b) { VS_Game_ID_Plain[a] = c; break }
-        logCopyright(ud);
+        logCopyright(chr_Copyright_DAN_BALL);
         cv.width = 512;
         cv.height = 384;
         for (a = 0; 513 > a; a++) Xe_arr[a] = new Float32Array(2);
@@ -1187,7 +1188,7 @@ function gameStartup(a, b, c, d, e, g, h, q, m, l, A, z, Z, B) {
     2 == rd && (Players.o(), Indicators.o(), Projectiles.o(),
         Drops.o(), WorldMap.o(), 1 == Game_Mode && loadGame(VS_Opponent_Data, 1), loadGame(Save_Cookie, 0), Save_Code3 = genSaveCode(0), dataGather(), antiCheatSet(), setArea(Stage_Eff_Canvas, 512, 384), mainSequence())
 }
-aa.fff = playSequence;
+WIN.fff = playSequence;
 
 function playSequence() {
     if (0 < Check_Host1) Check_Host1++;
@@ -1201,14 +1202,14 @@ function playSequence() {
         antiCheatCheck()
     }
 }
-aa.fff = menuAndMap;
+WIN.fff = menuAndMap;
 
 function menuAndMap() {
     var a;
     if (!Sequence_Step)
         if (Players.o(), Enemies.o(0), Sequence_Step++, 1 == Game_Mode) Sequence_Step = 60;
         else { if (2 == Game_Mode || 3 == Game_Mode) Sequence_Step = 70 }
-    else if (1 == Sequence_Step) ib = 0, Terrain.o(0) && (Players.set(0, 20, Terrain.b[20]), Players.set(1, 28, Terrain.b[28]), Players.set(2, 36, Terrain.b[36]), Players.set(3, 44, Terrain.b[44]), setRangersUI(), Enemies.o(1), Sequence_Step++);
+    else if (1 == Sequence_Step) Current_Screen = 0, Terrain.o(0) && (Players.set(0, 20, Terrain.b[20]), Players.set(1, 28, Terrain.b[28]), Players.set(2, 36, Terrain.b[36]), Players.set(3, 44, Terrain.b[44]), setRangersUI(), Enemies.o(1), Sequence_Step++);
     else if (2 == Sequence_Step) {
         Players.G();
         setRangersUI();
@@ -1274,7 +1275,7 @@ function menuAndMap() {
         c = 0;
         for (a = 4; 40 > a; a++) 48 == getVal(Item_Inv[a], 7) && (b += getVal(Item_Inv[a], 8)), 48 == getVal(Comp1_Inv[a], 7) && (b += getVal(Comp1_Inv[a], 8)), 48 == getVal(Comp2_Inv[a], 7) && (b += getVal(Comp2_Inv[a], 8)), 49 == getVal(Item_Inv[a], 7) && (c = 1), 49 == getVal(Comp1_Inv[a], 7) && (c = 1), 49 == getVal(Comp2_Inv[a], 7) && (c = 1);
         b = clamp(b, 100, 300);
-        k = 0;
+        Current_Stage = 0;
         LV[0] = 1;
         FP[0] = 1;
         for (a = Team_Gold = Team_EXP = Rank[0] = 0; 4 > a; a++) SP[a] = 0, LP_Current[a] = 50, MP_Bar[a] = 0, LP_SP[a] = 0, STR_SP[a] = 0, DEX_SP[a] = 0, MAG_SP[a] = 0, Sett_Auto_Move[a] = 1;
@@ -1289,11 +1290,11 @@ function menuAndMap() {
         300 <= b ? Item_Inv[16] = 560 : 250 <= b ? Item_Inv[16] = 559 : 200 <= b ? Item_Inv[16] = 558 : 150 <= b && (Item_Inv[16] = 557);
         1 == c && 100 == b && (Item_Inv[16] = 561);
         1 == c && 100 != b && (Item_Inv[17] = 561);
-        ib = WorldMap.a = 0;
+        Current_Screen = WorldMap.a = 0;
         Sequence_Step = 6;
         antiCheatSet();
         menuCredits()
-    } else if (5 == Sequence_Step) ib = 0, Sequence_Step = 6;
+    } else if (5 == Sequence_Step) Current_Screen = 0, Sequence_Step = 6;
     else if (6 == Sequence_Step) {
         a = WorldMap;
         var e, g, d = new Vector2D,
@@ -1323,10 +1324,10 @@ function menuAndMap() {
         dispItem(Map_Features_Img, a.a + 1112 - 8, 44, 32, 16, 144, 0, 32, 16, 16777215);
         for (b = 0; b < Stage_Count; b++) 0 != Stage_Status[b] && (e = 8 * Dot_Locations[b][0], g = 8 * Dot_Locations[b][1], c = b && 20 != b && 47 != b && 77 != b ? 33 == b ? 0 : 71 == b ? 0 : Stage_Status[b] & Beaten ? 10027008 : 13421568 : 16777215, 0 == Dot_Locations[b][2] && filledRectCentered(a.a + e, g, 6, 6,
             c), c = 71 == b ? 3 : 24, isMouseHoveredCenter(a.a + e, g, c, c) && outlineRectCentered(a.a + e, g, c, c, 13369344));
-        e = 8 * Dot_Locations[k][0];
-        g = 8 * Dot_Locations[k][1];
+        e = 8 * Dot_Locations[Current_Stage][0];
+        g = 8 * Dot_Locations[Current_Stage][1];
         drawItem(Player_Img, a.a + e + 1 - 12, g - 14 - 11, 24, 22, 0, 0, 24, 22);
-        for (b = 0; b < Stage_Count; b++) 0 != Stage_Status[b] && (e = 8 * Dot_Locations[b][0], g = 8 * Dot_Locations[b][1], c = 71 == b ? 3 : 24, isMouseHoveredCenter(a.a + e, g, c, c)) && (!Clicked || b && 20 != b && 47 != b && 70 != b && 77 != b ? Clicked && b && (k = b, ib = 0, Sequence_Step = 10) : (k = b, ib = 1, Sequence_Step = 50), e = clamp(he, 1 + 4 * Stage_Names[b].length, 510 - 4 * Stage_Names[b].length), g = clamp(ie - 24, 8, 256), centeredText(Large_Text, e, g, Stage_Names[b], 16777215, 5263440));
+        for (b = 0; b < Stage_Count; b++) 0 != Stage_Status[b] && (e = 8 * Dot_Locations[b][0], g = 8 * Dot_Locations[b][1], c = 71 == b ? 3 : 24, isMouseHoveredCenter(a.a + e, g, c, c)) && (!Clicked || b && 20 != b && 47 != b && 70 != b && 77 != b ? Clicked && b && (Current_Stage = b, Current_Screen = 0, Sequence_Step = 10) : (Current_Stage = b, Current_Screen = 1, Sequence_Step = 50), e = clamp(he, 1 + 4 * Stage_Names[b].length, 510 - 4 * Stage_Names[b].length), g = clamp(ie - 24, 8, 256), centeredText(Large_Text, e, g, Stage_Names[b], 16777215, 5263440));
         b = Large_Text;
         b.b = 4;
         centeredText(b, 256, 16, "WORLD MAP", -1, 13158600);
@@ -1336,12 +1337,12 @@ function menuAndMap() {
         drawUI(2)
     }
 }
-aa.fff = PvEscreens;
+WIN.fff = PvEscreens;
 
 function PvEscreens() {
     var a, b, c, d;
     if (10 == Sequence_Step) {
-        if (Terrain.o(k)) {
+        if (Terrain.o(Current_Stage)) {
             Players.set(0, 0, Terrain.b[0]);
             Players.set(1, 1, Terrain.b[1]);
             Players.set(2, 2, Terrain.b[2]);
@@ -1353,11 +1354,11 @@ function PvEscreens() {
             Enemy_Spawn_Scale = 100;
             for (b = 4; 40 > b; b++) 48 == getVal(Item_Inv[b], 7) && (Enemy_Spawn_Scale += getVal(Item_Inv[b], 8)), 48 == getVal(Comp1_Inv[b], 7) && (Enemy_Spawn_Scale += getVal(Comp1_Inv[b], 8)), 48 == getVal(Comp2_Inv[b], 7) && (Enemy_Spawn_Scale += getVal(Comp2_Inv[b], 8));
             Enemy_Spawn_Scale = clamp(Enemy_Spawn_Scale, 100, 300);
-            var q = floor((Stage_Spawns[k][ib].length - 2) / 3);
+            var q = floor((Stage_Spawns[Current_Stage][Current_Screen].length - 2) / 3);
             for (a = 0; a < q; a++) {
-                var m = Stage_Spawns[k][ib][3 * a + 2],
-                    l = Stage_Spawns[k][ib][3 * a + 3],
-                    A = Stage_Spawns[k][ib][3 * a + 4],
+                var m = Stage_Spawns[Current_Stage][Current_Screen][3 * a + 2],
+                    l = Stage_Spawns[Current_Stage][Current_Screen][3 * a + 3],
+                    A = Stage_Spawns[Current_Stage][Current_Screen][3 * a + 4],
                     A = floor(A * Enemy_Spawn_Scale / 100);
                 for (b = 0; b < A; b++) {
                     if (m == Ground) c = floor(randomRange(12, 60)), d = fiftyfifty(Terrain.b[c], Terrain.g[c]);
@@ -1383,18 +1384,18 @@ function PvEscreens() {
             Projectiles.a = 0;
             Indicators.a = 0;
             Drops.a = 0;
-            hb = jb = Target_Array_ID = En_Count_From_Max = Target_HP_Max = Target_HP_Current = Drops.f = 0;
+            Text_Fade = Sign_Touched_Mode = Target_Array_ID = En_Count_From_Max = Target_HP_Max = Target_HP_Current = Drops.f = 0;
             Sequence_Step++
         }
-    } else if (11 == Sequence_Step) drawStage(0), drawUI(0), q = 30, a = "", ib ? ib + 1 == Stage_Spawns[k].length && (q = 110, a = "BOSS AREA") : (q = 110, a = Stage_Names[k]), screenTransition(255 - floor(255 * minOf(hb, 30) / 30)), 110 == q && (b = 255, 30 > hb ? b = floor(255 * hb / 30) : 80 < hb && (b = 255 - floor(255 * (hb - 80) / 30)), largeMessage(Large_Text, 256, 128, a, 255, 255, 255, b, 64, 64, 64, b, 16, 24), c = -1024 + floor(512 * hb / 30), drawLine(c, 112, c + 1024, 112, 8421504), c = 512 - floor(512 * hb / 30), drawLine(c, 141, c + 1024, 141, 8421504)), hb++, hb == q && (hb = 0, Sequence_Step++);
+    } else if (11 == Sequence_Step) drawStage(0), drawUI(0), q = 30, a = "", Current_Screen ? Current_Screen + 1 == Stage_Spawns[Current_Stage].length && (q = 110, a = "BOSS AREA") : (q = 110, a = Stage_Names[Current_Stage]), screenTransition(255 - floor(255 * minOf(Text_Fade, 30) / 30)), 110 == q && (b = 255, 30 > Text_Fade ? b = floor(255 * Text_Fade / 30) : 80 < Text_Fade && (b = 255 - floor(255 * (Text_Fade - 80) / 30)), largeMessage(Large_Text, 256, 128, a, 255, 255, 255, b, 64, 64, 64, b, 16, 24), c = -1024 + floor(512 * Text_Fade / 30), drawLine(c, 112, c + 1024, 112, 8421504), c = 512 - floor(512 * Text_Fade / 30), drawLine(c, 141, c + 1024, 141, 8421504)), Text_Fade++, Text_Fade == q && (Text_Fade = 0, Sequence_Step++);
     else if (12 ==
-        Sequence_Step) drawStage(0), drawUI(0), 0 == LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] ? (hb = 0, Sequence_Step = 30) : jb ? Sequence_Step++ : isMouseHovered(364, 4, 56, 20) ? (Clicked ? Sequence_Step = 20 : yd[32] && (Sequence_Step = 20), TXoutputB(Large_Text, 368, 8, "Option", 16711680, 0)) : yd[32] ? Sequence_Step = 20 : isMouseHovered(428, 4, 80, 20) && (Clicked && (Sequence_Step = 6), TXoutputB(Large_Text, 432, 8, "World Map", 16711680, 0));
-    else if (13 == Sequence_Step) drawStage(0), drawUI(0), screenTransition(floor(255 * hb / 30)), hb++, 30 == hb && (1 == jb ? (jb = 0, ib++, hb = 0, Sequence_Step = 10) : 2 == jb && (hb = ib = jb = 0, antiCheatCheck(), Stage_Status[k] |= Beaten, 0 < Dot_Locations[k][3] && (Stage_Status[Dot_Locations[k][3]] |= Unlocked), 0 < Dot_Locations[k][4] && (Stage_Status[Dot_Locations[k][4]] |= Unlocked), antiCheatSet(), Sequence_Step = 6, -1 == Dot_Locations[k][3] && (Sequence_Step = 40)), Save_Code3 = genSaveCode(0), Ec = 1);
+        Sequence_Step) drawStage(0), drawUI(0), 0 == LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] ? (Text_Fade = 0, Sequence_Step = 30) : Sign_Touched_Mode ? Sequence_Step++ : isMouseHovered(364, 4, 56, 20) ? (Clicked ? Sequence_Step = 20 : yd[32] && (Sequence_Step = 20), TXoutputB(Large_Text, 368, 8, "Option", 16711680, 0)) : yd[32] ? Sequence_Step = 20 : isMouseHovered(428, 4, 80, 20) && (Clicked && (Sequence_Step = 6), TXoutputB(Large_Text, 432, 8, "World Map", 16711680, 0));
+    else if (13 == Sequence_Step) drawStage(0), drawUI(0), screenTransition(floor(255 * Text_Fade / 30)), Text_Fade++, 30 == Text_Fade && (1 == Sign_Touched_Mode ? (Sign_Touched_Mode = 0, Current_Screen++, Text_Fade = 0, Sequence_Step = 10) : 2 == Sign_Touched_Mode && (Text_Fade = Current_Screen = Sign_Touched_Mode = 0, antiCheatCheck(), Stage_Status[Current_Stage] |= Beaten, 0 < Dot_Locations[Current_Stage][3] && (Stage_Status[Dot_Locations[Current_Stage][3]] |= Unlocked), 0 < Dot_Locations[Current_Stage][4] && (Stage_Status[Dot_Locations[Current_Stage][4]] |= Unlocked), antiCheatSet(), Sequence_Step = 6, -1 == Dot_Locations[Current_Stage][3] && (Sequence_Step = 40)), Save_Code3 = genSaveCode(0), Ec = 1);
     else if (20 == Sequence_Step) {
         drawStage(1);
         drawUI(1);
         q = 12;
-        k && 20 != k && 47 != k && 70 != k && 77 != k || 1 != ib || (q =
+        Current_Stage && 20 != Current_Stage && 47 != Current_Stage && 70 != Current_Stage && 77 != Current_Stage || 1 != Current_Screen || (q =
             52);
         isMouseHovered(364, 4, 56, 20) ? (Clicked ? Sequence_Step = q : yd[32] && (Sequence_Step = q), TXoutputB(Large_Text, 368, 8, "Option", 16711680, 0)) : yd[32] && (Sequence_Step = q);
         Display_Mode = 1;
@@ -1422,8 +1423,8 @@ function PvEscreens() {
         centeredText(Large_Text, 256, 182, "Space Key: open & close", 12632256, 0);
         isMouseHoveredCenter(256, 182, 256, 13) && (centeredText(Large_Text, 256, 182, "Space Key: open & close", 16711680, 0), Fe && (Sequence_Step = q))
     } else if (30 == Sequence_Step) {
-        if (drawStage(0), drawUI(0), 100 > hb && hb++, b = floor(255 * hb / 100), largeMessage(Large_Text, 256, 128, "GAME OVER", 100, 20,
-                10, b, 200, 0, 0, b, 16, 24), 100 == hb && Clicked) {
+        if (drawStage(0), drawUI(0), 100 > Text_Fade && Text_Fade++, b = floor(255 * Text_Fade / 100), largeMessage(Large_Text, 256, 128, "GAME OVER", 100, 20,
+                10, b, 200, 0, 0, b, 16, 24), 100 == Text_Fade && Clicked) {
             antiCheatCheck();
             for (a = 0; 4 > a; a++) 0 == LP_Current[a] && (LP_Current[a] = 1);
             antiCheatSet();
@@ -1448,19 +1449,19 @@ function PvEscreens() {
         }
     }
 }
-aa.fff = townScreens;
+WIN.fff = townScreens;
 
 function townScreens() {
-    var a, b, c, d, e;
-    if (50 == Sequence_Step) Terrain.o(k) && (Players.set(0, 16, Terrain.b[0]), Players.set(1, 19, Terrain.b[1]), Players.set(2, 22, Terrain.b[2]), Players.set(3, 25, Terrain.b[3]), Enemies.o(1), Projectiles.a = 0, Indicators.a = 0, Drops.a = 0, hb = jb = Target_Array_ID = En_Count_From_Max = Target_HP_Max = Target_HP_Current = Drops.f = 0, Sequence_Step++);
-    else if (51 == Sequence_Step) drawStage(0), drawUI(0), e = "", k ? 20 == k ? e = "VILLAGE" : 47 == k ? e = "RESORT" : 70 == k ? e = "Forget Tree" : 77 == k && (e = "ISLAND") : e = "TOWN", screenTransition(255 - floor(255 * minOf(hb, 30) / 30)), c = 255, 30 > hb ? c = floor(255 * hb / 30) : 80 < hb && (c = 255 - floor(255 * (hb - 80) / 30)), largeMessage(Large_Text, 256, 128, e, 255, 255, 255, c, 64, 64, 64, c, 16, 24), b = -1024 + floor(512 * hb / 30), drawLine(b, 112, b + 1024, 112, 8421504), b = 512 - floor(512 * hb / 30),
-        drawLine(b, 141, b + 1024, 141, 8421504), hb++, 110 == hb && (hb = 0, Sequence_Step++);
+    var a, b, shop_left, shop_top, town_stage;
+    if (50 == Sequence_Step) Terrain.o(Current_Stage) && (Players.set(0, 16, Terrain.b[0]), Players.set(1, 19, Terrain.b[1]), Players.set(2, 22, Terrain.b[2]), Players.set(3, 25, Terrain.b[3]), Enemies.o(1), Projectiles.a = 0, Indicators.a = 0, Drops.a = 0, Text_Fade = Sign_Touched_Mode = Target_Array_ID = En_Count_From_Max = Target_HP_Max = Target_HP_Current = Drops.f = 0, Sequence_Step++);
+    else if (51 == Sequence_Step) drawStage(0), drawUI(0), town_stage = "", Current_Stage ? 20 == Current_Stage ? town_stage = "VILLAGE" : 47 == Current_Stage ? town_stage = "RESORT" : 70 == Current_Stage ? town_stage = "Forget Tree" : 77 == Current_Stage && (town_stage = "ISLAND") : town_stage = "TOWN", screenTransition(255 - floor(255 * minOf(Text_Fade, 30) / 30)), shop_left = 255, 30 > Text_Fade ? shop_left = floor(255 * Text_Fade / 30) : 80 < Text_Fade && (shop_left = 255 - floor(255 * (Text_Fade - 80) / 30)), largeMessage(Large_Text, 256, 128, town_stage, 255, 255, 255, shop_left, 64, 64, 64, shop_left, 16, 24), b = -1024 + floor(512 * Text_Fade / 30), drawLine(b, 112, b + 1024, 112, 8421504), b = 512 - floor(512 * Text_Fade / 30),
+        drawLine(b, 141, b + 1024, 141, 8421504), Text_Fade++, 110 == Text_Fade && (Text_Fade = 0, Sequence_Step++);
     else if (52 == Sequence_Step)
-        if (drawStage(0), drawUI(0), jb) Sequence_Step = 59;
+        if (drawStage(0), drawUI(0), Sign_Touched_Mode) Sequence_Step = 59;
         else if (isMouseHovered(364, 4, 56, 20)) Clicked ? Sequence_Step = 20 : yd[32] && (Sequence_Step = 20), TXoutputB(Large_Text, 368, 8, "Option", 16711680, 0);
     else if (yd[32]) Sequence_Step = 20;
     else if (isMouseHovered(428, 4, 80, 20)) Clicked && (Sequence_Step = 6), TXoutputB(Large_Text, 432, 8, "World Map", 16711680, 0);
-    else if (70 == k)
+    else if (70 == Current_Stage)
         if (isMouseHoveredCenter(256, 128, 40, 24) && (centeredText(Large_Text, 256, 128, "FORGET", 16711680, 1054740), Clicked && (Sequence_Step = 55, Menu_Entry = Menu_Row = Menu_Column = 0)), isMouseHoveredCenter(256, 160, 40, 24)) {
             var g = 0;
             for (a = 0; 4 > a; a++) g += LP_Max[a] - LP_Current[a];
@@ -1484,212 +1485,212 @@ function townScreens() {
             Team_Gold -= g;
             antiCheatSet()
         }
-    } else isMouseHoveredCenter(40, 152, 72, 24) ? (k ? 20 == k ? centeredText(Large_Text,
-        40, 152, " COMPO SHOP", 16711680, 13800762) : 47 == k ? centeredText(Large_Text, 40, 152, " JUNK SHOP", 16711680, 13800762) : 77 == k && centeredText(Large_Text, 40, 152, " COMPO SHOP", 16711680, 13800762) : centeredText(Large_Text, 40, 152, "SHOP", 16711680, 13800762), Clicked && (Sequence_Step = 53, Menu_Entry = Menu_Row = Menu_Column = 0)) : isMouseHoveredCenter(40, 184, 48, 24) && (centeredText(Large_Text, 40, 184, "BOOK", 16711680, 13800762), Clicked && (Sequence_Step = 54, Menu_Entry = Menu_Row = Menu_Column = 0));
+    } else isMouseHoveredCenter(40, 152, 72, 24) ? (Current_Stage ? 20 == Current_Stage ? centeredText(Large_Text,
+        40, 152, " COMPO SHOP", 16711680, 13800762) : 47 == Current_Stage ? centeredText(Large_Text, 40, 152, " JUNK SHOP", 16711680, 13800762) : 77 == Current_Stage && centeredText(Large_Text, 40, 152, " COMPO SHOP", 16711680, 13800762) : centeredText(Large_Text, 40, 152, "SHOP", 16711680, 13800762), Clicked && (Sequence_Step = 53, Menu_Entry = Menu_Row = Menu_Column = 0)) : isMouseHoveredCenter(40, 184, 48, 24) && (centeredText(Large_Text, 40, 184, "BOOK", 16711680, 13800762), Clicked && (Sequence_Step = 54, Menu_Entry = Menu_Row = Menu_Column = 0));
     else if (53 == Sequence_Step) {
         drawStage(0);
-        e = jb = 0;
-        k ? 20 == k ? e = 1 : 47 == k ? e = 2 : 77 == k && (e = 3) : e = 0;
-        var h = [
+        town_stage = Sign_Touched_Mode = 0;
+        Current_Stage ? 20 == Current_Stage ? town_stage = 1 : 47 == Current_Stage ? town_stage = 2 : 77 == Current_Stage && (town_stage = 3) : town_stage = 0;
+        var shop_item = [
             [3, 4, 5, 6, 12, 14, 15, 18],
             [7, 8, 9, 10, 11, 16, 17],
             [3, 4, 5, 6, 12, 14, 15, 18],
             [7, 8, 9, 10, 11, 16, 17]
         ];
-        c = 80;
-        d = 28;
+        shop_left = 80;
+        shop_top = 28;
         Display_Mode = 1;
-        filledRect(c - 4, d - 4, 243, 168, 2147483648);
+        filledRect(shop_left - 4, shop_top - 4, 243, 168, 2147483648);
         Display_Mode = 0;
-        outlineRect(c + 0, d +
+        outlineRect(shop_left + 0, shop_top +
             0, 236, 161, 16777215);
-        isMouseHovered(c + 8, d + 4, 16 * h[e].length, 12) && (b = floor((he - (c + 8)) / 16), Clicked && (Menu_Column = b, Menu_Row = clamp(Menu_Row, 0, floor(Shop_Items[e][Menu_Column].length / 3) - 1)), filledRect(c + 8 + 16 * b, d + 4, 12, 12, 10027008));
+        isMouseHovered(shop_left + 8, shop_top + 4, 16 * shop_item[town_stage].length, 12) && (b = floor((he - (shop_left + 8)) / 16), Clicked && (Menu_Column = b, Menu_Row = clamp(Menu_Row, 0, floor(Shop_Items[town_stage][Menu_Column].length / 3) - 1)), filledRect(shop_left + 8 + 16 * b, shop_top + 4, 12, 12, 10027008));
         Display_Mode2 = 2;
-        for (a = 0; a < h[e].length; a++) dispItem(Drop_Img, c + 8 + 16 * a, d + 4, 12, 12, 12 * h[e][a], 0, 12, 12, 16777215);
+        for (a = 0; a < shop_item[town_stage].length; a++) dispItem(Drop_Img, shop_left + 8 + 16 * a, shop_top + 4, 12, 12, 12 * shop_item[town_stage][a], 0, 12, 12, 16777215);
         Display_Mode2 = 0;
-        outlineRect(c + 8 + 16 * Menu_Column - 1, d + 4 - 1, 14, 14, 10027008);
-        drawLine(c + 0, d + 20 - 1, c + 235, d + 20 - 1, 16777215);
-        isMouseHovered(c + 120, d + 24, 84, 84) && (b = floor((he - (c + 120)) / 28), a = floor((ie - (d + 24)) / 28), Clicked && (Menu_Entry = 3 * a + b), filledRect(c + 120 + 28 * b, d + 24 + 28 * a, 24, 24, 10027008));
-        b = (3 * Menu_Row + Menu_Entry) % Shop_Items[e][Menu_Column].length;
-        h = Shop_Items[e][Menu_Column][b];
+        outlineRect(shop_left + 8 + 16 * Menu_Column - 1, shop_top + 4 - 1, 14, 14, 10027008);
+        drawLine(shop_left + 0, shop_top + 20 - 1, shop_left + 235, shop_top + 20 - 1, 16777215);
+        isMouseHovered(shop_left + 120, shop_top + 24, 84, 84) && (b = floor((he - (shop_left + 120)) / 28), a = floor((ie - (shop_top + 24)) / 28), Clicked && (Menu_Entry = 3 * a + b), filledRect(shop_left + 120 + 28 * b, shop_top + 24 + 28 * a, 24, 24, 10027008));
+        b = (3 * Menu_Row + Menu_Entry) % Shop_Items[town_stage][Menu_Column].length;
+        shop_item = Shop_Items[town_stage][Menu_Column][b];
         g = 1;
         for (a = 0; a < Stage_Count; a++) 0 < (Stage_Status[a] &
             Beaten) && g < Shop_Reqs[a] && (g = Shop_Reqs[a]);
-        !k && g <= b && (h = 0);
-        itemText(c + 8, d + 24, Item_Catalogue[h][0] + " " + (Item_Catalogue[h][1] ? Item_Catalogue[h][1] : ""), -1, 2631720, -2);
-        itemText(c + 8, d + 24, Item_Catalogue[h][0] + " " + (Item_Catalogue[h][1] ? Item_Catalogue[h][1] : ""), 16777215, -1, -2);
-        a = getVal(h, 5);
-        if (9 == a) TXoutputB(Large_Text, c + 8, d + 40, "Compo Item", -1, 5263440), itemText(c + 8, d + 56, Item_Catalogue[h][10], -1, 2631720, -2), itemText(c + 8, d + 56, Item_Catalogue[h][10], 16777215, -1, -2), itemText(c + 8, d + 68, Item_Catalogue[h][11], -1, 2631720, -2), itemText(c + 8, d + 68, Item_Catalogue[h][11], 16777215, -1, -2);
+        !Current_Stage && g <= b && (shop_item = 0);
+        itemText(shop_left + 8, shop_top + 24, Item_Catalogue[shop_item][0] + " " + (Item_Catalogue[shop_item][1] ? Item_Catalogue[shop_item][1] : ""), -1, 2631720, -2);
+        itemText(shop_left + 8, shop_top + 24, Item_Catalogue[shop_item][0] + " " + (Item_Catalogue[shop_item][1] ? Item_Catalogue[shop_item][1] : ""), 16777215, -1, -2);
+        a = getVal(shop_item, 5);
+        if (9 == a) TXoutputB(Large_Text, shop_left + 8, shop_top + 40, "Compo Item", -1, 5263440), itemText(shop_left + 8, shop_top + 56, Item_Catalogue[shop_item][10], -1, 2631720, -2), itemText(shop_left + 8, shop_top + 56, Item_Catalogue[shop_item][10], 16777215, -1, -2), itemText(shop_left + 8, shop_top + 68, Item_Catalogue[shop_item][11], -1, 2631720, -2), itemText(shop_left + 8, shop_top + 68, Item_Catalogue[shop_item][11], 16777215, -1, -2);
         else {
-            TXoutputB(Large_Text, c + 8, d + 40, "AT " + Item_Catalogue[h][10] + "-" + Item_Catalogue[h][11], 16777215, 0);
-            TXoutputB(Large_Text, c + 8, d + 52, "AGI " + Item_Catalogue[h][14] + "-" + Item_Catalogue[h][15], 16777215, 0);
-            TXoutputB(Large_Text, c + 8, d + 64, "RANGE " + Item_Catalogue[h][16],
+            TXoutputB(Large_Text, shop_left + 8, shop_top + 40, "AT " + Item_Catalogue[shop_item][10] + "-" + Item_Catalogue[shop_item][11], 16777215, 0);
+            TXoutputB(Large_Text, shop_left + 8, shop_top + 52, "AGI " + Item_Catalogue[shop_item][14] + "-" + Item_Catalogue[shop_item][15], 16777215, 0);
+            TXoutputB(Large_Text, shop_left + 8, shop_top + 64, "RANGE " + Item_Catalogue[shop_item][16],
                 16777215, 0);
-            var q = getVal(h, 34),
-                m = getVal(h, 35),
-                l = maxOf(getVal(h, 36), 0),
-                A = getVal(h, 39),
-                z = getVal(h, 40);
-            TXoutputB(Large_Text, c + 8, d + 80, "TYPE " + "physical fire ice thunder poison freeze".split(" ")[q], 16777215, 0);
-            TXoutputB(Large_Text, c + 8, d + 92, "AT " + A + "-" + z, 16777215, 0);
-            6 == a ? TXoutputB(Large_Text, c + 8, d + 104, "$$ " + l, 16777215, 0) : TXoutputB(Large_Text, c + 8, d + 104, "MP " + l, 16777215, 0);
-            2 == q ? TXoutputB(Large_Text, c + 8, d + 116, "SLOW " + m + "%", 16777215, 0) : 4 == q ? TXoutputB(Large_Text, c + 8, d + 116, "TIME " + m / 50 + "s", 16777215, 0) : 5 == q && TXoutputB(Large_Text, c + 8, d + 116, "TIME " + m / 50 + "s", 16777215, 0)
+            var q = getVal(shop_item, 34),
+                m = getVal(shop_item, 35),
+                l = maxOf(getVal(shop_item, 36), 0),
+                A = getVal(shop_item, 39),
+                z = getVal(shop_item, 40);
+            TXoutputB(Large_Text, shop_left + 8, shop_top + 80, "TYPE " + "physical fire ice thunder poison freeze".split(" ")[q], 16777215, 0);
+            TXoutputB(Large_Text, shop_left + 8, shop_top + 92, "AT " + A + "-" + z, 16777215, 0);
+            6 == a ? TXoutputB(Large_Text, shop_left + 8, shop_top + 104, "$$ " + l, 16777215, 0) : TXoutputB(Large_Text, shop_left + 8, shop_top + 104, "MP " + l, 16777215, 0);
+            2 == q ? TXoutputB(Large_Text, shop_left + 8, shop_top + 116, "SLOW " + m + "%", 16777215, 0) : 4 == q ? TXoutputB(Large_Text, shop_left + 8, shop_top + 116, "TIME " + m / 50 + "s", 16777215, 0) : 5 == q && TXoutputB(Large_Text, shop_left + 8, shop_top + 116, "TIME " + m / 50 + "s", 16777215, 0)
         }
-        for (a = 0; 9 > a; a++) q = (3 * Menu_Row + a) % Shop_Items[e][Menu_Column].length, !k && g <= q || (Display_Mode2 = 2, dispItem(Item_Img, c + 120 + a % 3 * 28, d + 24 + 28 *
-            floor(a / 3), 24, 24, 24 * getVal(Shop_Items[e][Menu_Column][q], 4), 0, 24, 24, getVal(Shop_Items[e][Menu_Column][q], 6)), Display_Mode2 = 0, Item_Catalogue[Shop_Items[e][Menu_Column][q]][1] && TXoutputB(Small_Text, c + 120 + a % 3 * 28 + 19, d + 24 + 28 * floor(a / 3) + 17, "" + Item_Catalogue[Shop_Items[e][Menu_Column][q]][1], 16777215, -1));
-        outlineRect(c + 120 + Menu_Entry % 3 * 28, d + 24 + 28 * floor(Menu_Entry / 3), 24, 24, 10027008);
-        g = getVal(h, 2);
-        2 == e && 1 == b && (g *= 10);
-        if (isMouseHovered(c + 176 - 56, d + 120 - 10, 108, 20)) {
-            if (0 != h && g <= Team_Gold && Clicked) {
+        for (a = 0; 9 > a; a++) q = (3 * Menu_Row + a) % Shop_Items[town_stage][Menu_Column].length, !Current_Stage && g <= q || (Display_Mode2 = 2, dispItem(Item_Img, shop_left + 120 + a % 3 * 28, shop_top + 24 + 28 *
+            floor(a / 3), 24, 24, 24 * getVal(Shop_Items[town_stage][Menu_Column][q], 4), 0, 24, 24, getVal(Shop_Items[town_stage][Menu_Column][q], 6)), Display_Mode2 = 0, Item_Catalogue[Shop_Items[town_stage][Menu_Column][q]][1] && TXoutputB(Small_Text, shop_left + 120 + a % 3 * 28 + 19, shop_top + 24 + 28 * floor(a / 3) + 17, "" + Item_Catalogue[Shop_Items[town_stage][Menu_Column][q]][1], 16777215, -1));
+        outlineRect(shop_left + 120 + Menu_Entry % 3 * 28, shop_top + 24 + 28 * floor(Menu_Entry / 3), 24, 24, 10027008);
+        g = getVal(shop_item, 2);
+        2 == town_stage && 1 == b && (g *= 10);
+        if (isMouseHovered(shop_left + 176 - 56, shop_top + 120 - 10, 108, 20)) {
+            if (0 != shop_item && g <= Team_Gold && Clicked) {
                 antiCheatCheck();
                 a = 0;
-                if (!e || 2 == e && !b) a = 59;
-                Drops.add(40, 200, h, 0, a);
+                if (!town_stage || 2 == town_stage && !b) a = 59;
+                Drops.add(40, 200, shop_item, 0, a);
                 Team_Gold -= g;
                 antiCheatSet()
             }
-            filledRect(c + 176 - 56, d + 120 - 10, 108, 20, 10027008)
+            filledRect(shop_left + 176 - 56, shop_top + 120 - 10, 108, 20, 10027008)
         }
-        centeredText(Large_Text, c + 176, d + 120, "" + g + "$ BUY", 16777215, 0);
-        outlineRect(c + 176 - 56, d + 120 - 10, 108, 20, 10027008);
-        h = 16777215;
-        isMouseHovered(c + 216 - 12, d + 36 - 12,
-            24, 24) && (Clicked && (Menu_Row = cycle(Menu_Row - 1, 0, floor(Shop_Items[e][Menu_Column].length / 3) - 1)), h = 10027008);
-        outlineRect(c + 216 - 12, d + 36 - 12, 24, 24, 16777215);
-        filledRect(c + 216 - 1, d + 36 - 8, 2, 2, h);
-        filledRect(c + 216 - 2, d + 36 - 6, 4, 2, h);
-        filledRect(c + 216 - 3, d + 36 - 4, 6, 2, h);
-        filledRect(c + 216 - 4, d + 36 - 2, 8, 2, h);
-        filledRect(c + 216 - 5, d + 36, 10, 2, h);
-        filledRect(c + 216 - 6, d + 38, 12, 2, h);
-        filledRect(c + 216 - 7, d + 40, 14, 2, h);
-        filledRect(c + 216 - 8, d + 42, 16, 2, h);
-        h = 16777215;
-        isMouseHovered(c + 216 - 12, d + 92 - 12, 24, 24) && (Clicked && (Menu_Row = cycle(Menu_Row + 1, 0, floor(Shop_Items[e][Menu_Column].length / 3) - 1)), h = 10027008);
-        outlineRect(c + 216 - 12, d + 92 - 12, 24, 24, 16777215);
-        filledRect(c + 216 - 8, d + 92 - 8, 16, 2, h);
-        filledRect(c + 216 - 7, d + 92 - 6, 14, 2, h);
-        filledRect(c + 216 - 6, d + 92 - 4, 12, 2, h);
-        filledRect(c + 216 -
-            5, d + 92 - 2, 10, 2, h);
-        filledRect(c + 216 - 4, d + 92, 8, 2, h);
-        filledRect(c + 216 - 3, d + 94, 6, 2, h);
-        filledRect(c + 216 - 2, d + 96, 4, 2, h);
-        filledRect(c + 216 - 1, d + 98, 2, 2, h);
-        drawLine(c + 0, d + 136 - 1, c + 235, d + 136 - 1, 16777215);
-        drawLine(c + 120, d + 136 - 1, c + 120, d + 160, 16777215);
-        isMouseHovered(c + 1, d + 136, 120, 24) && 0 != Item_Inv[40] ? (g = floor(getVal(Item_Inv[40], 2) / 8), Clicked && (antiCheatCheck(), Drops.add(40, 200, 1, g, 0), Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0, antiCheatSet()), filledRect(c + 1, d + 136, 119, 24, 10027008), centeredText(Large_Text, c + 60, d + 148, "" + g + "$ SELL", 16777215, 0)) : isMouseHovered(c + 1, d + 136, 120, 24) && 0 == Item_Inv[40] && !Click_To_Sell_Mode ? (Clicked && (Click_To_Sell_Mode = 1), filledRect(c + 1, d + 136, 119, 24, 10027008), centeredText(Large_Text, c + 60, d + 148, "CLICK TO SELL", 16777215, 0)) : isMouseHovered(c + 1, d + 136,
-            120, 24) && 0 == Item_Inv[40] && 1 == Click_To_Sell_Mode ? (Clicked && (Click_To_Sell_Mode = 0), filledRect(c + 1, d + 136, 119, 24, 10027008), centeredText(Large_Text, c + 60, d + 148, "CANCEL", 16777215, 0)) : 1 == Click_To_Sell_Mode ? centeredText(Large_Text, c + 60, d + 148, "CANCEL", 16777215, 0) : centeredText(Large_Text, c + 60, d + 148, "DRAG TO SELL", 16777215, 0);
-        isMouseHovered(c + 121, d + 136, 114, 24) && (Clicked && (Click_To_Sell_Mode = 0, Sequence_Step = 52), filledRect(c + 121, d + 136, 114, 24, 10027008));
-        centeredText(Large_Text, c + 176, d + 148, "EXIT", 16777215, 0);
+        centeredText(Large_Text, shop_left + 176, shop_top + 120, "" + g + "$ BUY", 16777215, 0);
+        outlineRect(shop_left + 176 - 56, shop_top + 120 - 10, 108, 20, 10027008);
+        shop_item = 16777215;
+        isMouseHovered(shop_left + 216 - 12, shop_top + 36 - 12,
+            24, 24) && (Clicked && (Menu_Row = cycle(Menu_Row - 1, 0, floor(Shop_Items[town_stage][Menu_Column].length / 3) - 1)), shop_item = 10027008);
+        outlineRect(shop_left + 216 - 12, shop_top + 36 - 12, 24, 24, 16777215);
+        filledRect(shop_left + 216 - 1, shop_top + 36 - 8, 2, 2, shop_item);
+        filledRect(shop_left + 216 - 2, shop_top + 36 - 6, 4, 2, shop_item);
+        filledRect(shop_left + 216 - 3, shop_top + 36 - 4, 6, 2, shop_item);
+        filledRect(shop_left + 216 - 4, shop_top + 36 - 2, 8, 2, shop_item);
+        filledRect(shop_left + 216 - 5, shop_top + 36, 10, 2, shop_item);
+        filledRect(shop_left + 216 - 6, shop_top + 38, 12, 2, shop_item);
+        filledRect(shop_left + 216 - 7, shop_top + 40, 14, 2, shop_item);
+        filledRect(shop_left + 216 - 8, shop_top + 42, 16, 2, shop_item);
+        shop_item = 16777215;
+        isMouseHovered(shop_left + 216 - 12, shop_top + 92 - 12, 24, 24) && (Clicked && (Menu_Row = cycle(Menu_Row + 1, 0, floor(Shop_Items[town_stage][Menu_Column].length / 3) - 1)), shop_item = 10027008);
+        outlineRect(shop_left + 216 - 12, shop_top + 92 - 12, 24, 24, 16777215);
+        filledRect(shop_left + 216 - 8, shop_top + 92 - 8, 16, 2, shop_item);
+        filledRect(shop_left + 216 - 7, shop_top + 92 - 6, 14, 2, shop_item);
+        filledRect(shop_left + 216 - 6, shop_top + 92 - 4, 12, 2, shop_item);
+        filledRect(shop_left + 216 -
+            5, shop_top + 92 - 2, 10, 2, shop_item);
+        filledRect(shop_left + 216 - 4, shop_top + 92, 8, 2, shop_item);
+        filledRect(shop_left + 216 - 3, shop_top + 94, 6, 2, shop_item);
+        filledRect(shop_left + 216 - 2, shop_top + 96, 4, 2, shop_item);
+        filledRect(shop_left + 216 - 1, shop_top + 98, 2, 2, shop_item);
+        drawLine(shop_left + 0, shop_top + 136 - 1, shop_left + 235, shop_top + 136 - 1, 16777215);
+        drawLine(shop_left + 120, shop_top + 136 - 1, shop_left + 120, shop_top + 160, 16777215);
+        isMouseHovered(shop_left + 1, shop_top + 136, 120, 24) && 0 != Item_Inv[40] ? (g = floor(getVal(Item_Inv[40], 2) / 8), Clicked && (antiCheatCheck(), Drops.add(40, 200, 1, g, 0), Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0, antiCheatSet()), filledRect(shop_left + 1, shop_top + 136, 119, 24, 10027008), centeredText(Large_Text, shop_left + 60, shop_top + 148, "" + g + "$ SELL", 16777215, 0)) : isMouseHovered(shop_left + 1, shop_top + 136, 120, 24) && 0 == Item_Inv[40] && !Click_To_Sell_Mode ? (Clicked && (Click_To_Sell_Mode = 1), filledRect(shop_left + 1, shop_top + 136, 119, 24, 10027008), centeredText(Large_Text, shop_left + 60, shop_top + 148, "CLICK TO SELL", 16777215, 0)) : isMouseHovered(shop_left + 1, shop_top + 136,
+            120, 24) && 0 == Item_Inv[40] && 1 == Click_To_Sell_Mode ? (Clicked && (Click_To_Sell_Mode = 0), filledRect(shop_left + 1, shop_top + 136, 119, 24, 10027008), centeredText(Large_Text, shop_left + 60, shop_top + 148, "CANCEL", 16777215, 0)) : 1 == Click_To_Sell_Mode ? centeredText(Large_Text, shop_left + 60, shop_top + 148, "CANCEL", 16777215, 0) : centeredText(Large_Text, shop_left + 60, shop_top + 148, "DRAG TO SELL", 16777215, 0);
+        isMouseHovered(shop_left + 121, shop_top + 136, 114, 24) && (Clicked && (Click_To_Sell_Mode = 0, Sequence_Step = 52), filledRect(shop_left + 121, shop_top + 136, 114, 24, 10027008));
+        centeredText(Large_Text, shop_left + 176, shop_top + 148, "EXIT", 16777215, 0);
         drawUI(1)
     } else if (54 == Sequence_Step) {
         drawStage(0);
-        jb = 0;
-        h = 10;
-        c = 80;
-        d = 28;
+        Sign_Touched_Mode = 0;
+        shop_item = 10;
+        shop_left = 80;
+        shop_top = 28;
         Display_Mode = 1;
-        70 == k ? filledRect(c - 4, d - 4, 328, 168, 3422552064) : filledRect(c - 4, d - 4, 328, 168, 2147483648);
+        70 == Current_Stage ? filledRect(shop_left - 4, shop_top - 4, 328, 168, 3422552064) : filledRect(shop_left - 4, shop_top - 4, 328, 168, 2147483648);
         Display_Mode = 0;
-        outlineRect(c + 0, d + 0, 321, 161, 16777215);
-        drawLine(c + 160, d + 0, c + 160, d + 160, 16777215);
-        e = "WORLD MAP " + (100 >
+        outlineRect(shop_left + 0, shop_top + 0, 321, 161, 16777215);
+        drawLine(shop_left + 160, shop_top + 0, shop_left + 160, shop_top + 160, 16777215);
+        town_stage = "WORLD MAP " + (100 >
             Menu_Column ? " " : "");
-        e += "" + floor(Menu_Column / h + 1) + "/" + floor((Stage_In_Book.length - 1) / h + 1);
-        TXoutputB(Large_Text, c + 20, d + 4, e, -1, 32768);
-        isMouseHovered(c + 8, d + 16, 144, 12 * h) && (a = floor((ie - (d + 16)) / 12), Clicked && (Menu_Row = a), filledRect(c + 8, d + 16 + 12 * a, 144, 12, 10027008));
-        for (a = 0; a < h; a++) e = Stage_In_Book[Menu_Column + a], 0 != e && (0 < (Stage_Status[e] & Beaten) ? TXoutputB(Large_Text, c + 8, d + 16 + 12 * a, Stage_Names[e], 16777215, 0) : TXoutputB(Large_Text, c + 8, d + 16 + 12 * a, "???", 16777215, 0));
-        e = Stage_In_Book[Menu_Column + Menu_Row];
-        0 != e && (0 < (Stage_Status[e] & Beaten) ? TXoutputB(Large_Text, c + 8, d + 16 + 12 * Menu_Row, Stage_Names[e], 16711680, 0) : TXoutputB(Large_Text, c + 8, d + 16 + 12 * Menu_Row, "???", 16711680, 0));
-        drawLine(c + 0, d + 140, c + 160, d + 140, 16777215);
-        isMouseHovered(c + 8, d + 144 - 2, 48, 17) && (Clicked && (Menu_Column = cycle(floor(Menu_Column / h) - 1, 0, floor((Stage_In_Book.length - 1) / h)) * h), filledRect(c +
-            8, d + 144 - 2, 48, 17, 10027008));
-        TXoutputB(Large_Text, c + 16, d + 145, "Prev", 16777215, 0);
-        isMouseHovered(c + 56, d + 144 - 2, 48, 17) && (Clicked && (Menu_Column = cycle(floor(Menu_Column / h) + 1, 0, floor((Stage_In_Book.length - 1) / h)) * h), filledRect(c + 56, d + 144 - 2, 48, 17, 10027008));
-        TXoutputB(Large_Text, c + 64, d + 145, "Next", 16777215, 0);
-        isMouseHovered(c + 104, d + 144 - 2, 48, 17) && (Clicked && (Sequence_Step = 52), filledRect(c + 104, d + 144 - 2, 48, 17, 10027008));
-        TXoutputB(Large_Text, c + 112, d + 145, "EXIT", 16777215, 0);
-        if (0 != e)
-            if (0 < (Stage_Status[e] & Bookede)) {
-                h = Book_Indexer[e + 1] - Book_Indexer[e];
-                for (a = h - 1; 0 <= a; a--) h -= EN_Info[Book_Indexer[e] + a][En_2nd_Att];
-                g = c + 80 - 16 * h;
-                isMouseHovered(g + 160, d + 0, 32 * h, 52) && (b = floor((he - (g + 160)) / 32), Clicked && (Menu_Entry = b), filledRect(g + 160 + 32 * b + 2, d + 2, 28, 52, 10027008));
+        town_stage += "" + floor(Menu_Column / shop_item + 1) + "/" + floor((Stage_In_Book.length - 1) / shop_item + 1);
+        TXoutputB(Large_Text, shop_left + 20, shop_top + 4, town_stage, -1, 32768);
+        isMouseHovered(shop_left + 8, shop_top + 16, 144, 12 * shop_item) && (a = floor((ie - (shop_top + 16)) / 12), Clicked && (Menu_Row = a), filledRect(shop_left + 8, shop_top + 16 + 12 * a, 144, 12, 10027008));
+        for (a = 0; a < shop_item; a++) town_stage = Stage_In_Book[Menu_Column + a], 0 != town_stage && (0 < (Stage_Status[town_stage] & Beaten) ? TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * a, Stage_Names[town_stage], 16777215, 0) : TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * a, "???", 16777215, 0));
+        town_stage = Stage_In_Book[Menu_Column + Menu_Row];
+        0 != town_stage && (0 < (Stage_Status[town_stage] & Beaten) ? TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * Menu_Row, Stage_Names[town_stage], 16711680, 0) : TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * Menu_Row, "???", 16711680, 0));
+        drawLine(shop_left + 0, shop_top + 140, shop_left + 160, shop_top + 140, 16777215);
+        isMouseHovered(shop_left + 8, shop_top + 144 - 2, 48, 17) && (Clicked && (Menu_Column = cycle(floor(Menu_Column / shop_item) - 1, 0, floor((Stage_In_Book.length - 1) / shop_item)) * shop_item), filledRect(shop_left +
+            8, shop_top + 144 - 2, 48, 17, 10027008));
+        TXoutputB(Large_Text, shop_left + 16, shop_top + 145, "Prev", 16777215, 0);
+        isMouseHovered(shop_left + 56, shop_top + 144 - 2, 48, 17) && (Clicked && (Menu_Column = cycle(floor(Menu_Column / shop_item) + 1, 0, floor((Stage_In_Book.length - 1) / shop_item)) * shop_item), filledRect(shop_left + 56, shop_top + 144 - 2, 48, 17, 10027008));
+        TXoutputB(Large_Text, shop_left + 64, shop_top + 145, "Next", 16777215, 0);
+        isMouseHovered(shop_left + 104, shop_top + 144 - 2, 48, 17) && (Clicked && (Sequence_Step = 52), filledRect(shop_left + 104, shop_top + 144 - 2, 48, 17, 10027008));
+        TXoutputB(Large_Text, shop_left + 112, shop_top + 145, "EXIT", 16777215, 0);
+        if (0 != town_stage)
+            if (0 < (Stage_Status[town_stage] & Bookede)) {
+                shop_item = Book_Indexer[town_stage + 1] - Book_Indexer[town_stage];
+                for (a = shop_item - 1; 0 <= a; a--) shop_item -= EN_Info[Book_Indexer[town_stage] + a][En_2nd_Att];
+                g = shop_left + 80 - 16 * shop_item;
+                isMouseHovered(g + 160, shop_top + 0, 32 * shop_item, 52) && (b = floor((he - (g + 160)) / 32), Clicked && (Menu_Entry = b), filledRect(g + 160 + 32 * b + 2, shop_top + 2, 28, 52, 10027008));
                 filledRect(g + 160 + 32 * Menu_Entry + 2,
-                    d + 50, 28, 4, 10027008);
-                Menu_Entry = clamp(Menu_Entry, 0, h - 1);
-                for (a = 0; a < h; a++) drawItem(Terrain_Textures[Stage_Spawns[e][Stage_Spawns[e].length - 1][0]], g + 164 + 32 * a, d + 44, 24, 8, 0, 0, 24, 8);
-                h = Book_Indexer[e + 1] - Book_Indexer[e];
-                for (b = a = 0; a < h; a++, b++) ENdrawIcon(Book_Indexer[e] + a, g + 176 + 32 * b, d + 44 - 1, 0), a += EN_Info[Book_Indexer[e] + a][En_2nd_Att];
-                e = Book_Indexer[e] + Menu_Entry;
-                TXoutputB(Large_Text, c + 164, d + 56, "Lv   " + EN_Info[e][EN_Lvl], 16777215, 0);
-                TXoutputB(Large_Text, c + 164, d + 68, "LP   " + EN_Info[e][EN_LP], 16777215, 0);
-                TXoutputB(Large_Text, c + 164, d + 80, "GOLD " + EN_Info[e][En_Gold], 16777215, 0);
-                TXoutputB(Large_Text, c + 164, d + 92, "EXP  " + EN_Info[e][EN_EXP], 16777215, 0);
-                TXoutputB(Large_Text, c + 164, d + 108, "Drop Item", 16777215, 0);
-                for (b = a = 0; 6 > a; a += 2) h = EN_Info[e][En_Drop1 + a], 0 != h && (Display_Mode2 = 2, dispItem(Drop_Img, c + 164, d + 4 * (30 + 3 * b), 12,
-                    12, 12 * getVal(h, 3), 0, 12, 12, getVal(h, 6)), Display_Mode2 = 0, itemText(c + 164, d + 4 * (30 + 3 * b), "  " + Item_Catalogue[h][0] + " " + (Item_Catalogue[h][1] ? Item_Catalogue[h][1] : ""), 16777215, 0, -1), b++);
-                TXoutputB(Large_Text, c + 256, d + 56, "strong", 16777215, 0);
-                0 < EN_Info[e][Ph_Resist] && TXoutputB(Small_Text, c + 256, d + 70, "Ph          ", 8421504, 0);
-                0 < EN_Info[e][Fi_Resist] && TXoutputB(Small_Text, c + 256, d + 70, "  Fi        ", 16711680, 0);
-                0 < EN_Info[e][Ic_Resist] && TXoutputB(Small_Text, c + 256, d + 70, "    Ic      ", 2105599, 0);
-                0 < EN_Info[e][Th_Resist] && TXoutputB(Small_Text, c + 256, d + 70, "      Th    ", 16777024, 0);
-                0 < EN_Info[e][Po_Resist] && TXoutputB(Small_Text, c + 256, d + 70, "        Po  ", 65280, 0);
-                0 < EN_Info[e][Fr_Resist] && TXoutputB(Small_Text, c + 256, d + 70, "          Fr", 12632319, 0);
-                TXoutputB(Large_Text, c + 256, d + 80, "weak", 16777215,
+                    shop_top + 50, 28, 4, 10027008);
+                Menu_Entry = clamp(Menu_Entry, 0, shop_item - 1);
+                for (a = 0; a < shop_item; a++) drawItem(Terrain_Textures[Stage_Spawns[town_stage][Stage_Spawns[town_stage].length - 1][0]], g + 164 + 32 * a, shop_top + 44, 24, 8, 0, 0, 24, 8);
+                shop_item = Book_Indexer[town_stage + 1] - Book_Indexer[town_stage];
+                for (b = a = 0; a < shop_item; a++, b++) ENdrawIcon(Book_Indexer[town_stage] + a, g + 176 + 32 * b, shop_top + 44 - 1, 0), a += EN_Info[Book_Indexer[town_stage] + a][En_2nd_Att];
+                town_stage = Book_Indexer[town_stage] + Menu_Entry;
+                TXoutputB(Large_Text, shop_left + 164, shop_top + 56, "Lv   " + EN_Info[town_stage][EN_Lvl], 16777215, 0);
+                TXoutputB(Large_Text, shop_left + 164, shop_top + 68, "LP   " + EN_Info[town_stage][EN_LP], 16777215, 0);
+                TXoutputB(Large_Text, shop_left + 164, shop_top + 80, "GOLD " + EN_Info[town_stage][En_Gold], 16777215, 0);
+                TXoutputB(Large_Text, shop_left + 164, shop_top + 92, "EXP  " + EN_Info[town_stage][EN_EXP], 16777215, 0);
+                TXoutputB(Large_Text, shop_left + 164, shop_top + 108, "Drop Item", 16777215, 0);
+                for (b = a = 0; 6 > a; a += 2) shop_item = EN_Info[town_stage][En_Drop1 + a], 0 != shop_item && (Display_Mode2 = 2, dispItem(Drop_Img, shop_left + 164, shop_top + 4 * (30 + 3 * b), 12,
+                    12, 12 * getVal(shop_item, 3), 0, 12, 12, getVal(shop_item, 6)), Display_Mode2 = 0, itemText(shop_left + 164, shop_top + 4 * (30 + 3 * b), "  " + Item_Catalogue[shop_item][0] + " " + (Item_Catalogue[shop_item][1] ? Item_Catalogue[shop_item][1] : ""), 16777215, 0, -1), b++);
+                TXoutputB(Large_Text, shop_left + 256, shop_top + 56, "strong", 16777215, 0);
+                0 < EN_Info[town_stage][Ph_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 70, "Ph          ", 8421504, 0);
+                0 < EN_Info[town_stage][Fi_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 70, "  Fi        ", 16711680, 0);
+                0 < EN_Info[town_stage][Ic_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 70, "    Ic      ", 2105599, 0);
+                0 < EN_Info[town_stage][Th_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 70, "      Th    ", 16777024, 0);
+                0 < EN_Info[town_stage][Po_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 70, "        Po  ", 65280, 0);
+                0 < EN_Info[town_stage][Fr_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 70, "          Fr", 12632319, 0);
+                TXoutputB(Large_Text, shop_left + 256, shop_top + 80, "weak", 16777215,
                     0);
-                0 > EN_Info[e][Ph_Resist] && TXoutputB(Small_Text, c + 256, d + 94, "Ph          ", 8421504, 0);
-                0 > EN_Info[e][Fi_Resist] && TXoutputB(Small_Text, c + 256, d + 94, "  Fi        ", 16711680, 0);
-                0 > EN_Info[e][Ic_Resist] && TXoutputB(Small_Text, c + 256, d + 94, "    Ic      ", 2105599, 0);
-                0 > EN_Info[e][Th_Resist] && TXoutputB(Small_Text, c + 256, d + 94, "      Th    ", 16777024, 0);
-                0 > EN_Info[e][Po_Resist] && TXoutputB(Small_Text, c + 256, d + 94, "        Po  ", 65280, 0);
-                0 > EN_Info[e][Fr_Resist] && TXoutputB(Small_Text, c + 256, d + 94, "          Fr", 12632319, 0)
-            } else 0 < (Stage_Status[e] & Beaten) ? (centeredText(Large_Text, c + 240, d + 40, "Information fee", 16777215, 0), g = 1E3 * (Menu_Column + Menu_Row + 1), isMouseHoveredCenter(c + 240, d + 80, 160, 160) && (g <= Team_Gold && Clicked && (antiCheatCheck(), Stage_Status[e] |= Bookede, Team_Gold -= g, antiCheatSet()), filledRectCentered(c + 240, d + 80, 120, 32, 10027008)),
-                centeredText(Large_Text, c + 240, d + 80, "" + g + "$ BUY", 16777215, 0)) : (centeredText(Large_Text, c + 240, d + 40, "?????", 16777215, 0), centeredText(Large_Text, c + 240, d + 80, "???", 16777215, 0));
+                0 > EN_Info[town_stage][Ph_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 94, "Ph          ", 8421504, 0);
+                0 > EN_Info[town_stage][Fi_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 94, "  Fi        ", 16711680, 0);
+                0 > EN_Info[town_stage][Ic_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 94, "    Ic      ", 2105599, 0);
+                0 > EN_Info[town_stage][Th_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 94, "      Th    ", 16777024, 0);
+                0 > EN_Info[town_stage][Po_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 94, "        Po  ", 65280, 0);
+                0 > EN_Info[town_stage][Fr_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 94, "          Fr", 12632319, 0)
+            } else 0 < (Stage_Status[town_stage] & Beaten) ? (centeredText(Large_Text, shop_left + 240, shop_top + 40, "Information fee", 16777215, 0), g = 1E3 * (Menu_Column + Menu_Row + 1), isMouseHoveredCenter(shop_left + 240, shop_top + 80, 160, 160) && (g <= Team_Gold && Clicked && (antiCheatCheck(), Stage_Status[town_stage] |= Bookede, Team_Gold -= g, antiCheatSet()), filledRectCentered(shop_left + 240, shop_top + 80, 120, 32, 10027008)),
+                centeredText(Large_Text, shop_left + 240, shop_top + 80, "" + g + "$ BUY", 16777215, 0)) : (centeredText(Large_Text, shop_left + 240, shop_top + 40, "?????", 16777215, 0), centeredText(Large_Text, shop_left + 240, shop_top + 80, "???", 16777215, 0));
         drawUI(1)
     } else if (55 == Sequence_Step) {
         drawStage(0);
-        jb = 0;
-        c = 80;
-        d = 28;
+        Sign_Touched_Mode = 0;
+        shop_left = 80;
+        shop_top = 28;
         Display_Mode = 1;
-        filledRect(c - 4, d - 4, 328, 168, 3422552064);
+        filledRect(shop_left - 4, shop_top - 4, 328, 168, 3422552064);
         Display_Mode = 0;
-        outlineRect(c + 0, d + 0, 321, 161, 16777215);
-        drawLine(c + 160, d + 0, c + 160, d + 160, 16777215);
-        c = 100;
-        d = 60;
-        for (a = 0; 4 > a; a++) isMouseHovered(c + 32 * a - 4, d + 0 - 4, 32, 32) ? (filledRect(c + 32 * a, d + 0, 24, 24, 10027008), Clicked && (Menu_Column = a)) : filledRect(c + 32 * a, d + 0, 24, 24, 0), dispItem(Player_Img, c + 32 * a, d, 24, 24, 24 * getVal(Item_Inv[4 + a], 5), 0, 24, 24, 16777215), colorPortraitWeap(c + 32 * a, d, 24 * getVal(Item_Inv[4 + a], 5), getVal(Item_Inv[4 + a], 6));
-        outlineRect(c + 32 * Menu_Column - 1, d - 1, 26, 26, 16711680);
-        TXoutputB(Large_Text, c, d - 16, Class_Name_List[getVal(Item_Inv[4 + Menu_Column], 5)], 16777215, 0);
-        c = 100;
-        d = 74;
-        TXoutputB(Large_Text, c, d + 16, "LP  " + LP_SP[Menu_Column], 16777215, 0);
-        TXoutputB(Large_Text, c, d + 28, "STR " + STR_SP[Menu_Column], 16777215, 0);
-        TXoutputB(Large_Text, c, d + 40, "DEX " + DEX_SP[Menu_Column], 16777215, 0);
-        TXoutputB(Large_Text, c, d + 52, "MAG " + MAG_SP[Menu_Column], 16777215, 0);
-        TXoutputB(Large_Text, c, d + 68, "LV  " + LV[0], 16777215, 0);
-        TXoutputB(Large_Text, c, d + 68, "        SP " + SP[Menu_Column], 16777215, 0);
-        c = 80;
-        d = 28;
-        drawLine(c + 0, d + 140, c + 160, d + 140, 16777215);
-        isMouseHovered(c + 56, d + 144 - 2, 48, 17) && (Clicked && (Sequence_Step = 52), filledRect(c + 56, d + 144 - 2, 48, 17, 10027008));
-        TXoutputB(Large_Text, c + 64, d + 145, "EXIT", 16777215, 0);
+        outlineRect(shop_left + 0, shop_top + 0, 321, 161, 16777215);
+        drawLine(shop_left + 160, shop_top + 0, shop_left + 160, shop_top + 160, 16777215);
+        shop_left = 100;
+        shop_top = 60;
+        for (a = 0; 4 > a; a++) isMouseHovered(shop_left + 32 * a - 4, shop_top + 0 - 4, 32, 32) ? (filledRect(shop_left + 32 * a, shop_top + 0, 24, 24, 10027008), Clicked && (Menu_Column = a)) : filledRect(shop_left + 32 * a, shop_top + 0, 24, 24, 0), dispItem(Player_Img, shop_left + 32 * a, shop_top, 24, 24, 24 * getVal(Item_Inv[4 + a], 5), 0, 24, 24, 16777215), colorPortraitWeap(shop_left + 32 * a, shop_top, 24 * getVal(Item_Inv[4 + a], 5), getVal(Item_Inv[4 + a], 6));
+        outlineRect(shop_left + 32 * Menu_Column - 1, shop_top - 1, 26, 26, 16711680);
+        TXoutputB(Large_Text, shop_left, shop_top - 16, Class_Name_List[getVal(Item_Inv[4 + Menu_Column], 5)], 16777215, 0);
+        shop_left = 100;
+        shop_top = 74;
+        TXoutputB(Large_Text, shop_left, shop_top + 16, "LP  " + LP_SP[Menu_Column], 16777215, 0);
+        TXoutputB(Large_Text, shop_left, shop_top + 28, "STR " + STR_SP[Menu_Column], 16777215, 0);
+        TXoutputB(Large_Text, shop_left, shop_top + 40, "DEX " + DEX_SP[Menu_Column], 16777215, 0);
+        TXoutputB(Large_Text, shop_left, shop_top + 52, "MAG " + MAG_SP[Menu_Column], 16777215, 0);
+        TXoutputB(Large_Text, shop_left, shop_top + 68, "LV  " + LV[0], 16777215, 0);
+        TXoutputB(Large_Text, shop_left, shop_top + 68, "        SP " + SP[Menu_Column], 16777215, 0);
+        shop_left = 80;
+        shop_top = 28;
+        drawLine(shop_left + 0, shop_top + 140, shop_left + 160, shop_top + 140, 16777215);
+        isMouseHovered(shop_left + 56, shop_top + 144 - 2, 48, 17) && (Clicked && (Sequence_Step = 52), filledRect(shop_left + 56, shop_top + 144 - 2, 48, 17, 10027008));
+        TXoutputB(Large_Text, shop_left + 64, shop_top + 145, "EXIT", 16777215, 0);
         g = 1E3 * (LP_SP[Menu_Column] + STR_SP[Menu_Column] + DEX_SP[Menu_Column] + MAG_SP[Menu_Column]);
-        isMouseHoveredCenter(c + 240, d + 80, 120, 32) && 0 < g && (g <= Team_Gold && Clicked &&
-            (antiCheatCheck(), SP[Menu_Column] += LP_SP[Menu_Column] + STR_SP[Menu_Column] + DEX_SP[Menu_Column] + MAG_SP[Menu_Column], LP_SP[Menu_Column] = 0, STR_SP[Menu_Column] = 0, DEX_SP[Menu_Column] = 0, MAG_SP[Menu_Column] = 0, Team_Gold -= g, antiCheatSet()), filledRectCentered(c + 240, d + 80, 120, 32, 10027008));
-        centeredText(Large_Text, c + 240, d + 72, "Forget", 16777215, 0);
-        centeredText(Large_Text, c + 240, d + 88, "" + g + "$ BUY", 16777215, 0);
+        isMouseHoveredCenter(shop_left + 240, shop_top + 80, 120, 32) && 0 < g && (g <= Team_Gold && Clicked &&
+            (antiCheatCheck(), SP[Menu_Column] += LP_SP[Menu_Column] + STR_SP[Menu_Column] + DEX_SP[Menu_Column] + MAG_SP[Menu_Column], LP_SP[Menu_Column] = 0, STR_SP[Menu_Column] = 0, DEX_SP[Menu_Column] = 0, MAG_SP[Menu_Column] = 0, Team_Gold -= g, antiCheatSet()), filledRectCentered(shop_left + 240, shop_top + 80, 120, 32, 10027008));
+        centeredText(Large_Text, shop_left + 240, shop_top + 72, "Forget", 16777215, 0);
+        centeredText(Large_Text, shop_left + 240, shop_top + 88, "" + g + "$ BUY", 16777215, 0);
         drawUI(1)
-    } else 59 == Sequence_Step && (drawStage(0), drawUI(0), screenTransition(floor(255 * hb / 30)), hb++, 30 == hb && (hb = ib = jb = 0, Sequence_Step = 6, antiCheatCheck(), Stage_Status[k] |= Beaten, 0 < Dot_Locations[k][3] && (Stage_Status[Dot_Locations[k][3]] |= Unlocked), 0 < Dot_Locations[k][4] && (Stage_Status[Dot_Locations[k][4]] |= Unlocked), antiCheatSet(), Save_Code3 = genSaveCode(0), Ec = 1))
+    } else 59 == Sequence_Step && (drawStage(0), drawUI(0), screenTransition(floor(255 * Text_Fade / 30)), Text_Fade++, 30 == Text_Fade && (Text_Fade = Current_Screen = Sign_Touched_Mode = 0, Sequence_Step = 6, antiCheatCheck(), Stage_Status[Current_Stage] |= Beaten, 0 < Dot_Locations[Current_Stage][3] && (Stage_Status[Dot_Locations[Current_Stage][3]] |= Unlocked), 0 < Dot_Locations[Current_Stage][4] && (Stage_Status[Dot_Locations[Current_Stage][4]] |= Unlocked), antiCheatSet(), Save_Code3 = genSaveCode(0), Ec = 1))
 }
-aa.fff = PvPscreens;
+WIN.fff = PvPscreens;
 
 function PvPscreens() {
     var a, b, c;
-    if (70 == Sequence_Step) k = 0, ib = 1, Terrain.o(k) && (Players.set(0, 26, Terrain.b[0]), Players.set(1, 30, Terrain.b[1]), Players.set(2, 34, Terrain.b[2]), Players.set(3, 38, Terrain.b[3]), Enemies.o(1), Projectiles.a = 0, Indicators.a = 0, Drops.a = 0, hb = jb = Target_Array_ID = En_Count_From_Max = Target_HP_Max = Target_HP_Current = Drops.f = 0, Sequence_Step++);
+    if (70 == Sequence_Step) Current_Stage = 0, Current_Screen = 1, Terrain.o(Current_Stage) && (Players.set(0, 26, Terrain.b[0]), Players.set(1, 30, Terrain.b[1]), Players.set(2, 34, Terrain.b[2]), Players.set(3, 38, Terrain.b[3]), Enemies.o(1), Projectiles.a = 0, Indicators.a = 0, Drops.a = 0, Text_Fade = Sign_Touched_Mode = Target_Array_ID = En_Count_From_Max = Target_HP_Max = Target_HP_Current = Drops.f = 0, Sequence_Step++);
     else if (71 == Sequence_Step || 72 == Sequence_Step || 73 == Sequence_Step || 74 == Sequence_Step)
         if (TRdrawTerrain(), Players.G(), DPmain(), INmain(), PJmain(), DPrenderDrops(), Players.B(), PJrenderProjectiles(), INoutput(), drawUI(0), 71 == Sequence_Step) VS_Upload_Errors ? Game_Language ? 100 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f") : 1 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "\u30e6\u30fc\u30b6\u30fc\u767b\u9332\u304c\u5fc5\u8981\u3067\u3059") : 2 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "1\u65e5\u306b1\u56de\u306e\u307f\u3067\u3059") :
             3 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "10\u4ef6\u4ee5\u4e0a\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u51fa\u6765\u307e\u305b\u3093") : doVSModeText(VSMODECODE11, "\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u51fa\u6765\u307e\u305b\u3093") : 100 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "The upload has been completed.") : 1 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "User registration is required.") : 2 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "1 time in 1 day only.") : 3 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "Cannot upload more than 10 posts.") : doVSModeText(VSMODECODE11, "Cannot upload.") : Game_Language ? doVSModeText(VSMODECODE11, "\u30b3\u30e1\u30f3\u30c8\u3092\u8a18\u5165\u3057\u3066\uff2f\uff2b\u3092\u62bc\u3057\u3066\u4e0b\u3055\u3044") :
@@ -1724,9 +1725,9 @@ function PvPscreens() {
                 }
         }
     } else 73 == Sequence_Step ? (b = encodeURIComponent(ef), b.length ? 0 == Item_Inv[4] || 0 == Item_Inv[5] || 0 == Item_Inv[6] || 0 == Item_Inv[7] ? (Game_Language ? doVSModeText(VSMODECODE11, "\u6b66\u5668\u3092\u88c5\u5099\u3057\u3066\u4e0b\u3055\u3044") :
-        doVSModeText(VSMODECODE11, "Equip a weapon."), Sequence_Step = 72) : (antiCheatCheck(), Save_Code3 = genSaveCode(1), c = chrCode(47, 115, 99, 111, 114, 101, 47, 114, 97, 110, 103, 101, 114, 95, 101, 110, 116, 114, 121, 46, 112, 104, 112, 63, 97, 61), c += Game_ID_1, c += jf + (Game_Language ? "0" : "1"), c += kf + b, c += lf + Save_Code3, logCopyright(c), funct_Dg(c), Sequence_Step++) : (Game_Language ? doVSModeText(VSMODECODE11, "\u30a8\u30e9\u30fc") : doVSModeText(VSMODECODE11, "Error"), Sequence_Step = 72)) : 74 == Sequence_Step && nf && (VS_Upload_Errors = "ok" == of[0] ? 100 : "err1" == of[0] ? 1 : "err2" == of[0] ? 2 : "err3" == of[0] ? 3 : "err4" == of[0] ? 4 : "err5" == of[0] ? 5 : 6, Sequence_Step = 71);
+        doVSModeText(VSMODECODE11, "Equip a weapon."), Sequence_Step = 72) : (antiCheatCheck(), Save_Code3 = genSaveCode(1), c = chrCode(47, 115, 99, 111, 114, 101, 47, 114, 97, 110, 103, 101, 114, 95, 101, 110, 116, 114, 121, 46, 112, 104, 112, 63, 97, 61), c += Game_ID_1, c += chr_and_b_equal + (Game_Language ? "0" : "1"), c += chr_and_c_equal + b, c += chr_and_d_equal + Save_Code3, logCopyright(c), funct_Dg(c), Sequence_Step++) : (Game_Language ? doVSModeText(VSMODECODE11, "\u30a8\u30e9\u30fc") : doVSModeText(VSMODECODE11, "Error"), Sequence_Step = 72)) : 74 == Sequence_Step && Global_Eg && (VS_Upload_Errors = "ok" == VS_result[0] ? 100 : "err1" == VS_result[0] ? 1 : "err2" == VS_result[0] ? 2 : "err3" == VS_result[0] ? 3 : "err4" == VS_result[0] ? 4 : "err5" == VS_result[0] ? 5 : 6, Sequence_Step = 71);
     else if (60 == Sequence_Step) {
-        if (k = 0, ib = 1, Terrain.o(k)) {
+        if (Current_Stage = 0, Current_Screen = 1, Terrain.o(Current_Stage)) {
             Players.set(0, 10, Terrain.b[0]);
             Players.set(1, 11, Terrain.b[1]);
             Players.set(2, 12, Terrain.b[2]);
@@ -1746,38 +1747,38 @@ function PvPscreens() {
             Projectiles.a = 0;
             Indicators.a = 0;
             Drops.a = 0;
-            hb = jb = Target_Array_ID = En_Count_From_Max = Target_HP_Max = Target_HP_Current = Drops.f = 0;
+            Text_Fade = Sign_Touched_Mode = Target_Array_ID = En_Count_From_Max = Target_HP_Max = Target_HP_Current = Drops.f = 0;
             Sequence_Step++
         }
     } else if (61 == Sequence_Step || 62 == Sequence_Step || 63 == Sequence_Step || 64 == Sequence_Step)
-        for (TRdrawTerrain(), 61 == Sequence_Step && (Players.N = 1), Players.G(), INmain(), PJmain(), Players.N = 0, Players.B(), PJrenderProjectiles(), INoutput(), setRangersUI(), 61 == Sequence_Step ? (hb = clamp(hb + 1, 0, 30), a = floor(255 * hb / 30), drawLine(0, 110, floor(512 * hb / 30), 110, 8421504), drawLine(512 - floor(512 * hb / 30), 143, 512, 143, 8421504), isMouseHoveredCenter(256, 127, 512, 32) && 30 == hb ? (Clicked && (Sequence_Step++, hb = 0), filledRectCentered(256, 127, 512, 32, 8388608), largeMessage(Large_Text, 256, 128, "FIGHT",
+        for (TRdrawTerrain(), 61 == Sequence_Step && (Players.N = 1), Players.G(), INmain(), PJmain(), Players.N = 0, Players.B(), PJrenderProjectiles(), INoutput(), setRangersUI(), 61 == Sequence_Step ? (Text_Fade = clamp(Text_Fade + 1, 0, 30), a = floor(255 * Text_Fade / 30), drawLine(0, 110, floor(512 * Text_Fade / 30), 110, 8421504), drawLine(512 - floor(512 * Text_Fade / 30), 143, 512, 143, 8421504), isMouseHoveredCenter(256, 127, 512, 32) && 30 == Text_Fade ? (Clicked && (Sequence_Step++, Text_Fade = 0), filledRectCentered(256, 127, 512, 32, 8388608), largeMessage(Large_Text, 256, 128, "FIGHT",
                 255, 255, 255, 255, 0, 0, 0, 255, 16, 24)) : largeMessage(Large_Text, 256, 128, "READY", 255, 255, 255, a, 0, 0, 0, a, 16, 24), Display_Mode = 1, b = 110, c = 120, doVSModeText(VSMODECODE11, Player_Name), dispItemCentered(VSMODECODE11, b, c + 0 - 2, VSMODECODE11.a, 16, 0, 0, VSMODECODE11.a, 16, a << 24 | 16777215), doVSModeText(VSMODECODE12, VS_Player_Team_Name), dispItemCentered(VSMODECODE12, b, c + 16 - 2, VSMODECODE12.a, 16, 0, 0, VSMODECODE12.a, 16, a << 24 | 16777215), b = 402, doVSModeText(VSMODECODE13, VS_Opponent_Name), dispItemCentered(VSMODECODE13, b, c + 0 - 2, VSMODECODE13.a, 16, 0, 0, VSMODECODE13.a, 16, a << 24 | 16777215), doVSModeText(VSMODECODE14, VS_Opponent_Team_Name), dispItemCentered(VSMODECODE14, b, c + 16 - 2, VSMODECODE14.a, 16, 0, 0, VSMODECODE14.a, 16, a << 24 | 16777215), Display_Mode = 0) : 62 == Sequence_Step ? 0 == LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] ? (VSMODECODE8 = 2, Sequence_Step++) : 0 == LP_Current[4] + LP_Current[5] + LP_Current[6] + LP_Current[7] && (VSMODECODE8 = 1, Sequence_Step++) : 63 == Sequence_Step ? (VS_Upload_Errors || (VS_Upload_Errors = 1, c = chrCode(47, 115, 99, 111, 114, 101, 47, 114, 97, 110, 103, 101, 114, 95, 118,
-                115, 46, 112, 104, 112, 63, 97, 61), c += Game_ID_1, c += jf + (Game_Language ? "0" : "1"), c += kf + VS_Player_Team_ID, c += lf + VS_Opponent_Team_ID, 0 != Item_Inv[4] && 0 != Item_Inv[5] && 0 != Item_Inv[6] && 0 != Item_Inv[7] && (c += pf + vsUploadCode(VSMODECODE8)), logCopyright(c), funct_Dg(c)), Sequence_Step++) : 64 == Sequence_Step && (hb = clamp(hb + 1, 0, 50), a = floor(255 * hb / 50), isMouseHoveredCenter(256, 128, 96, 32) && 50 == hb && (Clicked && (Sequence_Step = 60), filledRectCentered(256, 128, 96, 32, 8388608)), outlineRectCentered(256, 128, 96, 32, 0 | floor(a / 2) << 16), largeMessage(Large_Text, 256, 129, "RETRY", 255, 255, 255, a, 0, 0, 0, a, 16, 24), b = 60, c = 72, Display_Mode = 1, dispItem(VSMODECODE11, b, c + 0 - 2, VSMODECODE11.a, 16, 0, 0, VSMODECODE11.a, 16, a << 24 | 16777215), Display_Mode = 0, largeMessage(Large_Text, b + 60, c + 40, 1 == VSMODECODE8 ? "WIN" : "LOSE", 255, 255, 255, a, 1 == VSMODECODE8 ? 255 : 0, 0, 1 == VSMODECODE8 ? 0 : 255, a, 32, 48), nf && ("ok" == of[0] ? (TXoutputM(Large_Text,
-                b, c + 64, "" + of[1] + " win " + of[2] + " lose", 255, 255, 255, a, 0, 0, 0, a, 8, 12), TXoutputM(Large_Text, b, c + 80, "Winning per " + of[3] + "%", 255, 255, 255, a, 0, 0, 0, a, 8, 12)) : TXoutputM(Large_Text, b, c + 64, " RANKING ERROR", 255, 255, 255, a, 0, 0, 0, a, 8, 12)), b = 332, Display_Mode = 1, dispItem(VSMODECODE13, b, c + 0 - 2, VSMODECODE13.a, 16, 0, 0, VSMODECODE13.a, 16, a << 24 | 16777215), Display_Mode = 0, largeMessage(Large_Text, b + 60, c + 40, 2 == VSMODECODE8 ? "WIN" : "LOSE", 255, 255, 255, a, 2 == VSMODECODE8 ? 255 : 0, 0, 2 == VSMODECODE8 ? 0 : 255, a, 32, 48), nf && ("ok" == of[0] ? (TXoutputM(Large_Text, b, c + 64, "" + of[4] + " win " + of[5] + " lose", 255, 255, 255, a, 0, 0, 0, a, 8, 12), TXoutputM(Large_Text, b, c + 80, "Winning per " + of[6] + "%", 255, 255, 255, a, 0, 0, 0, a, 8, 12)) : TXoutputM(Large_Text, b,
-                c + 64, " RANKING ERROR", 255, 255, 255, a, 0, 0, 0, a, 8, 12))), filledRect(0, 257, 512, 126, [13407305, 9480368, 7241784, 10993609, 11302740, 24586, 7297069, 7297069, 10053120][Stage_Spawns[k][ib][0]]), TXoutputM(Small_Text, 10, 374, rf, 0, 0, 0, 0, 0, 0, 0, 128, 5, 7), largeMessage(Large_Text, 256, 328, "VS", 255, 255, 255, 255, 0, 0, 0, 255, 16, 24), b = 40, c = 268, dispItem(VSMODECODE11, b, c + 0 - 2, VSMODECODE11.a, 16, 0, 0, VSMODECODE11.a, 16, 0), TXoutputB(Large_Text, b, c + 16, "LV " + LV[0], 16777215, 0), TXoutputB(Large_Text, b, c + 16, "        FP " + FP[0], 16777215, 0), doVSModeText(VSMODECODE15, "\u300c " + VS_Player_Team_Name + " \u300d"), dispItemCentered(VSMODECODE15, b + 60, c + 88, VSMODECODE15.a, 16, 0, 0, VSMODECODE15.a, 16, 0), b = 206, largeMessage(Large_Text, b, c + 22, "Rank", 0, 0, 0, 0, 0, 0, 0, 128, 8, 12), largeMessage(Large_Text, b, c +
+                115, 46, 112, 104, 112, 63, 97, 61), c += Game_ID_1, c += chr_and_b_equal + (Game_Language ? "0" : "1"), c += chr_and_c_equal + VS_Player_Team_ID, c += chr_and_d_equal + VS_Opponent_Team_ID, 0 != Item_Inv[4] && 0 != Item_Inv[5] && 0 != Item_Inv[6] && 0 != Item_Inv[7] && (c += chr_and_e_equal + vsUploadCode(VSMODECODE8)), logCopyright(c), funct_Dg(c)), Sequence_Step++) : 64 == Sequence_Step && (Text_Fade = clamp(Text_Fade + 1, 0, 50), a = floor(255 * Text_Fade / 50), isMouseHoveredCenter(256, 128, 96, 32) && 50 == Text_Fade && (Clicked && (Sequence_Step = 60), filledRectCentered(256, 128, 96, 32, 8388608)), outlineRectCentered(256, 128, 96, 32, 0 | floor(a / 2) << 16), largeMessage(Large_Text, 256, 129, "RETRY", 255, 255, 255, a, 0, 0, 0, a, 16, 24), b = 60, c = 72, Display_Mode = 1, dispItem(VSMODECODE11, b, c + 0 - 2, VSMODECODE11.a, 16, 0, 0, VSMODECODE11.a, 16, a << 24 | 16777215), Display_Mode = 0, largeMessage(Large_Text, b + 60, c + 40, 1 == VSMODECODE8 ? "WIN" : "LOSE", 255, 255, 255, a, 1 == VSMODECODE8 ? 255 : 0, 0, 1 == VSMODECODE8 ? 0 : 255, a, 32, 48), Global_Eg && ("ok" == VS_result[0] ? (TXoutputM(Large_Text,
+                b, c + 64, "" + VS_result[1] + " win " + VS_result[2] + " lose", 255, 255, 255, a, 0, 0, 0, a, 8, 12), TXoutputM(Large_Text, b, c + 80, "Winning per " + VS_result[3] + "%", 255, 255, 255, a, 0, 0, 0, a, 8, 12)) : TXoutputM(Large_Text, b, c + 64, " RANKING ERROR", 255, 255, 255, a, 0, 0, 0, a, 8, 12)), b = 332, Display_Mode = 1, dispItem(VSMODECODE13, b, c + 0 - 2, VSMODECODE13.a, 16, 0, 0, VSMODECODE13.a, 16, a << 24 | 16777215), Display_Mode = 0, largeMessage(Large_Text, b + 60, c + 40, 2 == VSMODECODE8 ? "WIN" : "LOSE", 255, 255, 255, a, 2 == VSMODECODE8 ? 255 : 0, 0, 2 == VSMODECODE8 ? 0 : 255, a, 32, 48), Global_Eg && ("ok" == VS_result[0] ? (TXoutputM(Large_Text, b, c + 64, "" + VS_result[4] + " win " + VS_result[5] + " lose", 255, 255, 255, a, 0, 0, 0, a, 8, 12), TXoutputM(Large_Text, b, c + 80, "Winning per " + VS_result[6] + "%", 255, 255, 255, a, 0, 0, 0, a, 8, 12)) : TXoutputM(Large_Text, b,
+                c + 64, " RANKING ERROR", 255, 255, 255, a, 0, 0, 0, a, 8, 12))), filledRect(0, 257, 512, 126, [13407305, 9480368, 7241784, 10993609, 11302740, 24586, 7297069, 7297069, 10053120][Stage_Spawns[Current_Stage][Current_Screen][0]]), TXoutputM(Small_Text, 10, 374, chr_C_DAN_BALL, 0, 0, 0, 0, 0, 0, 0, 128, 5, 7), largeMessage(Large_Text, 256, 328, "VS", 255, 255, 255, 255, 0, 0, 0, 255, 16, 24), b = 40, c = 268, dispItem(VSMODECODE11, b, c + 0 - 2, VSMODECODE11.a, 16, 0, 0, VSMODECODE11.a, 16, 0), TXoutputB(Large_Text, b, c + 16, "LV " + LV[0], 16777215, 0), TXoutputB(Large_Text, b, c + 16, "        FP " + FP[0], 16777215, 0), doVSModeText(VSMODECODE15, "\u300c " + VS_Player_Team_Name + " \u300d"), dispItemCentered(VSMODECODE15, b + 60, c + 88, VSMODECODE15.a, 16, 0, 0, VSMODECODE15.a, 16, 0), b = 206, largeMessage(Large_Text, b, c + 22, "Rank", 0, 0, 0, 0, 0, 0, 0, 128, 8, 12), largeMessage(Large_Text, b, c +
                 60, "" + Rank_List[Rank[0]], 0, 0, 0, 0, 0, 0, 0, 80, 32, 48), b = 352, dispItem(VSMODECODE13, b, c + 0 - 2, VSMODECODE13.a, 16, 0, 0, VSMODECODE13.a, 16, 0), TXoutputB(Large_Text, b, c + 16, "LV " + LV[1], 16777215, 0), TXoutputB(Large_Text, b, c + 16, "        FP " + FP[1], 16777215, 0), doVSModeText(VSMODECODE16, "\u300c " + VS_Opponent_Team_Name + " \u300d"), dispItemCentered(VSMODECODE16, b + 60, c + 88, VSMODECODE16.a, 16, 0, 0, VSMODECODE16.a, 16, 0), b = 306, largeMessage(Large_Text, b, c + 22, "Rank", 0, 0, 0, 0, 0, 0, 0, 128, 8, 12), largeMessage(Large_Text, b, c + 60, "" + Rank_List[Rank[1]], 0, 0, 0, 0, 0, 0, 0, 80, 32, 48), b = 40, c = 316, a = 0; 8 > a; a++) 4 <= a && (b = 224), filledRect(b + 32 * a, c - 12, floor(24 * LP_Current[a] / LP_Max[a]), 4, 8388608), d = maxOf(getVal(Item_Inv[4 + a], 36), 1), e = getVal(Item_Inv[4 + a], 5), 4 != e && 5 != e && 6 != e && filledRect(b + 32 * a, c - 6, floor(23 * MP_Bar[a] / d) + 1, 2, 128), filledRect(b + 32 *
             a, c + 0, 24, 24, 0), dispItem(Player_Img, b + 32 * a, c, 24, 24, 24 * getVal(Item_Inv[4 + a], 5), 0, 24, 24, 16777215), colorPortraitWeap(b + 32 * a, c, 24 * getVal(Item_Inv[4 + a], 5), getVal(Item_Inv[4 + a], 6))
 }
 
 function menuCredits() {
     filledRect(0, 368, 512, 16, 0);
-    centeredText(Large_Text, 256, 376, ud, -1, 6697728)
+    centeredText(Large_Text, 256, 376, chr_Copyright_DAN_BALL, -1, 6697728)
 }
-aa.fff = drawStage;
+WIN.fff = drawStage;
 
 function drawStage(a) {
     var b;
     TRdrawTerrain();
-    if (!k && 1 == ib || 20 == k && 1 == ib || 47 == k && 1 == ib || 77 == k && 1 == ib) dispItemCentered(Hut_Img, 400, 183, 117, 84, 0, 0, 78, 56, 16777215), dispItemCentered(Hut_Img, 40, 170, 156, 112, 0, 0, 78, 56, 16777215), centeredText(Large_Text, 400, 168, "INN", 16777215, 13800762), k ? 20 == k ? centeredText(Large_Text, 40, 152, " COMPO SHOP", 16777215, 13800762) : 47 == k ? centeredText(Large_Text, 40, 152, " JUNK SHOP", 16777215, 13800762) : 77 == k && centeredText(Large_Text, 40, 152, " COMPO SHOP", 16777215, 13800762) : centeredText(Large_Text, 40, 152, "SHOP", 16777215, 13800762), centeredText(Large_Text, 40, 184, "BOOK", 16777215, 13800762);
-    70 == k && 1 == ib && (dispItem(Forget_Tree_Img, 0, -288, 512, 512, 0, 0, 64, 64, 16777215), 52 == Sequence_Step && (centeredText(Large_Text, 256,
+    if (!Current_Stage && 1 == Current_Screen || 20 == Current_Stage && 1 == Current_Screen || 47 == Current_Stage && 1 == Current_Screen || 77 == Current_Stage && 1 == Current_Screen) dispItemCentered(Hut_Img, 400, 183, 117, 84, 0, 0, 78, 56, 16777215), dispItemCentered(Hut_Img, 40, 170, 156, 112, 0, 0, 78, 56, 16777215), centeredText(Large_Text, 400, 168, "INN", 16777215, 13800762), Current_Stage ? 20 == Current_Stage ? centeredText(Large_Text, 40, 152, " COMPO SHOP", 16777215, 13800762) : 47 == Current_Stage ? centeredText(Large_Text, 40, 152, " JUNK SHOP", 16777215, 13800762) : 77 == Current_Stage && centeredText(Large_Text, 40, 152, " COMPO SHOP", 16777215, 13800762) : centeredText(Large_Text, 40, 152, "SHOP", 16777215, 13800762), centeredText(Large_Text, 40, 184, "BOOK", 16777215, 13800762);
+    70 == Current_Stage && 1 == Current_Screen && (dispItem(Forget_Tree_Img, 0, -288, 512, 512, 0, 0, 64, 64, 16777215), 52 == Sequence_Step && (centeredText(Large_Text, 256,
         128, "FORGET", 16777215, 1054740), centeredText(Large_Text, 256, 160, "INN", 16777215, 1054740), centeredText(Large_Text, 256, 184, "BOOK", 16777215, 1054740)));
     0 == a && (Players.G(), Enemies.L(), DPmain(), INmain(), PJmain());
     b = Terrain;
-    if (55 != b.c && 89 != b.c && ib != Stage_Spawns[b.c].length - 1 || 0 == Enemies.i) {
+    if (55 != b.c && 89 != b.c && Current_Screen != Stage_Spawns[b.c].length - 1 || 0 == Enemies.i) {
         var c;
-        c = 7 == Stage_Spawns[k][ib][1] ? 8 * b.b[63] - 16 : 8 * b.g[63] - 16;
+        c = 7 == Stage_Spawns[Current_Stage][Current_Screen][1] ? 8 * b.b[63] - 16 : 8 * b.g[63] - 16;
         drawItem(Sign_Img, 480, c, 32, 24, 0, 0, 32, 24);
-        ib == Stage_Spawns[b.c].length - 1 ? 88 == b.c ? centeredText(Small_Text, 496, c + 8, "END", 0, -1) : centeredText(Small_Text, 496, c + 8, "MAP", 0, -1) : ib == Stage_Spawns[b.c].length - 2 ? centeredText(Small_Text, 496, c + 8, "BOSS", 0, -1) : centeredText(Small_Text, 496, c + 8, "NEXT", 0, -1)
+        Current_Screen == Stage_Spawns[b.c].length - 1 ? 88 == b.c ? centeredText(Small_Text, 496, c + 8, "END", 0, -1) : centeredText(Small_Text, 496, c + 8, "MAP", 0, -1) : Current_Screen == Stage_Spawns[b.c].length - 2 ? centeredText(Small_Text, 496, c + 8, "BOSS", 0, -1) : centeredText(Small_Text, 496, c + 8, "NEXT", 0, -1)
     }
     Enemies.K();
     DPrenderDrops();
@@ -1876,10 +1877,10 @@ function drawStage(a) {
     }
     INoutput();
     Display_Mode = 1;
-    filledRect(4, 4, 8 * (Stage_Names[k].length + 6) + 8, 20, 2151694400);
+    filledRect(4, 4, 8 * (Stage_Names[Current_Stage].length + 6) + 8, 20, 2151694400);
     Display_Mode = 0;
-    !k && 1 == ib || 20 == k && 1 == ib || 47 == k && 1 ==
-        ib || 70 == k && 1 == ib || 77 == k && 1 == ib ? TXoutputB(Large_Text, 8, 8, Stage_Names[k], 16777215, 0) : ib + 1 == Stage_Spawns[k].length ? TXoutputB(Large_Text, 8, 8, Stage_Names[k] + ": BOSS", 16777215, 0) : TXoutputB(Large_Text, 8, 8, Stage_Names[k] + ": " + (ib + 1), 16777215, 0);
+    !Current_Stage && 1 == Current_Screen || 20 == Current_Stage && 1 == Current_Screen || 47 == Current_Stage && 1 ==
+        Current_Screen || 70 == Current_Stage && 1 == Current_Screen || 77 == Current_Stage && 1 == Current_Screen ? TXoutputB(Large_Text, 8, 8, Stage_Names[Current_Stage], 16777215, 0) : Current_Screen + 1 == Stage_Spawns[Current_Stage].length ? TXoutputB(Large_Text, 8, 8, Stage_Names[Current_Stage] + ": BOSS", 16777215, 0) : TXoutputB(Large_Text, 8, 8, Stage_Names[Current_Stage] + ": " + (Current_Screen + 1), 16777215, 0);
     Display_Mode = 1;
     filledRect(364, 4, 56, 20, 2151694400);
     Display_Mode = 0;
@@ -1888,7 +1889,7 @@ function drawStage(a) {
     filledRect(428, 4, 80, 20, 2151694400);
     Display_Mode = 0;
     TXoutputB(Large_Text, 432, 8, "World Map", 16777215, 0);
-    if (0 < En_Count_From_Max && (0 == a && En_Count_From_Max--, filledRect(196, 10, 120, 12, 3158064), filledRect(196, 10, floor(120 * Target_HP_Current / Target_HP_Max), 12, 6291456), 0 < (Stage_Status[k] & Bookede))) {
+    if (0 < En_Count_From_Max && (0 == a && En_Count_From_Max--, filledRect(196, 10, 120, 12, 3158064), filledRect(196, 10, floor(120 * Target_HP_Current / Target_HP_Max), 12, 6291456), 0 < (Stage_Status[Current_Stage] & Bookede))) {
         centeredText(Small_Text, 256, 16, "" + Target_HP_Current + "/" + Target_HP_Max, 16777215, 0);
         ENdrawIcon(Target_Array_ID, 206, 33, 1);
         TXoutputB(Small_Text, 216, 25, "DROP", 16777215, 0);
@@ -1898,7 +1899,7 @@ function drawStage(a) {
         TXoutputB(Small_Text, 276, 25, "EXP " + a, 16777215, 0)
     }
 }
-aa.fff = setRangersUI;
+WIN.fff = setRangersUI;
 
 function setRangersUI() {
     var a, b;
@@ -1946,13 +1947,13 @@ function setRangersUI() {
     for (a = 0; a < c; a++) 0 != LP_Current[a] && checkEff(4 + a, 28) && (STR_Aura[a] += getEff(4 + a, 8));
     antiCheatSet()
 }
-aa.fff = drawUI;
+WIN.fff = drawUI;
 
 function drawUI(a) {
     var b, c, d, e, g;
     (vf || Clicked) && 256 <= ie ? Mouse_Up = !0 : (vf || Clicked) && 256 > ie && (Mouse_Up = !1);
-    filledRect(0, 257, 512, 126, [13407305, 9480368, 7241784, 7630870, 11302740, 13599032, 10993609, 6322320, 1921195, 10053120, 6714227, 6313296, 6313296][Stage_Spawns[k][ib][0]]);
-    TXoutputM(Small_Text, 10, 374, rf, 0, 0, 0, 0, 0, 0, 0, 128, 5, 7);
+    filledRect(0, 257, 512, 126, [13407305, 9480368, 7241784, 7630870, 11302740, 13599032, 10993609, 6322320, 1921195, 10053120, 6714227, 6313296, 6313296][Stage_Spawns[Current_Stage][Current_Screen][0]]);
+    TXoutputM(Small_Text, 10, 374, chr_C_DAN_BALL, 0, 0, 0, 0, 0, 0, 0, 128, 5, 7);
     e = 10;
     g = 260;
     var h = 4753E3;
@@ -2136,7 +2137,7 @@ SR_Player.prototype.set = function(a, b, c) {
     this.F[a] = 0;
     for (d = this.v[a] = 0; 6 > d; d++) this.s[a][d] = 0, this.C[a][d] = 0, this.D[a][d] = 0
 };
-aa.fff = SR_Player.prototype.Y;
+WIN.fff = SR_Player.prototype.Y;
 SR_Player.prototype.Y = function(a, b) {
     var c = this.a[a][b],
         d = new Vector2D;
@@ -2150,11 +2151,11 @@ SR_Player.prototype.Y = function(a, b) {
     h = Terrain.a[q][h];
     9 == h && (scaleVector2D(d, .95), this.i[a] |= 2);
     var m = .5;
-    8 == Stage_Spawns[Terrain.c][ib][0] && (m = 1);
+    8 == Stage_Spawns[Terrain.c][Current_Screen][0] && (m = 1);
     for (var l = 0; l < e; l++) g = c.y + d.y, h = clamp(c.x, 0, 511) >> 3, q = clamp(g, 0, 383) >> 3, h = Terrain.a[q][h], 384 <= g || (0 <= h && 8 >= h ? (d.x *= m, d.y = -d.y, this.i[a] |= 1) : c.y = g), g = c.x + d.x, h = clamp(g, 0, 511) >> 3, q = clamp(c.y, 0, 383) >> 3, h = Terrain.a[q][h], 0 > g || 512 <= g || (0 <= h && 8 >= h ? (d.y *= m, d.x = -d.x, this.i[a] |= 1) : c.x = g)
 };
 
-function Df(a, b, c, d, e) {
+function PLfindPlayer(a, b, c, d, e) {
     var g = Players,
         h = .5 * (a + c),
         q = 1E3,
@@ -2168,7 +2169,7 @@ function Df(a, b, c, d, e) {
     return m
 }
 
-function Ef(a, b, c, d, e, g, h, q, m, l) {
+function PLtakeDamage(a, b, c, d, e, g, h, q, m, l) {
     var A = Players,
         z = -1;
     A.j = 0;
@@ -2206,7 +2207,7 @@ function Ef(a, b, c, d, e, g, h, q, m, l) {
         }
     return z
 }
-aa.fff = SR_Player.prototype.X;
+WIN.fff = SR_Player.prototype.X;
 SR_Player.prototype.X = function() {
     var a = new Vector2D,
         b, c;
@@ -2224,7 +2225,7 @@ SR_Player.prototype.X = function() {
     } else Ff || (this.h = -1, this.u = 0)
 };
 
-function Gf(a, b, c, d, e) {
+function PLprojectileAttack(a, b, c, d, e) {
     var g = new Vector2D,
         h = b;
     8 > b && (h = Item_Inv[4 + b]);
@@ -2362,7 +2363,7 @@ function Walk(a, b) {
             d = .5 * (a.a[b][9].y + a.a[b][10].y),
             e = RANGE[b],
             g;
-        g = 1 != Game_Mode ? Kf(c - 200 - e, d - 20 - e, c + 200 + e, d + 100 + e) : Df(c - 600, d - 300, c + 600, d + 300, 1 - (b >> 2) << 2); - 1 != g && (a.L[b] = 15, e = .6, c < (1 != Game_Mode ? Enemies.a[g][20].x : a.a[g][2].x) ? (c = floor(clamp(c + 14, 0, 511) / 8), d = floor(clamp(d - 6, 8, 383) / 8), 0 <= Terrain.a[d][c] && 8 >= Terrain.a[d][c] && (e = 2), 0 <= Terrain.a[d - 1][c] && 8 >= Terrain.a[d - 1][c] && (e = 4), a.a[b][9].x < a.a[b][10].x ? (a.a[b][7].x += 4, a.a[b][7].y -= 3 * e) : (a.a[b][8].x +=
+        g = 1 != Game_Mode ? Kf(c - 200 - e, d - 20 - e, c + 200 + e, d + 100 + e) : PLfindPlayer(c - 600, d - 300, c + 600, d + 300, 1 - (b >> 2) << 2); - 1 != g && (a.L[b] = 15, e = .6, c < (1 != Game_Mode ? Enemies.a[g][20].x : a.a[g][2].x) ? (c = floor(clamp(c + 14, 0, 511) / 8), d = floor(clamp(d - 6, 8, 383) / 8), 0 <= Terrain.a[d][c] && 8 >= Terrain.a[d][c] && (e = 2), 0 <= Terrain.a[d - 1][c] && 8 >= Terrain.a[d - 1][c] && (e = 4), a.a[b][9].x < a.a[b][10].x ? (a.a[b][7].x += 4, a.a[b][7].y -= 3 * e) : (a.a[b][8].x +=
             4, a.a[b][8].y -= 3 * e)) : (c = floor(clamp(c - 14, 0, 511) / 8), d = floor(clamp(d - 6, 8, 383) / 8), 0 <= Terrain.a[d][c] && 8 >= Terrain.a[d][c] && (e = 2), 0 <= Terrain.a[d - 1][c] && 8 >= Terrain.a[d - 1][c] && (e = 4), a.a[b][9].x > a.a[b][10].x ? (a.a[b][7].x -= 4, a.a[b][7].y -= 3 * e) : (a.a[b][8].x -= 4, a.a[b][8].y -= 3 * e)))
     }
 }
@@ -2372,11 +2373,11 @@ function Swim(a, b) {
         var c = .5 * (a.a[b][9].x + a.a[b][10].x),
             d = .5 * (a.a[b][9].y + a.a[b][10].y),
             e = RANGE[b],
-            e = 1 != Game_Mode ? Kf(c - 200 - e, d - 100 - e, c + 200 + e, d + 100 + e) : Df(c - 600, d - 300, c + 600, d + 300, 1 - (b >> 2) << 2); - 1 != e && 9 == Terrain.a[floor(clamp(d, 8, 383) / 8)][floor(clamp(c, 0, 511) / 8)] && (c < (1 != Game_Mode ? Enemies.a[e][20].x : a.a[e][2].x) ? (a.a[b][0].x += .25, a.a[b][1].x += .25) : (a.a[b][0].x -= .25, a.a[b][1].x -= .25), d < (1 != Game_Mode ? Enemies.a[e][20].y : a.a[e][2].y) ? (a.a[b][0].y += .25, a.a[b][1].y += .25) : (a.a[b][0].y -= .25, a.a[b][1].y -= .25), a.a[b][0].x +=
+            e = 1 != Game_Mode ? Kf(c - 200 - e, d - 100 - e, c + 200 + e, d + 100 + e) : PLfindPlayer(c - 600, d - 300, c + 600, d + 300, 1 - (b >> 2) << 2); - 1 != e && 9 == Terrain.a[floor(clamp(d, 8, 383) / 8)][floor(clamp(c, 0, 511) / 8)] && (c < (1 != Game_Mode ? Enemies.a[e][20].x : a.a[e][2].x) ? (a.a[b][0].x += .25, a.a[b][1].x += .25) : (a.a[b][0].x -= .25, a.a[b][1].x -= .25), d < (1 != Game_Mode ? Enemies.a[e][20].y : a.a[e][2].y) ? (a.a[b][0].y += .25, a.a[b][1].y += .25) : (a.a[b][0].y -= .25, a.a[b][1].y -= .25), a.a[b][0].x +=
             randomRange(-.25, .25), a.a[b][0].y += randomRange(-.25, .25), a.a[b][1].x += randomRange(-.25, .25), a.a[b][1].y += randomRange(-.25, .25))
     }
 }
-aa.fff = SR_Player.prototype.G;
+WIN.fff = SR_Player.prototype.G;
 SR_Player.prototype.G = function() {
     var a, b, c;
     this.X();
@@ -2386,13 +2387,13 @@ SR_Player.prototype.G = function() {
         else {
             if (0 < this.w[a] && 0 < LP_Current[a] && (this.w[a]--, random(100) < this.M[a])) continue;
             0 != LP_Current[a] && (this.f[a] = 0 == Item_Inv[4 + a] ? 0 : Ranger_Class[a]);
-            if ((55 != k && 89 != k && ib != Stage_Spawns[k].length - 1 || 0 == Enemies.i) && 0 < (this.i[a] & 1) && 0 != LP_Current[a]) {
+            if ((55 != Current_Stage && 89 != Current_Stage && Current_Screen != Stage_Spawns[Current_Stage].length - 1 || 0 == Enemies.i) && 0 < (this.i[a] & 1) && 0 != LP_Current[a]) {
                 b = (this.a[a][9].x + this.a[a][10].x) / 2;
                 c = (this.a[a][9].y + this.a[a][10].y) / 2;
                 var e = Terrain.g[63];
-                7 == Stage_Spawns[k][ib][1] && (e = Terrain.b[63]);
+                7 == Stage_Spawns[Current_Stage][Current_Screen][1] && (e = Terrain.b[63]);
                 500 < b && 10 > absVal(8 * e - c) &&
-                    (jb = ib != Stage_Spawns[k].length - 1 ? 1 : 2)
+                    (Sign_Touched_Mode = Current_Screen != Stage_Spawns[Current_Stage].length - 1 ? 1 : 2)
             }
             this.K[a]++;
             if (0 == LP_Current[a])
@@ -2407,7 +2408,7 @@ SR_Player.prototype.G = function() {
                 this.f[a] = wf;
                 for (b = 0; 11 > b; b++) this.a[a][b].x += randomRange(-2, 2), this.a[a][b].y += randomRange(-1, -3);
                 if (1 == Game_Mode)
-                    for (e = 1 - (a >> 2) << 2, b = 0; 4 > b; b++) checkEff(4 + e + b, 41) && random(100) < getEff(4 + e + b, 8) && (c = Df(this.a[a][0].x - 600, this.a[a][0].y - 300, this.a[a][0].x + 600, this.a[a][0].y + 300, a >> 2 << 2), -1 != c && Gf(Players, getEff(4 + e + b, 9), this.a[a][0].x, this.a[a][0].y, c))
+                    for (e = 1 - (a >> 2) << 2, b = 0; 4 > b; b++) checkEff(4 + e + b, 41) && random(100) < getEff(4 + e + b, 8) && (c = PLfindPlayer(this.a[a][0].x - 600, this.a[a][0].y - 300, this.a[a][0].x + 600, this.a[a][0].y + 300, a >> 2 << 2), -1 != c && PLprojectileAttack(Players, getEff(4 + e + b, 9), this.a[a][0].x, this.a[a][0].y, c))
             }
             this.h == a && 1 != Game_Mode && (this.a[this.h][this.u].x +=
                 (he - this.a[this.h][this.u].x) * (0 == LP_Current[a] ? .04 : .2), this.a[this.h][this.u].y += (ie - this.a[this.h][this.u].y) * (0 == LP_Current[a] ? .04 : .2));
@@ -2417,7 +2418,7 @@ SR_Player.prototype.G = function() {
             for (b = this.i[a] = 0; 11 > b; b++) this.Y(a, b)
         }
 };
-aa.fff = SR_Player.prototype.O;
+WIN.fff = SR_Player.prototype.O;
 SR_Player.prototype.O = function(a) {
     var b, c, d = new Vector2D,
         e = 1 - (a >> 2) << 2;
@@ -2429,7 +2430,7 @@ SR_Player.prototype.O = function(a) {
         0 < this.c[a] && this.c[a]--;
         var q = .5 * (this.a[a][9].x + this.a[a][10].x),
             m = .5 * (this.a[a][9].y + this.a[a][10].y);
-        c = 1 != Game_Mode ? Kf(q - c, m - c, q + c, m) : Df(q - c, m - c, q + c, m, e);
+        c = 1 != Game_Mode ? Kf(q - c, m - c, q + c, m) : PLfindPlayer(q - c, m - c, q + c, m, e);
         if (!this.c[a] && -1 != c) {
             this.c[a] = h;
             q < (1 != Game_Mode ? Enemies.a[c][20].x : this.a[c][2].x) ? this.a[a][5].x < this.a[a][6].x ? (this.a[a][5].x += 4, this.a[a][4].x -= 4, this.a[a][2].y += 1, this.b[a] = 5) : (this.a[a][6].x += 4, this.a[a][3].x -=
@@ -2437,14 +2438,14 @@ SR_Player.prototype.O = function(a) {
             antiCheatCheck();
             h = getVal(Item_Inv[4 + a], 36);
             MP_Bar[a] = minOf(MP_Bar[a] + MAG[a], h);
-            if (MP_Bar[a] == h && 0 < h || -1 == h) MP_Bar[a] = 0, Gf(this, a, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, c);
+            if (MP_Bar[a] == h && 0 < h || -1 == h) MP_Bar[a] = 0, PLprojectileAttack(this, a, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, c);
             checkEff(4 + a, 46) && (h = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280));
             antiCheatSet()
         } - 1 == c && Walk(this, a);
         Swim(this, a)
     }
     if (-1 != this.b[a] && this.f[a] && this.h != a &&
-        (c = getVal(Item_Inv[4 + a], 9), checkEff(4 + a, 27) && random(100) < getEff(4 + a, 8) && (c = 1), checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (b += floor(getEff(4 + a, 9) * b / 100), g += floor(getEff(4 + a, 9) * g / 100)), h = 12, q = 8, checkEff(4 + a, 42) && (h += floor(12 * getEff(4 + a, 8) / 100), q += floor(8 * getEff(4 + a, 8) / 100)), e = 1 != Game_Mode ? Nf(c, 0, 0, b, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, q) : Ef(c, 0, 0, b, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, q, e), -1 != e)) {
+        (c = getVal(Item_Inv[4 + a], 9), checkEff(4 + a, 27) && random(100) < getEff(4 + a, 8) && (c = 1), checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (b += floor(getEff(4 + a, 9) * b / 100), g += floor(getEff(4 + a, 9) * g / 100)), h = 12, q = 8, checkEff(4 + a, 42) && (h += floor(12 * getEff(4 + a, 8) / 100), q += floor(8 * getEff(4 + a, 8) / 100)), e = 1 != Game_Mode ? Nf(c, 0, 0, b, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, q) : PLtakeDamage(c, 0, 0, b, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, q, e), -1 != e)) {
         this.b[a] = -1;
         checkEff(4 + a, 11) && (h = maxOf(1, floor(this.j * getEff(4 + a, 8) / 100)), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280));
         checkEff(4 + a, 12) && !Game_Mode && random(100) < getEff(4 + a, 8) &&
@@ -2469,7 +2470,7 @@ SR_Player.prototype.O = function(a) {
     pullJoints(this.a[a][8], this.a[a][10], 4.8, .5, .5);
     pullJoints(this.a[a][7], this.a[a][8], 6, .1, .1)
 };
-aa.fff = SR_Player.prototype.P;
+WIN.fff = SR_Player.prototype.P;
 SR_Player.prototype.P = function(a) {
     var b, c, d = new Vector2D,
         e = 1 - (a >> 2) << 2;
@@ -2481,13 +2482,13 @@ SR_Player.prototype.P = function(a) {
         0 < this.c[a] && this.c[a]--;
         var m = .5 * (this.a[a][9].x + this.a[a][10].x),
             l = .5 * (this.a[a][9].y + this.a[a][10].y);
-        c = 1 != Game_Mode ? Kf(m - q, l - q, m + q, l) : Df(m - q, l - q, m + q, l, e);
+        c = 1 != Game_Mode ? Kf(m - q, l - q, m + q, l) : PLfindPlayer(m - q, l - q, m + q, l, e);
         this.c[a] || -1 == c || (this.c[a] = h, m < (1 != Game_Mode ? Enemies.a[c][20].x : this.a[c][2].x) ? (this.a[a][5].x += 3, this.a[a][5].y += .2 * (l - 2 - this.a[a][5].y), this.a[a][6].x = this.a[a][5].x - 2, this.a[a][6].y = this.a[a][5].y, this.a[a][1].x -= 3) : (this.a[a][5].x -=
             3, this.a[a][5].y += .2 * (l - 2 - this.a[a][5].y), this.a[a][6].x = this.a[a][5].x + 2, this.a[a][6].y = this.a[a][5].y, this.a[a][1].x += 3), this.b[a] = 5, antiCheatCheck(), h = getVal(Item_Inv[4 + a], 36), MP_Bar[a] = minOf(MP_Bar[a] + MAG[a], h), MP_Bar[a] == h && 0 < h && (MP_Bar[a] = 0, this.I[a] = getVal(Item_Inv[4 + a], 41)), checkEff(4 + a, 46) && (h = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), antiCheatSet()); - 1 == c && Walk(this, a);
         Swim(this, a)
     }
     if (-1 != this.b[a] && (checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (b += floor(getEff(4 + a, 9) * b / 100), g += floor(getEff(4 + a, 9) * g / 100)), Vdistance(d, this.a[a][5], this.a[a][6]), normalize(d), scaleVector2D(d, q), c = this.a[a][6].x +
-            d.x / 2, h = this.a[a][6].y + d.y / 2, -1 != (1 != Game_Mode ? Nf(1, 0, 0, b, g, c, h, absVal(d.x), absVal(d.y)) : Ef(1, 0, 0, b, g, c, h, absVal(d.x), absVal(d.y), e)) && (this.b[a] = -1, checkEff(4 + a, 11) && (h = maxOf(1, floor(this.j * getEff(4 + a, 8) / 100)), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), checkEff(4 + a, 12) && !Game_Mode && random(100) < getEff(4 + a, 8) && Drops.add(this.a[a][0].x, this.a[a][0].y, 2, 0, 0), checkEff(4 + a, 37) && !Game_Mode && random(100) < getEff(4 + a, 8)))) {
+            d.x / 2, h = this.a[a][6].y + d.y / 2, -1 != (1 != Game_Mode ? Nf(1, 0, 0, b, g, c, h, absVal(d.x), absVal(d.y)) : PLtakeDamage(1, 0, 0, b, g, c, h, absVal(d.x), absVal(d.y), e)) && (this.b[a] = -1, checkEff(4 + a, 11) && (h = maxOf(1, floor(this.j * getEff(4 + a, 8) / 100)), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), checkEff(4 + a, 12) && !Game_Mode && random(100) < getEff(4 + a, 8) && Drops.add(this.a[a][0].x, this.a[a][0].y, 2, 0, 0), checkEff(4 + a, 37) && !Game_Mode && random(100) < getEff(4 + a, 8)))) {
         g = 100;
         for (b = 0; 4 > b; b++) checkEff(4 + b, 35) && (g += getEff(4 + b, 8));
         Drops.add(this.a[a][0].x, this.a[a][0].y, 1, floor(this.j * g / 100), 0)
@@ -2507,9 +2508,9 @@ SR_Player.prototype.P = function(a) {
     pullJoints(this.a[a][8], this.a[a][10], 4.8, .5, .5);
     pullJoints(this.a[a][7], this.a[a][8], 6, .1, .1);
     0 < this.I[a] && (this.I[a]--, Vdistance(d,
-        this.a[a][5], this.a[a][6]), normalize(d), scaleVector2D(d, q), d.add(this.a[a][6]), 1 != Game_Mode ? Gf(this, a, d.x, d.y, 0) : Gf(this, a, d.x, d.y, e))
+        this.a[a][5], this.a[a][6]), normalize(d), scaleVector2D(d, q), d.add(this.a[a][6]), 1 != Game_Mode ? PLprojectileAttack(this, a, d.x, d.y, 0) : PLprojectileAttack(this, a, d.x, d.y, e))
 };
-aa.fff = SR_Player.prototype.R;
+WIN.fff = SR_Player.prototype.R;
 SR_Player.prototype.R = function(a) {
     var b;
     b = 1 - (a >> 2) << 2;
@@ -2517,9 +2518,9 @@ SR_Player.prototype.R = function(a) {
         d = RANGE[a],
         e = .5 * (this.a[a][9].x + this.a[a][10].x),
         g = .5 * (this.a[a][9].y + this.a[a][10].y);
-    b = 1 != Game_Mode ? Kf(e - d, g - d, e + d, g + d) : Df(e - d, g - d, e + d, g + d, b); - 1 != b && (e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (this.a[a][6].x += .2, this.a[a][6].y -= .2, this.a[a][5].x -= .2) : (this.a[a][6].x -= .2, this.a[a][6].y -= .2, this.a[a][5].x += .2), this.a[a][5].y += .2);
+    b = 1 != Game_Mode ? Kf(e - d, g - d, e + d, g + d) : PLfindPlayer(e - d, g - d, e + d, g + d, b); - 1 != b && (e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (this.a[a][6].x += .2, this.a[a][6].y -= .2, this.a[a][5].x -= .2) : (this.a[a][6].x -= .2, this.a[a][6].y -= .2, this.a[a][5].x += .2), this.a[a][5].y += .2);
     this.i[a] && this.h != a && (0 < this.c[a] && this.c[a]--, this.c[a] || (-1 != b && (this.c[a] = c, pullJoints(this.a[a][5], this.a[a][6],
-        2, .2, .2), this.b[a] = 6), -1 != this.b[a] && (Gf(this, a, this.a[a][6].x, this.a[a][6].y, b), this.b[a] = -1, checkEff(4 + a, 46) && (c = getEff(4 + a, 8), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + c, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, c, 65280)))), -1 == b && (Walk(this, a), Swim(this, a)));
+        2, .2, .2), this.b[a] = 6), -1 != this.b[a] && (PLprojectileAttack(this, a, this.a[a][6].x, this.a[a][6].y, b), this.b[a] = -1, checkEff(4 + a, 46) && (c = getEff(4 + a, 8), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + c, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, c, 65280)))), -1 == b && (Walk(this, a), Swim(this, a)));
     pullJoints(this.a[a][0], this.a[a][1], 3.6, .5, .5);
     pullJoints(this.a[a][1], this.a[a][2], 3.6, .5, .5);
     pullJoints(this.a[a][1], this.a[a][3], 4.8, .5, .5);
@@ -2534,7 +2535,7 @@ SR_Player.prototype.R = function(a) {
     pullJoints(this.a[a][8], this.a[a][10], 4.8, .5, .5);
     pullJoints(this.a[a][7], this.a[a][8], 6, .1, .1)
 };
-aa.fff = SR_Player.prototype.S;
+WIN.fff = SR_Player.prototype.S;
 SR_Player.prototype.S = function(a) {
     var b;
     b = 1 - (a >> 2) << 2;
@@ -2542,9 +2543,9 @@ SR_Player.prototype.S = function(a) {
         d = RANGE[a],
         e = .5 * (this.a[a][9].x + this.a[a][10].x),
         g = .5 * (this.a[a][9].y + this.a[a][10].y);
-    b = 1 != Game_Mode ? Kf(e - d, g - d, e + d, g + d) : Df(e - d, g - d, e + d, g + d, b); - 1 != b && (e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (this.a[a][5].x += .1, this.a[a][6].x += .1, this.a[a][1].x -= .2) : (this.a[a][5].x -= .1, this.a[a][6].x -= .1, this.a[a][1].x += .2));
+    b = 1 != Game_Mode ? Kf(e - d, g - d, e + d, g + d) : PLfindPlayer(e - d, g - d, e + d, g + d, b); - 1 != b && (e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (this.a[a][5].x += .1, this.a[a][6].x += .1, this.a[a][1].x -= .2) : (this.a[a][5].x -= .1, this.a[a][6].x -= .1, this.a[a][1].x += .2));
     this.i[a] && this.h != a && (0 < this.c[a] && this.c[a]--, this.c[a] || (-1 != b && (this.c[a] = c, e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (pullJoints(this.a[a][5],
-        this.a[a][6], 0, .1, .1), this.b[a] = 6) : (pullJoints(this.a[a][5], this.a[a][6], 0, .1, .1), this.b[a] = 5)), -1 != this.b[a] && (Gf(this, a, this.a[a][6].x, this.a[a][6].y, b), this.b[a] = -1, checkEff(4 + a, 46) && (c = getEff(4 + a, 8), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + c, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, c, 65280)))), -1 == b && (Walk(this, a), Swim(this, a)));
+        this.a[a][6], 0, .1, .1), this.b[a] = 6) : (pullJoints(this.a[a][5], this.a[a][6], 0, .1, .1), this.b[a] = 5)), -1 != this.b[a] && (PLprojectileAttack(this, a, this.a[a][6].x, this.a[a][6].y, b), this.b[a] = -1, checkEff(4 + a, 46) && (c = getEff(4 + a, 8), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + c, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, c, 65280)))), -1 == b && (Walk(this, a), Swim(this, a)));
     pullJoints(this.a[a][0], this.a[a][1], 3.6, .5, .5);
     pullJoints(this.a[a][1], this.a[a][2], 3.6, .5, .5);
     pullJoints(this.a[a][1], this.a[a][3], 4.8, .5, .5);
@@ -2559,14 +2560,14 @@ SR_Player.prototype.S = function(a) {
     pullJoints(this.a[a][8], this.a[a][10], 4.8, .5, .5);
     pullJoints(this.a[a][7], this.a[a][8], 6, .1, .1)
 };
-aa.fff = SR_Player.prototype.T;
+WIN.fff = SR_Player.prototype.T;
 SR_Player.prototype.T = function(a) {
     var b, c, d = 1 - (a >> 2) << 2;
     b = Agi_Min[a] + randInt(Agi_Max[a] - Agi_Min[a] + 1);
     c = RANGE[a];
     var e = .5 * (this.a[a][9].x + this.a[a][10].x),
         g = .5 * (this.a[a][9].y + this.a[a][10].y);
-    c = 1 != Game_Mode ? Kf(e - c, g - c / 2, e + c, g + c / 2) : Df(e - c, g - c / 2, e + c, g + c / 2, d);
+    c = 1 != Game_Mode ? Kf(e - c, g - c / 2, e + c, g + c / 2) : PLfindPlayer(e - c, g - c / 2, e + c, g + c / 2, d);
     if (this.i[a] && this.h != a) {
         0 < this.c[a] && this.c[a]--;
         if (!this.c[a] && -1 != c) {
@@ -2574,9 +2575,9 @@ SR_Player.prototype.T = function(a) {
             this.a[a][6].y -= 2;
             this.a[a][5].y += 2;
             if (1 != Game_Mode)
-                for (b = 0; b < Enemies.i; b++) 0 != Enemies.D[b] && Gf(this, a, this.a[a][6].x, this.a[a][6].y, b);
+                for (b = 0; b < Enemies.i; b++) 0 != Enemies.D[b] && PLprojectileAttack(this, a, this.a[a][6].x, this.a[a][6].y, b);
             else
-                for (b = d; b < d + 4; b++) 0 != Players.H[b] && Gf(this, a, this.a[a][6].x, this.a[a][6].y, b);
+                for (b = d; b < d + 4; b++) 0 != Players.H[b] && PLprojectileAttack(this, a, this.a[a][6].x, this.a[a][6].y, b);
             if (checkEff(4 + a, 46)) {
                 d = getEff(4 + a, 8);
                 antiCheatCheck();
@@ -2598,7 +2599,7 @@ SR_Player.prototype.T = function(a) {
     pullJoints(this.a[a][8], this.a[a][10], 4.8, .5, .5);
     pullJoints(this.a[a][7], this.a[a][8], 6, .1, .1)
 };
-aa.fff = SR_Player.prototype.U;
+WIN.fff = SR_Player.prototype.U;
 SR_Player.prototype.U = function(a) {
     var b, c, d = new Vector2D;
     c = 1 - (a >> 2) << 2;
@@ -2606,7 +2607,7 @@ SR_Player.prototype.U = function(a) {
     var e = RANGE[a],
         g = .5 * (this.a[a][9].x + this.a[a][10].x),
         h = .5 * (this.a[a][9].y + this.a[a][10].y);
-    c = 1 != Game_Mode ? Kf(g - e, h - e, g + e, h + e) : Df(g - e, h - e, g + e, h + e, c); - 1 != c && this.h != a && (1 != Game_Mode ? Vdistance(d, Enemies.a[c][20], this.a[a][6]) : Vdistance(d, this.a[c][2], this.a[a][6]), normalize(d), this.a[a][5].x += .2 * d.x, this.a[a][5].y += .2 * d.y, this.a[a][6].x += .2 * d.x, this.a[a][6].y += .2 * d.y, this.a[a][1].x -= .4 * d.x, this.a[a][1].y -= .4 * d.y);
+    c = 1 != Game_Mode ? Kf(g - e, h - e, g + e, h + e) : PLfindPlayer(g - e, h - e, g + e, h + e, c); - 1 != c && this.h != a && (1 != Game_Mode ? Vdistance(d, Enemies.a[c][20], this.a[a][6]) : Vdistance(d, this.a[c][2], this.a[a][6]), normalize(d), this.a[a][5].x += .2 * d.x, this.a[a][5].y += .2 * d.y, this.a[a][6].x += .2 * d.x, this.a[a][6].y += .2 * d.y, this.a[a][1].x -= .4 * d.x, this.a[a][1].y -= .4 * d.y);
     if (this.i[a] && this.h != a) {
         0 < this.c[a] && this.c[a]--;
         if (!this.c[a] && (-1 != c && (this.c[a] = b, this.a[a][5].y -= 1.5, this.a[a][6].y -= 1.5, this.a[a][3].y += 1.6, this.a[a][4].y += 1.6, this.b[a] = 6), -1 != this.b[a])) {
@@ -2619,7 +2620,7 @@ SR_Player.prototype.U = function(a) {
                 for (b = 0; b < g; b++) Indicators.add(this.a[a][6].x, this.a[a][6].y, 0 > d.x ? .5 : -.5, e, 16776960);
                 e = 0
             }
-            0 == e && (Gf(this, a, this.a[a][6].x, this.a[a][6].y, c), checkEff(4 + a, 46) && (d = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + d, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y,
+            0 == e && (PLprojectileAttack(this, a, this.a[a][6].x, this.a[a][6].y, c), checkEff(4 + a, 46) && (d = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + d, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y,
                 0, d, 65280)));
             antiCheatSet();
             this.b[a] = -1
@@ -2639,7 +2640,7 @@ SR_Player.prototype.U = function(a) {
     pullJoints(this.a[a][7],
         this.a[a][8], 6, .1, .1)
 };
-aa.fff = SR_Player.prototype.V;
+WIN.fff = SR_Player.prototype.V;
 SR_Player.prototype.V = function(a) {
     var b, c = new Vector2D,
         d = 1 - (a >> 2) << 2,
@@ -2652,16 +2653,16 @@ SR_Player.prototype.V = function(a) {
         0 < this.c[a] && this.c[a]--;
         b = .5 * (this.a[a][9].x + this.a[a][10].x);
         var m = .5 * (this.a[a][9].y + this.a[a][10].y);
-        b = 1 != Game_Mode ? Kf(b - q, m - q - 20, b + q, m + 20) : Df(b - q, m - q - 20, b + q, m + 20, d);
+        b = 1 != Game_Mode ? Kf(b - q, m - q - 20, b + q, m + 20) : PLfindPlayer(b - q, m - q - 20, b + q, m + 20, d);
         this.c[a] || -1 == b || (this.c[a] = h, this.a[a][5].x < this.a[a][6].x ? (this.a[a][5].x += 4, this.a[a][4].x -= 4) : (this.a[a][6].x += 4, this.a[a][3].x -= 4), this.a[a][2].y +=
             1, this.b[a] = 14, antiCheatCheck(), h = getVal(Item_Inv[4 + a], 36), MP_Bar[a] = minOf(MP_Bar[a] + MAG[a], h), checkEff(4 + a, 46) && (h = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), antiCheatSet()); - 1 == b && Walk(this, a);
         Swim(this, a)
     }
-    if (-1 != this.b[a] && (checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (e += floor(getEff(4 + a, 9) * e / 100), g += floor(getEff(4 + a, 9) * g / 100)), h = 20, checkEff(4 + a, 42) && (h += floor(20 * getEff(4 + a, 8) / 100)), d = 1 != Game_Mode ? Nf(1, 0, 0, e, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, h) : Ef(1, 0, 0, e, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, h, d), -1 != d)) {
+    if (-1 != this.b[a] && (checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (e += floor(getEff(4 + a, 9) * e / 100), g += floor(getEff(4 + a, 9) * g / 100)), h = 20, checkEff(4 + a, 42) && (h += floor(20 * getEff(4 + a, 8) / 100)), d = 1 != Game_Mode ? Nf(1, 0, 0, e, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, h) : PLtakeDamage(1, 0, 0, e, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, h, d), -1 != d)) {
         antiCheatCheck();
         h = getVal(Item_Inv[4 + a], 36);
         if (MP_Bar[a] == h && 0 <
-            h || -1 == h) MP_Bar[a] = 0, e = this.a[a][this.b[a]].y, g = floor(clamp(this.a[a][this.b[a]].x, 0, 511) / 8), h = floor(clamp(this.a[a][this.b[a]].y, 0, 255) / 8), 0 <= h - Terrain.b[g] ? e = 8 * Terrain.b[g] + 7 : 3 >= absVal(h - Terrain.g[g]) && (e = 8 * Terrain.g[g] + 7), Gf(this, a, this.a[a][this.b[a]].x, e, d);
+            h || -1 == h) MP_Bar[a] = 0, e = this.a[a][this.b[a]].y, g = floor(clamp(this.a[a][this.b[a]].x, 0, 511) / 8), h = floor(clamp(this.a[a][this.b[a]].y, 0, 255) / 8), 0 <= h - Terrain.b[g] ? e = 8 * Terrain.b[g] + 7 : 3 >= absVal(h - Terrain.g[g]) && (e = 8 * Terrain.g[g] + 7), PLprojectileAttack(this, a, this.a[a][this.b[a]].x, e, d);
         antiCheatSet();
         this.b[a] = -1;
         checkEff(4 + a, 11) && (h = maxOf(1, floor(this.j * getEff(4 + a, 8) / 100)), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280));
@@ -2692,7 +2693,7 @@ SR_Player.prototype.V = function(a) {
     pullJoints(this.a[a][8], this.a[a][10], 4.8, .5, .5);
     pullJoints(this.a[a][7], this.a[a][8], 6, .1, .1)
 };
-aa.fff = SR_Player.prototype.W;
+WIN.fff = SR_Player.prototype.W;
 SR_Player.prototype.W = function(a) {
     var b, c, d = new Vector2D,
         e = 1 - (a >> 2) << 2,
@@ -2718,18 +2719,18 @@ SR_Player.prototype.W = function(a) {
         b = .5 * (this.a[a][9].x +
             this.a[a][10].x);
         c = .5 * (this.a[a][9].y + this.a[a][10].y);
-        c = 1 != Game_Mode ? Kf(b - m, c - m, b + m, c + m) : Df(b - m, c - m, b + m, c + m, e);
+        c = 1 != Game_Mode ? Kf(b - m, c - m, b + m, c + m) : PLfindPlayer(b - m, c - m, b + m, c + m, e);
         for (b = 0; b < l && 0 != this.s[a][b]; b++);
         this.c[a] || -1 == c || b == l || (this.c[a] = q, this.s[a][b] = 1, this.C[a][b] = floor(m / 2) + 20, this.D[a][b] = 0, this.a[a][12].x -= 2, this.a[a][14].x += 2, this.b[a] = 15 + b, this.a[a][this.b[a]].set(this.a[a][0]), this.a[a][this.b[a]].y -= 5, this.g[a][this.b[a]].set(this.a[a][this.b[a]]), 1 != Game_Mode ? Vdistance(d, Enemies.a[c][20], this.a[a][this.b[a]]) : Vdistance(d, this.a[c][1], this.a[a][this.b[a]]), normalize(d), scaleVector2D(d, 2), this.a[a][this.b[a]].add(d)); -
         1 == c && (Walk(this, a), Swim(this, a))
     }
     for (b = 0; b < l; b++)
         if (0 != this.s[a][b] && (this.b[a] = 15 + b, this.C[a][b]--, 0 >= this.C[a][b] && (1 == this.s[a][b] ? (this.s[a][b]++, d.set(this.a[a][0]), d.y -= 5, this.g[a][this.b[a]].set(this.a[a][this.b[a]]), Vdistance(d, d, this.a[a][this.b[a]]), q = normalize(d), scaleVector2D(d, 2), this.a[a][this.b[a]].add(d), this.C[a][b] = floor(q / 2)) : (this.s[a][b] = 0, this.C[a][b] = 0, this.D[a][b] = 0)), this.D[a][b]--, !(0 < this.D[a][b]) && (q = 0, checkEff(4 + a, 27) && random(100) < getEff(4 + a, 8) && (q = 1), checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (g += floor(getEff(4 + a, 9) * g / 100), h += floor(getEff(4 + a, 9) *
-                h / 100)), q = 1 != Game_Mode ? Nf(q, 0, 0, g, h, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, 10, 10) : Ef(q, 0, 0, g, h, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, 10, 10, e), -1 != q))) {
+                h / 100)), q = 1 != Game_Mode ? Nf(q, 0, 0, g, h, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, 10, 10) : PLtakeDamage(q, 0, 0, g, h, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, 10, 10, e), -1 != q))) {
             antiCheatCheck();
             m = getVal(Item_Inv[4 + a], 36);
             MP_Bar[a] = minOf(MP_Bar[a] + MAG[a], m);
-            if (MP_Bar[a] == m && 0 < m || -1 == m) MP_Bar[a] = 0, Gf(this, a, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, q);
+            if (MP_Bar[a] == m && 0 < m || -1 == m) MP_Bar[a] = 0, PLprojectileAttack(this, a, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, q);
             checkEff(4 + a, 46) && (q = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + q, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, q, 65280));
             antiCheatSet();
             this.D[a][b] = getVal(Item_Inv[4 + a], 7)
@@ -2754,7 +2755,7 @@ SR_Player.prototype.W = function(a) {
         this.a[a][14], 12, 0, .1);
     pullJoints(this.a[a][13], this.a[a][14], 9.6, .5, .5)
 };
-aa.fff = SR_Player.prototype.B;
+WIN.fff = SR_Player.prototype.B;
 SR_Player.prototype.B = function() {
     var a, b, c = new Vector2D,
         d = new Vector2D,
@@ -2773,7 +2774,7 @@ SR_Player.prototype.B = function() {
                 Anger_Crown_Lightning--;
                 var l = minOf(Anger_Crown_Lightning, 64);
                 for (b = 0; 11 > b; b++) dispItemCentered(Effect_Img, floor(this.a[a][b].x), floor(this.a[a][b].y), 24, 24, 0, 0, 12, 12, l << 24 | 16777062);
-                120 < Anger_Crown_Lightning && (b = randInt(11), Gf(Players, 563, Players.a[a][b].x, Players.a[a][b].y,
+                120 < Anger_Crown_Lightning && (b = randInt(11), PLprojectileAttack(Players, 563, Players.a[a][b].x, Players.a[a][b].y,
                     0))
             } else
                 for (b = 0; 11 > b; b++) dispItemCentered(Effect_Img, floor(this.a[a][b].x), floor(this.a[a][b].y), 12, 12, 0, 0, 12, 12, 1073741824);
@@ -3598,7 +3599,7 @@ function Xf(a, b, c) {
         g = g[59];
     if (0 < a.s[b]) a.s[b]--;
     else if (!(random(1E3) >
-            ab) && (ab = Df(a.a[b][0].x - Pa, a.a[b][0].y - Pa, a.a[b][0].x + Pa, a.a[b][0].y + Pa, 0), -1 != ab && (a.s[b] = ka, h)))
+            ab) && (ab = PLfindPlayer(a.a[b][0].x - Pa, a.a[b][0].y - Pa, a.a[b][0].x + Pa, a.a[b][0].y + Pa, 0), -1 != ab && (a.s[b] = ka, h)))
         if (1 == h) {
             var h = a.a[b][0].x + 10 * d.x,
                 ca = a.a[b][0].y + 10 * d.y;
@@ -3656,14 +3657,14 @@ function enemyDeath(a, b, c) {
         for (d = 4; 40 > d; d++) 49 == getVal(Item_Inv[d], 7) && (c = 1),
             49 == getVal(Comp1_Inv[d], 7) && (c = 1), 49 == getVal(Comp2_Inv[d], 7) && (c = 1);
         if (1 == c)
-            for (Anger_Crown_Lightning = 480, b = 0; 4 > b; b++) Gf(Players, 562, Players.a[b][0].x, Players.a[b][0].y, 0), LP_Current[b] != LP_Max[b] && Indicators.add(Players.a[b][0].x, Players.a[b][0].y, 0, LP_Max[b] - LP_Current[b], 65280), LP_Current[b] = LP_Max[b]
+            for (Anger_Crown_Lightning = 480, b = 0; 4 > b; b++) PLprojectileAttack(Players, 562, Players.a[b][0].x, Players.a[b][0].y, 0), LP_Current[b] != LP_Max[b] && Indicators.add(Players.a[b][0].x, Players.a[b][0].y, 0, LP_Max[b] - LP_Current[b], 65280), LP_Current[b] = LP_Max[b]
     }
     antiCheatSet();
     c = EN_Info[a.f[b]][En_Gold];
     h = g = e = 100;
     for (d = 0; 4 > d; d++) checkEff(4 + d, 33) && (e += getEff(4 + d, 8)), checkEff(4 + d, 34) && (g += getEff(4 + d, 8)), checkEff(4 + d, 35) && (h += getEff(4 + d, 8));
     for (d = 0; 4 > d; d++)
-        if (checkEff(4 + d, 41) && random(100) < getEff(4 + d, 8)) { var q = Kf(a.a[b][0].x - 600, a.a[b][0].y - 300, a.a[b][0].x + 600, a.a[b][0].y + 300); - 1 != q && Gf(Players, getEff(4 + d, 9), a.a[b][0].x, a.a[b][0].y, q) }
+        if (checkEff(4 + d, 41) && random(100) < getEff(4 + d, 8)) { var q = Kf(a.a[b][0].x - 600, a.a[b][0].y - 300, a.a[b][0].x + 600, a.a[b][0].y + 300); - 1 != q && PLprojectileAttack(Players, getEff(4 + d, 9), a.a[b][0].x, a.a[b][0].y, q) }
     q = 0;
     17 == a.v[b] && (q = a.b[b] -
         1);
@@ -3672,7 +3673,7 @@ function enemyDeath(a, b, c) {
     500 * Math.random() < g && Drops.add(a.a[b][q].x, a.a[b][q].y, 2, 0, 0);
     return 0
 }
-aa.fff = SR_Enemy.prototype.L;
+WIN.fff = SR_Enemy.prototype.L;
 SR_Enemy.prototype.L = function() {
     var a;
     for (a = 0; a < this.i; a++) {
@@ -3686,7 +3687,7 @@ SR_Enemy.prototype.L = function() {
         }
     }
 };
-aa.fff = SR_Enemy.prototype.T;
+WIN.fff = SR_Enemy.prototype.T;
 SR_Enemy.prototype.T = function(a) {
     var b;
     b = EN_Info[this.f[a]][EN_Size];
@@ -3731,7 +3732,7 @@ SR_Enemy.prototype.T = function(a) {
     }
     return a
 };
-aa.fff = SR_Enemy.prototype.M;
+WIN.fff = SR_Enemy.prototype.M;
 SR_Enemy.prototype.M = function(a) {
     var b;
     if (this.b[a])
@@ -3739,7 +3740,7 @@ SR_Enemy.prototype.M = function(a) {
             moveJoint(this.a[a][0], this.c[a][0], .05, .99);
             moveJoint(this.a[a][1], this.c[a][1], .05, .9);
             moveJoint(this.a[a][2], this.c[a][2], .05, .9);
-            b = Df(this.a[a][0].x - 200, this.a[a][0].y - 50, this.a[a][0].x + 200, this.a[a][0].y + 50, 0); - 1 != b && (this.a[a][0].x += Players.a[b][2].x < this.a[a][0].x ? -.001 : .001);
+            b = PLfindPlayer(this.a[a][0].x - 200, this.a[a][0].y - 50, this.a[a][0].x + 200, this.a[a][0].y + 50, 0); - 1 != b && (this.a[a][0].x += Players.a[b][2].x < this.a[a][0].x ? -.001 : .001);
             if (0 < (this.g[a] & 2)) {
                 var c = 0; - 1 != b ? c = Players.a[b][2].x < this.a[a][0].x ? -1 : 1 : c = fiftyfifty(-1, 1);
                 10 > random(100) && (this.a[a][0].x += randomRange(.4, .6) * c, this.a[a][0].y += randomRange(-1.5, -2))
@@ -3774,7 +3775,7 @@ SR_Enemy.prototype.M = function(a) {
     }
     return a
 };
-aa.fff = SR_Enemy.prototype.N;
+WIN.fff = SR_Enemy.prototype.N;
 SR_Enemy.prototype.N = function(a) {
     var b, c = new Vector2D;
     b = EN_Info[this.f[a]][EN_Size];
@@ -3788,7 +3789,7 @@ SR_Enemy.prototype.N = function(a) {
             moveJoint(this.a[a][5], this.c[a][5], 0, .99);
             moveJoint(this.a[a][6], this.c[a][6], 0, .99);
             assignVector2D(c, 0, 0);
-            var d = Df(this.a[a][0].x - 150, this.a[a][0].y - 150, this.a[a][0].x + 150, this.a[a][0].y + 150, 0); - 1 != d && (Vdistance(c, Players.a[d][2], this.a[a][0]), d = normalize(c), d -= EN_Info[this.f[a]][32] -
+            var d = PLfindPlayer(this.a[a][0].x - 150, this.a[a][0].y - 150, this.a[a][0].x + 150, this.a[a][0].y + 150, 0); - 1 != d && (Vdistance(c, Players.a[d][2], this.a[a][0]), d = normalize(c), d -= EN_Info[this.f[a]][32] -
                 10, 0 > d ? scaleVector2D(c, -.05) : scaleVector2D(c, .05));
             this.a[a][0].add(c);
             10 > random(100) && (this.a[a][0].x += randomRange(-1, 1), this.a[a][0].y += randomRange(-1, 1));
@@ -3848,7 +3849,7 @@ SR_Enemy.prototype.N = function(a) {
     }
     return a
 };
-aa.fff = SR_Enemy.prototype.O;
+WIN.fff = SR_Enemy.prototype.O;
 SR_Enemy.prototype.O = function(a) {
     var b, c = new Vector2D,
         d = EN_Info[this.f[a]][EN_Size];
@@ -3857,7 +3858,7 @@ SR_Enemy.prototype.O = function(a) {
             moveJoint(this.a[a][0], this.c[a][0], 0, .99);
             for (b = 1; 6 > b; b++) moveJoint(this.a[a][b], this.c[a][b], 0, .9);
             assignVector2D(c, 0, 0);
-            b = Df(this.a[a][0].x - 200, this.a[a][0].y - 200, this.a[a][0].x + 200, this.a[a][0].y + 200, 0); - 1 != b && (Vdistance(c, Players.a[b][2], this.a[a][0]), b = normalize(c), b -= EN_Info[this.f[a]][32] / 2 - 10, 0 > b ? scaleVector2D(c, -.01) : scaleVector2D(c, .01));
+            b = PLfindPlayer(this.a[a][0].x - 200, this.a[a][0].y - 200, this.a[a][0].x + 200, this.a[a][0].y + 200, 0); - 1 != b && (Vdistance(c, Players.a[b][2], this.a[a][0]), b = normalize(c), b -= EN_Info[this.f[a]][32] / 2 - 10, 0 > b ? scaleVector2D(c, -.01) : scaleVector2D(c, .01));
             b = Terrain.a[floor(clamp(this.a[a][0].y + 24, 0, 255) / 8)][floor(clamp(this.a[a][0].x, 0, 511) / 8)];
             0 <= b && 8 >= b && (c.y -= .02);
             2 > random(100) && (c.x += randomRange(-.5, .5), c.y +=
@@ -3888,7 +3889,7 @@ SR_Enemy.prototype.O = function(a) {
     else this.b[a] = 1;
     return a
 };
-aa.fff = SR_Enemy.prototype.G;
+WIN.fff = SR_Enemy.prototype.G;
 SR_Enemy.prototype.G = function(a, b) {
     var c;
     c = EN_Info[this.f[a]][EN_Size];
@@ -3897,7 +3898,7 @@ SR_Enemy.prototype.G = function(a, b) {
             4 == b ? (moveJoint(this.a[a][0], this.c[a][0], -.2, .99), moveJoint(this.a[a][1], this.c[a][1], 0, .99), moveJoint(this.a[a][2], this.c[a][2], -.1, .99), moveJoint(this.a[a][3], this.c[a][3], 0, .99), moveJoint(this.a[a][4], this.c[a][4], 0, .99), moveJoint(this.a[a][5], this.c[a][5], 0, .99), moveJoint(this.a[a][6], this.c[a][6], 0, .99), moveJoint(this.a[a][7], this.c[a][7], 0, .99), moveJoint(this.a[a][8], this.c[a][8], 0, .99), moveJoint(this.a[a][9], this.c[a][9], .3, .99), moveJoint(this.a[a][10], this.c[a][10], .3, .99)) : 12 ==
                 b && (moveJoint(this.a[a][0], this.c[a][0], -.02, .99), moveJoint(this.a[a][1], this.c[a][1], 0, .99), moveJoint(this.a[a][2], this.c[a][2], -.01, .99), moveJoint(this.a[a][3], this.c[a][3], 0, .99), moveJoint(this.a[a][4], this.c[a][4], 0, .99), moveJoint(this.a[a][5], this.c[a][5], 0, .99), moveJoint(this.a[a][6], this.c[a][6], 0, .99), moveJoint(this.a[a][7], this.c[a][7], 0, .99), moveJoint(this.a[a][8], this.c[a][8], 0, .99), moveJoint(this.a[a][9], this.c[a][9], .1, .99), moveJoint(this.a[a][10], this.c[a][10], .1, .99));
             if (50 > random(100) && 0 < (this.g[a] & 3)) {
-                var d = Df(this.a[a][0].x - 200, this.a[a][0].y - 50, this.a[a][0].x + 200, this.a[a][0].y +
+                var d = PLfindPlayer(this.a[a][0].x - 200, this.a[a][0].y - 50, this.a[a][0].x + 200, this.a[a][0].y +
                     50, 0); - 1 != d ? this.b[a] = Players.a[d][2].x < this.a[a][0].x ? 1 : 2 : 10 > random(100) && (this.b[a] = fiftyfifty(1, 2));
                 var e = d = 1,
                     g = 0;
@@ -3944,7 +3945,7 @@ SR_Enemy.prototype.G = function(a, b) {
         1;
     return a
 };
-aa.fff = SR_Enemy.prototype.H;
+WIN.fff = SR_Enemy.prototype.H;
 SR_Enemy.prototype.H = function(a, b) {
     var c, d = EN_Info[this.f[a]][EN_Size];
     if (this.b[a])
@@ -3978,14 +3979,14 @@ SR_Enemy.prototype.H = function(a, b) {
     else this.b[a] = floor(randomRange(4, 8));
     return a
 };
-aa.fff = SR_Enemy.prototype.P;
+WIN.fff = SR_Enemy.prototype.P;
 SR_Enemy.prototype.P = function(a) {
     var b, c = EN_Info[this.f[a]][EN_Size];
     if (this.b[a])
         if (1 == this.b[a] || 2 == this.b[a]) {
             moveJoint(this.a[a][0], this.c[a][0], .5, .99);
             for (b = 1; 7 > b; b++) moveJoint(this.a[a][b], this.c[a][b], 0, .99);
-            b = Df(this.a[a][0].x - 200, this.a[a][0].y - 50, this.a[a][0].x + 200, this.a[a][0].y + 50, 0); - 1 != b && 40 > random(100) && 0 < (this.g[a] & 2) && (this.a[a][0].x += Players.a[b][2].x < this.a[a][0].x ? -2 : 2);
+            b = PLfindPlayer(this.a[a][0].x - 200, this.a[a][0].y - 50, this.a[a][0].x + 200, this.a[a][0].y + 50, 0); - 1 != b && 40 > random(100) && 0 < (this.g[a] & 2) && (this.a[a][0].x += Players.a[b][2].x < this.a[a][0].x ? -2 : 2);
             var d = .1,
                 c = 1.2 * c;
             for (b = 1; 4 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 3], 20 * c, d, d);
@@ -4033,7 +4034,7 @@ SR_Enemy.prototype.P = function(a) {
     }
     return a
 };
-aa.fff = SR_Enemy.prototype.R;
+WIN.fff = SR_Enemy.prototype.R;
 SR_Enemy.prototype.R = function(a) {
     var b, c = new Vector2D,
         d = EN_Info[this.f[a]][EN_Size];
@@ -4042,7 +4043,7 @@ SR_Enemy.prototype.R = function(a) {
             moveJoint(this.a[a][0], this.c[a][0], 0, .99);
             for (b = 1; 5 > b; b++) moveJoint(this.a[a][b], this.c[a][b], 0, .9);
             assignVector2D(c, 0, 0);
-            b = Df(this.a[a][0].x - 150, this.a[a][0].y - 50, this.a[a][0].x + 150, this.a[a][0].y + 50, 0); - 1 != b && (Vdistance(c, Players.a[b][2], this.a[a][0]), b = normalize(c), b -= EN_Info[this.f[a]][32] / 2 - 10, 0 > b ? scaleVector2D(c, -.01) : scaleVector2D(c, .01));
+            b = PLfindPlayer(this.a[a][0].x - 150, this.a[a][0].y - 50, this.a[a][0].x + 150, this.a[a][0].y + 50, 0); - 1 != b && (Vdistance(c, Players.a[b][2], this.a[a][0]), b = normalize(c), b -= EN_Info[this.f[a]][32] / 2 - 10, 0 > b ? scaleVector2D(c, -.01) : scaleVector2D(c, .01));
             0 > Terrain.a[floor(clamp(this.a[a][0].y - 7, 0, 255) / 8)][floor(clamp(this.a[a][0].x, 0, 511) / 8)] && (c.y += .03);
             2 > random(100) && (c.x += randomRange(-.5, .5), c.y += randomRange(-.5, .5));
             this.a[a][0].add(c);
@@ -4074,7 +4075,7 @@ SR_Enemy.prototype.R = function(a) {
     else this.b[a] = 1;
     return a
 };
-aa.fff = SR_Enemy.prototype.S;
+WIN.fff = SR_Enemy.prototype.S;
 SR_Enemy.prototype.S = function(a) {
     var b, c = EN_Info[this.f[a]][EN_Size];
     if (this.b[a])
@@ -4102,7 +4103,7 @@ SR_Enemy.prototype.S = function(a) {
     else this.a[a][0].x += 0, this.a[a][0].y += 0, this.a[a][1].x += 0, this.a[a][1].y += 1, this.a[a][2].x += 0, this.a[a][2].y += 3, this.b[a]++;
     return a
 };
-aa.fff = SR_Enemy.prototype.J;
+WIN.fff = SR_Enemy.prototype.J;
 SR_Enemy.prototype.J = function(a, b) {
     var c, d = new Vector2D,
         e = EN_Info[this.f[a]][EN_Size];
@@ -4112,7 +4113,7 @@ SR_Enemy.prototype.J = function(a, b) {
             for (c = 1; 6 > c; c++) moveJoint(this.a[a][c], this.c[a][c], 0, .9);
             if (9 == b) {
                 assignVector2D(d, 0, 0);
-                c = Df(this.a[a][0].x - 150, this.a[a][0].y - 50, this.a[a][0].x + 150, this.a[a][0].y + 50, 0); - 1 != c && (Vdistance(d, Players.a[c][2], this.a[a][0]), c = normalize(d), c -= EN_Info[this.f[a]][32] / 2 - 10, 0 > c ? (scaleVector2D(d, -.05), 384 < this.a[a][0].x && setPerpendicular(d), 128 > this.a[a][0].x && (setPerpendicular(d), scaleVector2D(d, -1))) : scaleVector2D(d, .01));
+                c = PLfindPlayer(this.a[a][0].x - 150, this.a[a][0].y - 50, this.a[a][0].x + 150, this.a[a][0].y + 50, 0); - 1 != c && (Vdistance(d, Players.a[c][2], this.a[a][0]), c = normalize(d), c -= EN_Info[this.f[a]][32] / 2 - 10, 0 > c ? (scaleVector2D(d, -.05), 384 < this.a[a][0].x && setPerpendicular(d), 128 > this.a[a][0].x && (setPerpendicular(d), scaleVector2D(d, -1))) : scaleVector2D(d, .01));
                 c = floor(clamp(this.a[a][0].x, 0, 511) / 8);
                 var g = floor(clamp(this.a[a][0].y -
                     7, 0, 255) / 8);
@@ -4122,7 +4123,7 @@ SR_Enemy.prototype.J = function(a, b) {
                 g = floor(clamp(this.a[a][0].y + d.y, 0, 255) / 8);
                 c = Terrain.a[g][c];
                 0 <= c && 8 >= c && setPerpendicular(d)
-            } else assignVector2D(d, 0, 0), c = Df(this.a[a][0].x - 500, this.a[a][0].y - 500, this.a[a][0].x + 500, this.a[a][0].y + 500, 0), -1 != c && (Vdistance(d, Players.a[c][2], this.a[a][0]), c = normalize(d), c -= EN_Info[this.f[a]][32] / 2 - 10, 0 > c ? (1 == this.b[a] ? scaleVector2D(d, -.05) : scaleVector2D(d, .05), setPerpendicular(d)) : scaleVector2D(d, .02)), c = floor(clamp(this.a[a][0].x + d.x, 0, 511) / 8), g = floor(clamp(this.a[a][0].y + d.y, 0, 255) / 8), c = Terrain.a[g][c], 0 <= c && 8 >= c && (setPerpendicular(d), 2 == this.b[a] && scaleVector2D(d, -1)), c = floor(clamp(this.a[a][0].x +
+            } else assignVector2D(d, 0, 0), c = PLfindPlayer(this.a[a][0].x - 500, this.a[a][0].y - 500, this.a[a][0].x + 500, this.a[a][0].y + 500, 0), -1 != c && (Vdistance(d, Players.a[c][2], this.a[a][0]), c = normalize(d), c -= EN_Info[this.f[a]][32] / 2 - 10, 0 > c ? (1 == this.b[a] ? scaleVector2D(d, -.05) : scaleVector2D(d, .05), setPerpendicular(d)) : scaleVector2D(d, .02)), c = floor(clamp(this.a[a][0].x + d.x, 0, 511) / 8), g = floor(clamp(this.a[a][0].y + d.y, 0, 255) / 8), c = Terrain.a[g][c], 0 <= c && 8 >= c && (setPerpendicular(d), 2 == this.b[a] && scaleVector2D(d, -1)), c = floor(clamp(this.a[a][0].x +
                 d.x, 0, 511) / 8), g = floor(clamp(this.a[a][0].y + d.y, 0, 255) / 8), c = Terrain.a[g][c], 0 <= c && 8 >= c && (setPerpendicular(d), 2 == this.b[a] && scaleVector2D(d, -1));
             2 > random(100) && (d.x += randomRange(-.5, .5), d.y += randomRange(-.5, .5));
             this.a[a][0].add(d);
@@ -4146,7 +4147,7 @@ SR_Enemy.prototype.J = function(a, b) {
     else 50 > random(100) ? this.b[a] = 1 : this.b[a] = 2;
     return a
 };
-aa.fff = SR_Enemy.prototype.U;
+WIN.fff = SR_Enemy.prototype.U;
 SR_Enemy.prototype.U = function(a) {
     var b;
     b = EN_Info[this.f[a]][EN_Size];
@@ -4162,7 +4163,7 @@ SR_Enemy.prototype.U = function(a) {
             moveJoint(this.a[a][7], this.c[a][7], -.1, .99);
             moveJoint(this.a[a][8], this.c[a][8], .8, .99);
             if (50 > random(100) && 0 < (this.g[a] & 3)) {
-                var c = Df(this.a[a][0].x - 500, this.a[a][0].y - 25,
+                var c = PLfindPlayer(this.a[a][0].x - 500, this.a[a][0].y - 25,
                     this.a[a][0].x + 500, this.a[a][0].y + 25, 0); - 1 != c ? this.b[a] = Players.a[c][2].x < this.a[a][0].x ? 1 : 2 : 10 > random(100) && (this.b[a] = fiftyfifty(1, 2));
                 1 == this.b[a] ? (this.a[a][2].x < this.a[a][6].x ? (this.a[a][6].x += random(-1), this.a[a][6].y += randomRange(-1, -1)) : (this.a[a][2].x += random(-1), this.a[a][2].y += randomRange(-1, -1)), this.a[a][4].x < this.a[a][8].x ? (this.a[a][8].x += random(-1), this.a[a][8].y += randomRange(-1, -1)) : (this.a[a][4].x += random(-1), this.a[a][4].y += randomRange(-1, -1)), 1 > random(100) && (--this.a[a][0].x, this.a[a][0].y -= 3)) : (this.a[a][2].x < this.a[a][6].x ? (this.a[a][2].x += random(1), this.a[a][2].y +=
                     randomRange(-1, -1)) : (this.a[a][6].x += random(1), this.a[a][6].y += randomRange(-1, -1)), this.a[a][4].x < this.a[a][8].x ? (this.a[a][4].x += random(1), this.a[a][4].y += randomRange(-1, -1)) : (this.a[a][8].x += random(1), this.a[a][8].y += randomRange(-1, -1)), 1 > random(100) && (this.a[a][0].x += 1, this.a[a][0].y -= 3))
@@ -4231,7 +4232,7 @@ SR_Enemy.prototype.U = function(a) {
     }
     return a
 };
-aa.fff = SR_Enemy.prototype.V;
+WIN.fff = SR_Enemy.prototype.V;
 SR_Enemy.prototype.V = function(a) {
     var b, c = EN_Info[this.f[a]][EN_Size];
     if (this.b[a])
@@ -4264,7 +4265,7 @@ SR_Enemy.prototype.V = function(a) {
         1, this.a[a][3].y += 2, this.b[a]++;
     return a
 };
-aa.fff = SR_Enemy.prototype.W;
+WIN.fff = SR_Enemy.prototype.W;
 SR_Enemy.prototype.W = function(a) {
     var b, c = new Vector2D;
     b = EN_Info[this.f[a]][EN_Size];
@@ -4275,7 +4276,7 @@ SR_Enemy.prototype.W = function(a) {
             moveJoint(this.a[a][2], this.c[a][2], -.1, .99);
             moveJoint(this.a[a][3], this.c[a][3], -.1, .99);
             assignVector2D(c, 0, 0);
-            var d = Df(this.a[a][0].x - 150, this.a[a][0].y - 250, this.a[a][0].x + 150, this.a[a][0].y + 250, 0); - 1 != d && (c.x = Players.a[d][2].x - this.a[a][0].x, c.y = Players.a[d][2].y - 10 - this.a[a][0].y, -10 > c.x ? c.x = -.02 : 10 < c.x ? c.x = .02 : c.x = randomRange(-.02, .02), d = EN_Info[this.f[a]][32] / 2, c.y < -d ? c.y = -.02 : c.y > d ? c.y = .02 : c.y = randomRange(-.1, .1));
+            var d = PLfindPlayer(this.a[a][0].x - 150, this.a[a][0].y - 250, this.a[a][0].x + 150, this.a[a][0].y + 250, 0); - 1 != d && (c.x = Players.a[d][2].x - this.a[a][0].x, c.y = Players.a[d][2].y - 10 - this.a[a][0].y, -10 > c.x ? c.x = -.02 : 10 < c.x ? c.x = .02 : c.x = randomRange(-.02, .02), d = EN_Info[this.f[a]][32] / 2, c.y < -d ? c.y = -.02 : c.y > d ? c.y = .02 : c.y = randomRange(-.1, .1));
             this.a[a][0].add(c);
             this.a[a][2].x -= random(.8);
             this.a[a][3].x += random(.8);
@@ -4318,7 +4319,7 @@ SR_Enemy.prototype.W = function(a) {
     }
     return a
 };
-aa.fff = SR_Enemy.prototype.X;
+WIN.fff = SR_Enemy.prototype.X;
 SR_Enemy.prototype.X = function(a) {
     var b;
     b = EN_Info[this.f[a]][EN_Size];
@@ -4327,7 +4328,7 @@ SR_Enemy.prototype.X = function(a) {
             moveJoint(this.a[a][0], this.c[a][0], -.15, .99);
             moveJoint(this.a[a][1], this.c[a][1], .1, .99);
             moveJoint(this.a[a][2], this.c[a][2], .1, .99);
-            var c = Df(this.a[a][0].x - 200, this.a[a][0].y - 50, this.a[a][0].x + 200, this.a[a][0].y + 50, 0);
+            var c = PLfindPlayer(this.a[a][0].x - 200, this.a[a][0].y - 50, this.a[a][0].x + 200, this.a[a][0].y + 50, 0);
             if (0 < (this.g[a] & 2) && 5 > random(100)) {
                 var d = 0; - 1 != c ? d = Players.a[c][2].x < this.a[a][0].x ? -1 : 1 : d = fiftyfifty(-1, 1);
                 this.a[a][0].x += randomRange(.4, .6) * d;
@@ -4372,7 +4373,7 @@ SR_Enemy.prototype.X = function(a) {
     }
     return a
 };
-aa.fff = SR_Enemy.prototype.Y;
+WIN.fff = SR_Enemy.prototype.Y;
 SR_Enemy.prototype.Y = function(a) {
     var b, c = new Vector2D,
         d = EN_Info[this.f[a]][EN_Size];
@@ -4382,7 +4383,7 @@ SR_Enemy.prototype.Y = function(a) {
             0 >= this.h[a] && 5 > random(100) && (b = floor(random(3)), 0 == b ? (c.x = (this.a[a][8].x + this.a[a][9].x) / 2 - this.a[a][7].x, c.y = (this.a[a][8].y + this.a[a][9].y) / 2 - this.a[a][7].y, normalize(c), scaleVector2D(c, d), this.a[a][7].add(c)) : 1 == b ? (c.x = (this.a[a][9].x + this.a[a][7].x) / 2 - this.a[a][8].x, c.y = (this.a[a][9].y + this.a[a][7].y) / 2 - this.a[a][8].y, normalize(c), scaleVector2D(c, d), this.a[a][8].add(c)) : 2 == b && (c.x = (this.a[a][7].x + this.a[a][8].x) /
                 2 - this.a[a][9].x, c.y = (this.a[a][7].y + this.a[a][8].y) / 2 - this.a[a][9].y, normalize(c), scaleVector2D(c, d), this.a[a][9].add(c)), this.h[a] = 25 * d);
             assignVector2D(c, 0, 0);
-            b = Df(this.a[a][0].x - 200, this.a[a][0].y - 200, this.a[a][0].x + 200, this.a[a][0].y + 200, 0);
+            b = PLfindPlayer(this.a[a][0].x - 200, this.a[a][0].y - 200, this.a[a][0].x + 200, this.a[a][0].y + 200, 0);
             if (-1 != b)
                 for (Vdistance(c, Players.a[b][2], this.a[a][0]), normalize(c), b = 4; 7 > b; b++) this.a[a][b].x += .02 * c.x, this.a[a][b].y += .02 * c.y;
             c = .05;
@@ -4412,7 +4413,7 @@ SR_Enemy.prototype.Y = function(a) {
     else this.b[a]++;
     return a
 };
-aa.fff = SR_Enemy.prototype.Z;
+WIN.fff = SR_Enemy.prototype.Z;
 SR_Enemy.prototype.Z = function(a) {
     var b, c = EN_Info[this.f[a]][EN_Size];
     if (this.b[a])
@@ -4445,7 +4446,7 @@ SR_Enemy.prototype.Z = function(a) {
     else this.b[a] = floor(randomRange(4, 7)), this.h[a] = floor(random(400));
     return a
 };
-aa.fff = SR_Enemy.prototype.K;
+WIN.fff = SR_Enemy.prototype.K;
 SR_Enemy.prototype.K = function() {
     var a, b;
     for (a = 0; a < this.i; a++) {
@@ -5946,7 +5947,7 @@ function PJmain() {
         else if (0 < a.C[b]) a.C[b]--;
     else if (1 == a.u[b]) a.h[b]++, a.h[b] >= a.D[b] && PJsub(a, b--);
     else {
-        0 < a.J[b] && (e = a.J[b], e = 1 != Game_Mode ? a.g[b] ? Df(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e, 0) : Kf(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e) : Df(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e, 1 - a.g[b] << 2), -1 != e && (1 != Game_Mode ? a.g[b] ? Vdistance(d, Players.a[e][0], a.b[b]) : Vdistance(d, Enemies.a[e][0], a.b[b]) : Vdistance(d, Players.a[e][0], a.b[b]), normalize(d), e = magnitudeOf(a.c[b]), a.c[b].x = .85 * a.c[b].x +
+        0 < a.J[b] && (e = a.J[b], e = 1 != Game_Mode ? a.g[b] ? PLfindPlayer(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e, 0) : Kf(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e) : PLfindPlayer(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e, 1 - a.g[b] << 2), -1 != e && (1 != Game_Mode ? a.g[b] ? Vdistance(d, Players.a[e][0], a.b[b]) : Vdistance(d, Enemies.a[e][0], a.b[b]) : Vdistance(d, Players.a[e][0], a.b[b]), normalize(d), e = magnitudeOf(a.c[b]), a.c[b].x = .85 * a.c[b].x +
             .15 * d.x + randomRange(-.1, .1), a.c[b].y = .85 * a.c[b].y + .15 * d.y + randomRange(-.1, .1), normalize(a.c[b]), scaleVector2D(a.c[b], maxOf(e, 1))));
         a.c[b].y += .01 * a.ja[b];
         scaleVector2D(a.c[b], .01 * a.m[b]);
@@ -5964,7 +5965,7 @@ function PJmain() {
         1 == a.i[b] && a.j[b] && random(1E3) > a.j[b] && (c = 0);
         0 < a.I[b] && (a.I[b]--, c = 0);
         g = -1;
-        1 == c && (g = 1 != Game_Mode ? a.g[b] ? Ef(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b], 0) : Nf(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b]) : Ef(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b], 1 - a.g[b] << 2)); - 1 != g && a.H[b] && (1 != Game_Mode ? a.g[b] ? Vdistance(d, Players.a[g][0], a.b[b]) : Vdistance(d, Enemies.a[g][0], a.b[b]) : Vdistance(d, Players.a[g][0], a.b[b]), normalize(d), scaleVector2D(d, .1 * a.H[b]), 1 == Game_Mode || a.g[b] ? scaleVector2D(d, .1) :
+        1 == c && (g = 1 != Game_Mode ? a.g[b] ? PLtakeDamage(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b], 0) : Nf(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b]) : PLtakeDamage(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b], 1 - a.g[b] << 2)); - 1 != g && a.H[b] && (1 != Game_Mode ? a.g[b] ? Vdistance(d, Players.a[g][0], a.b[b]) : Vdistance(d, Enemies.a[g][0], a.b[b]) : Vdistance(d, Players.a[g][0], a.b[b]), normalize(d), scaleVector2D(d, .1 * a.H[b]), 1 == Game_Mode || a.g[b] ? scaleVector2D(d, .1) :
             scaleVector2D(d, Text_Spacing[EN_Info[Enemies.f[g]][EN_Species]] / EN_Info[Enemies.f[g]][EN_Size]), 1 != Game_Mode ? a.g[b] ? Players.g[g][0].sub(d) : Enemies.c[g][0].sub(d) : Players.g[g][0].sub(d), a.H[b] = 0);
         1 == a.i[b] && a.j[b] && (g = -1);
         if (1 == e || -1 != g)
@@ -6161,7 +6162,7 @@ function DPmain() {
         d = Terrain.a[e][d];
         0 <= d && 8 >= d || (a.b[b].x = c);
         if (100 > a.h[b]) a.h[b]++;
-        else if (c = Df(a.b[b].x - 12, a.b[b].y - 6 - 12, a.b[b].x + 12, a.b[b].y - 6 + 12, 0), -1 != c) {
+        else if (c = PLfindPlayer(a.b[b].x - 12, a.b[b].y - 6 - 12, a.b[b].x + 12, a.b[b].y - 6 + 12, 0), -1 != c) {
             antiCheatCheck();
             if (1 == a.g[b]) Team_Gold = clamp(Team_Gold + a.value[b], 0, 9999999), Indicators.add(a.b[b].x, a.b[b].y,
                 0, a.value[b], 16776960);
@@ -6218,7 +6219,7 @@ function SR_Terrain() {
 SR_Terrain.prototype.o = function(a) {
     var b, c;
     this.c = a;
-    this.j != Stage_Spawns[this.c][ib][1] && (this.j = Stage_Spawns[this.c][ib][1], Stage_Terrain_Img = new SR_Image, Stage_Terrain_Img.IGset("st" + this.j + ".gif"));
+    this.j != Stage_Spawns[this.c][Current_Screen][1] && (this.j = Stage_Spawns[this.c][Current_Screen][1], Stage_Terrain_Img = new SR_Image, Stage_Terrain_Img.IGset("st" + this.j + ".gif"));
     imgToArray(Stage_Terrain_Img);
     if (Tile_Counter1) return !1;
     this.f = Stage_Terrain_Img.c;
@@ -6251,7 +6252,7 @@ SR_Terrain.prototype.o = function(a) {
     this.i = 0;
     for (b = 12; 60 > b; b++)
         for (c = 1; c < this.f - 1; c++) 9 == this.a[c - 1][b] && 9 == this.a[c][b] && (this.s[this.i++] = c * this.m + b);
-    if (!ib) {
+    if (!Current_Screen) {
         for (a = 0; 196608 > a; a++) Stage_Eff_Canvas.l[a] = 0;
         b = Game_Canvas;
         switch (this.c) {
@@ -6282,7 +6283,7 @@ function TRdrawTerrain() {
     var a = Terrain,
         b, c, d = new Int32Array([0, 8, 16, 0, 8, 16, 0, 8, 16]),
         e = new Int32Array([0, 0, 0, 8, 8, 8, 16, 16, 16]),
-        g = Terrain_Textures[Stage_Spawns[a.c][ib][0]];
+        g = Terrain_Textures[Stage_Spawns[a.c][Current_Screen][0]];
     for (c = 0; c < a.f; c++)
         for (b = 0; b < a.m; b++) { var h = a.a[c][b]; - 1 != h && (9 == h ? 82 == a.c ? -1 == a.a[c - 1][b] ? drawItem(Water_Red_Img, 8 * b, 8 * c, 8, 8, 0, 0, 8, 8) : backgroundFill(8 * b - 4, 8 * c, 16, 8, 5570560) : -1 == a.a[c - 1][b] ? drawItem(Water_Img, 8 * b, 8 * c, 8, 8, 0, 0, 8, 8) : backgroundFill(8 * b - 4, 8 * c, 16, 8, 21916) : drawItem(g, 8 * b, 8 * c, 8, 8, d[h], e[h], 8, 8)) }
 }
@@ -6326,26 +6327,26 @@ var lg = document,
     ctx = cv.getContext("2d"),
     My_Img_Data = ctx.createImageData(512, 384),
     Bit_8_Color = new Uint32Array(My_Img_Data.data.buffer),
-    pg = aa.console,
+    pg = WIN.console,
     chrCode = String.fromCharCode,
     Ld = setTimeout,
     Host_Name = location.hostname;
 Host_Name = 'dan-ball.jp';
-aa.fff = putImageData;
+WIN.fff = putImageData;
 
 function putImageData(a, b, c) { try { cv = lg.getElementById("cv"), ctx = cv.getContext("2d"), ctx.putImageData(a, b, c) } catch (d) {} }
-aa.fff = logCopyright;
+WIN.fff = logCopyright;
 
 function logCopyright(a) { try { pg.log(a) } catch (b) {} }
-aa.Init = gameStartup;
-var rf = chrCode(40, 67, 41, 32, 50, 48, 48, 56, 32, 104, 97, 53, 53, 105, 105, 32, 68, 65, 78, 45, 66, 65, 76, 76, 46, 106, 112),
-    ud = chrCode(67, 111, 112, 121, 114, 105, 103, 104, 116, 32, 40, 67, 41, 32, 50, 48, 48, 56, 32, 104, 97, 53, 53, 105, 105, 32, 68, 65, 78, 45, 66, 65, 76, 76, 46, 106, 112),
-    sg = chrCode(46, 47, 100, 97, 116, 97, 47);//'./data/'
+WIN.Init = gameStartup;
+var chr_C_DAN_BALL = chrCode(40, 67, 41, 32, 50, 48, 48, 56, 32, 104, 97, 53, 53, 105, 105, 32, 68, 65, 78, 45, 66, 65, 76, 76, 46, 106, 112),
+    chr_Copyright_DAN_BALL = chrCode(67, 111, 112, 121, 114, 105, 103, 104, 116, 32, 40, 67, 41, 32, 50, 48, 48, 56, 32, 104, 97, 53, 53, 105, 105, 32, 68, 65, 78, 45, 66, 65, 76, 76, 46, 106, 112),
+    chr_dot_data = chrCode(46, 47, 100, 97, 116, 97, 47);//'./data/'
 chrCode(102, 112, 115);
-var tg = chrCode(99, 97, 110, 118, 97, 115),
-    ug = chrCode(50, 100),
+var chr_canvas = chrCode(99, 97, 110, 118, 97, 115),
+    chr_2d = chrCode(50, 100),
     Check_Host2 = 0,
-    wg = chrCode(100, 97, 110, 45, 98, 97, 108, 108, 46, 106, 112),
+    chr_dan_ball_jp = chrCode(100, 97, 110, 45, 98, 97, 108, 108, 46, 106, 112),
     Game_Canvas = new Int32Array(196608),
     Layer1 = new Int32Array(384),
     Layer2 = new Int32Array(384),
@@ -6353,7 +6354,7 @@ var tg = chrCode(99, 97, 110, 118, 97, 115),
     Layer4 = new Float32Array(384),
     Layer5 = new Float32Array(384),
     Layer6 = new Float32Array(384);
-wg = 'dan-ball.jp';
+chr_dan_ball_jp = 'dan-ball.jp';
 
 function mainSequence() {
     if (Animation_Frame) {
@@ -6388,9 +6389,9 @@ function mainSequence() {
 var Check_Host1 = 1;
 
 function checkFalseHost() {
-    if (Host_Name.length != wg.length) return !0;
+    if (Host_Name.length != chr_dan_ball_jp.length) return !0;
     for (Check_Host1 = 0; Check_Host2 < Host_Name.length; Check_Host2++)
-        if (Host_Name[Check_Host2] != wg[Check_Host2]) return !0;
+        if (Host_Name[Check_Host2] != chr_dan_ball_jp[Check_Host2]) return !0;
     return !1
 }
 var Animation_Frame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame,
@@ -6428,18 +6429,18 @@ function setArea(a, b, c) {
     for (b = 0; 16 > b; b++);
     a.l = new Int32Array(a.m * a.c)
 }
-SR_Image.prototype.IGset = function(a) { this.i != a && (Tile_Counter1++, this.i = a, this.b = new Image, this.b.src = sg + a + "?18.9", delete this.l, this.g = this.l = 0) };
+SR_Image.prototype.IGset = function(a) { this.i != a && (Tile_Counter1++, this.i = a, this.b = new Image, this.b.src = chr_dot_data + a + "?18.9", delete this.l, this.g = this.l = 0) };
 
 function imgToArray(a) {
     if (!a.g && a.b.complete) {
         Tile_Counter1--;
         var b = a.b.width,
             c = a.b.height;
-        if (!b || !c) throw delete a.b, a.i = "", Og;
-        var d = lg.createElement(tg);
+        if (!b || !c) throw delete a.b, a.i = "", chr_ERROR;
+        var d = lg.createElement(chr_canvas);
         d.width = b;
         d.height = c;
-        d = d.getContext(ug);
+        d = d.getContext(chr_2d);
         d.drawImage(a.b, 0, 0);
         d = d.getImageData(0, 0, b, c).data;
         setArea(a, b, c);
@@ -6451,7 +6452,7 @@ function imgToArray(a) {
 }
 
 function doVSModeText(a, b) {
-    a.g || (a.g = 1, setArea(a, 512, 16), a.h = lg.createElement(tg), a.h.width = a.m, a.h.height = a.c, a.f = a.h.getContext(ug));
+    a.g || (a.g = 1, setArea(a, 512, 16), a.h = lg.createElement(chr_canvas), a.h.width = a.m, a.h.height = a.c, a.f = a.h.getContext(chr_2d));
     var c = b + "sans-serif014";
     if (a.j != c) {
         a.j = c;
@@ -6739,15 +6740,15 @@ function getMousePos(a) {
 lg.onmousemove = getMousePos;
 lg.onmousedown = function(a) {
     getMousePos(a);
-    Vg = !1;
-    if (!(0 > Jg || 512 <= Jg || 0 > Kg || 384 <= Kg) && (Vg = !0, 0 == a.button && (Dg = !0), 2 == a.button && (Gg = !0), Vg)) return !1
+    Mouse_In_Window = !1;
+    if (!(0 > Jg || 512 <= Jg || 0 > Kg || 384 <= Kg) && (Mouse_In_Window = !0, 0 == a.button && (Dg = !0), 2 == a.button && (Gg = !0), Mouse_In_Window)) return !1
 };
 lg.onmouseup = function(a) {
     getMousePos(a);
     0 == a.button && (Dg = !1);
     2 == a.button && (Gg = !1)
 };
-lg.oncontextmenu = function() { if (Vg) return !1 };
+lg.oncontextmenu = function() { if (Mouse_In_Window) return !1 };
 
 function Wg(a) {
     var b = cv.getBoundingClientRect(),
@@ -6784,24 +6785,24 @@ lg.onkeydown = function(a) {
     var b = a.keyCode;
     65 <= b & 90 >= b ? a.shiftKey || (b += 32) : b = a.shiftKey ? Arr256_5[b] : Arr256_4[b];
     0 <= b && 256 > b && (Ad[b] = !0, zd[b] = !0);
-    if (0 != b && Vg) return !1
+    if (0 != b && Mouse_In_Window) return !1
 };
 lg.onkeyup = function(a) {
     var b = a.keyCode;
     65 <= b & 90 >= b ? a.shiftKey || (b += 32) : b = a.shiftKey ? Arr256_5[b] : Arr256_4[b];
     0 <= b && 256 > b && (Ad[b] = !1);
-    if (0 != b && Vg) return !1
+    if (0 != b && Mouse_In_Window) return !1
 };
-var Vg = !1,
+var Mouse_In_Window = !1,
     ef = "",
     gf = new SR_Image,
-    of = Array(100),
-    nf = 0,
-    Xg = chrCode(80, 79, 83, 84),
-    jf = chrCode(38, 98, 61),
-    kf = chrCode(38, 99, 61),
-    lf = chrCode(38, 100, 61),
-    pf = chrCode(38, 101, 61);
+    VS_result = Array(100),
+    Global_Eg = 0,
+    chr_POST = chrCode(80, 79, 83, 84),
+    chr_and_b_equal = chrCode(38, 98, 61),
+    chr_and_c_equal = chrCode(38, 99, 61),
+    chr_and_d_equal = chrCode(38, 100, 61),
+    chr_and_e_equal = chrCode(38, 101, 61);
 chrCode(38, 102, 61);
 chrCode(38, 103, 61);
 chrCode(38, 104, 61);
@@ -6809,14 +6810,14 @@ chrCode(38, 105, 61);
 chrCode(38, 106, 61);
 chrCode(38, 107, 61);
 chrCode(111, 107);
-var Og = chrCode(69, 82, 82, 79, 82),
-    Yg = chrCode(61),
-    Zg = chrCode(10),
-    $g = chrCode(67, 111, 110, 116, 101, 110, 116, 45, 84, 121, 112, 101),
-    ah = chrCode(97, 112, 112, 108, 105, 99, 97, 116, 105, 111, 110, 47, 120, 45, 119, 119, 119, 45, 102, 111, 114, 109, 45, 117, 114, 108, 101, 110, 99, 111, 100, 101, 100);
+var chr_ERROR = chrCode(69, 82, 82, 79, 82),
+    chr_equal = chrCode(61),
+    chr_Line_Return = chrCode(10),
+    chr_Content_Type = chrCode(67, 111, 110, 116, 101, 110, 116, 45, 84, 121, 112, 101),
+    chr_app_www = chrCode(97, 112, 112, 108, 105, 99, 97, 116, 105, 111, 110, 47, 120, 45, 119, 119, 119, 45, 102, 111, 114, 109, 45, 117, 114, 108, 101, 110, 99, 111, 100, 101, 100);
 
 function funct_Dg(a) {
-    for (var b = nf = 0; 100 > b; b++) of[b] = "";
+    for (var b = Global_Eg = 0; 100 > b; b++) VS_result[b] = "";
     if (false) {
         try {
             var c = new XMLHttpRequest;
@@ -6826,31 +6827,31 @@ function funct_Dg(a) {
                         var a, b, g = 0,
                             h = c.responseText.length;
                         for (a = 0; a < h; a++)
-                            if (b = c.responseText[a], b == Yg) {
+                            if (b = c.responseText[a], b == chr_equal) {
                                 for (a += 1; a < h; a++) {
                                     b = c.responseText[a];
-                                    if (b == Zg) break;
-                                    of[g] += b
+                                    if (b == chr_Line_Return) break;
+                                    VS_result[g] += b
                                 }
                                 g++
                             } else
-                                for (; a < h && c.responseText[a] != Zg; a++);
-                        nf = 1
-                    } else nf = -1
+                                for (; a < h && c.responseText[a] != chr_Line_Return; a++);
+                        Global_Eg = 1
+                    } else Global_Eg = -1
             };
-            c.open(Xg, a, !0);
-            c.setRequestHeader($g, ah);
+            c.open(chr_POST, a, !0);
+            c.setRequestHeader(chr_Content_Type, chr_app_www);
             c.send("")
-        } catch (d) { nf = -2 }
+        } catch (d) { Global_Eg = -2 }
     } else {
-        of[0] = "ok";
-        of[1] = "1";
-        of[2] = "2";
-        of[3] = "3";
-        of[4] = "4";
-        of[5] = "5";
-        of[6] = "6";
-        nf = 1;
+        VS_result[0] = "ok";
+        VS_result[1] = "1";
+        VS_result[2] = "2";
+        VS_result[3] = "3";
+        VS_result[4] = "4";
+        VS_result[5] = "5";
+        VS_result[6] = "6";
+        Global_Eg = 1;
     }
 }
 
