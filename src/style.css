@@ -69,7 +69,7 @@ INPUT[TYPE="CHECKBOX"]{PADDING:0;MARGIN:0 2px 0 0;WIDTH:14px;HEIGHT:14px;VERTICA
 #middle_ru{POSITION:relative;LINE-HEIGHT:14px;FLOAT:right;WIDTH:300px;PADDING:6px 0 0;Z-INDEX:2;}
 #middle_rd{POSITION:relative;LINE-HEIGHT:14px;FLOAT:right;WIDTH:300px;PADDING:12px 0 0;Z-INDEX:2;CLEAR:right;}
 #middle_re{WIDTH:100%;LINE-HEIGHT:0;HEIGHT:12px;CLEAR:both;}
-@media screen and (max-width:900px){
+@media screen and (max-width:9000px){
 	#middle_l{MARGIN:0;PADDING:6px 0 0;FLOAT:none;}
 	#middle_ru,#middle_rd{WIDTH:100%;FLOAT:none;}
 }

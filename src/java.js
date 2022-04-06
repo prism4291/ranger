@@ -19,6 +19,7 @@ function cookie_get(nm) {
 	}
 	return(r);
 }
+/*
 function cvs_mv2(gw, gh, ss, as, ab, ms) {
 	console.log('cvs_mv2');
 	var d=document;
@@ -61,6 +62,7 @@ function cvs_mv2(gw, gh, ss, as, ab, ms) {
 	}
 	window.onresize=function(){cvs_mv2(gw,gh,ss,as,ab,ms);}
 }
+
 var ajax_a=new Array();
 var ajax_f=new Array();
 function ajax(u, c) {
@@ -376,6 +378,7 @@ function hrc2(r) {
 	r=r.replace(/&gt;/g,	'>');
 	return r;
 }
+*/
 function hu_tag(id, lg) {
 	console.log('hu_tag');
 	var w='',ck=cookie_get('user');
@@ -428,16 +431,18 @@ function timer(id, u, t) {
 		else									s=document.getElementById(id).c('0');
 		if(s!=''){
 			var time=new Date(new Date().setTime(0)).toGMTString();
-			document.cookie='save='+s+'; expires='+time+'; path='+u+'\/ja; ';
-			document.cookie='save='+s+'; expires='+time+'; path='+u+'\/ja\/; ';
-			document.cookie='save='+s+'; expires='+time+'; path='+u.substr(0,-1)+'; ';
+			//document.cookie='save='+s+'; expires='+time+'; path='+u+'\/ja; ';
+			//document.cookie='save='+s+'; expires='+time+'; path='+u+'\/ja\/; ';
+			//document.cookie='save='+s+'; expires='+time+'; path='+u.substr(0,-1)+'; ';
 			time=new Date(new Date().getTime()+(1000*3600*24*30*3)).toGMTString();
-			document.cookie='save='+s+'; expires='+time+'; path='+u+'; ';
+			document.cookie='save='+s+'; expires='+time+'; path='+u+';Secure; ';
 		}
-	}catch(e){
+	} catch (e) {
+		console.log(e);
 	}
 	setTimeout("timer('"+id+"','"+u+"',"+t+")",t);
 }
+/*
 function post(u_no, v_no, v) {
 	console.log('post');
 	var i,f=document.createElement('form');
@@ -455,6 +460,7 @@ function post(u_no, v_no, v) {
 	f.setAttribute('method','post');
 	f.submit();
 }
+
 function top_blank() {
 	console.log('top_blank');
 	var i=0,l=document.links,c=document.links.length;
@@ -483,4 +489,4 @@ function top_blank() {
 		if((w==996 && h==896) || (w==1000 && h==900))
 			parent.location.href=m;
 	}
-}
+}*/
