@@ -1,3 +1,4 @@
+/*
 function cookie_get(nm) {
 	console.log('Cookie_get');
 	var r=[],dc=document.cookie;
@@ -18,7 +19,7 @@ function cookie_get(nm) {
 		}
 	}
 	return(r);
-}
+}*/
 /*
 function cvs_mv2(gw, gh, ss, as, ab, ms) {
 	console.log('cvs_mv2');
@@ -381,21 +382,22 @@ function hrc2(r) {
 */
 function hu_tag(id, lg) {
 	console.log('hu_tag');
-	var w='',ck=cookie_get('user');
+	var w=''/*,ck=cookie_get('user')*/;
 	var v=[['復活の呪文','Save game'],['ゲット','Get'],['セット','Set'],['ユーザー登録が必要です。','User registration is required.']];
-	if(ck[3]!=''){
-		w+='<TABLE ID="htbl"><TR><TH>'+v[0][lg]+'<\/TH><TD><TEXTAREA ID="bun" ONCLICK="this.select();"><\/TEXTAREA><\/TD><TH>';
+	/*if(ck[3]!=''){*/
+	w += '<TABLE ID="htbl"><TR><TH>' + v[0][lg] + '<\/TH><TD>' + '<TEXTAREA ID = "code" type = "text" value = "" readonly = "readonly" style = "WIDTH: 100%; HEIGHT: 48px; BORDER: 1px solid #000;" ></TEXTAREA>' +'<TEXTAREA ID="bun" style = "WIDTH: 100%; HEIGHT: 48px; BORDER: 1px solid #000;" ONCLICK="this.select();"><\/TEXTAREA><\/TD><TH>';
 			w+='<INPUT TYPE="SUBMIT" VALUE="'+v[1][lg]+'" ONCLICK="save(\''+id+'\')" ONMOUSEDOWN="';
 				w+='document.getElementById(\'bun\').value=\'\';document.getElementById(\'pass\').innerHTML=\'　\';';
 			w+='">';
 			w+='<INPUT TYPE="SUBMIT" VALUE="'+v[2][lg]+'" ONCLICK="load(\''+id+'\')" ONMOUSEDOWN="';
 				w+='document.getElementById(\'pass\').innerHTML=\'　\';';
 			w+='">';
-		w+='<\/TH><\/TR><\/TABLE><DIV id="pass" STYLE="HEIGHT:14px;"><\/DIV><BR>';
-	}else{
+	w += '<\/TH><\/TR><\/TABLE><DIV id="pass" STYLE="HEIGHT:14px;"><\/DIV><BR>';
+	w += '<\/TH><\/TR><\/TABLE><DIV id="datauser" STYLE="HEIGHT:14px;"><\/DIV><BR>';
+	/*}else{
 		w+='<TABLE CLASS="ctbl" STYLE="MARGIN:0 auto;"><TR><TH><B>'+v[0][lg]+'<\/B><\/TH><TD>'+v[3][lg]+'<\/TD><\/TR><\/TABLE>';
 		w+='<BR>';
-	}
+	}*/
 
 	document.getElementById('hu_tag').innerHTML=w;
 }
@@ -404,9 +406,10 @@ function save(id) {
 	var s='',h='Error';
 
 	if(document.getElementById('cv'))		s=GameSave('0');
-	else									s=document.getElementById(id).a('0');
+	//else									s=document.getElementById(id).a('0');
 	if(s!=''){
-		document.getElementById('bun').value=s;
+		//document.getElementById('bun').value=s;
+		document.getElementById('code').value = s;
 		h='Get OK';
 	}
 	document.getElementById('pass').innerHTML=h;
@@ -417,10 +420,12 @@ function load(id) {
 	var s=document.getElementById('bun').value,ret=-1,h='Error';
 	if(s!=''){
 		if(document.getElementById('cv'))		ret=GameLoad(s);
-		else									ret=document.getElementById(id).b(s);
+		//else									ret=document.getElementById(id).b(s);
 	}
 	if(ret!=-1)	h='Set OK';
-	document.getElementById('pass').innerHTML=h;
+	document.getElementById('pass').innerHTML = h;
+	document.getElementById('bun').value = "";
+	//document.getElementById('code').value = s;
 }
 function timer(id, u, t) {
 	//console.log('timer');
@@ -428,14 +433,15 @@ function timer(id, u, t) {
 		var s='';
 
 		if(document.getElementById('cv'))		s=AutoSave('0');
-		else									s=document.getElementById(id).c('0');
+		//else									s=document.getElementById(id).c('0');
 		if(s!=''){
-			var time=new Date(new Date().setTime(0)).toGMTString();
+			//var time=new Date(new Date().setTime(0)).toGMTString();
 			//document.cookie='save='+s+'; expires='+time+'; path='+u+'\/ja; ';
 			//document.cookie='save='+s+'; expires='+time+'; path='+u+'\/ja\/; ';
 			//document.cookie='save='+s+'; expires='+time+'; path='+u.substr(0,-1)+'; ';
-			time=new Date(new Date().getTime()+(1000*3600*24*30*3)).toGMTString();
-			document.cookie='save='+s+'; expires='+time+'; path='+u+';Secure; ';
+			//time=new Date(new Date().getTime()+(1000*3600*24*30*3)).toGMTString();
+			//document.cookie = 'save=' + s + '; expires=' + time + '; path=' + u + ';Secure; ';
+			document.getElementById('code').value = s;
 		}
 	} catch (e) {
 		console.log(e);

@@ -3,7 +3,7 @@ html{FONT:12px/14px 'ＭＳ ゴシック','Osaka-等幅','Monaco','Osaka-Mono','
 BODY{MARGIN:0;BACKGROUND:#ece4d1;FONT:12px/14px 'ＭＳ ゴシック','Osaka-等幅','Monaco','Osaka-Mono','monospace';FONT-DISPLAY:swap;-webkit-text-size-adjust:100%;}
 IMG,FORM,CENTER,TABLE,TD,TH,H1,H2,DL,DIV,A{MARGIN:0;PADDING:0;BORDER:0;}
 TABLE{BORDER-COLLAPSE:collapse;BORDER-SPACING:0;}
-A,IMG{IMAGE-RENDERING:pixelated;IMAGE-RENDERING:-moz-crisp-edges;IMAGE-RENDERING:crisp-edges;-MS-INTERPOLATION-MODE:nearest-neighbor;}
+A,IMG{IMAGE-RENDERING:pixelated;IMAGE-RENDERING:-moz-crisp-edges;/*IMAGE-RENDERING:crisp-edges;*/-MS-INTERPOLATION-MODE:nearest-neighbor;}
 .hr{CLEAR:both;WIDTH:500px;HEIGHT:1px;OVERFLOW:hidden;MARGIN:14px 0;BACKGROUND:#d86a24;}
 APPLET,CANVAS{DISPLAY:block;MARGIN:0 auto;}
 HR{BORDER:0px;BORDER-TOP:1px solid #d86a24;HEIGHT:0px;MARGIN:14px auto;}
@@ -165,7 +165,7 @@ INPUT[TYPE="CHECKBOX"]{PADDING:0;MARGIN:0 2px 0 0;WIDTH:14px;HEIGHT:14px;VERTICA
 .bttl:before{CONTENT:"- ";}
 .bttl:after {CONTENT:" -";}
 
-.nrnb{IMAGE-RENDERING:pixelated;IMAGE-RENDERING:-moz-crisp-edges;IMAGE-RENDERING:crisp-edges;-MS-INTERPOLATION-MODE:nearest-neighbor;}
+.nrnb{IMAGE-RENDERING:pixelated;IMAGE-RENDERING:-moz-crisp-edges;/*IMAGE-RENDERING:crisp-edges;*/-MS-INTERPOLATION-MODE:nearest-neighbor;}
 
 .gt{TEXT-ALIGN:left;MARGIN:14px 0;}
 .gtm0{TEXT-ALIGN:left;MARGIN:0;}
@@ -241,8 +241,8 @@ INPUT[TYPE="CHECKBOX"]{PADDING:0;MARGIN:0 2px 0 0;WIDTH:14px;HEIGHT:14px;VERTICA
 @media screen and (max-width:610px){
 	.logi_w2{PADDING:15px 0 0;}
 	.logi_w21{DISPLAY:block;POSITION:absolute;TOP:0;LEFT:0;WIDTH:100%;OVERFLOW:hidden;}
-	.logi_w211{OVERFLOW:hidden;WHITE-SPACE:nowrap;TEXT-OVERFLOW:ellipsis;-WEBKIT-TEXT-OVERFLOW:ellipsis;MIN-WIDTH:44.44%;MAX-WIDTH:44.44%;}
-	.logi_w212{OVERFLOW:hidden;WHITE-SPACE:nowrap;TEXT-OVERFLOW:ellipsis;-WEBKIT-TEXT-OVERFLOW:ellipsis;MIN-WIDTH:50%;MAX-WIDTH:50%;}
+	.logi_w211{OVERFLOW:hidden;WHITE-SPACE:nowrap;TEXT-OVERFLOW:ellipsis;/*-WEBKIT-TEXT-OVERFLOW:ellipsis;*/MIN-WIDTH:44.44%;MAX-WIDTH:44.44%;}
+	.logi_w212{OVERFLOW:hidden;WHITE-SPACE:nowrap;TEXT-OVERFLOW:ellipsis;/*-WEBKIT-TEXT-OVERFLOW:ellipsis;*/MIN-WIDTH:50%;MAX-WIDTH:50%;}
 }
 #logi_rlink{MARGIN:0 auto 14px;}
 .logi_rlink_a{DISPLAY:inline-block;WHITE-SPACE:nowrap;MARGIN:14px 0 0;}

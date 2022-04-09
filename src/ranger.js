@@ -834,7 +834,9 @@ function loadGame(a, b) {
     if (g[d + 0] != (e >> 8 & 47) || g[d + 1] != (e >> 4 & 31) || g[d + 2] != (e >> 0 & 15)) return 3;
     if (0 == b)
         for (d = 0; 8 > d; d++)
-            if (g[d + 5] != VS_Game_ID_Plain[d]) return 4;
+            //if (g[d + 5] != VS_Game_ID_Plain[d]) return 4;
+            if (g[d + 5] != VS_Game_ID_Plain[d]) VS_Game_ID_Plain[d] = g[d + 5];
+    if (document.getElementById('datauser')) var loadGameUserCode = ""; VS_Game_ID_Plain.forEach(elem => loadGameUserCode += Char_List[elem]); document.getElementById('datauser').innerHTML = loadGameUserCode;
     d = 0;
     d++;
     d++;
