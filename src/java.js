@@ -380,6 +380,35 @@ function hrc2(r) {
 	return r;
 }
 */
+function start_vs() {
+	var vs_data_1 = document.getElementById('code').value;
+	var vs_data_2 = document.getElementById('bun').value;
+	gameStartup('', '', 0, vs_data_1, 1, '12345678', '23456789', vs_data_2, 0, 450000, 'party1', 'A', 'party2', 'B');
+}
+function reset_vs() {
+	window.location.reload(false);
+}
+function hu_tag_vs(id, lg) {
+	console.log('hu_tag_vs');
+	/*if(ck[3]!=''){*/
+	var w = '';
+	w += '<TABLE ID="htbl"><TR><TH><\/TH><TD>' + '<TEXTAREA ID = "code" type = "text" value = "" style = "WIDTH: 100%; HEIGHT: 48px; BORDER: 1px solid #000;" ></TEXTAREA>' + '<TEXTAREA ID="bun" style = "WIDTH: 100%; HEIGHT: 48px; BORDER: 1px solid #000;" ONCLICK="this.select();"><\/TEXTAREA><\/TD><TH>';
+
+	w += '<INPUT TYPE="SUBMIT" VALUE="start" ONCLICK="start_vs()" ONMOUSEDOWN="';
+	w += 'document.getElementById(\'pass\').innerHTML=\'　\';';
+	w += '">';
+
+	w += '<\/TH><\/TR><\/TABLE><DIV id="pass" STYLE="HEIGHT:14px;"><\/DIV><BR>';
+	w += '<\/TH><\/TR><\/TABLE><DIV id="datauser" STYLE="HEIGHT:14px;"><\/DIV><BR>';
+	/*}else{
+		w+='<TABLE CLASS="ctbl" STYLE="MARGIN:0 auto;"><TR><TH><B>'+v[0][lg]+'<\/B><\/TH><TD>'+v[3][lg]+'<\/TD><\/TR><\/TABLE>';
+		w+='<BR>';
+	}*/
+	w += '<INPUT TYPE="SUBMIT" VALUE="reset" ONCLICK="reset_vs()" ONMOUSEDOWN="';
+	w += 'document.getElementById(\'pass\').innerHTML=\'　\';';
+	w += '">';
+	document.getElementById('hu_tag').innerHTML = w;
+}
 function hu_tag(id, lg) {
 	console.log('hu_tag');
 	var w=''/*,ck=cookie_get('user')*/;
