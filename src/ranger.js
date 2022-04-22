@@ -34,7 +34,7 @@ var WIN = window,
     Current_Stage = 0,
     Current_Screen = 0,
     Sign_Touched_Mode = 0,
-    n = 0,
+    Displayed_Object = 0,
     Selected_Player = 3,
     Mouse_Up = !1,
     Menu_Column = 0,
@@ -702,7 +702,7 @@ Item_Catalogue[560] = ["Imperial Crown", 4, 400, 19, 63, 9, 4294956800, 48, 200,
 Item_Catalogue[561] = ["Anger Crown", 0, 400, 19, 63, 9, 4292730333, 49, 0, 0, "LV up effect", "(Passive)"];
 Item_Catalogue[562] = ["Anger Crown", 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 9999, 1, 0, 0, 0, 0, 0, 18, 4294967193, 2, 64, 512, 64, 512, 0, 0, 10, 20, 0, 100, 1, 0, 0, 3, 0, 0, 0];
 Item_Catalogue[563] = ["Anger Crown", 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 999, 1, 0, 0, 0, 0, 0, 21, 4294967193, 2, 8, 8, 16, 16, 0, 0, 10, 3, -9, 100, 1, 0, 0, 3, 0, 0, 0];
-var Ec = 0,
+var Save_Code1 = 0,
     Saving_Text_Timer = 0,
     Save_Code3 = "";
 window.GameSave = getSaveCode;
@@ -710,14 +710,14 @@ window.GameSave = getSaveCode;
 function getSaveCode(a) { return 0 == a.length ? "" : Save_Code3 }
 var Save_Error = 0,
     Save_Error_Text_Timer = 0,
-    Kc = "";
+    Save_Code_le = "";
 window.GameLoad = setSaveCode;
 
 function setSaveCode(a) {
-    if (0 != a.length) return Kc = a, 0;
+    if (0 != a.length) return Save_Code_le = a, 0;
     if (0 == a.length) {
-        if (0 == Kc.length) return -1;
-        n = Sign_Touched_Mode = Current_Screen = Current_Stage = Text_Fade = Sequence_Step = 0;
+        if (0 == Save_Code_le.length) return -1;
+        Displayed_Object = Sign_Touched_Mode = Current_Screen = Current_Stage = Text_Fade = Sequence_Step = 0;
         Selected_Player = 3;
         Mouse_Up = !1;
         for (a = 0; 4 > a; a++) MP_Bar[a] = 0;
@@ -727,9 +727,9 @@ function setSaveCode(a) {
         Projectiles.o();
         Drops.o();
         WorldMap.o();
-        Save_Error = loadGame(Kc, 0);
+        Save_Error = loadGame(Save_Code_le, 0);
         0 < Save_Error ? Save_Error_Text_Timer = 50 : Save_Code3 = genSaveCode(0);
-        Kc = "";
+        Save_Code_le = "";
         antiCheatSet()
     }
     return -1
@@ -737,27 +737,27 @@ function setSaveCode(a) {
 window.AutoSave = saveGame;
 
 function saveGame(a) {
-    if (0 == a.length || !Ec) return "";
-    Ec = 0;
+    if (0 == a.length || !Save_Code1) return "";
+    Save_Code1 = 0;
     Saving_Text_Timer = 50;
     return getSaveCode("0")
 }
 
 function getVal(a, b) { return Item_Catalogue[a].length <= b ? 0 : 6 == b || 19 == b || 44 == b ? Item_Catalogue[a][b] >>> 0 : Item_Catalogue[a][b] }
-var Wc = !1,
-    Xc = !1;
+var Slot1 = !1,
+    Slot2 = !1;
 
 function checkEff(a, b) {
-    Xc = Wc = !1;
-    getVal(Comp1_Inv[a], 7) == b && (Wc = !0);
-    getVal(Comp2_Inv[a], 7) == b && (Xc = !0);
-    return Wc || Xc ? !0 : !1
+    Slot2 = Slot1 = !1;
+    getVal(Comp1_Inv[a], 7) == b && (Slot1 = !0);
+    getVal(Comp2_Inv[a], 7) == b && (Slot2 = !0);
+    return Slot1 || Slot2 ? !0 : !1
 }
 
 function getEff(a, b) {
     var c = 0;
-    Wc && (c += getVal(Comp1_Inv[a], b));
-    Xc && (c += getVal(Comp2_Inv[a], b));
+    Slot1 && (c += getVal(Comp1_Inv[a], b));
+    Slot2 && (c += getVal(Comp2_Inv[a], b));
     return c
 }
 var Char_List = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.*".split("");
@@ -900,27 +900,27 @@ function vsUploadCode(a) {
     for (a = 2; a < b; a++) c += Char_List[d[a] + e & 63], e += d[a] + a + d[0];
     return c
 }
-var ed = 0,
-    fd = 0,
-    gd = [],
-    hd = 0,
-    id = 0,
-    jd = 0;
+var Check_Var_Total = 0,
+    Check_Var_Seed = 0,
+    Item_Attribute_Data = [],
+    Enemy_Spawn_Data = 0,
+    Monster_Data = 0,
+    Shop_Item_Data = 0;
 WIN.fff = dataGather;
 
 function dataGather() {
     var a, b, c;
-    gd = new Int32Array(Item_Catalogue.length);
+    Item_Attribute_Data = new Int32Array(Item_Catalogue.length);
     for (a = 0; a < Item_Catalogue.length; a++)
-        for (b = gd[a] = 0; b < Item_Catalogue[a].length; b++) "number" == typeof Item_Catalogue[a][b] && (gd[a] += Item_Catalogue[a][b] & 255);
-    for (a = hd = 0; a < Stage_Spawns.length; a++)
+        for (b = Item_Attribute_Data[a] = 0; b < Item_Catalogue[a].length; b++) "number" == typeof Item_Catalogue[a][b] && (Item_Attribute_Data[a] += Item_Catalogue[a][b] & 255);
+    for (a = Enemy_Spawn_Data = 0; a < Stage_Spawns.length; a++)
         for (b = 0; b < Stage_Spawns[a].length; b++)
-            for (c = 0; c < Stage_Spawns[a][b].length; c++) hd += Stage_Spawns[a][b][c];
-    for (a = id = 0; a < EN_Info.length; a++)
-        for (b = 0; b < EN_Info[a].length; b++) id += EN_Info[a][b] & 65535;
-    for (c = jd = 0; c < Shop_Items.length; c++)
+            for (c = 0; c < Stage_Spawns[a][b].length; c++) Enemy_Spawn_Data += Stage_Spawns[a][b][c];
+    for (a = Monster_Data = 0; a < EN_Info.length; a++)
+        for (b = 0; b < EN_Info[a].length; b++) Monster_Data += EN_Info[a][b] & 65535;
+    for (c = Shop_Item_Data = 0; c < Shop_Items.length; c++)
         for (a = 0; a < Shop_Items[c].length; a++)
-            for (b = 0; b < Shop_Items[c][a].length; b++) jd += Shop_Items[c][a][b] * b & 65535
+            for (b = 0; b < Shop_Items[c][a].length; b++) Shop_Item_Data += Shop_Items[c][a][b] * b & 65535
 }
 
 function antiCheatCheck() {
@@ -967,7 +967,7 @@ function antiCheatCheck() {
     for (a = 0; 8 >
         a; a++) d += MAG_SP[a];
     d != 8 * (LV[0] - 1) + 8 * (LV[1] - 1) && (Game_Canvas = null);
-    d = fd;
+    d = Check_Var_Seed;
     d += (Team_EXP | 1) * (d & 15 | 1);
     d += (Team_Gold | 1) * (d & 15 | 1);
     for (a = 0; 2 > a; a++) d += (LV[a] | 1) * (d & 15 | 1);
@@ -1001,35 +1001,35 @@ function antiCheatCheck() {
     d += (FP[1] | 1) * (d & 15 | 1);
     d += (Rank[0] | 1) * (d & 15 | 1);
     d += (Rank[1] | 1) * (d & 15 | 1);
-    d != (ed ^ 16777215) && (Game_Canvas = null);
+    d != (Check_Var_Total ^ 16777215) && (Game_Canvas = null);
     if (1 > random(100))
         for (a = 0; a < Item_Catalogue.length; a++) {
             for (b = d = 0; b < Item_Catalogue[a].length; b++) "number" == typeof Item_Catalogue[a][b] && (d += Item_Catalogue[a][b] & 255);
-            d != gd[a] && (Game_Canvas = null)
+            d != Item_Attribute_Data[a] && (Game_Canvas = null)
         }
     if (1 > random(100)) {
         for (a = d = 0; a < Stage_Spawns.length; a++)
             for (b = 0; b < Stage_Spawns[a].length; b++)
                 for (c = 0; c < Stage_Spawns[a][b].length; c++) d += Stage_Spawns[a][b][c];
-        d != hd && (Game_Canvas = null)
+        d != Enemy_Spawn_Data && (Game_Canvas = null)
     }
     if (1 > random(100)) {
         for (a = d = 0; a < EN_Info.length; a++)
             for (b = 0; b < EN_Info[a].length; b++) d += EN_Info[a][b] & 65535;
-        d != id && (Game_Canvas = null)
+        d != Monster_Data && (Game_Canvas = null)
     }
     if (1 > random(100)) {
         for (c =
             d = 0; c < Shop_Items.length; c++)
             for (a = 0; a < Shop_Items[c].length; a++)
                 for (b = 0; b < Shop_Items[c][a].length; b++) d += Shop_Items[c][a][b] * b & 65535;
-        d != jd && (Game_Canvas = null)
+        d != Shop_Item_Data && (Game_Canvas = null)
     }
 }
 
 function antiCheatSet() {
     var a, b = floor(random(1024));
-    fd = b;
+    Check_Var_Seed = b;
     b += (Team_EXP | 1) * (b & 15 | 1);
     b += (Team_Gold | 1) * (b & 15 | 1);
     for (a = 0; 2 > a; a++) b += (LV[a] | 1) * (b & 15 | 1);
@@ -1063,12 +1063,12 @@ function antiCheatSet() {
     b += (FP[1] | 1) * (b & 15 | 1);
     b += (Rank[0] | 1) * (b & 15 | 1);
     b += (Rank[1] | 1) * (b & 15 | 1);
-    ed = b ^ 16777215
+    Check_Var_Total = b ^ 16777215
 }
-var rd = 0;
+var Startup_Step = 0;
 
 function gameStartup(a, b, c, d, e, g, h, q, m, l, A, z, Z, B) {
-    if (!rd) {
+    if (!Startup_Step) {
         null != a ? Game_ID_1 = a : Game_ID_1 = "";
         null != b ? Game_ID_2 = b : Game_ID_2 = "";
         Game_Language = "0" == c ? !0 : !1;
@@ -1163,9 +1163,9 @@ function gameStartup(a, b, c, d, e, g, h, q, m, l, A, z, Z, B) {
         Map_Tiles_Img.IGset("mt.gif");
         Map_Feature_Index.IGset("map2.gif");
         Map_Features_Img.IGset("mt2.gif");
-        checkFalseHost() ? rd-- : rd++
+        checkFalseHost() ? Startup_Step-- : Startup_Step++
     }
-    if (1 == rd) {
+    if (1 == Startup_Step) {
         imgToArray(Large_Text.f);
         imgToArray(Small_Text.f);
         for (a = 0; 13 > a; a++) imgToArray(Terrain_Textures[a]);
@@ -1185,9 +1185,9 @@ function gameStartup(a, b, c, d, e, g, h, q, m, l, A, z, Z, B) {
         imgToArray(Map_Tiles_Img);
         imgToArray(Map_Feature_Index);
         imgToArray(Map_Features_Img);
-        Tile_Counter1 ? Ld(gameStartup, timePF()) : rd++
+        Tile_Counter1 ? timeOut(gameStartup, timePF()) : Startup_Step++
     }
-    2 == rd && (Players.o(), Indicators.o(), Projectiles.o(),
+    2 == Startup_Step && (Players.o(), Indicators.o(), Projectiles.o(),
         Drops.o(), WorldMap.o(), 1 == Game_Mode && loadGame(VS_Opponent_Data, 1), loadGame(Save_Cookie, 0), Save_Code3 = genSaveCode(0), dataGather(), antiCheatSet(), setArea(Stage_Eff_Canvas, 512, 384), mainSequence())
 }
 WIN.fff = playSequence;
@@ -1226,7 +1226,7 @@ function menuAndMap() {
         if (isMouseHoveredCenter(100 == b ? 256 : 316, 195, 100 == b ? 128 : 248, 24)) {
             if (Clicked) {
                 antiCheatCheck();
-                Selected_Player = n = 3;
+                Selected_Player = Displayed_Object = 3;
                 for (a = 0; 4 > a; a++) Ranger_Class_Proxy[a] = Ranger_Class[a], Item_Inv_Proxy[a] = Item_Inv[4 + a], Comp1_Inv_Proxy[a] = Comp1_Inv[4 + a], Comp2_Inv_Proxy[a] = Comp2_Inv[4 + a], Ranger_Class[a] = 0, Item_Inv[4 + a] = 0, Comp1_Inv[4 + a] = 0, Comp2_Inv[4 + a] = 0;
                 Sequence_Step++;
                 antiCheatSet();
@@ -1245,8 +1245,8 @@ function menuAndMap() {
         TRdrawTerrain();
         Players.B();
         largeMessage(Large_Text, 256, 50, "Player's Class Selection", 204, 148, 73, 255, 100, 0, 0, 255, 16, 24);
-        for (a = 0; 4 > a; a++) isMouseHoveredCenter(160 + 64 * a, 140, 24, 24) && (Clicked && (Selected_Player = n = a), filledRectCentered(160 + 64 * a, 140, 24, 24, 8388608)), outlineRectCentered(160 + 64 * a, 140, 25, 25, 16777215), dispItemCentered(Player_Img, 160 + 64 * a, 140, 24, 24, 24 * Ranger_Class[a], 0, 24, 24, 16777215);
-        outlineRectCentered(160 + 64 * n, 140, 25, 25, 16711680);
+        for (a = 0; 4 > a; a++) isMouseHoveredCenter(160 + 64 * a, 140, 24, 24) && (Clicked && (Selected_Player = Displayed_Object = a), filledRectCentered(160 + 64 * a, 140, 24, 24, 8388608)), outlineRectCentered(160 + 64 * a, 140, 25, 25, 16777215), dispItemCentered(Player_Img, 160 + 64 * a, 140, 24, 24, 24 * Ranger_Class[a], 0, 24, 24, 16777215);
+        outlineRectCentered(160 + 64 * Displayed_Object, 140, 25, 25, 16711680);
         antiCheatCheck();
         for (a = 0; 8 > a; a++) {
             var b = 46 + 60 * a,
@@ -1255,7 +1255,7 @@ function menuAndMap() {
             d.b = -1;
             centeredText(d, b, 220, c, 13407305, 6553600);
             d.b = 0;
-            isMouseHoveredCenter(46 + 60 * a, 240, 24, 24) && (Clicked && (Ranger_Class[n] = a + 1, Item_Inv[4 + n] = [3, 4, 5, 6, 58, 76, 188, 289][a], Comp1_Inv[4 + n] = 0, Comp2_Inv[4 + n] = 0), filledRectCentered(46 + 60 * a, 240, 24, 24, 8388608));
+            isMouseHoveredCenter(46 + 60 * a, 240, 24, 24) && (Clicked && (Ranger_Class[Displayed_Object] = a + 1, Item_Inv[4 + Displayed_Object] = [3, 4, 5, 6, 58, 76, 188, 289][a], Comp1_Inv[4 + Displayed_Object] = 0, Comp2_Inv[4 + Displayed_Object] = 0), filledRectCentered(46 + 60 * a, 240, 24, 24, 8388608));
             outlineRectCentered(46 + 60 * a, 240, 25, 25, 16777215);
             dispItemCentered(Player_Img, 46 + 60 * a, 240, 24, 24, 24 * (a + 1), 0, 24, 24, 16777215)
         }
@@ -1301,7 +1301,7 @@ function menuAndMap() {
         a = WorldMap;
         var e, g, d = new Vector2D,
             h = new Vector2D;
-        20 > he && 256 > ie ? a.a = clamp(a.a + 4, -720, 0) : 492 < he && 256 > ie && (a.a = clamp(a.a - 4, -720, 0));
+        20 > Mouse_Xpos && 256 > Mouse_Ypos ? a.a = clamp(a.a + 4, -720, 0) : 492 < Mouse_Xpos && 256 > Mouse_Ypos && (a.a = clamp(a.a - 4, -720, 0));
         for (g = 0; 16 > g; g++)
             for (e = 0; e < a.m; e++) - 1 != a.b[g][e] && drawItem(Map_Tiles_Img, a.a + 16 * e, 16 * g, 16, 16, a.b[g][e] % 5 * 16, 16 * floor(a.b[g][e] / 5), 16, 16);
         for (b = 0; b < Stage_Count; b++)
@@ -1329,7 +1329,7 @@ function menuAndMap() {
         e = 8 * Dot_Locations[Current_Stage][0];
         g = 8 * Dot_Locations[Current_Stage][1];
         drawItem(Player_Img, a.a + e + 1 - 12, g - 14 - 11, 24, 22, 0, 0, 24, 22);
-        for (b = 0; b < Stage_Count; b++) 0 != Stage_Status[b] && (e = 8 * Dot_Locations[b][0], g = 8 * Dot_Locations[b][1], c = 71 == b ? 3 : 24, isMouseHoveredCenter(a.a + e, g, c, c)) && (!Clicked || b && 20 != b && 47 != b && 70 != b && 77 != b ? Clicked && b && (Current_Stage = b, Current_Screen = 0, Sequence_Step = 10) : (Current_Stage = b, Current_Screen = 1, Sequence_Step = 50), e = clamp(he, 1 + 4 * Stage_Names[b].length, 510 - 4 * Stage_Names[b].length), g = clamp(ie - 24, 8, 256), centeredText(Large_Text, e, g, Stage_Names[b], 16777215, 5263440));
+        for (b = 0; b < Stage_Count; b++) 0 != Stage_Status[b] && (e = 8 * Dot_Locations[b][0], g = 8 * Dot_Locations[b][1], c = 71 == b ? 3 : 24, isMouseHoveredCenter(a.a + e, g, c, c)) && (!Clicked || b && 20 != b && 47 != b && 70 != b && 77 != b ? Clicked && b && (Current_Stage = b, Current_Screen = 0, Sequence_Step = 10) : (Current_Stage = b, Current_Screen = 1, Sequence_Step = 50), e = clamp(Mouse_Xpos, 1 + 4 * Stage_Names[b].length, 510 - 4 * Stage_Names[b].length), g = clamp(Mouse_Ypos - 24, 8, 256), centeredText(Large_Text, e, g, Stage_Names[b], 16777215, 5263440));
         b = Large_Text;
         b.b = 4;
         centeredText(b, 256, 16, "WORLD MAP", -1, 13158600);
@@ -1392,7 +1392,7 @@ function PvEscreens() {
     } else if (11 == Sequence_Step) drawStage(0), drawUI(0), q = 30, a = "", Current_Screen ? Current_Screen + 1 == Stage_Spawns[Current_Stage].length && (q = 110, a = "BOSS AREA") : (q = 110, a = Stage_Names[Current_Stage]), screenTransition(255 - floor(255 * minOf(Text_Fade, 30) / 30)), 110 == q && (b = 255, 30 > Text_Fade ? b = floor(255 * Text_Fade / 30) : 80 < Text_Fade && (b = 255 - floor(255 * (Text_Fade - 80) / 30)), largeMessage(Large_Text, 256, 128, a, 255, 255, 255, b, 64, 64, 64, b, 16, 24), c = -1024 + floor(512 * Text_Fade / 30), drawLine(c, 112, c + 1024, 112, 8421504), c = 512 - floor(512 * Text_Fade / 30), drawLine(c, 141, c + 1024, 141, 8421504)), Text_Fade++, Text_Fade == q && (Text_Fade = 0, Sequence_Step++);
     else if (12 ==
         Sequence_Step) drawStage(0), drawUI(0), 0 == LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] ? (Text_Fade = 0, Sequence_Step = 30) : Sign_Touched_Mode ? Sequence_Step++ : isMouseHovered(364, 4, 56, 20) ? (Clicked ? Sequence_Step = 20 : yd[32] && (Sequence_Step = 20), TXoutputB(Large_Text, 368, 8, "Option", 16711680, 0)) : yd[32] ? Sequence_Step = 20 : isMouseHovered(428, 4, 80, 20) && (Clicked && (Sequence_Step = 6), TXoutputB(Large_Text, 432, 8, "World Map", 16711680, 0));
-    else if (13 == Sequence_Step) drawStage(0), drawUI(0), screenTransition(floor(255 * Text_Fade / 30)), Text_Fade++, 30 == Text_Fade && (1 == Sign_Touched_Mode ? (Sign_Touched_Mode = 0, Current_Screen++, Text_Fade = 0, Sequence_Step = 10) : 2 == Sign_Touched_Mode && (Text_Fade = Current_Screen = Sign_Touched_Mode = 0, antiCheatCheck(), Stage_Status[Current_Stage] |= Beaten, 0 < Dot_Locations[Current_Stage][3] && (Stage_Status[Dot_Locations[Current_Stage][3]] |= Unlocked), 0 < Dot_Locations[Current_Stage][4] && (Stage_Status[Dot_Locations[Current_Stage][4]] |= Unlocked), antiCheatSet(), Sequence_Step = 6, -1 == Dot_Locations[Current_Stage][3] && (Sequence_Step = 40)), Save_Code3 = genSaveCode(0), Ec = 1);
+    else if (13 == Sequence_Step) drawStage(0), drawUI(0), screenTransition(floor(255 * Text_Fade / 30)), Text_Fade++, 30 == Text_Fade && (1 == Sign_Touched_Mode ? (Sign_Touched_Mode = 0, Current_Screen++, Text_Fade = 0, Sequence_Step = 10) : 2 == Sign_Touched_Mode && (Text_Fade = Current_Screen = Sign_Touched_Mode = 0, antiCheatCheck(), Stage_Status[Current_Stage] |= Beaten, 0 < Dot_Locations[Current_Stage][3] && (Stage_Status[Dot_Locations[Current_Stage][3]] |= Unlocked), 0 < Dot_Locations[Current_Stage][4] && (Stage_Status[Dot_Locations[Current_Stage][4]] |= Unlocked), antiCheatSet(), Sequence_Step = 6, -1 == Dot_Locations[Current_Stage][3] && (Sequence_Step = 40)), Save_Code3 = genSaveCode(0), Save_Code1 = 1);
     else if (20 == Sequence_Step) {
         drawStage(1);
         drawUI(1);
@@ -1410,20 +1410,20 @@ function PvEscreens() {
         for (a = 0; 4 > a; a++) centeredText(Large_Text, 256 + 32 * a, 98, b[Sett_Auto_Move[a]], 16777215, 0), isMouseHoveredCenter(256 + 32 * a, 98, 32, 13) && (centeredText(Large_Text, 256 + 32 * a, 98, b[Sett_Auto_Move[a]], 16711680, 0), Clicked && (Sett_Auto_Move[a] = 1 - Sett_Auto_Move[a]));
         TXoutputB(Large_Text, 128, 108, "  Move of dying: " + b[Sett_Move_If_Dying],
             16777215, 0);
-        isMouseHovered(128, 108, 256, 13) && (TXoutputB(Large_Text, 128, 108, "  Move of dying: " + b[Sett_Move_If_Dying], 16711680, 0), Sett_Move_If_Dying = cycle(Sett_Move_If_Dying + Fe, 0, 1));
+        isMouseHovered(128, 108, 256, 13) && (TXoutputB(Large_Text, 128, 108, "  Move of dying: " + b[Sett_Move_If_Dying], 16711680, 0), Sett_Move_If_Dying = cycle(Sett_Move_If_Dying + Sett_Change, 0, 1));
         a = ["PLAYER&ENEMY", "PLAYER", "ENEMY", "OFF"];
         TXoutputB(Large_Text, 128, 121, "  Damage Effect: " + a[Sett_Dmg_Indicators], 16777215, 0);
-        isMouseHovered(128, 121, 256, 13) && (TXoutputB(Large_Text, 128, 121, "  Damage Effect: " + a[Sett_Dmg_Indicators], 16711680, 0), Sett_Dmg_Indicators = cycle(Sett_Dmg_Indicators + Fe, 0, 3));
+        isMouseHovered(128, 121, 256, 13) && (TXoutputB(Large_Text, 128, 121, "  Damage Effect: " + a[Sett_Dmg_Indicators], 16711680, 0), Sett_Dmg_Indicators = cycle(Sett_Dmg_Indicators + Sett_Change, 0, 3));
         a = ["OFF", "PLAYER", "ENEMY", "PLAYER&ENEMY"];
         TXoutputB(Large_Text, 128, 134, "  LP Bar       : " + a[Sett_LP_Bar_Disp], 16777215, 0);
-        isMouseHovered(128, 134, 256, 13) && (TXoutputB(Large_Text, 128, 134, "  LP Bar       : " + a[Sett_LP_Bar_Disp], 16711680, 0), Sett_LP_Bar_Disp = cycle(Sett_LP_Bar_Disp + Fe, 0, 3));
+        isMouseHovered(128, 134, 256, 13) && (TXoutputB(Large_Text, 128, 134, "  LP Bar       : " + a[Sett_LP_Bar_Disp], 16711680, 0), Sett_LP_Bar_Disp = cycle(Sett_LP_Bar_Disp + Sett_Change, 0, 3));
         a = ["SQUARE", "TRIANGLE", "SHADOW", "OFF"];
         TXoutputB(Large_Text, 128, 147, "  PL Symbol    : " + a[Sett_PL_Symbol], 16777215, 0);
-        isMouseHovered(128, 147, 256, 13) && (TXoutputB(Large_Text, 128, 147, "  PL Symbol    : " + a[Sett_PL_Symbol], 16711680, 0), Sett_PL_Symbol = cycle(Sett_PL_Symbol + Fe, 0, 3));
+        isMouseHovered(128, 147, 256, 13) && (TXoutputB(Large_Text, 128, 147, "  PL Symbol    : " + a[Sett_PL_Symbol], 16711680, 0), Sett_PL_Symbol = cycle(Sett_PL_Symbol + Sett_Change, 0, 3));
         TXoutputB(Large_Text, 128, 160, "  Drag DeadBody: " + b[Sett_Drag_Dead_Body], 16777215, 0);
-        isMouseHovered(128, 160, 256, 13) && (TXoutputB(Large_Text, 128, 160, "  Drag DeadBody: " + b[Sett_Drag_Dead_Body], 16711680, 0), Sett_Drag_Dead_Body = cycle(Sett_Drag_Dead_Body + Fe, 0, 1));
+        isMouseHovered(128, 160, 256, 13) && (TXoutputB(Large_Text, 128, 160, "  Drag DeadBody: " + b[Sett_Drag_Dead_Body], 16711680, 0), Sett_Drag_Dead_Body = cycle(Sett_Drag_Dead_Body + Sett_Change, 0, 1));
         centeredText(Large_Text, 256, 182, "Space Key: open & close", 12632256, 0);
-        isMouseHoveredCenter(256, 182, 256, 13) && (centeredText(Large_Text, 256, 182, "Space Key: open & close", 16711680, 0), Fe && (Sequence_Step = q))
+        isMouseHoveredCenter(256, 182, 256, 13) && (centeredText(Large_Text, 256, 182, "Space Key: open & close", 16711680, 0), Sett_Change && (Sequence_Step = q))
     } else if (30 == Sequence_Step) {
         if (drawStage(0), drawUI(0), 100 > Text_Fade && Text_Fade++, b = floor(255 * Text_Fade / 100), largeMessage(Large_Text, 256, 128, "GAME OVER", 100, 20,
                 10, b, 200, 0, 0, b, 16, 24), 100 == Text_Fade && Clicked) {
@@ -1506,13 +1506,13 @@ function townScreens() {
         Display_Mode = 0;
         outlineRect(shop_left + 0, shop_top +
             0, 236, 161, 16777215);
-        isMouseHovered(shop_left + 8, shop_top + 4, 16 * shop_item[town_stage].length, 12) && (b = floor((he - (shop_left + 8)) / 16), Clicked && (Menu_Column = b, Menu_Row = clamp(Menu_Row, 0, floor(Shop_Items[town_stage][Menu_Column].length / 3) - 1)), filledRect(shop_left + 8 + 16 * b, shop_top + 4, 12, 12, 10027008));
+        isMouseHovered(shop_left + 8, shop_top + 4, 16 * shop_item[town_stage].length, 12) && (b = floor((Mouse_Xpos - (shop_left + 8)) / 16), Clicked && (Menu_Column = b, Menu_Row = clamp(Menu_Row, 0, floor(Shop_Items[town_stage][Menu_Column].length / 3) - 1)), filledRect(shop_left + 8 + 16 * b, shop_top + 4, 12, 12, 10027008));
         Display_Mode2 = 2;
         for (a = 0; a < shop_item[town_stage].length; a++) dispItem(Drop_Img, shop_left + 8 + 16 * a, shop_top + 4, 12, 12, 12 * shop_item[town_stage][a], 0, 12, 12, 16777215);
         Display_Mode2 = 0;
         outlineRect(shop_left + 8 + 16 * Menu_Column - 1, shop_top + 4 - 1, 14, 14, 10027008);
         drawLine(shop_left + 0, shop_top + 20 - 1, shop_left + 235, shop_top + 20 - 1, 16777215);
-        isMouseHovered(shop_left + 120, shop_top + 24, 84, 84) && (b = floor((he - (shop_left + 120)) / 28), a = floor((ie - (shop_top + 24)) / 28), Clicked && (Menu_Entry = 3 * a + b), filledRect(shop_left + 120 + 28 * b, shop_top + 24 + 28 * a, 24, 24, 10027008));
+        isMouseHovered(shop_left + 120, shop_top + 24, 84, 84) && (b = floor((Mouse_Xpos - (shop_left + 120)) / 28), a = floor((Mouse_Ypos - (shop_top + 24)) / 28), Clicked && (Menu_Entry = 3 * a + b), filledRect(shop_left + 120 + 28 * b, shop_top + 24 + 28 * a, 24, 24, 10027008));
         b = (3 * Menu_Row + Menu_Entry) % Shop_Items[town_stage][Menu_Column].length;
         shop_item = Shop_Items[town_stage][Menu_Column][b];
         g = 1;
@@ -1602,7 +1602,7 @@ function townScreens() {
             Menu_Column ? " " : "");
         town_stage += "" + floor(Menu_Column / shop_item + 1) + "/" + floor((Stage_In_Book.length - 1) / shop_item + 1);
         TXoutputB(Large_Text, shop_left + 20, shop_top + 4, town_stage, -1, 32768);
-        isMouseHovered(shop_left + 8, shop_top + 16, 144, 12 * shop_item) && (a = floor((ie - (shop_top + 16)) / 12), Clicked && (Menu_Row = a), filledRect(shop_left + 8, shop_top + 16 + 12 * a, 144, 12, 10027008));
+        isMouseHovered(shop_left + 8, shop_top + 16, 144, 12 * shop_item) && (a = floor((Mouse_Ypos - (shop_top + 16)) / 12), Clicked && (Menu_Row = a), filledRect(shop_left + 8, shop_top + 16 + 12 * a, 144, 12, 10027008));
         for (a = 0; a < shop_item; a++) town_stage = Stage_In_Book[Menu_Column + a], 0 != town_stage && (0 < (Stage_Status[town_stage] & Beaten) ? TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * a, Stage_Names[town_stage], 16777215, 0) : TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * a, "???", 16777215, 0));
         town_stage = Stage_In_Book[Menu_Column + Menu_Row];
         0 != town_stage && (0 < (Stage_Status[town_stage] & Beaten) ? TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * Menu_Row, Stage_Names[town_stage], 16711680, 0) : TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * Menu_Row, "???", 16711680, 0));
@@ -1619,7 +1619,7 @@ function townScreens() {
                 shop_item = Book_Indexer[town_stage + 1] - Book_Indexer[town_stage];
                 for (a = shop_item - 1; 0 <= a; a--) shop_item -= EN_Info[Book_Indexer[town_stage] + a][En_2nd_Att];
                 g = shop_left + 80 - 16 * shop_item;
-                isMouseHovered(g + 160, shop_top + 0, 32 * shop_item, 52) && (b = floor((he - (g + 160)) / 32), Clicked && (Menu_Entry = b), filledRect(g + 160 + 32 * b + 2, shop_top + 2, 28, 52, 10027008));
+                isMouseHovered(g + 160, shop_top + 0, 32 * shop_item, 52) && (b = floor((Mouse_Xpos - (g + 160)) / 32), Clicked && (Menu_Entry = b), filledRect(g + 160 + 32 * b + 2, shop_top + 2, 28, 52, 10027008));
                 filledRect(g + 160 + 32 * Menu_Entry + 2,
                     shop_top + 50, 28, 4, 10027008);
                 Menu_Entry = clamp(Menu_Entry, 0, shop_item - 1);
@@ -1686,7 +1686,7 @@ function townScreens() {
         centeredText(Large_Text, shop_left + 240, shop_top + 72, "Forget", 16777215, 0);
         centeredText(Large_Text, shop_left + 240, shop_top + 88, "" + g + "$ BUY", 16777215, 0);
         drawUI(1)
-    } else 59 == Sequence_Step && (drawStage(0), drawUI(0), screenTransition(floor(255 * Text_Fade / 30)), Text_Fade++, 30 == Text_Fade && (Text_Fade = Current_Screen = Sign_Touched_Mode = 0, Sequence_Step = 6, antiCheatCheck(), Stage_Status[Current_Stage] |= Beaten, 0 < Dot_Locations[Current_Stage][3] && (Stage_Status[Dot_Locations[Current_Stage][3]] |= Unlocked), 0 < Dot_Locations[Current_Stage][4] && (Stage_Status[Dot_Locations[Current_Stage][4]] |= Unlocked), antiCheatSet(), Save_Code3 = genSaveCode(0), Ec = 1))
+    } else 59 == Sequence_Step && (drawStage(0), drawUI(0), screenTransition(floor(255 * Text_Fade / 30)), Text_Fade++, 30 == Text_Fade && (Text_Fade = Current_Screen = Sign_Touched_Mode = 0, Sequence_Step = 6, antiCheatCheck(), Stage_Status[Current_Stage] |= Beaten, 0 < Dot_Locations[Current_Stage][3] && (Stage_Status[Dot_Locations[Current_Stage][3]] |= Unlocked), 0 < Dot_Locations[Current_Stage][4] && (Stage_Status[Dot_Locations[Current_Stage][4]] |= Unlocked), antiCheatSet(), Save_Code3 = genSaveCode(0), Save_Code1 = 1))
 }
 WIN.fff = PvPscreens;
 
@@ -1699,24 +1699,24 @@ function PvPscreens() {
             doVSModeText(VSMODECODE11, "Enter comments and click OK."), Sequence_Step++;
         else if (72 == Sequence_Step) {
         if (filledRectCentered(256, 100, 300, 100, 8421504), centeredText(Large_Text, 256, 70, "UPLOAD", 16752800, 0), dispItemCentered(VSMODECODE11, 256, 90, VSMODECODE11.a, 16, 0, 0, VSMODECODE11.a, 16, 0), !VS_Upload_Errors) {
-            b = ef;
+            b = prompt_res;
             filledRect(136, 108, 240, 16, 16777215);
             outlineRect(135, 107, 242, 18, 0);
-            if (isMouseHovered(136, 108, 240, 16) && (outlineRect(135, 107, 242, 18, 16711680), ff)) {
+            if (isMouseHovered(136, 108, 240, 16) && (outlineRect(135, 107, 242, 18, 16711680), Released)) {
                 c = null;
                 try { c = prompt("UPLOAD", b) } catch (g) {}
                 null != c && (b = c)
             }
-            doVSModeText(gf, b);
-            dispItem(gf, 137, 108, 238, 16, 0, 0, 238, 16, 0);
-            ef = b;
+            doVSModeText(VS_Image, b);
+            dispItem(VS_Image, 137, 108, 238, 16, 0, 0, 238, 16, 0);
+            prompt_res = b;
             b = isMouseHoveredCenter(256, 140, 16, 12);
             centeredText(Large_Text, 256, 140, "OK", b ? 16711680 : 16777215, 0);
-            if (b && ff)
-                if (2 > ef.length) Game_Language ? doVSModeText(VSMODECODE11, "\u30b3\u30e1\u30f3\u30c8\u3092\uff12\u6587\u5b57\u4ee5\u4e0a\u8a18\u5165\u3057\u3066\u4e0b\u3055\u3044") :
+            if (b && Released)
+                if (2 > prompt_res.length) Game_Language ? doVSModeText(VSMODECODE11, "\u30b3\u30e1\u30f3\u30c8\u3092\uff12\u6587\u5b57\u4ee5\u4e0a\u8a18\u5165\u3057\u3066\u4e0b\u3055\u3044") :
                     doVSModeText(VSMODECODE11, "The comment must be longer than 2 characters.");
                 else {
-                    b = ef;
+                    b = prompt_res;
                     c = 0;
                     a = b.length;
                     for (var d = 0; d < a; d++) {
@@ -1726,7 +1726,7 @@ function PvPscreens() {
                     20 < c ? Game_Language ? doVSModeText(VSMODECODE11, "\u30b3\u30e1\u30f3\u30c8\u3092\uff11\uff10\u6587\u5b57\u4ee5\u4e0b\u3067\u8a18\u5165\u3057\u3066\u4e0b\u3055\u3044") : doVSModeText(VSMODECODE11, "The comment must be shorter than 10 characters.") : Sequence_Step++
                 }
         }
-    } else 73 == Sequence_Step ? (b = encodeURIComponent(ef), b.length ? 0 == Item_Inv[4] || 0 == Item_Inv[5] || 0 == Item_Inv[6] || 0 == Item_Inv[7] ? (Game_Language ? doVSModeText(VSMODECODE11, "\u6b66\u5668\u3092\u88c5\u5099\u3057\u3066\u4e0b\u3055\u3044") :
+    } else 73 == Sequence_Step ? (b = encodeURIComponent(prompt_res), b.length ? 0 == Item_Inv[4] || 0 == Item_Inv[5] || 0 == Item_Inv[6] || 0 == Item_Inv[7] ? (Game_Language ? doVSModeText(VSMODECODE11, "\u6b66\u5668\u3092\u88c5\u5099\u3057\u3066\u4e0b\u3055\u3044") :
         doVSModeText(VSMODECODE11, "Equip a weapon."), Sequence_Step = 72) : (antiCheatCheck(), Save_Code3 = genSaveCode(1), c = chrCode(47, 115, 99, 111, 114, 101, 47, 114, 97, 110, 103, 101, 114, 95, 101, 110, 116, 114, 121, 46, 112, 104, 112, 63, 97, 61), c += Game_ID_1, c += chr_and_b_equal + (Game_Language ? "0" : "1"), c += chr_and_c_equal + b, c += chr_and_d_equal + Save_Code3, logCopyright(c), funct_Dg(c), Sequence_Step++) : (Game_Language ? doVSModeText(VSMODECODE11, "\u30a8\u30e9\u30fc") : doVSModeText(VSMODECODE11, "Error"), Sequence_Step = 72)) : 74 == Sequence_Step && Global_Eg && (VS_Upload_Errors = "ok" == VS_result[0] ? 100 : "err1" == VS_result[0] ? 1 : "err2" == VS_result[0] ? 2 : "err3" == VS_result[0] ? 3 : "err4" == VS_result[0] ? 4 : "err5" == VS_result[0] ? 5 : 6, Sequence_Step = 71);
     else if (60 == Sequence_Step) {
         if (Current_Stage = 0, Current_Screen = 1, Terrain.o(Current_Stage)) {
@@ -1833,7 +1833,7 @@ function drawStage(a) {
                 if (8 == Players.f[b])
                     for (c = 0; 6 > c; c++) 0 != Players.s[b][c] && dispItemCentered(Projectiles_Img, Players.a[b][15 + c].x, Players.a[b][15 + c].y, 32, 32, 33, 1, 14, 14, 2164260863);
             for (b = 0; b < Drops.a; b++) dispItemCentered(Projectiles_Img, Drops.b[b].x, Drops.b[b].y - 6, 32, 32, 33, 1, 14, 14, 4294967295);
-            dispItemCentered(Projectiles_Img, he, ie, 80, 80, 33, 1, 14, 14, 3238002687);
+            dispItemCentered(Projectiles_Img, Mouse_Xpos, Mouse_Ypos, 80, 80, 33, 1, 14, 14, 3238002687);
             Game_Canvas = h;
             Display_Mode = 1;
             for (b = 0; b < e; b++) d = Stage_Eff_Canvas.l[b], 255 == d ? Game_Canvas[b] = 251658240 : (c = Game_Canvas[b] >> 16 & 255, h = (-c * d >> 8) + c, c = Game_Canvas[b] >> 8 & 255, g = (-c * d >> 8) + c, c = Game_Canvas[b] & 255, c = (-c * d >> 8) + c, Game_Canvas[b] = h << 16 | g << 8 | c);
@@ -1953,7 +1953,7 @@ WIN.fff = drawUI;
 
 function drawUI(a) {
     var b, c, d, e, g;
-    (vf || Clicked) && 256 <= ie ? Mouse_Up = !0 : (vf || Clicked) && 256 > ie && (Mouse_Up = !1);
+    (Left_Click_Is_Up || Clicked) && 256 <= Mouse_Ypos ? Mouse_Up = !0 : (Left_Click_Is_Up || Clicked) && 256 > Mouse_Ypos && (Mouse_Up = !1);
     filledRect(0, 257, 512, 126, [13407305, 9480368, 7241784, 7630870, 11302740, 13599032, 10993609, 6322320, 1921195, 10053120, 6714227, 6313296, 6313296][Stage_Spawns[Current_Stage][Current_Screen][0]]);
     TXoutputM(Small_Text, 10, 374, chr_C_DAN_BALL, 0, 0, 0, 0, 0, 0, 0, 128, 5, 7);
     e = 10;
@@ -1971,33 +1971,33 @@ function drawUI(a) {
         for (b = 0; 4 > b; b++) STR_Aura[b] = 0, DEX_Aura[b] = 0, MAG_Aura[b] = 0;
         antiCheatSet()
     }
-    if (4 > n) {
-        b = "LP  " + LP_Current[n] + "/" + LP_Max[n];
-        d = "STR " + STR[n];
-        var q = "DEX " + DEX[n],
-            m = "MAG " + MAG[n];
+    if (4 > Displayed_Object) {
+        b = "LP  " + LP_Current[Displayed_Object] + "/" + LP_Max[Displayed_Object];
+        d = "STR " + STR[Displayed_Object];
+        var q = "DEX " + DEX[Displayed_Object],
+            m = "MAG " + MAG[Displayed_Object];
         TXoutputB(Large_Text, e,
-            g + 0, Class_Name_List[getVal(Item_Inv[4 + n], 5)], 16777215, 0);
+            g + 0, Class_Name_List[getVal(Item_Inv[4 + Displayed_Object], 5)], 16777215, 0);
         TXoutputB(Large_Text, e, g + 16, b, 16777215, 0);
-        if (Players.f[n] != wf)
-            if (TXoutputB(Large_Text, e, g + 28, d, 16777215, 0), TXoutputB(Large_Text, e, g + 40, q, 16777215, 0), TXoutputB(Large_Text, e, g + 52, m, 16777215, 0), TXoutputB(Small_Text, e, g + 30, "              AT ", -1, 0), TXoutputB(Small_Text, e, g + 42, "              AGI ", -1, 0), TXoutputB(Small_Text, e, g + 54, "              RANGE ", -1, 0), TXoutputB(Small_Text, e, g + 30, "                 " + AT_Min[n] + "-" + AT_Max[n], 0, -1), TXoutputB(Small_Text, e, g + 42, "                  " + Agi_Min[n] + "-" + Agi_Max[n], 0, -1), TXoutputB(Small_Text, e, g + 54, "                    " + RANGE[n], 0, -1), 5 == Ranger_Class[n]) TXoutputB(Small_Text, e, g + 66, "AURA          AURA", -1, 0), TXoutputB(Small_Text, e, g + 66, "     (AT)" + STR[n] +
-                "%", 0, -1), TXoutputB(Small_Text, e, g + 66, "                   (DF)" + DEX[n] / 5, 0, -1);
-            else if (7 == Ranger_Class[n]) TXoutputB(Small_Text, e, g + 66, "              BULLET", -1, 0), TXoutputB(Small_Text, e, g + 66, "                     +" + DEX[n] / 5, 0, -1);
-        else if (8 == Ranger_Class[n]) {
+        if (Players.f[Displayed_Object] != Class_Dead)
+            if (TXoutputB(Large_Text, e, g + 28, d, 16777215, 0), TXoutputB(Large_Text, e, g + 40, q, 16777215, 0), TXoutputB(Large_Text, e, g + 52, m, 16777215, 0), TXoutputB(Small_Text, e, g + 30, "              AT ", -1, 0), TXoutputB(Small_Text, e, g + 42, "              AGI ", -1, 0), TXoutputB(Small_Text, e, g + 54, "              RANGE ", -1, 0), TXoutputB(Small_Text, e, g + 30, "                 " + AT_Min[Displayed_Object] + "-" + AT_Max[Displayed_Object], 0, -1), TXoutputB(Small_Text, e, g + 42, "                  " + Agi_Min[Displayed_Object] + "-" + Agi_Max[Displayed_Object], 0, -1), TXoutputB(Small_Text, e, g + 54, "                    " + RANGE[Displayed_Object], 0, -1), 5 == Ranger_Class[Displayed_Object]) TXoutputB(Small_Text, e, g + 66, "AURA          AURA", -1, 0), TXoutputB(Small_Text, e, g + 66, "     (AT)" + STR[Displayed_Object] +
+                "%", 0, -1), TXoutputB(Small_Text, e, g + 66, "                   (DF)" + DEX[Displayed_Object] / 5, 0, -1);
+            else if (7 == Ranger_Class[Displayed_Object]) TXoutputB(Small_Text, e, g + 66, "              BULLET", -1, 0), TXoutputB(Small_Text, e, g + 66, "                     +" + DEX[Displayed_Object] / 5, 0, -1);
+        else if (8 == Ranger_Class[Displayed_Object]) {
             var l;
-            l = 10 > DEX[n] ? 0 + (DEX[n] - 0) / 10 : 30 > DEX[n] ? 1 + (DEX[n] - 10) / 20 : 60 > DEX[n] ? 2 + (DEX[n] - 30) / 30 : 100 > DEX[n] ? 3 + (DEX[n] - 60) / 40 : 4;
+            l = 10 > DEX[Displayed_Object] ? 0 + (DEX[Displayed_Object] - 0) / 10 : 30 > DEX[Displayed_Object] ? 1 + (DEX[Displayed_Object] - 10) / 20 : 60 > DEX[Displayed_Object] ? 2 + (DEX[Displayed_Object] - 30) / 30 : 100 > DEX[Displayed_Object] ? 3 + (DEX[Displayed_Object] - 60) / 40 : 4;
             TXoutputB(Small_Text, e, g + 66, "              RING", -1, 0);
             TXoutputB(Small_Text, e, g + 66, "                   +" + ("" + l).substring(0, minOf(("" + l).length, 5)), 0, -1)
         }
         TXoutputB(Large_Text, e, g + 76, "LV  " + LV[0], 16777215, 0);
-        TXoutputB(Large_Text, e, g + 76, "        SP " + SP[n], 16777215, 0);
+        TXoutputB(Large_Text, e, g + 76, "        SP " + SP[Displayed_Object], 16777215, 0);
         TXoutputB(Large_Text,
             e, g + 88, "EXP " + Team_EXP + "(" + floor(100 * (Team_EXP - h) / (c - h)) + "%)", 16777215, 0);
         TXoutputB(Large_Text, e, g + 100, "$$$ " + Team_Gold, 16777215, 0);
         TXoutputB(Small_Text, e + 105, g + 102, "FP " + FP[0], -1, 0);
-        Players.f[n] == wf ? (h = maxOf(floor(Team_Gold / 10), 10 * LV[0]), b = "Revival $ " + h, TXoutputB(Large_Text, e, g + 40, b, 8421504, 0), isMouseHovered(e, g + 40, 8 * b.length, 12) && Mouse_Up && (h <= Team_Gold && Clicked && 0 != LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] && (antiCheatCheck(), LP_Current[n] += floor(LP_Max[n] / 4), Team_Gold -= h, Players.set(n, floor(Players.a[n][0].x / 8), floor(Players.a[n][0].y / 8)), antiCheatSet()), TXoutputB(Large_Text, e, g + 40, b, 16711680, 0))) : 0 < SP[n] && (h = Clicked, antiCheatCheck(), isMouseHovered(e, g + 16, 8 * b.length + 16, 12) && Mouse_Up ? (h && (LP_SP[n]++, SP[n]--), TXoutputB(Large_Text, e, g + 16, b, 16711680, 0)) : isMouseHovered(e, g + 28, 8 * d.length + 16, 12) &&
-            Mouse_Up ? (h && (STR_SP[n]++, SP[n]--), TXoutputB(Large_Text, e, g + 28, d, 16711680, 0)) : isMouseHovered(e, g + 40, 8 * q.length + 16, 12) && Mouse_Up ? (h && (DEX_SP[n]++, SP[n]--), TXoutputB(Large_Text, e, g + 40, q, 16711680, 0)) : isMouseHovered(e, g + 52, 8 * m.length + 16, 12) && Mouse_Up && (h && (MAG_SP[n]++, SP[n]--), TXoutputB(Large_Text, e, g + 52, m, 16711680, 0)), antiCheatSet(), TXoutputB(Large_Text, e + 8 * b.length, g + 16, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * d.length, g + 28, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * q.length, g + 40, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * m.length, g + 52, " +", 16711680, 0))
-    } else if (m = Item_Inv[n], 8 <= n && 11 >= n && (m = Comp1_Inv[4 + n - 8]), 12 <= n && 15 >= n && (m = Comp2_Inv[4 + n - 12]), itemText(e, g + 0, Item_Catalogue[m][0] + " " + (Item_Catalogue[m][1] ? Item_Catalogue[m][1] : ""), 16777215, 0, -1),
+        Players.f[Displayed_Object] == Class_Dead ? (h = maxOf(floor(Team_Gold / 10), 10 * LV[0]), b = "Revival $ " + h, TXoutputB(Large_Text, e, g + 40, b, 8421504, 0), isMouseHovered(e, g + 40, 8 * b.length, 12) && Mouse_Up && (h <= Team_Gold && Clicked && 0 != LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] && (antiCheatCheck(), LP_Current[Displayed_Object] += floor(LP_Max[Displayed_Object] / 4), Team_Gold -= h, Players.set(Displayed_Object, floor(Players.a[Displayed_Object][0].x / 8), floor(Players.a[Displayed_Object][0].y / 8)), antiCheatSet()), TXoutputB(Large_Text, e, g + 40, b, 16711680, 0))) : 0 < SP[Displayed_Object] && (h = Clicked, antiCheatCheck(), isMouseHovered(e, g + 16, 8 * b.length + 16, 12) && Mouse_Up ? (h && (LP_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 16, b, 16711680, 0)) : isMouseHovered(e, g + 28, 8 * d.length + 16, 12) &&
+            Mouse_Up ? (h && (STR_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 28, d, 16711680, 0)) : isMouseHovered(e, g + 40, 8 * q.length + 16, 12) && Mouse_Up ? (h && (DEX_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 40, q, 16711680, 0)) : isMouseHovered(e, g + 52, 8 * m.length + 16, 12) && Mouse_Up && (h && (MAG_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 52, m, 16711680, 0)), antiCheatSet(), TXoutputB(Large_Text, e + 8 * b.length, g + 16, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * d.length, g + 28, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * q.length, g + 40, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * m.length, g + 52, " +", 16711680, 0))
+    } else if (m = Item_Inv[Displayed_Object], 8 <= Displayed_Object && 11 >= Displayed_Object && (m = Comp1_Inv[4 + Displayed_Object - 8]), 12 <= Displayed_Object && 15 >= Displayed_Object && (m = Comp2_Inv[4 + Displayed_Object - 12]), itemText(e, g + 0, Item_Catalogue[m][0] + " " + (Item_Catalogue[m][1] ? Item_Catalogue[m][1] : ""), 16777215, 0, -1),
         0 != m && 59 != m)
         if (b = getVal(m, 5), 9 == b) TXoutputB(Large_Text, e, g + 16, "Compo Item", -1, 0), itemText(e, g + 32, Item_Catalogue[m][10], 16777215, 0, -1), itemText(e, g + 44, Item_Catalogue[m][11], 16777215, 0, -1);
         else {
@@ -2009,8 +2009,8 @@ function drawUI(a) {
             h = maxOf(getVal(m, 36), 0);
             q = getVal(m, 39);
             m = getVal(m, 40);
-            if (1 == c || 2 == c || 3 == c || 4 == c || 5 == c) checkEff(n, 13) && (q += getEff(n, 8), m += getEff(n, 9)), checkEff(n, 15) && (q += getEff(n, 8), m += getEff(n, 9)), checkEff(n, 17) && (q += getEff(n, 8), m += getEff(n, 9)), checkEff(n, 18) && (q += getEff(n, 8), m += getEff(n, 9)), checkEff(n, 16) && (d +=
-                getEff(n, 8)), checkEff(n, 19) && (d += getEff(n, 8)), checkEff(n, 20) && (d += getEff(n, 8));
+            if (1 == c || 2 == c || 3 == c || 4 == c || 5 == c) checkEff(Displayed_Object, 13) && (q += getEff(Displayed_Object, 8), m += getEff(Displayed_Object, 9)), checkEff(Displayed_Object, 15) && (q += getEff(Displayed_Object, 8), m += getEff(Displayed_Object, 9)), checkEff(Displayed_Object, 17) && (q += getEff(Displayed_Object, 8), m += getEff(Displayed_Object, 9)), checkEff(Displayed_Object, 18) && (q += getEff(Displayed_Object, 8), m += getEff(Displayed_Object, 9)), checkEff(Displayed_Object, 16) && (d +=
+                getEff(Displayed_Object, 8)), checkEff(Displayed_Object, 19) && (d += getEff(Displayed_Object, 8)), checkEff(Displayed_Object, 20) && (d += getEff(Displayed_Object, 8));
             TXoutputB(Large_Text, e, g + 56, "TYPE " + "physical fire ice thunder poison freeze".split(" ")[c], 16777215, 0);
             TXoutputB(Large_Text, e, g + 68, "AT " + q + "-" + m, 16777215, 0);
             6 == b ? TXoutputB(Large_Text, e, g + 80, "$$ " + h, 16777215, 0) : TXoutputB(Large_Text, e, g + 80, "MP " + h, 16777215, 0);
@@ -2018,12 +2018,12 @@ function drawUI(a) {
             filledRect(e + 0, g + 96, 12, 12, 0);
             filledRect(e + 75, g + 96, 12, 12, 0);
             Display_Mode2 = 2;
-            dispItem(Drop_Img, e + 0, g + 96, 12, 12, 12 * getVal(Comp1_Inv[n], 3), 0, 12, 12, getVal(Comp1_Inv[n], 6));
+            dispItem(Drop_Img, e + 0, g + 96, 12, 12, 12 * getVal(Comp1_Inv[Displayed_Object], 3), 0, 12, 12, getVal(Comp1_Inv[Displayed_Object], 6));
             dispItem(Drop_Img,
-                e + 75, g + 96, 12, 12, 12 * getVal(Comp2_Inv[n], 3), 0, 12, 12, getVal(Comp2_Inv[n], 6));
+                e + 75, g + 96, 12, 12, 12 * getVal(Comp2_Inv[Displayed_Object], 3), 0, 12, 12, getVal(Comp2_Inv[Displayed_Object], 6));
             Display_Mode2 = 0;
-            TXoutputB(Small_Text, e + 16, g + 99, Item_Catalogue[Comp1_Inv[n]][0].substring(0, minOf(8, Item_Catalogue[Comp1_Inv[n]][0].length)) + " " + Item_Catalogue[Comp1_Inv[n]][1], -1, 0);
-            TXoutputB(Small_Text, e + 91, g + 99, Item_Catalogue[Comp2_Inv[n]][0].substring(0, minOf(8, Item_Catalogue[Comp2_Inv[n]][0].length)) + " " + Item_Catalogue[Comp2_Inv[n]][1], -1, 0)
+            TXoutputB(Small_Text, e + 16, g + 99, Item_Catalogue[Comp1_Inv[Displayed_Object]][0].substring(0, minOf(8, Item_Catalogue[Comp1_Inv[Displayed_Object]][0].length)) + " " + Item_Catalogue[Comp1_Inv[Displayed_Object]][1], -1, 0);
+            TXoutputB(Small_Text, e + 91, g + 99, Item_Catalogue[Comp2_Inv[Displayed_Object]][0].substring(0, minOf(8, Item_Catalogue[Comp2_Inv[Displayed_Object]][0].length)) + " " + Item_Catalogue[Comp2_Inv[Displayed_Object]][1], -1, 0)
         }
     e = 192;
     g = 271;
@@ -2045,21 +2045,21 @@ function drawUI(a) {
     b = -1;
     e = 192;
     g = 271;
-    isMouseHovered(e - 4, g - 4, 128, 112) && Mouse_Up && (c = floor((he - e + 4) / 32), d = floor((ie - g + 4) / 28), b = 4 * d + c, backgroundFill(e + 32 * c, g + 28 * d, 24, 24, 8388608));
+    isMouseHovered(e - 4, g - 4, 128, 112) && Mouse_Up && (c = floor((Mouse_Xpos - e + 4) / 32), d = floor((Mouse_Ypos - g + 4) / 28), b = 4 * d + c, backgroundFill(e + 32 * c, g + 28 * d, 24, 24, 8388608));
     e = 344;
     g = 271;
-    isMouseHovered(e - 4, g - 4, 168, 112) && Mouse_Up && (c = floor((he - e + 4) / 28), d = floor((ie - g + 4) / 28), b = 16 + 6 * d + c, backgroundFill(e + 28 * c, g + 28 * d, 24, 24, 8388608));
+    isMouseHovered(e - 4, g - 4, 168, 112) && Mouse_Up && (c = floor((Mouse_Xpos - e + 4) / 28), d = floor((Mouse_Ypos - g + 4) / 28), b = 16 + 6 * d + c, backgroundFill(e + 28 * c, g + 28 * d, 24, 24, 8388608));
     antiCheatCheck();
     if (0 <= b && 3 >= b && 0 == Item_Inv[40] && Clicked) Selected_Player = b;
     else if (4 <= b && 8 > b && Clicked) {
         if (0 == Item_Inv[40] || getVal(Item_Inv[40], 5) == Ranger_Class[b - 4]) a = Item_Inv[b], Item_Inv[b] = Item_Inv[40], Item_Inv[40] = a, a = Comp1_Inv[b], Comp1_Inv[b] = Comp1_Inv[40], Comp1_Inv[40] = a, a = Comp2_Inv[b], Comp2_Inv[b] = Comp2_Inv[40],
             Comp2_Inv[40] = a, MP_Bar[b - 4] = 0, Players.I[b - 4] = 0
-    } else 8 <= b && 11 >= b && Clicked ? 9 == getVal(Item_Inv[40], 5) && restrictSlots(b - 8, 0) && (Comp1_Inv[4 + b - 8] = Item_Inv[40], Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0, MP_Bar[b - 8] = 0) : 12 <= b && 15 >= b && Clicked ? 9 == getVal(Item_Inv[40], 5) && restrictSlots(b - 12, 1) && (Comp2_Inv[4 + b - 12] = Item_Inv[40], Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0, MP_Bar[b - 12] = 0) : 16 <= b && 40 > b && Clicked ? 1 == Click_To_Sell_Mode && 0 != Item_Inv[b] ? (h = floor(getVal(Item_Inv[b], 2) / 8), Clicked && (Drops.add(40, 200, 1, h, 0), Item_Inv[b] = 0, Comp1_Inv[b] = 0, Comp2_Inv[b] = 0)) : (a = Item_Inv[b], Item_Inv[b] = Item_Inv[40], Item_Inv[40] = a, a = Comp1_Inv[b], Comp1_Inv[b] = Comp1_Inv[40], Comp1_Inv[40] = a, a = Comp2_Inv[b], Comp2_Inv[b] = Comp2_Inv[40], Comp2_Inv[40] = a) : -1 == b && 0 != Item_Inv[40] && Clicked && 256 > ie && 0 == a && (Drops.add(Players.a[Selected_Player][0].x, Players.a[Selected_Player][0].y, Item_Inv[40], Comp1_Inv[40],
+    } else 8 <= b && 11 >= b && Clicked ? 9 == getVal(Item_Inv[40], 5) && restrictSlots(b - 8, 0) && (Comp1_Inv[4 + b - 8] = Item_Inv[40], Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0, MP_Bar[b - 8] = 0) : 12 <= b && 15 >= b && Clicked ? 9 == getVal(Item_Inv[40], 5) && restrictSlots(b - 12, 1) && (Comp2_Inv[4 + b - 12] = Item_Inv[40], Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0, MP_Bar[b - 12] = 0) : 16 <= b && 40 > b && Clicked ? 1 == Click_To_Sell_Mode && 0 != Item_Inv[b] ? (h = floor(getVal(Item_Inv[b], 2) / 8), Clicked && (Drops.add(40, 200, 1, h, 0), Item_Inv[b] = 0, Comp1_Inv[b] = 0, Comp2_Inv[b] = 0)) : (a = Item_Inv[b], Item_Inv[b] = Item_Inv[40], Item_Inv[40] = a, a = Comp1_Inv[b], Comp1_Inv[b] = Comp1_Inv[40], Comp1_Inv[40] = a, a = Comp2_Inv[b], Comp2_Inv[b] = Comp2_Inv[40], Comp2_Inv[40] = a) : -1 == b && 0 != Item_Inv[40] && Clicked && 256 > Mouse_Ypos && 0 == a && (Drops.add(Players.a[Selected_Player][0].x, Players.a[Selected_Player][0].y, Item_Inv[40], Comp1_Inv[40],
         Comp2_Inv[40]), Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0);
     antiCheatSet();
-    n = -1 == b ? Selected_Player : b;
-    0 != Item_Inv[40] && (Display_Mode2 = 2, dispItemCentered(Item_Img, he, ie, 24, 24, 24 * getVal(Item_Inv[40], 4), 0, 24, 24, getVal(Item_Inv[40], 6)), Display_Mode2 = 0);
-    1 == Click_To_Sell_Mode && (c = clamp(he, 56, 456), d = clamp(ie - 8, 10, 374), 16 <= b && 40 > b ? (h = floor(getVal(Item_Inv[b], 2) / 8), centeredText(Large_Text, c, d, "" + h + "$ SELL", 16777215, 0)) : centeredText(Large_Text, c, d, "CLICK TO SELL", 16777215, 0))
+    Displayed_Object = -1 == b ? Selected_Player : b;
+    0 != Item_Inv[40] && (Display_Mode2 = 2, dispItemCentered(Item_Img, Mouse_Xpos, Mouse_Ypos, 24, 24, 24 * getVal(Item_Inv[40], 4), 0, 24, 24, getVal(Item_Inv[40], 6)), Display_Mode2 = 0);
+    1 == Click_To_Sell_Mode && (c = clamp(Mouse_Xpos, 56, 456), d = clamp(Mouse_Ypos - 8, 10, 374), 16 <= b && 40 > b ? (h = floor(getVal(Item_Inv[b], 2) / 8), centeredText(Large_Text, c, d, "" + h + "$ SELL", 16777215, 0)) : centeredText(Large_Text, c, d, "CLICK TO SELL", 16777215, 0))
 }
 
 function restrictSlots(a, b) { if (0 == Item_Inv[40] || 9 != getVal(Item_Inv[40], 5)) return !0; if (0 == Item_Inv[4 + a] || 0 == b && 59 == Comp1_Inv[4 + a] || 1 == b && 59 == Comp2_Inv[4 + a]) return !1; var c = getVal(Item_Inv[40], 7); return 0 == b && c == getVal(Comp2_Inv[4 + a], 7) || 1 == b && c == getVal(Comp1_Inv[4 + a], 7) ? !1 : compRestrCheck(c, getVal(Item_Inv[4 + a], 5), getVal(Item_Inv[4 + a], 34), getVal(Item_Inv[4 + a], 12)) }
@@ -2079,7 +2079,7 @@ function compRestrCheck(a, b, c, d) {
     }
     return !1
 }
-var wf = 9,
+var Class_Dead = 9,
     Players = new SR_Player;
 
 function SR_Player() {
@@ -2166,7 +2166,7 @@ function PLfindPlayer(a, b, c, d, e) {
     for (var l = e + 4; e < l; e++) {
         g.H[e] = 0;
         var A = g.a[e][2];
-        g.f[e] == wf || A.x - 5 > c || A.x + 5 < a || A.y - 10 > d || A.y + 10 < b || (g.H[e] = 1, absVal(A.x - h) < q && (q = absVal(A.x - h), m = e))
+        g.f[e] == Class_Dead || A.x - 5 > c || A.x + 5 < a || A.y - 10 > d || A.y + 10 < b || (g.H[e] = 1, absVal(A.x - h) < q && (q = absVal(A.x - h), m = e))
     }
     return m
 }
@@ -2178,7 +2178,7 @@ function PLtakeDamage(a, b, c, d, e, g, h, q, m, l) {
     q *= .5;
     m *= .5;
     for (var Z = l + 4; l < Z; l++)
-        if (A.f[l] != wf && !(A.a[l][2].x - 5 > g + q || A.a[l][2].x + 5 < g - q || A.a[l][2].y - 10 > h + m || A.a[l][2].y + 10 < h - m)) {
+        if (A.f[l] != Class_Dead && !(A.a[l][2].x - 5 > g + q || A.a[l][2].x + 5 < g - q || A.a[l][2].y - 10 > h + m || A.a[l][2].y + 10 < h - m)) {
             var z = -1,
                 B = d + floor(random(e - d + 1));
             A.J[l] = 2;
@@ -2216,15 +2216,15 @@ SR_Player.prototype.X = function() {
     if (-1 == this.h && 1 != Game_Mode) {
         if (Clicked) {
             b = 20;
-            a.x = he - this.g[Selected_Player][0].x;
-            a.y = ie - (this.g[Selected_Player][0].y - 8);
+            a.x = Mouse_Xpos - this.g[Selected_Player][0].x;
+            a.y = Mouse_Ypos - (this.g[Selected_Player][0].y - 8);
             c = magnitudeOf(a);
             20 > c && c < b && (0 != LP_Current[Selected_Player] || 0 != Sett_Drag_Dead_Body) && (b = c, this.h = Selected_Player, this.u = 0);
             for (var d = 0; 4 > d; d++)
                 if (0 != LP_Current[d] || 0 != Sett_Drag_Dead_Body)
-                    for (var e = 0; 10 > e; e++) a.x = he - this.g[d][e].x, a.y = ie - this.g[d][e].y, c = magnitudeOf(a), 20 > c && c < b && (b = c, this.h = d, this.u = e, Selected_Player = d)
+                    for (var e = 0; 10 > e; e++) a.x = Mouse_Xpos - this.g[d][e].x, a.y = Mouse_Ypos - this.g[d][e].y, c = magnitudeOf(a), 20 > c && c < b && (b = c, this.h = d, this.u = e, Selected_Player = d)
         }
-    } else Ff || (this.h = -1, this.u = 0)
+    } else Left_Click_Was_Down || (this.h = -1, this.u = 0)
 };
 
 function PLprojectileAttack(a, b, c, d, e) {
@@ -2365,7 +2365,7 @@ function Walk(a, b) {
             d = .5 * (a.a[b][9].y + a.a[b][10].y),
             e = RANGE[b],
             g;
-        g = 1 != Game_Mode ? Kf(c - 200 - e, d - 20 - e, c + 200 + e, d + 100 + e) : PLfindPlayer(c - 600, d - 300, c + 600, d + 300, 1 - (b >> 2) << 2); - 1 != g && (a.L[b] = 15, e = .6, c < (1 != Game_Mode ? Enemies.a[g][20].x : a.a[g][2].x) ? (c = floor(clamp(c + 14, 0, 511) / 8), d = floor(clamp(d - 6, 8, 383) / 8), 0 <= Terrain.a[d][c] && 8 >= Terrain.a[d][c] && (e = 2), 0 <= Terrain.a[d - 1][c] && 8 >= Terrain.a[d - 1][c] && (e = 4), a.a[b][9].x < a.a[b][10].x ? (a.a[b][7].x += 4, a.a[b][7].y -= 3 * e) : (a.a[b][8].x +=
+        g = 1 != Game_Mode ? ENfindEnemy(c - 200 - e, d - 20 - e, c + 200 + e, d + 100 + e) : PLfindPlayer(c - 600, d - 300, c + 600, d + 300, 1 - (b >> 2) << 2); - 1 != g && (a.L[b] = 15, e = .6, c < (1 != Game_Mode ? Enemies.a[g][20].x : a.a[g][2].x) ? (c = floor(clamp(c + 14, 0, 511) / 8), d = floor(clamp(d - 6, 8, 383) / 8), 0 <= Terrain.a[d][c] && 8 >= Terrain.a[d][c] && (e = 2), 0 <= Terrain.a[d - 1][c] && 8 >= Terrain.a[d - 1][c] && (e = 4), a.a[b][9].x < a.a[b][10].x ? (a.a[b][7].x += 4, a.a[b][7].y -= 3 * e) : (a.a[b][8].x +=
             4, a.a[b][8].y -= 3 * e)) : (c = floor(clamp(c - 14, 0, 511) / 8), d = floor(clamp(d - 6, 8, 383) / 8), 0 <= Terrain.a[d][c] && 8 >= Terrain.a[d][c] && (e = 2), 0 <= Terrain.a[d - 1][c] && 8 >= Terrain.a[d - 1][c] && (e = 4), a.a[b][9].x > a.a[b][10].x ? (a.a[b][7].x -= 4, a.a[b][7].y -= 3 * e) : (a.a[b][8].x -= 4, a.a[b][8].y -= 3 * e)))
     }
 }
@@ -2375,7 +2375,7 @@ function Swim(a, b) {
         var c = .5 * (a.a[b][9].x + a.a[b][10].x),
             d = .5 * (a.a[b][9].y + a.a[b][10].y),
             e = RANGE[b],
-            e = 1 != Game_Mode ? Kf(c - 200 - e, d - 100 - e, c + 200 + e, d + 100 + e) : PLfindPlayer(c - 600, d - 300, c + 600, d + 300, 1 - (b >> 2) << 2); - 1 != e && 9 == Terrain.a[floor(clamp(d, 8, 383) / 8)][floor(clamp(c, 0, 511) / 8)] && (c < (1 != Game_Mode ? Enemies.a[e][20].x : a.a[e][2].x) ? (a.a[b][0].x += .25, a.a[b][1].x += .25) : (a.a[b][0].x -= .25, a.a[b][1].x -= .25), d < (1 != Game_Mode ? Enemies.a[e][20].y : a.a[e][2].y) ? (a.a[b][0].y += .25, a.a[b][1].y += .25) : (a.a[b][0].y -= .25, a.a[b][1].y -= .25), a.a[b][0].x +=
+            e = 1 != Game_Mode ? ENfindEnemy(c - 200 - e, d - 100 - e, c + 200 + e, d + 100 + e) : PLfindPlayer(c - 600, d - 300, c + 600, d + 300, 1 - (b >> 2) << 2); - 1 != e && 9 == Terrain.a[floor(clamp(d, 8, 383) / 8)][floor(clamp(c, 0, 511) / 8)] && (c < (1 != Game_Mode ? Enemies.a[e][20].x : a.a[e][2].x) ? (a.a[b][0].x += .25, a.a[b][1].x += .25) : (a.a[b][0].x -= .25, a.a[b][1].x -= .25), d < (1 != Game_Mode ? Enemies.a[e][20].y : a.a[e][2].y) ? (a.a[b][0].y += .25, a.a[b][1].y += .25) : (a.a[b][0].y -= .25, a.a[b][1].y -= .25), a.a[b][0].x +=
             randomRange(-.25, .25), a.a[b][0].y += randomRange(-.25, .25), a.a[b][1].x += randomRange(-.25, .25), a.a[b][1].y += randomRange(-.25, .25))
     }
 }
@@ -2406,15 +2406,15 @@ SR_Player.prototype.G = function() {
                 0, .99), moveJoint(this.a[a][9], this.g[a][9], .3, .99), moveJoint(this.a[a][10], this.g[a][10], .3, .99);
             else
                 for (b = 0; 11 > b; b++) moveJoint(this.a[a][b], this.g[a][b], .05, .99);
-            if (0 == LP_Current[a] && this.f[a] != wf) {
-                this.f[a] = wf;
+            if (0 == LP_Current[a] && this.f[a] != Class_Dead) {
+                this.f[a] = Class_Dead;
                 for (b = 0; 11 > b; b++) this.a[a][b].x += randomRange(-2, 2), this.a[a][b].y += randomRange(-1, -3);
                 if (1 == Game_Mode)
                     for (e = 1 - (a >> 2) << 2, b = 0; 4 > b; b++) checkEff(4 + e + b, 41) && random(100) < getEff(4 + e + b, 8) && (c = PLfindPlayer(this.a[a][0].x - 600, this.a[a][0].y - 300, this.a[a][0].x + 600, this.a[a][0].y + 300, a >> 2 << 2), -1 != c && PLprojectileAttack(Players, getEff(4 + e + b, 9), this.a[a][0].x, this.a[a][0].y, c))
             }
             this.h == a && 1 != Game_Mode && (this.a[this.h][this.u].x +=
-                (he - this.a[this.h][this.u].x) * (0 == LP_Current[a] ? .04 : .2), this.a[this.h][this.u].y += (ie - this.a[this.h][this.u].y) * (0 == LP_Current[a] ? .04 : .2));
-            this.f[a] && 1 != this.f[a] ? 2 == this.f[a] ? this.P(a) : 3 == this.f[a] ? this.R(a) : 4 == this.f[a] ? this.S(a) : 5 == this.f[a] ? this.T(a) : 6 == this.f[a] ? this.U(a) : 7 == this.f[a] ? this.V(a) : 8 == this.f[a] ? this.W(a) : this.f[a] == wf && (pullJoints(this.a[a][1], this.a[a][2], 3.6, .5, .5), pullJoints(this.a[a][3], this.a[a][5], 4.8, .5, .5), pullJoints(this.a[a][4], this.a[a][6], 4.8, .5, .5), pullJoints(this.a[a][7], this.a[a][9], 4.8, .5, .5), pullJoints(this.a[a][8], this.a[a][10],
+                (Mouse_Xpos - this.a[this.h][this.u].x) * (0 == LP_Current[a] ? .04 : .2), this.a[this.h][this.u].y += (Mouse_Ypos - this.a[this.h][this.u].y) * (0 == LP_Current[a] ? .04 : .2));
+            this.f[a] && 1 != this.f[a] ? 2 == this.f[a] ? this.P(a) : 3 == this.f[a] ? this.R(a) : 4 == this.f[a] ? this.S(a) : 5 == this.f[a] ? this.T(a) : 6 == this.f[a] ? this.U(a) : 7 == this.f[a] ? this.V(a) : 8 == this.f[a] ? this.W(a) : this.f[a] == Class_Dead && (pullJoints(this.a[a][1], this.a[a][2], 3.6, .5, .5), pullJoints(this.a[a][3], this.a[a][5], 4.8, .5, .5), pullJoints(this.a[a][4], this.a[a][6], 4.8, .5, .5), pullJoints(this.a[a][7], this.a[a][9], 4.8, .5, .5), pullJoints(this.a[a][8], this.a[a][10],
                 4.8, .5, .5)) : this.O(a);
             0 < (this.i[a] & 1) && (this.K[a] = 0);
             for (b = this.i[a] = 0; 11 > b; b++) this.Y(a, b)
@@ -2432,7 +2432,7 @@ SR_Player.prototype.O = function(a) {
         0 < this.c[a] && this.c[a]--;
         var q = .5 * (this.a[a][9].x + this.a[a][10].x),
             m = .5 * (this.a[a][9].y + this.a[a][10].y);
-        c = 1 != Game_Mode ? Kf(q - c, m - c, q + c, m) : PLfindPlayer(q - c, m - c, q + c, m, e);
+        c = 1 != Game_Mode ? ENfindEnemy(q - c, m - c, q + c, m) : PLfindPlayer(q - c, m - c, q + c, m, e);
         if (!this.c[a] && -1 != c) {
             this.c[a] = h;
             q < (1 != Game_Mode ? Enemies.a[c][20].x : this.a[c][2].x) ? this.a[a][5].x < this.a[a][6].x ? (this.a[a][5].x += 4, this.a[a][4].x -= 4, this.a[a][2].y += 1, this.b[a] = 5) : (this.a[a][6].x += 4, this.a[a][3].x -=
@@ -2447,7 +2447,7 @@ SR_Player.prototype.O = function(a) {
         Swim(this, a)
     }
     if (-1 != this.b[a] && this.f[a] && this.h != a &&
-        (c = getVal(Item_Inv[4 + a], 9), checkEff(4 + a, 27) && random(100) < getEff(4 + a, 8) && (c = 1), checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (b += floor(getEff(4 + a, 9) * b / 100), g += floor(getEff(4 + a, 9) * g / 100)), h = 12, q = 8, checkEff(4 + a, 42) && (h += floor(12 * getEff(4 + a, 8) / 100), q += floor(8 * getEff(4 + a, 8) / 100)), e = 1 != Game_Mode ? Nf(c, 0, 0, b, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, q) : PLtakeDamage(c, 0, 0, b, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, q, e), -1 != e)) {
+        (c = getVal(Item_Inv[4 + a], 9), checkEff(4 + a, 27) && random(100) < getEff(4 + a, 8) && (c = 1), checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (b += floor(getEff(4 + a, 9) * b / 100), g += floor(getEff(4 + a, 9) * g / 100)), h = 12, q = 8, checkEff(4 + a, 42) && (h += floor(12 * getEff(4 + a, 8) / 100), q += floor(8 * getEff(4 + a, 8) / 100)), e = 1 != Game_Mode ? ENtakeDamage(c, 0, 0, b, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, q) : PLtakeDamage(c, 0, 0, b, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, q, e), -1 != e)) {
         this.b[a] = -1;
         checkEff(4 + a, 11) && (h = maxOf(1, floor(this.j * getEff(4 + a, 8) / 100)), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280));
         checkEff(4 + a, 12) && !Game_Mode && random(100) < getEff(4 + a, 8) &&
@@ -2484,13 +2484,13 @@ SR_Player.prototype.P = function(a) {
         0 < this.c[a] && this.c[a]--;
         var m = .5 * (this.a[a][9].x + this.a[a][10].x),
             l = .5 * (this.a[a][9].y + this.a[a][10].y);
-        c = 1 != Game_Mode ? Kf(m - q, l - q, m + q, l) : PLfindPlayer(m - q, l - q, m + q, l, e);
+        c = 1 != Game_Mode ? ENfindEnemy(m - q, l - q, m + q, l) : PLfindPlayer(m - q, l - q, m + q, l, e);
         this.c[a] || -1 == c || (this.c[a] = h, m < (1 != Game_Mode ? Enemies.a[c][20].x : this.a[c][2].x) ? (this.a[a][5].x += 3, this.a[a][5].y += .2 * (l - 2 - this.a[a][5].y), this.a[a][6].x = this.a[a][5].x - 2, this.a[a][6].y = this.a[a][5].y, this.a[a][1].x -= 3) : (this.a[a][5].x -=
             3, this.a[a][5].y += .2 * (l - 2 - this.a[a][5].y), this.a[a][6].x = this.a[a][5].x + 2, this.a[a][6].y = this.a[a][5].y, this.a[a][1].x += 3), this.b[a] = 5, antiCheatCheck(), h = getVal(Item_Inv[4 + a], 36), MP_Bar[a] = minOf(MP_Bar[a] + MAG[a], h), MP_Bar[a] == h && 0 < h && (MP_Bar[a] = 0, this.I[a] = getVal(Item_Inv[4 + a], 41)), checkEff(4 + a, 46) && (h = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), antiCheatSet()); - 1 == c && Walk(this, a);
         Swim(this, a)
     }
     if (-1 != this.b[a] && (checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (b += floor(getEff(4 + a, 9) * b / 100), g += floor(getEff(4 + a, 9) * g / 100)), Vdistance(d, this.a[a][5], this.a[a][6]), normalize(d), scaleVector2D(d, q), c = this.a[a][6].x +
-            d.x / 2, h = this.a[a][6].y + d.y / 2, -1 != (1 != Game_Mode ? Nf(1, 0, 0, b, g, c, h, absVal(d.x), absVal(d.y)) : PLtakeDamage(1, 0, 0, b, g, c, h, absVal(d.x), absVal(d.y), e)) && (this.b[a] = -1, checkEff(4 + a, 11) && (h = maxOf(1, floor(this.j * getEff(4 + a, 8) / 100)), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), checkEff(4 + a, 12) && !Game_Mode && random(100) < getEff(4 + a, 8) && Drops.add(this.a[a][0].x, this.a[a][0].y, 2, 0, 0), checkEff(4 + a, 37) && !Game_Mode && random(100) < getEff(4 + a, 8)))) {
+            d.x / 2, h = this.a[a][6].y + d.y / 2, -1 != (1 != Game_Mode ? ENtakeDamage(1, 0, 0, b, g, c, h, absVal(d.x), absVal(d.y)) : PLtakeDamage(1, 0, 0, b, g, c, h, absVal(d.x), absVal(d.y), e)) && (this.b[a] = -1, checkEff(4 + a, 11) && (h = maxOf(1, floor(this.j * getEff(4 + a, 8) / 100)), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), checkEff(4 + a, 12) && !Game_Mode && random(100) < getEff(4 + a, 8) && Drops.add(this.a[a][0].x, this.a[a][0].y, 2, 0, 0), checkEff(4 + a, 37) && !Game_Mode && random(100) < getEff(4 + a, 8)))) {
         g = 100;
         for (b = 0; 4 > b; b++) checkEff(4 + b, 35) && (g += getEff(4 + b, 8));
         Drops.add(this.a[a][0].x, this.a[a][0].y, 1, floor(this.j * g / 100), 0)
@@ -2520,7 +2520,7 @@ SR_Player.prototype.R = function(a) {
         d = RANGE[a],
         e = .5 * (this.a[a][9].x + this.a[a][10].x),
         g = .5 * (this.a[a][9].y + this.a[a][10].y);
-    b = 1 != Game_Mode ? Kf(e - d, g - d, e + d, g + d) : PLfindPlayer(e - d, g - d, e + d, g + d, b); - 1 != b && (e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (this.a[a][6].x += .2, this.a[a][6].y -= .2, this.a[a][5].x -= .2) : (this.a[a][6].x -= .2, this.a[a][6].y -= .2, this.a[a][5].x += .2), this.a[a][5].y += .2);
+    b = 1 != Game_Mode ? ENfindEnemy(e - d, g - d, e + d, g + d) : PLfindPlayer(e - d, g - d, e + d, g + d, b); - 1 != b && (e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (this.a[a][6].x += .2, this.a[a][6].y -= .2, this.a[a][5].x -= .2) : (this.a[a][6].x -= .2, this.a[a][6].y -= .2, this.a[a][5].x += .2), this.a[a][5].y += .2);
     this.i[a] && this.h != a && (0 < this.c[a] && this.c[a]--, this.c[a] || (-1 != b && (this.c[a] = c, pullJoints(this.a[a][5], this.a[a][6],
         2, .2, .2), this.b[a] = 6), -1 != this.b[a] && (PLprojectileAttack(this, a, this.a[a][6].x, this.a[a][6].y, b), this.b[a] = -1, checkEff(4 + a, 46) && (c = getEff(4 + a, 8), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + c, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, c, 65280)))), -1 == b && (Walk(this, a), Swim(this, a)));
     pullJoints(this.a[a][0], this.a[a][1], 3.6, .5, .5);
@@ -2545,7 +2545,7 @@ SR_Player.prototype.S = function(a) {
         d = RANGE[a],
         e = .5 * (this.a[a][9].x + this.a[a][10].x),
         g = .5 * (this.a[a][9].y + this.a[a][10].y);
-    b = 1 != Game_Mode ? Kf(e - d, g - d, e + d, g + d) : PLfindPlayer(e - d, g - d, e + d, g + d, b); - 1 != b && (e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (this.a[a][5].x += .1, this.a[a][6].x += .1, this.a[a][1].x -= .2) : (this.a[a][5].x -= .1, this.a[a][6].x -= .1, this.a[a][1].x += .2));
+    b = 1 != Game_Mode ? ENfindEnemy(e - d, g - d, e + d, g + d) : PLfindPlayer(e - d, g - d, e + d, g + d, b); - 1 != b && (e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (this.a[a][5].x += .1, this.a[a][6].x += .1, this.a[a][1].x -= .2) : (this.a[a][5].x -= .1, this.a[a][6].x -= .1, this.a[a][1].x += .2));
     this.i[a] && this.h != a && (0 < this.c[a] && this.c[a]--, this.c[a] || (-1 != b && (this.c[a] = c, e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (pullJoints(this.a[a][5],
         this.a[a][6], 0, .1, .1), this.b[a] = 6) : (pullJoints(this.a[a][5], this.a[a][6], 0, .1, .1), this.b[a] = 5)), -1 != this.b[a] && (PLprojectileAttack(this, a, this.a[a][6].x, this.a[a][6].y, b), this.b[a] = -1, checkEff(4 + a, 46) && (c = getEff(4 + a, 8), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + c, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, c, 65280)))), -1 == b && (Walk(this, a), Swim(this, a)));
     pullJoints(this.a[a][0], this.a[a][1], 3.6, .5, .5);
@@ -2569,7 +2569,7 @@ SR_Player.prototype.T = function(a) {
     c = RANGE[a];
     var e = .5 * (this.a[a][9].x + this.a[a][10].x),
         g = .5 * (this.a[a][9].y + this.a[a][10].y);
-    c = 1 != Game_Mode ? Kf(e - c, g - c / 2, e + c, g + c / 2) : PLfindPlayer(e - c, g - c / 2, e + c, g + c / 2, d);
+    c = 1 != Game_Mode ? ENfindEnemy(e - c, g - c / 2, e + c, g + c / 2) : PLfindPlayer(e - c, g - c / 2, e + c, g + c / 2, d);
     if (this.i[a] && this.h != a) {
         0 < this.c[a] && this.c[a]--;
         if (!this.c[a] && -1 != c) {
@@ -2609,7 +2609,7 @@ SR_Player.prototype.U = function(a) {
     var e = RANGE[a],
         g = .5 * (this.a[a][9].x + this.a[a][10].x),
         h = .5 * (this.a[a][9].y + this.a[a][10].y);
-    c = 1 != Game_Mode ? Kf(g - e, h - e, g + e, h + e) : PLfindPlayer(g - e, h - e, g + e, h + e, c); - 1 != c && this.h != a && (1 != Game_Mode ? Vdistance(d, Enemies.a[c][20], this.a[a][6]) : Vdistance(d, this.a[c][2], this.a[a][6]), normalize(d), this.a[a][5].x += .2 * d.x, this.a[a][5].y += .2 * d.y, this.a[a][6].x += .2 * d.x, this.a[a][6].y += .2 * d.y, this.a[a][1].x -= .4 * d.x, this.a[a][1].y -= .4 * d.y);
+    c = 1 != Game_Mode ? ENfindEnemy(g - e, h - e, g + e, h + e) : PLfindPlayer(g - e, h - e, g + e, h + e, c); - 1 != c && this.h != a && (1 != Game_Mode ? Vdistance(d, Enemies.a[c][20], this.a[a][6]) : Vdistance(d, this.a[c][2], this.a[a][6]), normalize(d), this.a[a][5].x += .2 * d.x, this.a[a][5].y += .2 * d.y, this.a[a][6].x += .2 * d.x, this.a[a][6].y += .2 * d.y, this.a[a][1].x -= .4 * d.x, this.a[a][1].y -= .4 * d.y);
     if (this.i[a] && this.h != a) {
         0 < this.c[a] && this.c[a]--;
         if (!this.c[a] && (-1 != c && (this.c[a] = b, this.a[a][5].y -= 1.5, this.a[a][6].y -= 1.5, this.a[a][3].y += 1.6, this.a[a][4].y += 1.6, this.b[a] = 6), -1 != this.b[a])) {
@@ -2655,12 +2655,12 @@ SR_Player.prototype.V = function(a) {
         0 < this.c[a] && this.c[a]--;
         b = .5 * (this.a[a][9].x + this.a[a][10].x);
         var m = .5 * (this.a[a][9].y + this.a[a][10].y);
-        b = 1 != Game_Mode ? Kf(b - q, m - q - 20, b + q, m + 20) : PLfindPlayer(b - q, m - q - 20, b + q, m + 20, d);
+        b = 1 != Game_Mode ? ENfindEnemy(b - q, m - q - 20, b + q, m + 20) : PLfindPlayer(b - q, m - q - 20, b + q, m + 20, d);
         this.c[a] || -1 == b || (this.c[a] = h, this.a[a][5].x < this.a[a][6].x ? (this.a[a][5].x += 4, this.a[a][4].x -= 4) : (this.a[a][6].x += 4, this.a[a][3].x -= 4), this.a[a][2].y +=
             1, this.b[a] = 14, antiCheatCheck(), h = getVal(Item_Inv[4 + a], 36), MP_Bar[a] = minOf(MP_Bar[a] + MAG[a], h), checkEff(4 + a, 46) && (h = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), antiCheatSet()); - 1 == b && Walk(this, a);
         Swim(this, a)
     }
-    if (-1 != this.b[a] && (checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (e += floor(getEff(4 + a, 9) * e / 100), g += floor(getEff(4 + a, 9) * g / 100)), h = 20, checkEff(4 + a, 42) && (h += floor(20 * getEff(4 + a, 8) / 100)), d = 1 != Game_Mode ? Nf(1, 0, 0, e, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, h) : PLtakeDamage(1, 0, 0, e, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, h, d), -1 != d)) {
+    if (-1 != this.b[a] && (checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (e += floor(getEff(4 + a, 9) * e / 100), g += floor(getEff(4 + a, 9) * g / 100)), h = 20, checkEff(4 + a, 42) && (h += floor(20 * getEff(4 + a, 8) / 100)), d = 1 != Game_Mode ? ENtakeDamage(1, 0, 0, e, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, h) : PLtakeDamage(1, 0, 0, e, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, h, d), -1 != d)) {
         antiCheatCheck();
         h = getVal(Item_Inv[4 + a], 36);
         if (MP_Bar[a] == h && 0 <
@@ -2721,14 +2721,14 @@ SR_Player.prototype.W = function(a) {
         b = .5 * (this.a[a][9].x +
             this.a[a][10].x);
         c = .5 * (this.a[a][9].y + this.a[a][10].y);
-        c = 1 != Game_Mode ? Kf(b - m, c - m, b + m, c + m) : PLfindPlayer(b - m, c - m, b + m, c + m, e);
+        c = 1 != Game_Mode ? ENfindEnemy(b - m, c - m, b + m, c + m) : PLfindPlayer(b - m, c - m, b + m, c + m, e);
         for (b = 0; b < l && 0 != this.s[a][b]; b++);
         this.c[a] || -1 == c || b == l || (this.c[a] = q, this.s[a][b] = 1, this.C[a][b] = floor(m / 2) + 20, this.D[a][b] = 0, this.a[a][12].x -= 2, this.a[a][14].x += 2, this.b[a] = 15 + b, this.a[a][this.b[a]].set(this.a[a][0]), this.a[a][this.b[a]].y -= 5, this.g[a][this.b[a]].set(this.a[a][this.b[a]]), 1 != Game_Mode ? Vdistance(d, Enemies.a[c][20], this.a[a][this.b[a]]) : Vdistance(d, this.a[c][1], this.a[a][this.b[a]]), normalize(d), scaleVector2D(d, 2), this.a[a][this.b[a]].add(d)); -
         1 == c && (Walk(this, a), Swim(this, a))
     }
     for (b = 0; b < l; b++)
         if (0 != this.s[a][b] && (this.b[a] = 15 + b, this.C[a][b]--, 0 >= this.C[a][b] && (1 == this.s[a][b] ? (this.s[a][b]++, d.set(this.a[a][0]), d.y -= 5, this.g[a][this.b[a]].set(this.a[a][this.b[a]]), Vdistance(d, d, this.a[a][this.b[a]]), q = normalize(d), scaleVector2D(d, 2), this.a[a][this.b[a]].add(d), this.C[a][b] = floor(q / 2)) : (this.s[a][b] = 0, this.C[a][b] = 0, this.D[a][b] = 0)), this.D[a][b]--, !(0 < this.D[a][b]) && (q = 0, checkEff(4 + a, 27) && random(100) < getEff(4 + a, 8) && (q = 1), checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (g += floor(getEff(4 + a, 9) * g / 100), h += floor(getEff(4 + a, 9) *
-                h / 100)), q = 1 != Game_Mode ? Nf(q, 0, 0, g, h, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, 10, 10) : PLtakeDamage(q, 0, 0, g, h, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, 10, 10, e), -1 != q))) {
+                h / 100)), q = 1 != Game_Mode ? ENtakeDamage(q, 0, 0, g, h, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, 10, 10) : PLtakeDamage(q, 0, 0, g, h, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, 10, 10, e), -1 != q))) {
             antiCheatCheck();
             m = getVal(Item_Inv[4 + a], 36);
             MP_Bar[a] = minOf(MP_Bar[a] + MAG[a], m);
@@ -2786,11 +2786,11 @@ SR_Player.prototype.B = function() {
         8 == this.f[a] && (b = (h & 16711680) >> 17 << 16 | (h & 65280) >> 9 << 8 | (h & 255) >> 1, drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][11].x, this.a[a][11].y, b), drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][12].x, this.a[a][12].y, b), drawLine(this.a[a][11].x, this.a[a][11].y, this.a[a][12].x, this.a[a][12].y, b), drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][13].x,
             this.a[a][13].y, b), drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][14].x, this.a[a][14].y, b), drawLine(this.a[a][13].x, this.a[a][13].y, this.a[a][14].x, this.a[a][14].y, b));
         drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][2].x, this.a[a][2].y, m);
-        this.f[a] != wf && (drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][3].x, this.a[a][3].y, m), drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][4].x, this.a[a][4].y, m));
+        this.f[a] != Class_Dead && (drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][3].x, this.a[a][3].y, m), drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][4].x, this.a[a][4].y, m));
         drawLine(this.a[a][3].x, this.a[a][3].y, this.a[a][5].x, this.a[a][5].y, m);
         drawLine(this.a[a][4].x, this.a[a][4].y, this.a[a][6].x, this.a[a][6].y, m);
         this.f[a] !=
-            wf && (drawLine(this.a[a][2].x, this.a[a][2].y, this.a[a][7].x, this.a[a][7].y, m), drawLine(this.a[a][2].x, this.a[a][2].y, this.a[a][8].x, this.a[a][8].y, m));
+            Class_Dead && (drawLine(this.a[a][2].x, this.a[a][2].y, this.a[a][7].x, this.a[a][7].y, m), drawLine(this.a[a][2].x, this.a[a][2].y, this.a[a][8].x, this.a[a][8].y, m));
         drawLine(this.a[a][7].x, this.a[a][7].y, this.a[a][9].x, this.a[a][9].y, m);
         drawLine(this.a[a][8].x, this.a[a][8].y, this.a[a][10].x, this.a[a][10].y, m);
         outlineRect(floor(this.a[a][0].x) - 2, floor(this.a[a][0].y) - 2, 5, 5, q);
@@ -3524,7 +3524,7 @@ SR_Enemy.prototype.sub = function(a) {
     this.i--
 };
 
-function Wf(a, b, c, d) {
+function ENgroundCollision(a, b, c, d) {
     var e = new Vector2D;
     Vdistance(e, a.a[b][c], a.c[b][c]);
     a.a[b][c].set(a.c[b][c]);
@@ -3533,9 +3533,9 @@ function Wf(a, b, c, d) {
     for (var h, q, m, l = 0; l < g; l++) h = a.a[b][c].y + e.y, q = clamp(a.a[b][c].x, 0, 511) >> 3, m = clamp(h, 0, 255) >> 3, q = Terrain.a[m][q], 0 > h || 256 <= h || (0 <= q && 8 >= q ? (0 < e.y && (a.g[b] |= 2), e.x *= d, e.y = -e.y) : a.a[b][c].y = h), h = a.a[b][c].x + e.x, q = clamp(h, 0, 511) >> 3, m = clamp(a.a[b][c].y, 0, 255) >> 3, q = Terrain.a[m][q], 0 > h || 512 <= h || (0 <= q && 8 >= q ? (e.y *= d, e.x = -e.x, a.g[b] |= 1) : a.a[b][c].x = h)
 }
 
-function Kf(a, b, c, d) { for (var e = Enemies, g = .5 * (a + c), h = 1E3, q = -1, m, l, A, z = 0; z < e.i; z++) m = EN_Info[e.f[z]][EN_Size], l = EN_Info[e.f[z]][EN_Species], A = (Hitboxvar1[l] >> 1) * ((m >> 1) + 1), m = (Hitboxvar2[l] >> 1) * m, e.D[z] = 0, l = e.a[z][20], !e.j[z] || l.x - A > c || l.x + A < a || l.y - m > d || l.y + m < b || (e.D[z] = 1, absVal(l.x - g) < h && (h = absVal(l.x - g), q = z)); return q }
+function ENfindEnemy(a, b, c, d) { for (var e = Enemies, g = .5 * (a + c), h = 1E3, q = -1, m, l, A, z = 0; z < e.i; z++) m = EN_Info[e.f[z]][EN_Size], l = EN_Info[e.f[z]][EN_Species], A = (Hitboxvar1[l] >> 1) * ((m >> 1) + 1), m = (Hitboxvar2[l] >> 1) * m, e.D[z] = 0, l = e.a[z][20], !e.j[z] || l.x - A > c || l.x + A < a || l.y - m > d || l.y + m < b || (e.D[z] = 1, absVal(l.x - g) < h && (h = absVal(l.x - g), q = z)); return q }
 
-function Nf(a, b, c, d, e, g, h, q, m) {
+function ENtakeDamage(a, b, c, d, e, g, h, q, m) {
     var l = Enemies,
         A = -1,
         z, Z, B;
@@ -3547,7 +3547,7 @@ function Nf(a, b, c, d, e, g, h, q, m) {
     return A
 }
 
-function Xf(a, b, c) {
+function ENattack(a, b, c) {
     var d = new Vector2D,
         e = a.f[b] + c,
         g = EN_Info[e],
@@ -3666,7 +3666,7 @@ function enemyDeath(a, b, c) {
     h = g = e = 100;
     for (d = 0; 4 > d; d++) checkEff(4 + d, 33) && (e += getEff(4 + d, 8)), checkEff(4 + d, 34) && (g += getEff(4 + d, 8)), checkEff(4 + d, 35) && (h += getEff(4 + d, 8));
     for (d = 0; 4 > d; d++)
-        if (checkEff(4 + d, 41) && random(100) < getEff(4 + d, 8)) { var q = Kf(a.a[b][0].x - 600, a.a[b][0].y - 300, a.a[b][0].x + 600, a.a[b][0].y + 300); - 1 != q && PLprojectileAttack(Players, getEff(4 + d, 9), a.a[b][0].x, a.a[b][0].y, q) }
+        if (checkEff(4 + d, 41) && random(100) < getEff(4 + d, 8)) { var q = ENfindEnemy(a.a[b][0].x - 600, a.a[b][0].y - 300, a.a[b][0].x + 600, a.a[b][0].y + 300); - 1 != q && PLprojectileAttack(Players, getEff(4 + d, 9), a.a[b][0].x, a.a[b][0].y, q) }
     q = 0;
     17 == a.v[b] && (q = a.b[b] -
         1);
@@ -3708,8 +3708,8 @@ SR_Enemy.prototype.T = function(a) {
             pullJoints(this.a[a][0], this.a[a][1], 9 * b, .2, .2);
             pullJoints(this.a[a][0], this.a[a][2], 9 * b, .2, .2);
             pullJoints(this.a[a][1], this.a[a][2], 11 * b, .2, .2);
-            Xf(this, a, 0);
-            for (b = this.g[a] = 0; 3 > b; b++) Wf(this,
+            ENattack(this, a, 0);
+            for (b = this.g[a] = 0; 3 > b; b++) ENgroundCollision(this,
                 a, b, .5);
             this.a[a][20].set(this.a[a][0]);
             if (0 >= this.j[a]) {
@@ -3719,7 +3719,7 @@ SR_Enemy.prototype.T = function(a) {
             }
         } else {
             for (b = 0; 3 > b; b++) moveJoint(this.a[a][b], this.c[a][b], .05, .99);
-            for (b = this.g[a] = 0; 3 > b; b++) Wf(this, a, b, .5);
+            for (b = this.g[a] = 0; 3 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else {
@@ -3750,12 +3750,12 @@ SR_Enemy.prototype.M = function(a) {
             pullJoints(this.a[a][0], this.a[a][1],
                 0, 0, .01);
             pullJoints(this.a[a][1], this.a[a][2], 0, 0, .01);
-            Xf(this, a, 0);
+            ENattack(this, a, 0);
             this.g[a] = 0;
-            Wf(this, a, 0, .5);
+            ENgroundCollision(this, a, 0, .5);
             b = this.g[a];
-            Wf(this, a, 1, .5);
-            Wf(this, a, 2, .5);
+            ENgroundCollision(this, a, 1, .5);
+            ENgroundCollision(this, a, 2, .5);
             this.g[a] = b;
             this.a[a][20].set(this.a[a][0]);
             if (0 >= this.j[a]) {
@@ -3765,7 +3765,7 @@ SR_Enemy.prototype.M = function(a) {
             }
         } else {
             for (b = 0; 3 > b; b++) moveJoint(this.a[a][b], this.c[a][b], .05, .99);
-            for (b = this.g[a] = 0; 3 > b; b++) Wf(this, a, b, .5);
+            for (b = this.g[a] = 0; 3 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else {
@@ -3809,8 +3809,8 @@ SR_Enemy.prototype.N = function(a) {
             pullJoints(this.a[a][4], this.a[a][5], d, c, c);
             pullJoints(this.a[a][4], this.a[a][6], d, c, c);
             pullJoints(this.a[a][5], this.a[a][6], d, c, c);
-            Xf(this, a, 0);
-            for (b = this.g[a] = 0; 7 > b; b++) Wf(this, a, b, 1);
+            ENattack(this, a, 0);
+            for (b = this.g[a] = 0; 7 > b; b++) ENgroundCollision(this, a, b, 1);
             this.a[a][20].set(this.a[a][0]);
             if (0 >= this.j[a]) {
                 this.b[a] = 3;
@@ -3828,7 +3828,7 @@ SR_Enemy.prototype.N = function(a) {
             pullJoints(this.a[a][4], this.a[a][6], d, c, c);
             pullJoints(this.a[a][5], this.a[a][6], d, c, c);
             for (b = this.g[a] =
-                0; 7 > b; b++) Wf(this, a, b, .5);
+                0; 7 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else {
@@ -3869,8 +3869,8 @@ SR_Enemy.prototype.O = function(a) {
             c = .02;
             d = 5 * d;
             for (b = 0; 5 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 1], d, 0, c);
-            Xf(this, a, 0);
-            for (b = this.g[a] = 0; 6 > b; b++) Wf(this, a, b, .5);
+            ENattack(this, a, 0);
+            for (b = this.g[a] = 0; 6 > b; b++) ENgroundCollision(this, a, b, .5);
             this.a[a][20].set(this.a[a][0]);
             if (0 >= this.j[a]) {
                 this.b[a] = 3;
@@ -3885,7 +3885,7 @@ SR_Enemy.prototype.O = function(a) {
             pullJoints(this.a[a][2], this.a[a][3], d, c, c);
             pullJoints(this.a[a][3], this.a[a][4], d, c, c);
             for (b = this.g[a] =
-                0; 6 > b; b++) Wf(this, a, b, .5);
+                0; 6 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else this.b[a] = 1;
@@ -3922,8 +3922,8 @@ SR_Enemy.prototype.G = function(a, b) {
             pullJoints(this.a[a][7], this.a[a][9], 4 * e, d, d);
             pullJoints(this.a[a][8], this.a[a][10], 4 * e, d, d);
             pullJoints(this.a[a][7], this.a[a][8], 5 * e, d, d);
-            332 == this.f[a] ? Xf(this, a, randInt(6)) : (Xf(this, a, 0), 0 != EN_Info[this.f[a]][En_2nd_Att] && Xf(this, a, 1));
-            for (c = this.g[a] = 0; 11 > c; c++) Wf(this,
+            332 == this.f[a] ? ENattack(this, a, randInt(6)) : (ENattack(this, a, 0), 0 != EN_Info[this.f[a]][En_2nd_Att] && ENattack(this, a, 1));
+            for (c = this.g[a] = 0; 11 > c; c++) ENgroundCollision(this,
                 a, c, .5);
             this.a[a][20].set(this.a[a][1]);
             if (0 >= this.j[a]) {
@@ -3940,7 +3940,7 @@ SR_Enemy.prototype.G = function(a, b) {
             pullJoints(this.a[a][4], this.a[a][6], 4 * e, d, d);
             pullJoints(this.a[a][7], this.a[a][9], 4 * e, d, d);
             pullJoints(this.a[a][8], this.a[a][10], 4 * e, d, d);
-            for (c = this.g[a] = 0; 11 > c; c++) Wf(this, a, c, .5);
+            for (c = this.g[a] = 0; 11 > c; c++) ENgroundCollision(this, a, c, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else this.b[a] =
@@ -3963,9 +3963,9 @@ SR_Enemy.prototype.H = function(a, b) {
             pullJoints(this.a[a][0], this.a[a][1], 8 * d, .2, .2);
             for (c = 1; c < this.b[a] - 2; c++) pullJoints(this.a[a][c], this.a[a][c + 1], 6 * d, .2, .2);
             pullJoints(this.a[a][c], this.a[a][c + 1], 6 * d, .2, 0);
-            Xf(this, a,
+            ENattack(this, a,
                 0);
-            for (c = this.g[a] = 0; c < this.b[a]; c++) Wf(this, a, c, .5);
+            for (c = this.g[a] = 0; c < this.b[a]; c++) ENgroundCollision(this, a, c, .5);
             this.a[a][20].x = .5 * (this.a[a][0].x + this.a[a][this.b[a] - 1].x);
             this.a[a][20].y = .5 * (this.a[a][0].y + this.a[a][this.b[a] - 1].y);
             if (0 >= this.j[a]) {
@@ -3975,7 +3975,7 @@ SR_Enemy.prototype.H = function(a, b) {
             }
         } else {
             for (c = 0; c < this.b[a] - 10; c++) moveJoint(this.a[a][c], this.c[a][c], .05, .99);
-            for (c = this.g[a] = 0; c < this.b[a] - 10; c++) Wf(this, a, c, .5);
+            for (c = this.g[a] = 0; c < this.b[a] - 10; c++) ENgroundCollision(this, a, c, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else this.b[a] = floor(randomRange(4, 8));
@@ -3999,8 +3999,8 @@ SR_Enemy.prototype.P = function(a) {
             for (b = 1; 6 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 1], 10 * c, d, d);
             pullJoints(this.a[a][b], this.a[a][1], 10 * c, d, d);
             for (b = 1; 7 > b; b++) pullJoints(this.a[a][0], this.a[a][b], 10 * c, .2, .2);
-            Xf(this, a, 0);
-            for (b = this.g[a] = 0; 7 > b; b++) Wf(this, a, b, .5);
+            ENattack(this, a, 0);
+            for (b = this.g[a] = 0; 7 > b; b++) ENgroundCollision(this, a, b, .5);
             this.a[a][20].set(this.a[a][0]);
             if (0 >= this.j[a]) {
                 this.b[a] = 3;
@@ -4013,7 +4013,7 @@ SR_Enemy.prototype.P = function(a) {
             c = 1.2 * c * (150 - this.h[a]) / 150;
             for (b =
                 1; 6 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 1], 10 * c, d, d);
-            for (b = this.g[a] = 0; 7 > b; b++) Wf(this, a, b, .5);
+            for (b = this.g[a] = 0; 7 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else {
@@ -4055,8 +4055,8 @@ SR_Enemy.prototype.R = function(a) {
             pullJoints(this.a[a][2], this.a[a][3], 6 * d, 0, c);
             pullJoints(this.a[a][2], this.a[a][4], 6 * d, 0, c);
             pullJoints(this.a[a][3], this.a[a][4], 8 * d, c, c);
-            Xf(this, a, 0);
-            for (b = this.g[a] = 0; 5 > b; b++) Wf(this, a, b, .5);
+            ENattack(this, a, 0);
+            for (b = this.g[a] = 0; 5 > b; b++) ENgroundCollision(this, a, b, .5);
             this.a[a][20].set(this.a[a][1]);
             if (0 >= this.j[a]) {
                 this.b[a] = 3;
@@ -4071,7 +4071,7 @@ SR_Enemy.prototype.R = function(a) {
                 d, c, c);
             pullJoints(this.a[a][2], this.a[a][4], d, c, c);
             pullJoints(this.a[a][3], this.a[a][4], d, c, c);
-            for (b = this.g[a] = 0; 5 > b; b++) Wf(this, a, b, .5);
+            for (b = this.g[a] = 0; 5 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else this.b[a] = 1;
@@ -4087,9 +4087,9 @@ SR_Enemy.prototype.S = function(a) {
             pullJoints(this.a[a][0], this.a[a][1], 7 * c, .2, .2);
             pullJoints(this.a[a][1], this.a[a][2], 5 * c, .2, 0);
             this.a[a][0].x = this.a[a][1].x = this.a[a][2].x;
-            0 < this.s[a] ? this.s[a]-- : 0 < this.u[a] && (this.a[a][0].y += randomRange(0, 1), Xf(this, a, 0));
+            0 < this.s[a] ? this.s[a]-- : 0 < this.u[a] && (this.a[a][0].y += randomRange(0, 1), ENattack(this, a, 0));
             this.u[a] = 0;
-            for (b = this.g[a] = 0; 3 > b; b++) Wf(this, a, b, .5);
+            for (b = this.g[a] = 0; 3 > b; b++) ENgroundCollision(this, a, b, .5);
             this.a[a][20].x = this.a[a][0].x;
             this.a[a][20].y = .5 * (this.a[a][0].y + this.a[a][1].y);
             if (0 >= this.j[a]) {
@@ -4099,7 +4099,7 @@ SR_Enemy.prototype.S = function(a) {
             }
         } else {
             for (b = 0; 3 > b; b++) moveJoint(this.a[a][b], this.c[a][b], .05, .99);
-            for (b = this.g[a] = 0; 3 > b; b++) Wf(this, a, b, .5);
+            for (b = this.g[a] = 0; 3 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else this.a[a][0].x += 0, this.a[a][0].y += 0, this.a[a][1].x += 0, this.a[a][1].y += 1, this.a[a][2].x += 0, this.a[a][2].y += 3, this.b[a]++;
@@ -4130,8 +4130,8 @@ SR_Enemy.prototype.J = function(a, b) {
             2 > random(100) && (d.x += randomRange(-.5, .5), d.y += randomRange(-.5, .5));
             this.a[a][0].add(d);
             for (c = 0; 6 > c; c++) pullJoints(this.a[a][c], this.a[a][c + 1], 6 * e, 0, .5);
-            0 == EN_Info[this.f[a]][En_2nd_Att] ? Xf(this, a, 0) : Xf(this, a, 50 > random(100) ? 0 : 1);
-            for (c = this.g[a] = 0; 6 > c; c++) Wf(this, a, c, .5);
+            0 == EN_Info[this.f[a]][En_2nd_Att] ? ENattack(this, a, 0) : ENattack(this, a, 50 > random(100) ? 0 : 1);
+            for (c = this.g[a] = 0; 6 > c; c++) ENgroundCollision(this, a, c, .5);
             this.a[a][20].set(this.a[a][0]);
             if (0 >= this.j[a]) {
                 this.b[a] = 3;
@@ -4143,7 +4143,7 @@ SR_Enemy.prototype.J = function(a, b) {
                 this.c[a][c], .05, .99);
             d = 6 * (150 - this.h[a]) / 150;
             for (c = 1; 5 > c; c++) pullJoints(this.a[a][c], this.a[a][c + 1], d * e, 0, .5);
-            for (c = this.g[a] = 0; 6 > c; c++) Wf(this, a, c, .5);
+            for (c = this.g[a] = 0; 6 > c; c++) ENgroundCollision(this, a, c, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else 50 > random(100) ? this.b[a] = 1 : this.b[a] = 2;
@@ -4187,9 +4187,9 @@ SR_Enemy.prototype.U = function(a) {
             pullJoints(this.a[a][3], this.a[a][4], 3 * b, .2 * c, .2 * c);
             pullJoints(this.a[a][2], this.a[a][4], 8 * b, .1 * c, .1 * c);
             pullJoints(this.a[a][5], this.a[a][7], 7 * b, .1 * c, .1 * c);
-            Xf(this, a, 0);
-            0 != EN_Info[this.f[a]][En_2nd_Att] && Xf(this, a, 1);
-            for (b = this.g[a] = 0; 9 > b; b++) Wf(this, a, b, .5);
+            ENattack(this, a, 0);
+            0 != EN_Info[this.f[a]][En_2nd_Att] && ENattack(this, a, 1);
+            for (b = this.g[a] = 0; 9 > b; b++) ENgroundCollision(this, a, b, .5);
             this.a[a][20].set(this.a[a][0]);
             if (0 >= this.j[a]) {
                 this.b[a] = 3;
@@ -4206,7 +4206,7 @@ SR_Enemy.prototype.U = function(a) {
             pullJoints(this.a[a][3], this.a[a][4], 4 * b, c, c);
             pullJoints(this.a[a][5], this.a[a][6], 3 * b, c, c);
             pullJoints(this.a[a][7], this.a[a][8], 3 * b, c, c);
-            for (b = this.g[a] = 0; 9 > b; b++) Wf(this, a, b, .5);
+            for (b = this.g[a] = 0; 9 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else {
@@ -4247,10 +4247,10 @@ SR_Enemy.prototype.V = function(a) {
             this.a[a][0].x = this.a[a][3].x;
             this.a[a][1].x = this.a[a][3].x - 8 * c;
             this.a[a][2].x = this.a[a][3].x + 8 * c;
-            0 < this.s[a] ? this.s[a]-- : 0 < this.u[a] && (this.a[a][0].y += randomRange(0, 1), this.a[a][1].y += randomRange(0, 1), this.a[a][2].y += randomRange(0, 1), Xf(this,
+            0 < this.s[a] ? this.s[a]-- : 0 < this.u[a] && (this.a[a][0].y += randomRange(0, 1), this.a[a][1].y += randomRange(0, 1), this.a[a][2].y += randomRange(0, 1), ENattack(this,
                 a, 0));
             this.u[a] = 0;
-            for (b = this.g[a] = 0; 4 > b; b++) Wf(this, a, b, .5);
+            for (b = this.g[a] = 0; 4 > b; b++) ENgroundCollision(this, a, b, .5);
             this.a[a][20].x = this.a[a][0].x;
             this.a[a][20].y = .5 * (this.a[a][0].y + this.a[a][1].y);
             if (0 >= this.j[a]) {
@@ -4260,7 +4260,7 @@ SR_Enemy.prototype.V = function(a) {
             }
         } else {
             for (b = 0; 4 > b; b++) moveJoint(this.a[a][b], this.c[a][b], .05, .99);
-            for (b = this.g[a] = 0; 4 > b; b++) Wf(this, a, b, .5);
+            for (b = this.g[a] = 0; 4 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else this.a[a][0].x += 1, this.a[a][0].y += 0, this.a[a][1].x += 0, this.a[a][1].y += 1, this.a[a][2].x += 2, this.a[a][2].y += 1, this.a[a][3].x +=
@@ -4288,8 +4288,8 @@ SR_Enemy.prototype.W = function(a) {
             pullJoints(this.a[a][2], this.a[a][3], 16 * b, c, c);
             pullJoints(this.a[a][0], this.a[a][2], 12 * b, c, c);
             pullJoints(this.a[a][0], this.a[a][3], 12 * b, c, c);
-            Xf(this, a, 0);
-            for (b = this.g[a] = 0; 4 > b; b++) Wf(this, a, b, 1);
+            ENattack(this, a, 0);
+            for (b = this.g[a] = 0; 4 > b; b++) ENgroundCollision(this, a, b, 1);
             this.a[a][20].set(this.a[a][0]);
             if (0 >= this.j[a]) {
                 this.b[a] = 3;
@@ -4304,7 +4304,7 @@ SR_Enemy.prototype.W = function(a) {
             pullJoints(this.a[a][1], this.a[a][2], 8 * b, c, c);
             pullJoints(this.a[a][1], this.a[a][3], 8 * b, c, c);
             pullJoints(this.a[a][2], this.a[a][3], 16 * b, c, c);
-            for (b = this.g[a] = 0; 4 > b; b++) Wf(this, a, b, .5);
+            for (b = this.g[a] = 0; 4 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else {
@@ -4342,8 +4342,8 @@ SR_Enemy.prototype.X = function(a) {
             pullJoints(this.a[a][1], this.a[a][2], 6 * b, c, c);
             1 < b && 0 < this.u[a] && 10 > random(100) && this.add(floor(this.a[a][0].x / 8), floor(this.a[a][0].y / 8), this.f[a] - 1);
             this.u[a] = 0;
-            Xf(this, a, 0);
-            for (b = this.g[a] = 0; 3 > b; b++) Wf(this, a, b, .9);
+            ENattack(this, a, 0);
+            for (b = this.g[a] = 0; 3 > b; b++) ENgroundCollision(this, a, b, .9);
             this.a[a][20].set(this.a[a][0]);
             if (0 >= this.j[a]) {
                 this.b[a]++;
@@ -4360,7 +4360,7 @@ SR_Enemy.prototype.X = function(a) {
                 5 * b, c, c);
             pullJoints(this.a[a][0], this.a[a][2], 5 * b, c, c);
             pullJoints(this.a[a][1], this.a[a][2], 6 * b, c, c);
-            for (b = this.g[a] = 0; 4 > b; b++) Wf(this, a, b, .5);
+            for (b = this.g[a] = 0; 4 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else {
@@ -4394,8 +4394,8 @@ SR_Enemy.prototype.Y = function(a) {
             for (b = 4; 7 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 3], 3 * d, c, .01);
             5 > this.h[a]-- &&
                 (c = .01 / d, pullJoints(this.a[a][7], this.a[a][8], 20 * d, c, c), pullJoints(this.a[a][8], this.a[a][9], 20 * d, c, c), pullJoints(this.a[a][9], this.a[a][7], 20 * d, c, c));
-            Xf(this, a, 0);
-            for (b = this.g[a] = 0; 10 > b; b++) Wf(this, a, b, .9);
+            ENattack(this, a, 0);
+            for (b = this.g[a] = 0; 10 > b; b++) ENgroundCollision(this, a, b, .9);
             this.a[a][20].set(this.a[a][0]);
             if (0 >= this.j[a]) {
                 this.b[a]++;
@@ -4409,7 +4409,7 @@ SR_Enemy.prototype.Y = function(a) {
             for (b = 1; 4 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 3], 3 * d * e, c, c);
             for (b = 4; 7 > b; b++) pullJoints(this.a[a][b],
                 this.a[a][b + 3], 3 * d * e, c, c);
-            for (b = this.g[a] = 0; 10 > b; b++) Wf(this, a, b, .5);
+            for (b = this.g[a] = 0; 10 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else this.b[a]++;
@@ -4430,9 +4430,9 @@ SR_Enemy.prototype.Z = function(a) {
             for (b = 1; b < this.b[a] - 2; b++) pullJoints(this.a[a][b], this.a[a][b + 1], 6 * c, .2, .2);
             pullJoints(this.a[a][b], this.a[a][b + 1], 6 *
                 c, .2, 0);
-            Xf(this, a, 0);
+            ENattack(this, a, 0);
             this.g[a] = 0;
-            for (b = this.b[a] - 1; b < this.b[a]; b++) Wf(this, a, b, .5);
+            for (b = this.b[a] - 1; b < this.b[a]; b++) ENgroundCollision(this, a, b, .5);
             this.a[a][20].set(this.a[a][0]);
             if (0 >= this.j[a]) {
                 for (b = 0; b < this.b[a]; b++) this.a[a][b].x += randomRange(-.5, .5), this.a[a][b].y -= randomRange(2, 3);
@@ -5949,7 +5949,7 @@ function PJmain() {
         else if (0 < a.C[b]) a.C[b]--;
     else if (1 == a.u[b]) a.h[b]++, a.h[b] >= a.D[b] && PJsub(a, b--);
     else {
-        0 < a.J[b] && (e = a.J[b], e = 1 != Game_Mode ? a.g[b] ? PLfindPlayer(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e, 0) : Kf(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e) : PLfindPlayer(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e, 1 - a.g[b] << 2), -1 != e && (1 != Game_Mode ? a.g[b] ? Vdistance(d, Players.a[e][0], a.b[b]) : Vdistance(d, Enemies.a[e][0], a.b[b]) : Vdistance(d, Players.a[e][0], a.b[b]), normalize(d), e = magnitudeOf(a.c[b]), a.c[b].x = .85 * a.c[b].x +
+        0 < a.J[b] && (e = a.J[b], e = 1 != Game_Mode ? a.g[b] ? PLfindPlayer(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e, 0) : ENfindEnemy(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e) : PLfindPlayer(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e, 1 - a.g[b] << 2), -1 != e && (1 != Game_Mode ? a.g[b] ? Vdistance(d, Players.a[e][0], a.b[b]) : Vdistance(d, Enemies.a[e][0], a.b[b]) : Vdistance(d, Players.a[e][0], a.b[b]), normalize(d), e = magnitudeOf(a.c[b]), a.c[b].x = .85 * a.c[b].x +
             .15 * d.x + randomRange(-.1, .1), a.c[b].y = .85 * a.c[b].y + .15 * d.y + randomRange(-.1, .1), normalize(a.c[b]), scaleVector2D(a.c[b], maxOf(e, 1))));
         a.c[b].y += .01 * a.ja[b];
         scaleVector2D(a.c[b], .01 * a.m[b]);
@@ -5967,7 +5967,7 @@ function PJmain() {
         1 == a.i[b] && a.j[b] && random(1E3) > a.j[b] && (c = 0);
         0 < a.I[b] && (a.I[b]--, c = 0);
         g = -1;
-        1 == c && (g = 1 != Game_Mode ? a.g[b] ? PLtakeDamage(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b], 0) : Nf(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b]) : PLtakeDamage(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b], 1 - a.g[b] << 2)); - 1 != g && a.H[b] && (1 != Game_Mode ? a.g[b] ? Vdistance(d, Players.a[g][0], a.b[b]) : Vdistance(d, Enemies.a[g][0], a.b[b]) : Vdistance(d, Players.a[g][0], a.b[b]), normalize(d), scaleVector2D(d, .1 * a.H[b]), 1 == Game_Mode || a.g[b] ? scaleVector2D(d, .1) :
+        1 == c && (g = 1 != Game_Mode ? a.g[b] ? PLtakeDamage(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b], 0) : ENtakeDamage(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b]) : PLtakeDamage(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b], 1 - a.g[b] << 2)); - 1 != g && a.H[b] && (1 != Game_Mode ? a.g[b] ? Vdistance(d, Players.a[g][0], a.b[b]) : Vdistance(d, Enemies.a[g][0], a.b[b]) : Vdistance(d, Players.a[g][0], a.b[b]), normalize(d), scaleVector2D(d, .1 * a.H[b]), 1 == Game_Mode || a.g[b] ? scaleVector2D(d, .1) :
             scaleVector2D(d, Text_Spacing[EN_Info[Enemies.f[g]][EN_Species]] / EN_Info[Enemies.f[g]][EN_Size]), 1 != Game_Mode ? a.g[b] ? Players.g[g][0].sub(d) : Enemies.c[g][0].sub(d) : Players.g[g][0].sub(d), a.H[b] = 0);
         1 == a.i[b] && a.j[b] && (g = -1);
         if (1 == e || -1 != g)
@@ -6131,7 +6131,7 @@ function SR_Drop() {
 SR_Drop.prototype.o = function() { this.f = this.a = 0 };
 SR_Drop.prototype.add = function(a, b, c, d, e) {
     if (100 != this.a)
-        for (a = clamp(a, 16, 495), b = clamp(b, 8, 247), assignVector2D(this.b[this.a], a, b), this.c[this.a].x = he < a ? randomRange(-.5, -1) : randomRange(.5, 1), this.c[this.a].y = randomRange(-1, -2), this.g[this.a] = c, this.value[this.a] = d, this.i[this.a] = e, this.h[this.a] = 0, this.a++, c = this.f = 0; c < this.a; c++) this.f += 7 * this.g[c] + 3 * this.value[c] + 11 * this.i[c]
+        for (a = clamp(a, 16, 495), b = clamp(b, 8, 247), assignVector2D(this.b[this.a], a, b), this.c[this.a].x = Mouse_Xpos < a ? randomRange(-.5, -1) : randomRange(.5, 1), this.c[this.a].y = randomRange(-1, -2), this.g[this.a] = c, this.value[this.a] = d, this.i[this.a] = e, this.h[this.a] = 0, this.a++, c = this.f = 0; c < this.a; c++) this.f += 7 * this.g[c] + 3 * this.value[c] + 11 * this.i[c]
 };
 SR_Drop.prototype.sub = function(a) {
     this.b[a].set(this.b[this.a - 1]);
@@ -6324,22 +6324,22 @@ SR_map.prototype.o = function() {
         for (b = 0; b < this.m; b++) a =
             c * Map_Feature_Index.m + b, this.c[c][b] = -1, 26112 == Map_Feature_Index.l[a] ? this.c[c][b] = 0 : 10066329 == Map_Feature_Index.l[a] ? this.c[c][b] = 1 : 8404992 == Map_Feature_Index.l[a] ? this.c[c][b] = 2 : 13434879 == Map_Feature_Index.l[a] ? this.c[c][b] = 5 : 12288 == Map_Feature_Index.l[a] && (this.c[c][b] = 6)
 };
-var lg = document,
-    cv = lg.getElementById("cv"),
+var doc = document,
+    cv = doc.getElementById("cv"),
     ctx = cv.getContext("2d"),
     My_Img_Data = ctx.createImageData(512, 384),
     Bit_8_Color = new Uint32Array(My_Img_Data.data.buffer),
-    pg = WIN.console,
+    Win_Console = WIN.console,
     chrCode = String.fromCharCode,
-    Ld = setTimeout,
+    timeOut = setTimeout,
     Host_Name = location.hostname;
 Host_Name = 'dan-ball.jp';
 WIN.fff = putImageData;
 
-function putImageData(a, b, c) { try { cv = lg.getElementById("cv"), ctx = cv.getContext("2d"), ctx.putImageData(a, b, c) } catch (d) {} }
+function putImageData(a, b, c) { try { cv = doc.getElementById("cv"), ctx = cv.getContext("2d"), ctx.putImageData(a, b, c) } catch (d) {} }
 WIN.fff = logCopyright;
 
-function logCopyright(a) { try { pg.log(a) } catch (b) {} }
+function logCopyright(a) { try { Win_Console.log(a) } catch (b) {} }
 WIN.Init = gameStartup;
 var chr_C_DAN_BALL = chrCode(40, 67, 41, 32, 50, 48, 48, 56, 32, 104, 97, 53, 53, 105, 105, 32, 68, 65, 78, 45, 66, 65, 76, 76, 46, 106, 112),
     chr_Copyright_DAN_BALL = chrCode(67, 111, 112, 121, 114, 105, 103, 104, 116, 32, 40, 67, 41, 32, 50, 48, 48, 56, 32, 104, 97, 53, 53, 105, 105, 32, 68, 65, 78, 45, 66, 65, 76, 76, 46, 106, 112),
@@ -6369,24 +6369,24 @@ function mainSequence() {
         Frame_Counter++;
         Prev_Game_Ticks_Passed = game_ticks_passed
     }
-    Clicked = 0 == Ff && 1 == Dg;
-    ff = 1 == Ff && 0 == Dg;
-    Eg = 0 == Fg && 1 == Gg;
-    Hg = 1 == Fg && 0 == Gg;
-    Ff = Dg;
-    Fg = Gg;
-    vf = !(ff | Ff | Hg | Fg);
-    Fe = Clicked ? 1 : Eg ? -1 : 0;
-    Dg ? Ig++ : Ig = 0;
-    he = Jg;
-    ie = Kg;
+    Clicked = 0 == Left_Click_Was_Down && 1 == Left_Click_Is_Down;
+    Released = 1 == Left_Click_Was_Down && 0 == Left_Click_Is_Down;
+    Right_Click_Clicked = 0 == Right_Click_Was_Down && 1 == Right_Click_Is_Down;
+    Right_Click_Released = 1 == Right_Click_Was_Down && 0 == Right_Click_Is_Down;
+    Left_Click_Was_Down = Left_Click_Is_Down;
+    Right_Click_Was_Down = Right_Click_Is_Down;
+    Left_Click_Is_Up = !(Released | Left_Click_Was_Down | Right_Click_Released | Right_Click_Was_Down);
+    Sett_Change = Clicked ? 1 : Right_Click_Clicked ? -1 : 0;
+    Left_Click_Is_Down ? Left_Click_Down_Time++ : Left_Click_Down_Time = 0;
+    Mouse_Xpos = Mouse_Xpos2;
+    Mouse_Ypos = Mouse_Ypos2;
     for (game_ticks_passed = 0; 256 > game_ticks_passed; game_ticks_passed++) yd[game_ticks_passed] = zd[game_ticks_passed], zd[game_ticks_passed] = !1;
     Rand_EF = Rand_EF + floor(1024 * Math.random()) & 1023;
     Rand_FF = floor(512 * Math.random()) | 1;
     playSequence();
     for (var b = 11 == Check_Host2 ? 196608 : 0, game_ticks_passed = 0; game_ticks_passed < b; game_ticks_passed++) Bit_8_Color[game_ticks_passed] = 4278190080 | (Game_Canvas[game_ticks_passed] & 255) << 16 | Game_Canvas[game_ticks_passed] & 65280 | Game_Canvas[game_ticks_passed] >> 16 & 255;
     putImageData(My_Img_Data, 0, 0);
-    Animation_Frame || Ld(mainSequence, timePF())
+    Animation_Frame || timeOut(mainSequence, timePF())
 }
 var Check_Host1 = 1;
 
@@ -6439,7 +6439,7 @@ function imgToArray(a) {
         var b = a.b.width,
             c = a.b.height;
         if (!b || !c) throw delete a.b, a.i = "", chr_ERROR;
-        var d = lg.createElement(chr_canvas);
+        var d = doc.createElement(chr_canvas);
         d.width = b;
         d.height = c;
         d = d.getContext(chr_2d);
@@ -6454,7 +6454,7 @@ function imgToArray(a) {
 }
 
 function doVSModeText(a, b) {
-    a.g || (a.g = 1, setArea(a, 512, 16), a.h = lg.createElement(chr_canvas), a.h.width = a.m, a.h.height = a.c, a.f = a.h.getContext(chr_2d));
+    a.g || (a.g = 1, setArea(a, 512, 16), a.h = doc.createElement(chr_canvas), a.h.width = a.m, a.h.height = a.c, a.f = a.h.getContext(chr_2d));
     var c = b + "sans-serif014";
     if (a.j != c) {
         a.j = c;
@@ -6689,44 +6689,44 @@ function drawRotation(a, b, c, d, e, g, h, q) {
     d = floor(d);
     for (var l, A, z = 0; z < m; z++, a += e, b += g, c += h, d += q) l = a >> 16, A = b >> 16, 0 > A || 384 <= A || (Layer1[A] > l && (Layer1[A] = l, Layer3[A] = c, Layer5[A] = d), Layer2[A] < l && (Layer2[A] = l, Layer4[A] = c, Layer6[A] = d))
 }
-var Sg = new Vector2D;
+var vec_2d = new Vector2D;
 
 function pullJoints(a, b, c, d, e) {
-    Vdistance(Sg, a, b);
-    c -= normalize(Sg);
+    Vdistance(vec_2d, a, b);
+    c -= normalize(vec_2d);
     d *= c;
     e *= c;
-    a.x += Sg.x * d;
-    a.y += Sg.y * d;
-    b.x -= Sg.x * e;
-    b.y -= Sg.y * e
+    a.x += vec_2d.x * d;
+    a.y += vec_2d.y * d;
+    b.x -= vec_2d.x * e;
+    b.y -= vec_2d.y * e
 }
 
 function moveJoint(a, b, c, d) {
-    Vdistance(Sg, a, b);
+    Vdistance(vec_2d, a, b);
     b.set(a);
-    Sg.y += c;
-    scaleVector2D(Sg, d);
-    a.add(Sg)
+    vec_2d.y += c;
+    scaleVector2D(vec_2d, d);
+    a.add(vec_2d)
 }
 var Clicked = !1,
-    ff = !1,
-    Ff = !1,
-    Dg = !1,
-    Eg = !1,
-    Hg = !1,
-    Fg = !1,
-    Gg = !1,
-    vf = !1,
-    Fe = 0,
-    Ig = 0,
-    he = 0,
-    ie = 0,
-    Jg = 0,
-    Kg = 0,
-    Tg = 0;
+    Released = !1,
+    Left_Click_Was_Down = !1,
+    Left_Click_Is_Down = !1,
+    Right_Click_Clicked = !1,
+    Right_Click_Released = !1,
+    Right_Click_Was_Down = !1,
+    Right_Click_Is_Down = !1,
+    Left_Click_Is_Up = !1,
+    Sett_Change = 0,
+    Left_Click_Down_Time = 0,
+    Mouse_Xpos = 0,
+    Mouse_Ypos = 0,
+    Mouse_Xpos2 = 0,
+    Mouse_Ypos2 = 0,
+    Mouse_In_Window = 0;
 
-function isMouseHovered(a, b, c, d) { return he < a || a + c <= he || ie < b || b + d <= ie ? !1 : !0 }
+function isMouseHovered(a, b, c, d) { return Mouse_Xpos < a || a + c <= Mouse_Xpos || Mouse_Ypos < b || b + d <= Mouse_Ypos ? !1 : !0 }
 
 function isMouseHoveredCenter(a, b, c, d) { return isMouseHovered(a - c / 2, b - d / 2, c, d) }
 
@@ -6736,23 +6736,23 @@ function getMousePos(a) {
         d = b.bottom - b.top,
         e = minOf(c / 512, d / 384),
         d = floor(d / 2 - 384 * e / 2);
-    Jg = floor((a.clientX - b.left - floor(c / 2 - 512 * e / 2)) / e);
-    Kg = floor((a.clientY - b.top - d) / e)
+    Mouse_Xpos2 = floor((a.clientX - b.left - floor(c / 2 - 512 * e / 2)) / e);
+    Mouse_Ypos2 = floor((a.clientY - b.top - d) / e)
 }
-lg.onmousemove = getMousePos;
-lg.onmousedown = function(a) {
+doc.onmousemove = getMousePos;
+doc.onmousedown = function(a) {
     getMousePos(a);
     Mouse_In_Window = !1;
-    if (!(0 > Jg || 512 <= Jg || 0 > Kg || 384 <= Kg) && (Mouse_In_Window = !0, 0 == a.button && (Dg = !0), 2 == a.button && (Gg = !0), Mouse_In_Window)) return !1
+    if (!(0 > Mouse_Xpos2 || 512 <= Mouse_Xpos2 || 0 > Mouse_Ypos2 || 384 <= Mouse_Ypos2) && (Mouse_In_Window = !0, 0 == a.button && (Left_Click_Is_Down = !0), 2 == a.button && (Right_Click_Is_Down = !0), Mouse_In_Window)) return !1
 };
-lg.onmouseup = function(a) {
+doc.onmouseup = function(a) {
     getMousePos(a);
-    0 == a.button && (Dg = !1);
-    2 == a.button && (Gg = !1)
+    0 == a.button && (Left_Click_Is_Down = !1);
+    2 == a.button && (Right_Click_Is_Down = !1)
 };
-lg.oncontextmenu = function() { if (Mouse_In_Window) return !1 };
+doc.oncontextmenu = function() { if (Mouse_In_Window) return !1 };
 
-function Wg(a) {
+function ci(a) {
     var b = cv.getBoundingClientRect(),
         c = b.right - b.left,
         d = b.bottom - b.top,
@@ -6760,44 +6760,44 @@ function Wg(a) {
         c = floor(c / 2 - 512 * e / 2),
         d = floor(d / 2 - 384 * e / 2);
     a = a.touches;
-    Tg = a.length;
-    1 == Tg ? (Jg = floor((a[0].clientX - b.left - c) / e), Kg = floor((a[0].clientY - b.top - d) / e)) : 2 == Tg && (Jg = floor((a[0].clientX - b.left - c) / e), Kg = floor((a[0].clientY - b.top - d) / e), d = floor((a[1].clientY - b.top - d) / e), Jg = floor((Jg + floor((a[1].clientX - b.left - c) / e)) / 2), Kg = floor((Kg + d) / 2))
+    Mouse_In_Window = a.length;
+    1 == Mouse_In_Window ? (Mouse_Xpos2 = floor((a[0].clientX - b.left - c) / e), Mouse_Ypos2 = floor((a[0].clientY - b.top - d) / e)) : 2 == Mouse_In_Window && (Mouse_Xpos2 = floor((a[0].clientX - b.left - c) / e), Mouse_Ypos2 = floor((a[0].clientY - b.top - d) / e), d = floor((a[1].clientY - b.top - d) / e), Mouse_Xpos2 = floor((Mouse_Xpos2 + floor((a[1].clientX - b.left - c) / e)) / 2), Mouse_Ypos2 = floor((Mouse_Ypos2 + d) / 2))
 }
 cv.ontouchstart = function(a) {
-    Wg(a);
-    1 == Tg ? (Dg = !0, he = Jg, ie = Kg) : 2 == Tg && (Dg = !1, he = Jg, ie = Kg);
+    ci(a);
+    1 == Mouse_In_Window ? (Left_Click_Is_Down = !0, Mouse_Xpos = Mouse_Xpos2, Mouse_Ypos = Mouse_Ypos2) : 2 == Mouse_In_Window && (Left_Click_Is_Down = !1, Mouse_Xpos = Mouse_Xpos2, Mouse_Ypos = Mouse_Ypos2);
     return !1
 };
-cv.ontouchmove = function(a) { Wg(a); return !1 };
+cv.ontouchmove = function(a) { ci(a); return !1 };
 cv.ontouchend = function(a) {
-    Wg(a);
-    0 == Tg ? Dg = !1 : 1 == Tg ? (he = Jg, ie = Kg) : 2 == Tg && (he = Jg, ie = Kg);
+    ci(a);
+    0 == Mouse_In_Window ? Left_Click_Is_Down = !1 : 1 == Mouse_In_Window ? (Mouse_Xpos = Mouse_Xpos2, Mouse_Ypos = Mouse_Ypos2) : 2 == Mouse_In_Window && (Mouse_Xpos = Mouse_Xpos2, Mouse_Ypos = Mouse_Ypos2);
     return !1
 };
 cv.ontouchcancel = function() {
-    Tg = 0;
-    Gg = Dg = !1
+    Mouse_In_Window = 0;
+    Right_Click_Is_Down = Left_Click_Is_Down = !1
 };
 var yd = Array(256),
     zd = Array(256),
     Ad = Array(256),
     Arr256_4 = Array(256),
     Arr256_5 = Array(256);
-lg.onkeydown = function(a) {
+doc.onkeydown = function(a) {
     var b = a.keyCode;
     65 <= b & 90 >= b ? a.shiftKey || (b += 32) : b = a.shiftKey ? Arr256_5[b] : Arr256_4[b];
     0 <= b && 256 > b && (Ad[b] = !0, zd[b] = !0);
     if (0 != b && Mouse_In_Window) return !1
 };
-lg.onkeyup = function(a) {
+doc.onkeyup = function(a) {
     var b = a.keyCode;
     65 <= b & 90 >= b ? a.shiftKey || (b += 32) : b = a.shiftKey ? Arr256_5[b] : Arr256_4[b];
     0 <= b && 256 > b && (Ad[b] = !1);
     if (0 != b && Mouse_In_Window) return !1
 };
 var Mouse_In_Window = !1,
-    ef = "",
-    gf = new SR_Image,
+    prompt_res = "",
+    VS_Image = new SR_Image,
     VS_result = Array(100),
     Global_Eg = 0,
     chr_POST = chrCode(80, 79, 83, 84),
