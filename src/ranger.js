@@ -707,7 +707,9 @@ var Save_Code1 = 0,
     Save_Code3 = "";
 window.GameSave = getSaveCode;
 
-function getSaveCode(a) { return 0 == a.length ? "" : Save_Code3 }
+function getSaveCode(a) {
+    return 0 == a.length ? "" : Save_Code3
+}
 var Save_Error = 0,
     Save_Error_Text_Timer = 0,
     Save_Code_le = "";
@@ -743,7 +745,9 @@ function saveGame(a) {
     return getSaveCode("0")
 }
 
-function getVal(a, b) { return Item_Catalogue[a].length <= b ? 0 : 6 == b || 19 == b || 44 == b ? Item_Catalogue[a][b] >>> 0 : Item_Catalogue[a][b] }
+function getVal(a, b) {
+    return Item_Catalogue[a].length <= b ? 0 : 6 == b || 19 == b || 44 == b ? Item_Catalogue[a][b] >>> 0 : Item_Catalogue[a][b]
+}
 var Slot1 = !1,
     Slot2 = !1;
 
@@ -779,8 +783,7 @@ function genSaveCode(a) {
     0 == a && (d[b++] = Team_EXP >> 18 & 63, d[b++] = Team_EXP >> 12 & 63, d[b++] = Team_EXP >> 6 & 63, d[b++] = Team_EXP >> 0 & 63, d[b++] = Team_Gold >> 18 & 63, d[b++] = Team_Gold >> 12 & 63, d[b++] = Team_Gold >> 6 & 63, d[b++] = Team_Gold >> 0 & 63);
     for (c = 0; 4 > c; c++) d[b++] = Ranger_Class[c] >> 0 & 63;
     if (0 == a)
-        for (c = 0; 4 > c; c++) d[b++] = LP_Current[c] >> 12 &
-            63, d[b++] = LP_Current[c] >> 6 & 63, d[b++] = LP_Current[c] >> 0 & 63;
+        for (c = 0; 4 > c; c++) d[b++] = LP_Current[c] >> 12 & 63, d[b++] = LP_Current[c] >> 6 & 63, d[b++] = LP_Current[c] >> 0 & 63;
     for (c = 0; 4 > c; c++) d[b++] = LP_SP[c] >> 6 & 63, d[b++] = LP_SP[c] >> 0 & 63, d[b++] = STR_SP[c] >> 6 & 63, d[b++] = STR_SP[c] >> 0 & 63, d[b++] = DEX_SP[c] >> 6 & 63, d[b++] = DEX_SP[c] >> 0 & 63, d[b++] = MAG_SP[c] >> 6 & 63, d[b++] = MAG_SP[c] >> 0 & 63;
     for (c = 4; 8 > c; c++) d[b++] = Item_Inv[c] >> 6 & 63, d[b++] = Item_Inv[c] >> 0 & 63, d[b++] = Comp1_Inv[c] >> 6 & 63, d[b++] = Comp1_Inv[c] >> 0 & 63, d[b++] = Comp2_Inv[c] >> 6 & 63, d[b++] = Comp2_Inv[c] >> 0 & 63;
     if (0 == a) {
@@ -795,7 +798,10 @@ function genSaveCode(a) {
         for (c = 0; c < Stage_Count; c++) {
             a = Stage_Status[c];
             for (var e = 0; c < Stage_Count - 1 && a == Stage_Status[c + 1]; c++)
-                if (e++, 31 == e) { c++; break }
+                if (e++, 31 == e) {
+                    c++;
+                    break
+                }
             d[b++] = a;
             0 < e && (d[b++] = 16 + e)
         }
@@ -825,7 +831,10 @@ function loadGame(a, b) {
     for (d = 0; d < h; d++) {
         var m = a.charAt(d);
         for (e = 0; e < Char_List.length; e++)
-            if (Char_List[e] == m) { g[d] = e; break }
+            if (Char_List[e] == m) {
+                g[d] = e;
+                break
+            }
     }
     if (0 >= g[0]) return 2;
     e = g[2];
@@ -834,9 +843,11 @@ function loadGame(a, b) {
     if (g[d + 0] != (e >> 8 & 47) || g[d + 1] != (e >> 4 & 31) || g[d + 2] != (e >> 0 & 15)) return 3;
     if (0 == b)
         for (d = 0; 8 > d; d++)
-            //if (g[d + 5] != VS_Game_ID_Plain[d]) return 4;
+        //if (g[d + 5] != VS_Game_ID_Plain[d]) return 4;
             if (g[d + 5] != VS_Game_ID_Plain[d]) VS_Game_ID_Plain[d] = g[d + 5];
-    if (document.getElementById('datauser')) var loadGameUserCode = ""; VS_Game_ID_Plain.forEach(elem => loadGameUserCode += Char_List[elem]); document.getElementById('datauser').innerHTML = loadGameUserCode;
+    if (document.getElementById('datauser')) var loadGameUserCode = "";
+    VS_Game_ID_Plain.forEach(elem => loadGameUserCode += Char_List[elem]);
+    document.getElementById('datauser').innerHTML = loadGameUserCode;
     d = 0;
     d++;
     d++;
@@ -846,8 +857,7 @@ function loadGame(a, b) {
     d += 8;
     q || (Current_Stage = (g[d++] << 6) + g[d++]);
     LV[b] = (g[d++] << 6) + g[d++];
-    1 == q && (Rank[b] =
-        g[d++]);
+    1 == q && (Rank[b] = g[d++]);
     for (e = c; e < c + 4; e++) SP[e] = (g[d++] << 6) + g[d++];
     q || (Team_EXP = (g[d++] << 18) + (g[d++] << 12) + (g[d++] << 6) + g[d++], Team_Gold = (g[d++] << 18) + (g[d++] << 12) + (g[d++] << 6) + g[d++]);
     for (e = c; e < c + 4; e++) Ranger_Class[e] = g[d++];
@@ -856,8 +866,7 @@ function loadGame(a, b) {
     for (e = c; e < c + 4; e++) LP_SP[e] = (g[d++] << 6) + g[d++], STR_SP[e] = (g[d++] << 6) + g[d++], DEX_SP[e] = (g[d++] << 6) + g[d++], MAG_SP[e] = (g[d++] << 6) + g[d++];
     for (e = 4 + c; e < 8 + c; e++) Item_Inv[e] = (g[d++] << 6) + g[d++], Comp1_Inv[e] = (g[d++] << 6) + g[d++], Comp2_Inv[e] = (g[d++] << 6) + g[d++];
     if (1 == q) return 0;
-    for (e = 16; 41 > e; e++) Item_Inv[e] = (g[d++] <<
-        6) + g[d++], Comp1_Inv[e] = (g[d++] << 6) + g[d++], Comp2_Inv[e] = (g[d++] << 6) + g[d++];
+    for (e = 16; 41 > e; e++) Item_Inv[e] = (g[d++] << 6) + g[d++], Comp1_Inv[e] = (g[d++] << 6) + g[d++], Comp2_Inv[e] = (g[d++] << 6) + g[d++];
     for (e = 0; 4 > e; e++) Sett_Auto_Move[e] = g[d++];
     Sett_Move_If_Dying = g[d++];
     Sett_Dmg_Indicators = g[d++];
@@ -929,7 +938,13 @@ function antiCheatCheck() {
     if (0 > LV[1] || 99 < LV[1]) Game_Canvas = null;
     if (0 > Team_EXP || 9999999 < Team_EXP) Game_Canvas = null;
     if (0 > Team_Gold || 9999999 < Team_Gold) Game_Canvas = null;
-    for (a = 0; 8 > a; a++) { if (0 > SP[a] || 196 < SP[a]) Game_Canvas = null; if (0 > LP_SP[a] || 196 < LP_SP[a]) Game_Canvas = null; if (0 > STR_SP[a] || 196 < STR_SP[a]) Game_Canvas = null; if (0 > DEX_SP[a] || 196 < DEX_SP[a]) Game_Canvas = null; if (0 > MAG_SP[a] || 196 < MAG_SP[a]) Game_Canvas = null }
+    for (a = 0; 8 > a; a++) {
+        if (0 > SP[a] || 196 < SP[a]) Game_Canvas = null;
+        if (0 > LP_SP[a] || 196 < LP_SP[a]) Game_Canvas = null;
+        if (0 > STR_SP[a] || 196 < STR_SP[a]) Game_Canvas = null;
+        if (0 > DEX_SP[a] || 196 < DEX_SP[a]) Game_Canvas = null;
+        if (0 > MAG_SP[a] || 196 < MAG_SP[a]) Game_Canvas = null
+    }
     for (a = 0; 8 > a; a++) 0 != Item_Inv[4 + a] && getVal(Item_Inv[4 + a], 5) != Ranger_Class[a] && (Game_Canvas = null);
     for (a = 0; 8 > a; a++) {
         b = getVal(Item_Inv[4 + a], 5);
@@ -938,8 +953,7 @@ function antiCheatCheck() {
         if (0 != Comp1_Inv[4 + a]) {
             9 != getVal(Comp1_Inv[4 + a], 5) && (Game_Canvas = null);
             getVal(Comp1_Inv[4 + a], 7) == getVal(Comp2_Inv[4 + a], 7) && (Game_Canvas = null);
-            var e = getVal(Comp1_Inv[4 +
-                a], 7);
+            var e = getVal(Comp1_Inv[4 + a], 7);
             0 == compRestrCheck(e, b, c, d) && (Game_Canvas = null)
         }
         0 != Comp2_Inv[4 + a] && 59 != Comp2_Inv[4 + a] && (9 != getVal(Comp2_Inv[4 + a], 5) && (Game_Canvas = null), e = getVal(Comp2_Inv[4 + a], 7), 0 == compRestrCheck(e, b, c, d) && (Game_Canvas = null))
@@ -964,8 +978,7 @@ function antiCheatCheck() {
     for (a = 0; 8 > a; a++) d += LP_SP[a];
     for (a = 0; 8 > a; a++) d += STR_SP[a];
     for (a = 0; 8 > a; a++) d += DEX_SP[a];
-    for (a = 0; 8 >
-        a; a++) d += MAG_SP[a];
+    for (a = 0; 8 > a; a++) d += MAG_SP[a];
     d != 8 * (LV[0] - 1) + 8 * (LV[1] - 1) && (Game_Canvas = null);
     d = Check_Var_Seed;
     d += (Team_EXP | 1) * (d & 15 | 1);
@@ -980,8 +993,7 @@ function antiCheatCheck() {
     for (a = 0; 8 > a; a++) d += (LP_Current[a] | 1) * (d & 15 | 1);
     for (a = 0; 8 > a; a++) d += (MP_Bar[a] | 1) * (d & 15 | 1);
     for (a = 0; 8 > a; a++) d += (LP_Max[a] | 1) * (d & 15 | 1);
-    for (a = 0; 8 > a; a++) d += (STR[a] | 1) *
-        (d & 15 | 1);
+    for (a = 0; 8 > a; a++) d += (STR[a] | 1) * (d & 15 | 1);
     for (a = 0; 8 > a; a++) d += (DEX[a] | 1) * (d & 15 | 1);
     for (a = 0; 8 > a; a++) d += (MAG[a] | 1) * (d & 15 | 1);
     for (a = 0; 8 > a; a++) d += (AT_Min[a] | 1) * (d & 15 | 1);
@@ -994,8 +1006,7 @@ function antiCheatCheck() {
     for (a = 0; 41 > a; a++) d += (Comp2_Inv[a] | 1) * (d & 15 | 1);
     for (a = 0; 8 > a; a++) d += (STR_Aura[a] | 1) * (d & 15 | 1);
     for (a = 0; 8 > a; a++) d += (DEX_Aura[a] | 1) * (d & 15 | 1);
-    for (a = 0; a < Stage_Count; a++) d += (Stage_Status[a] | 1) * (d & 15 |
-        1);
+    for (a = 0; a < Stage_Count; a++) d += (Stage_Status[a] | 1) * (d & 15 | 1);
     d += (Game_Mode | 1) * (d & 15 | 1);
     d += (FP[0] | 1) * (d & 15 | 1);
     d += (FP[1] | 1) * (d & 15 | 1);
@@ -1019,8 +1030,7 @@ function antiCheatCheck() {
         d != Monster_Data && (Game_Canvas = null)
     }
     if (1 > random(100)) {
-        for (c =
-            d = 0; c < Shop_Items.length; c++)
+        for (c = d = 0; c < Shop_Items.length; c++)
             for (a = 0; a < Shop_Items[c].length; a++)
                 for (b = 0; b < Shop_Items[c][a].length; b++) d += Shop_Items[c][a][b] * b & 65535;
         d != Shop_Item_Data && (Game_Canvas = null)
@@ -1043,8 +1053,7 @@ function antiCheatSet() {
     for (a = 0; 8 > a; a++) b += (MP_Bar[a] | 1) * (b & 15 | 1);
     for (a = 0; 8 > a; a++) b += (LP_Max[a] | 1) * (b & 15 | 1);
     for (a = 0; 8 > a; a++) b += (STR[a] | 1) * (b & 15 | 1);
-    for (a = 0; 8 >
-        a; a++) b += (DEX[a] | 1) * (b & 15 | 1);
+    for (a = 0; 8 > a; a++) b += (DEX[a] | 1) * (b & 15 | 1);
     for (a = 0; 8 > a; a++) b += (MAG[a] | 1) * (b & 15 | 1);
     for (a = 0; 8 > a; a++) b += (AT_Min[a] | 1) * (b & 15 | 1);
     for (a = 0; 8 > a; a++) b += (AT_Max[a] | 1) * (b & 15 | 1);
@@ -1057,8 +1066,7 @@ function antiCheatSet() {
     for (a = 0; 8 > a; a++) b += (STR_Aura[a] | 1) * (b & 15 | 1);
     for (a = 0; 8 > a; a++) b += (DEX_Aura[a] | 1) * (b & 15 | 1);
     for (a = 0; a < Stage_Count; a++) b += (Stage_Status[a] | 1) * (b & 15 | 1);
-    b += (Game_Mode | 1) * (b & 15 |
-        1);
+    b += (Game_Mode | 1) * (b & 15 | 1);
     b += (FP[0] | 1) * (b & 15 | 1);
     b += (FP[1] | 1) * (b & 15 | 1);
     b += (Rank[0] | 1) * (b & 15 | 1);
@@ -1085,16 +1093,18 @@ function gameStartup(a, b, c, d, e, g, h, q, m, l, A, z, Z, B) {
         null != B ? VS_Opponent_Team_Name = B : VS_Opponent_Team_Name = "";
         for (a = 0; 8 > a && a < Game_ID_2.length; a++)
             for (b = Game_ID_2.charAt(a), c = 0; c < Char_List.length; c++)
-                if (Char_List[c] == b) { VS_Game_ID_Plain[a] = c; break }
+                if (Char_List[c] == b) {
+                    VS_Game_ID_Plain[a] = c;
+                    break
+                }
         logCopyright(chr_Copyright_DAN_BALL);
         cv.width = 512;
         cv.height = 384;
         for (a = 0; 513 > a; a++) Xe_arr[a] = new Float32Array(2);
-        for (a = 0; 512 > a; a++) b = 360 *
-            a / 512 * Pi / 180, Xe_arr[a][0] = Math.cos(b), Xe_arr[a][1] = Math.sin(b);
+        for (a = 0; 512 > a; a++) b = 360 * a / 512 * Pi / 180, Xe_arr[a][0] = Math.cos(b), Xe_arr[a][1] = Math.sin(b);
         Xe_arr[a][0] = Xe_arr[0][0];
         Xe_arr[a][1] = Xe_arr[0][1];
-        for (a = 0; 256 > a; a++) yd[a] = !1, zd[a] = !1, Ad[a] = !1, Arr256_4[a] = 0, Arr256_5[a] = 0;
+        for (a = 0; 256 > a; a++) Is_Key_Pressed1[a] = !1, Arr256_2[a] = !1, Is_Key_Held[a] = !1, Arr256_4[a] = 0, Arr256_5[a] = 0;
         for (a = 0; 10 > a; a++) Arr256_4[48 + a] = 48 + a;
         for (a = 0; 9 > a; a++) Arr256_5[49 + a] = 33 + a;
         for (a = 0; 4 > a; a++) Arr256_4[37 + a] = 37 + a;
@@ -1145,8 +1155,7 @@ function gameStartup(a, b, c, d, e, g, h, q, m, l, A, z, Z, B) {
         for (a = 0; 196608 > a; a++) Game_Canvas[a] = 0;
         Large_Text.o("font.gif", 8, 12);
         Small_Text.o("font_s.gif", 5, 7);
-        for (a = 0; 13 > a; a++) Terrain_Textures[a] = new SR_Image, Terrain_Textures[a].IGset("gt" +
-            a + ".gif");
+        for (a = 0; 13 > a; a++) Terrain_Textures[a] = new SR_Image, Terrain_Textures[a].IGset("gt" + a + ".gif");
         Player_Img.IGset("pl.gif");
         Drop_Img.IGset("icon.gif");
         Item_Img.IGset("item.gif");
@@ -1187,8 +1196,7 @@ function gameStartup(a, b, c, d, e, g, h, q, m, l, A, z, Z, B) {
         imgToArray(Map_Features_Img);
         Tile_Counter1 ? timeOut(gameStartup, timePF()) : Startup_Step++
     }
-    2 == Startup_Step && (Players.o(), Indicators.o(), Projectiles.o(),
-        Drops.o(), WorldMap.o(), 1 == Game_Mode && loadGame(VS_Opponent_Data, 1), loadGame(Save_Cookie, 0), Save_Code3 = genSaveCode(0), dataGather(), antiCheatSet(), setArea(Stage_Eff_Canvas, 512, 384), mainSequence())
+    2 == Startup_Step && (Players.o(), Indicators.o(), Projectiles.o(), Drops.o(), WorldMap.o(), 1 == Game_Mode && loadGame(VS_Opponent_Data, 1), loadGame(Save_Cookie, 0), Save_Code3 = genSaveCode(0), dataGather(), antiCheatSet(), setArea(Stage_Eff_Canvas, 512, 384), mainSequence())
 }
 WIN.fff = playSequence;
 
@@ -1210,7 +1218,9 @@ function menuAndMap() {
     var a;
     if (!Sequence_Step)
         if (Players.o(), Enemies.o(0), Sequence_Step++, 1 == Game_Mode) Sequence_Step = 60;
-        else { if (2 == Game_Mode || 3 == Game_Mode) Sequence_Step = 70 }
+        else {
+            if (2 == Game_Mode || 3 == Game_Mode) Sequence_Step = 70
+        }
     else if (1 == Sequence_Step) Current_Screen = 0, Terrain.o(0) && (Players.set(0, 20, Terrain.b[20]), Players.set(1, 28, Terrain.b[28]), Players.set(2, 36, Terrain.b[36]), Players.set(3, 44, Terrain.b[44]), setRangersUI(), Enemies.o(1), Sequence_Step++);
     else if (2 == Sequence_Step) {
         Players.G();
@@ -1221,8 +1231,7 @@ function menuAndMap() {
         var b = 100;
         for (a = 4; 40 > a; a++) 48 == getVal(Item_Inv[a], 7) && (b += getVal(Item_Inv[a], 8)), 48 == getVal(Comp1_Inv[a], 7) && (b += getVal(Comp1_Inv[a], 8)), 48 == getVal(Comp2_Inv[a], 7) && (b += getVal(Comp2_Inv[a], 8)), 49 == getVal(Item_Inv[a], 7) && (b += 1), 49 == getVal(Comp1_Inv[a], 7) && (b += 1), 49 == getVal(Comp2_Inv[a], 7) && (b += 1);
         b = clamp(b, 100, 300);
-        100 ==
-            b ? centeredText(Large_Text, 256, 195, "NEW GAME", 16777215, 10053171) : centeredText(Large_Text, 256, 195, "               NEW GAME with the Crown", 16777215, 10053171);
+        100 == b ? centeredText(Large_Text, 256, 195, "NEW GAME", 16777215, 10053171) : centeredText(Large_Text, 256, 195, "               NEW GAME with the Crown", 16777215, 10053171);
         if (isMouseHoveredCenter(100 == b ? 256 : 316, 195, 100 == b ? 128 : 248, 24)) {
             if (Clicked) {
                 antiCheatCheck();
@@ -1263,8 +1272,7 @@ function menuAndMap() {
         centeredText(Large_Text, 48, 300, "RETURN", 16777215, 10053171);
         if (isMouseHoveredCenter(48, 300, 128, 24)) {
             if (Clicked) {
-                for (a =
-                    0; 4 > a; a++) Ranger_Class[a] = Ranger_Class_Proxy[a], Item_Inv[4 + a] = Item_Inv_Proxy[a], Comp1_Inv[4 + a] = Comp1_Inv_Proxy[a], Comp2_Inv[4 + a] = Comp2_Inv_Proxy[a];
+                for (a = 0; 4 > a; a++) Ranger_Class[a] = Ranger_Class_Proxy[a], Item_Inv[4 + a] = Item_Inv_Proxy[a], Comp1_Inv[4 + a] = Comp1_Inv_Proxy[a], Comp2_Inv[4 + a] = Comp2_Inv_Proxy[a];
                 Sequence_Step = 2
             }
             drawLine(0, 308, 96, 308, 11141120)
@@ -1284,8 +1292,7 @@ function menuAndMap() {
         Sett_PL_Symbol = Sett_LP_Bar_Disp = Sett_Dmg_Indicators = Sett_Move_If_Dying = 0;
         Sett_Drag_Dead_Body = 1;
         for (a = 16; 41 > a; a++) Item_Inv[a] = 0, Comp1_Inv[a] = 0, Comp2_Inv[a] = 0;
-        for (a = 0; a <
-            Stage_Count; a++) Stage_Status[a] = 0;
+        for (a = 0; a < Stage_Count; a++) Stage_Status[a] = 0;
         Stage_Status[0] = Beaten | Unlocked;
         Stage_Status[1] = Unlocked;
         for (a = 0; 4 > a; a++) Players.f[a] = 0;
@@ -1306,8 +1313,7 @@ function menuAndMap() {
             for (e = 0; e < a.m; e++) - 1 != a.b[g][e] && drawItem(Map_Tiles_Img, a.a + 16 * e, 16 * g, 16, 16, a.b[g][e] % 5 * 16, 16 * floor(a.b[g][e] / 5), 16, 16);
         for (b = 0; b < Stage_Count; b++)
             if (Stage_Status[b] & Beaten)
-                for (e = 3; 4 >=
-                    e; e++)
+                for (e = 3; 4 >= e; e++)
                     if (!(0 >= Dot_Locations[b][e]) && 32 != b && 70 != b && 88 != b)
                         for (d.x = 8 * Dot_Locations[b][0], d.y = 8 * Dot_Locations[b][1], h.x = 8 * (Dot_Locations[Dot_Locations[b][e]][0] - Dot_Locations[b][0]), h.y = 8 * (Dot_Locations[Dot_Locations[b][e]][1] - Dot_Locations[b][1]), g = normalize(h) / 8 - 1, scaleVector2D(h, 8), d.add(h), c = 0; c < g; c++) filledRectCentered(a.a + d.x, d.y, 2, 2, 13421772), d.add(h);
         for (g = 0; 16 > g; g++)
@@ -1315,8 +1321,7 @@ function menuAndMap() {
         dispItem(Map_Features_Img, a.a + 384 - 8, 124, 16, 16, 16, 0, 16, 16, 8421631);
         dispItem(Map_Features_Img, a.a + 504 - 8, 116, 16, 16, 48, 0, 16, 16, 16777215);
         dispItem(Map_Features_Img, a.a + 552 - 8, 116, 16, 16, 64, 0, 16, 16, 16777215);
-        dispItem(Map_Features_Img, a.a + 592 - 8, 100, 16, 16, 32, 0, 16, 16,
-            16777215);
+        dispItem(Map_Features_Img, a.a + 592 - 8, 100, 16, 16, 32, 0, 16, 16, 16777215);
         dispItem(Map_Features_Img, a.a + 672 - 8, 68, 16, 16, 32, 0, 16, 16, 16777215);
         dispItem(Map_Features_Img, a.a + 808 - 8, 132, 16, 16, 16, 0, 16, 16, 13434879);
         dispItem(Map_Features_Img, a.a + 904 - 8, 164, 16, 16, 112, 0, 16, 16, 13434879);
@@ -1324,8 +1329,7 @@ function menuAndMap() {
         dispItem(Map_Features_Img, a.a + 1088 - 8, 100, 16, 16, 32, 0, 16, 16, 16777215);
         dispItem(Map_Features_Img, a.a + 1160 - 8, 84, 16, 16, 32, 0, 16, 16, 16777215);
         dispItem(Map_Features_Img, a.a + 1112 - 8, 44, 32, 16, 144, 0, 32, 16, 16777215);
-        for (b = 0; b < Stage_Count; b++) 0 != Stage_Status[b] && (e = 8 * Dot_Locations[b][0], g = 8 * Dot_Locations[b][1], c = b && 20 != b && 47 != b && 77 != b ? 33 == b ? 0 : 71 == b ? 0 : Stage_Status[b] & Beaten ? 10027008 : 13421568 : 16777215, 0 == Dot_Locations[b][2] && filledRectCentered(a.a + e, g, 6, 6,
-            c), c = 71 == b ? 3 : 24, isMouseHoveredCenter(a.a + e, g, c, c) && outlineRectCentered(a.a + e, g, c, c, 13369344));
+        for (b = 0; b < Stage_Count; b++) 0 != Stage_Status[b] && (e = 8 * Dot_Locations[b][0], g = 8 * Dot_Locations[b][1], c = b && 20 != b && 47 != b && 77 != b ? 33 == b ? 0 : 71 == b ? 0 : Stage_Status[b] & Beaten ? 10027008 : 13421568 : 16777215, 0 == Dot_Locations[b][2] && filledRectCentered(a.a + e, g, 6, 6, c), c = 71 == b ? 3 : 24, isMouseHoveredCenter(a.a + e, g, c, c) && outlineRectCentered(a.a + e, g, c, c, 13369344));
         e = 8 * Dot_Locations[Current_Stage][0];
         g = 8 * Dot_Locations[Current_Stage][1];
         drawItem(Player_Img, a.a + e + 1 - 12, g - 14 - 11, 24, 22, 0, 0, 24, 22);
@@ -1334,8 +1338,7 @@ function menuAndMap() {
         b.b = 4;
         centeredText(b, 256, 16, "WORLD MAP", -1, 13158600);
         b.b = 0;
-        0 > a.a && centeredText(Large_Text, 12, 16, "<<", 13158600, 5263440); - 720 < a.a && centeredText(Large_Text, 500, 16, ">>",
-            13158600, 5263440);
+        0 > a.a && centeredText(Large_Text, 12, 16, "<<", 13158600, 5263440); - 720 < a.a && centeredText(Large_Text, 500, 16, ">>", 13158600, 5263440);
         drawUI(2)
     }
 }
@@ -1364,8 +1367,7 @@ function PvEscreens() {
                     A = floor(A * Enemy_Spawn_Scale / 100);
                 for (b = 0; b < A; b++) {
                     if (m == Ground) c = floor(randomRange(12, 60)), d = fiftyfifty(Terrain.b[c], Terrain.g[c]);
-                    else if (m ==
-                        Ground_Left) c = floor(randomRange(12, 28)), d = fiftyfifty(Terrain.b[c], Terrain.g[c]);
+                    else if (m == Ground_Left) c = floor(randomRange(12, 28)), d = fiftyfifty(Terrain.b[c], Terrain.g[c]);
                     else if (m == Ground_Middle) c = floor(randomRange(28, 44)), d = fiftyfifty(Terrain.b[c], Terrain.g[c]);
                     else if (m == Ground_Right) c = floor(randomRange(44, 60)), d = fiftyfifty(Terrain.b[c], Terrain.g[c]);
                     else if (m == Air_Water) c = floor(randomRange(12, 60)), d = floor(randomRange(Terrain.h[c] + 2, Terrain.g[c]));
@@ -1376,8 +1378,7 @@ function PvEscreens() {
                     else if (m == Ground_Right_Clump) c = h, d = fiftyfifty(Terrain.b[c], Terrain.g[c]);
                     else if (m == Ceiling) c = floor(randomRange(12, 60)), d = Terrain.h[c];
                     else if (m == Ceiling_Left) c = floor(randomRange(12, 28)), d = Terrain.h[c];
-                    else if (m == Ceiling_Middle) c = floor(randomRange(28,
-                        44)), d = Terrain.h[c];
+                    else if (m == Ceiling_Middle) c = floor(randomRange(28, 44)), d = Terrain.h[c];
                     else if (m == Ceiling_Right) c = floor(randomRange(44, 60)), d = Terrain.h[c];
                     else continue;
                     Enemies.add(c, d, l)
@@ -1390,16 +1391,14 @@ function PvEscreens() {
             Sequence_Step++
         }
     } else if (11 == Sequence_Step) drawStage(0), drawUI(0), q = 30, a = "", Current_Screen ? Current_Screen + 1 == Stage_Spawns[Current_Stage].length && (q = 110, a = "BOSS AREA") : (q = 110, a = Stage_Names[Current_Stage]), screenTransition(255 - floor(255 * minOf(Text_Fade, 30) / 30)), 110 == q && (b = 255, 30 > Text_Fade ? b = floor(255 * Text_Fade / 30) : 80 < Text_Fade && (b = 255 - floor(255 * (Text_Fade - 80) / 30)), largeMessage(Large_Text, 256, 128, a, 255, 255, 255, b, 64, 64, 64, b, 16, 24), c = -1024 + floor(512 * Text_Fade / 30), drawLine(c, 112, c + 1024, 112, 8421504), c = 512 - floor(512 * Text_Fade / 30), drawLine(c, 141, c + 1024, 141, 8421504)), Text_Fade++, Text_Fade == q && (Text_Fade = 0, Sequence_Step++);
-    else if (12 ==
-        Sequence_Step) drawStage(0), drawUI(0), 0 == LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] ? (Text_Fade = 0, Sequence_Step = 30) : Sign_Touched_Mode ? Sequence_Step++ : isMouseHovered(364, 4, 56, 20) ? (Clicked ? Sequence_Step = 20 : yd[32] && (Sequence_Step = 20), TXoutputB(Large_Text, 368, 8, "Option", 16711680, 0)) : yd[32] ? Sequence_Step = 20 : isMouseHovered(428, 4, 80, 20) && (Clicked && (Sequence_Step = 6), TXoutputB(Large_Text, 432, 8, "World Map", 16711680, 0));
+    else if (12 == Sequence_Step) drawStage(0), drawUI(0), 0 == LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] ? (Text_Fade = 0, Sequence_Step = 30) : Sign_Touched_Mode ? Sequence_Step++ : isMouseHovered(364, 4, 56, 20) ? (Clicked ? Sequence_Step = 20 : Is_Key_Pressed1[32] && (Sequence_Step = 20), TXoutputB(Large_Text, 368, 8, "Option", 16711680, 0)) : Is_Key_Pressed1[32] ? Sequence_Step = 20 : isMouseHovered(428, 4, 80, 20) && (Clicked && (Sequence_Step = 6), TXoutputB(Large_Text, 432, 8, "World Map", 16711680, 0));
     else if (13 == Sequence_Step) drawStage(0), drawUI(0), screenTransition(floor(255 * Text_Fade / 30)), Text_Fade++, 30 == Text_Fade && (1 == Sign_Touched_Mode ? (Sign_Touched_Mode = 0, Current_Screen++, Text_Fade = 0, Sequence_Step = 10) : 2 == Sign_Touched_Mode && (Text_Fade = Current_Screen = Sign_Touched_Mode = 0, antiCheatCheck(), Stage_Status[Current_Stage] |= Beaten, 0 < Dot_Locations[Current_Stage][3] && (Stage_Status[Dot_Locations[Current_Stage][3]] |= Unlocked), 0 < Dot_Locations[Current_Stage][4] && (Stage_Status[Dot_Locations[Current_Stage][4]] |= Unlocked), antiCheatSet(), Sequence_Step = 6, -1 == Dot_Locations[Current_Stage][3] && (Sequence_Step = 40)), Save_Code3 = genSaveCode(0), Save_Code1 = 1);
     else if (20 == Sequence_Step) {
         drawStage(1);
         drawUI(1);
         q = 12;
-        Current_Stage && 20 != Current_Stage && 47 != Current_Stage && 70 != Current_Stage && 77 != Current_Stage || 1 != Current_Screen || (q =
-            52);
-        isMouseHovered(364, 4, 56, 20) ? (Clicked ? Sequence_Step = q : yd[32] && (Sequence_Step = q), TXoutputB(Large_Text, 368, 8, "Option", 16711680, 0)) : yd[32] && (Sequence_Step = q);
+        Current_Stage && 20 != Current_Stage && 47 != Current_Stage && 70 != Current_Stage && 77 != Current_Stage || 1 != Current_Screen || (q = 52);
+        isMouseHovered(364, 4, 56, 20) ? (Clicked ? Sequence_Step = q : Is_Key_Pressed1[32] && (Sequence_Step = q), TXoutputB(Large_Text, 368, 8, "Option", 16711680, 0)) : Is_Key_Pressed1[32] && (Sequence_Step = q);
         Display_Mode = 1;
         filledRect(128, 42, 256, 151, 3425907507);
         Display_Mode = 0;
@@ -1408,8 +1407,7 @@ function PvEscreens() {
         centeredText(Large_Text, 180, 98, "Auto move", 16777215, 0);
         b = ["OFF", "ON"];
         for (a = 0; 4 > a; a++) centeredText(Large_Text, 256 + 32 * a, 98, b[Sett_Auto_Move[a]], 16777215, 0), isMouseHoveredCenter(256 + 32 * a, 98, 32, 13) && (centeredText(Large_Text, 256 + 32 * a, 98, b[Sett_Auto_Move[a]], 16711680, 0), Clicked && (Sett_Auto_Move[a] = 1 - Sett_Auto_Move[a]));
-        TXoutputB(Large_Text, 128, 108, "  Move of dying: " + b[Sett_Move_If_Dying],
-            16777215, 0);
+        TXoutputB(Large_Text, 128, 108, "  Move of dying: " + b[Sett_Move_If_Dying], 16777215, 0);
         isMouseHovered(128, 108, 256, 13) && (TXoutputB(Large_Text, 128, 108, "  Move of dying: " + b[Sett_Move_If_Dying], 16711680, 0), Sett_Move_If_Dying = cycle(Sett_Move_If_Dying + Sett_Change, 0, 1));
         a = ["PLAYER&ENEMY", "PLAYER", "ENEMY", "OFF"];
         TXoutputB(Large_Text, 128, 121, "  Damage Effect: " + a[Sett_Dmg_Indicators], 16777215, 0);
@@ -1425,8 +1423,7 @@ function PvEscreens() {
         centeredText(Large_Text, 256, 182, "Space Key: open & close", 12632256, 0);
         isMouseHoveredCenter(256, 182, 256, 13) && (centeredText(Large_Text, 256, 182, "Space Key: open & close", 16711680, 0), Sett_Change && (Sequence_Step = q))
     } else if (30 == Sequence_Step) {
-        if (drawStage(0), drawUI(0), 100 > Text_Fade && Text_Fade++, b = floor(255 * Text_Fade / 100), largeMessage(Large_Text, 256, 128, "GAME OVER", 100, 20,
-                10, b, 200, 0, 0, b, 16, 24), 100 == Text_Fade && Clicked) {
+        if (drawStage(0), drawUI(0), 100 > Text_Fade && Text_Fade++, b = floor(255 * Text_Fade / 100), largeMessage(Large_Text, 256, 128, "GAME OVER", 100, 20, 10, b, 200, 0, 0, b, 16, 24), 100 == Text_Fade && Clicked) {
             antiCheatCheck();
             for (a = 0; 4 > a; a++) 0 == LP_Current[a] && (LP_Current[a] = 1);
             antiCheatSet();
@@ -1460,8 +1457,8 @@ function townScreens() {
         drawLine(b, 141, b + 1024, 141, 8421504), Text_Fade++, 110 == Text_Fade && (Text_Fade = 0, Sequence_Step++);
     else if (52 == Sequence_Step)
         if (drawStage(0), drawUI(0), Sign_Touched_Mode) Sequence_Step = 59;
-        else if (isMouseHovered(364, 4, 56, 20)) Clicked ? Sequence_Step = 20 : yd[32] && (Sequence_Step = 20), TXoutputB(Large_Text, 368, 8, "Option", 16711680, 0);
-    else if (yd[32]) Sequence_Step = 20;
+        else if (isMouseHovered(364, 4, 56, 20)) Clicked ? Sequence_Step = 20 : Is_Key_Pressed1[32] && (Sequence_Step = 20), TXoutputB(Large_Text, 368, 8, "Option", 16711680, 0);
+    else if (Is_Key_Pressed1[32]) Sequence_Step = 20;
     else if (isMouseHovered(428, 4, 80, 20)) Clicked && (Sequence_Step = 6), TXoutputB(Large_Text, 432, 8, "World Map", 16711680, 0);
     else if (70 == Current_Stage)
         if (isMouseHoveredCenter(256, 128, 40, 24) && (centeredText(Large_Text, 256, 128, "FORGET", 16711680, 1054740), Clicked && (Sequence_Step = 55, Menu_Entry = Menu_Row = Menu_Column = 0)), isMouseHoveredCenter(256, 160, 40, 24)) {
@@ -1469,8 +1466,7 @@ function townScreens() {
             for (a = 0; 4 > a; a++) g += LP_Max[a] - LP_Current[a];
             centeredText(Large_Text, 256, 160, "INN", 16711680, 1054740);
             TXoutputB(Large_Text, 280, 154, "charge of " + g, 16711680, 1054740);
-            if (g <=
-                Team_Gold && Clicked) {
+            if (g <= Team_Gold && Clicked) {
                 antiCheatCheck();
                 for (a = 0; 4 > a; a++) LP_Current[a] != LP_Max[a] && Indicators.add(Players.a[a][0].x, Players.a[a][0].y, 0, LP_Max[a] - LP_Current[a], 65280), LP_Current[a] = LP_Max[a];
                 Team_Gold -= g;
@@ -1487,8 +1483,7 @@ function townScreens() {
             Team_Gold -= g;
             antiCheatSet()
         }
-    } else isMouseHoveredCenter(40, 152, 72, 24) ? (Current_Stage ? 20 == Current_Stage ? centeredText(Large_Text,
-        40, 152, " COMPO SHOP", 16711680, 13800762) : 47 == Current_Stage ? centeredText(Large_Text, 40, 152, " JUNK SHOP", 16711680, 13800762) : 77 == Current_Stage && centeredText(Large_Text, 40, 152, " COMPO SHOP", 16711680, 13800762) : centeredText(Large_Text, 40, 152, "SHOP", 16711680, 13800762), Clicked && (Sequence_Step = 53, Menu_Entry = Menu_Row = Menu_Column = 0)) : isMouseHoveredCenter(40, 184, 48, 24) && (centeredText(Large_Text, 40, 184, "BOOK", 16711680, 13800762), Clicked && (Sequence_Step = 54, Menu_Entry = Menu_Row = Menu_Column = 0));
+    } else isMouseHoveredCenter(40, 152, 72, 24) ? (Current_Stage ? 20 == Current_Stage ? centeredText(Large_Text, 40, 152, " COMPO SHOP", 16711680, 13800762) : 47 == Current_Stage ? centeredText(Large_Text, 40, 152, " JUNK SHOP", 16711680, 13800762) : 77 == Current_Stage && centeredText(Large_Text, 40, 152, " COMPO SHOP", 16711680, 13800762) : centeredText(Large_Text, 40, 152, "SHOP", 16711680, 13800762), Clicked && (Sequence_Step = 53, Menu_Entry = Menu_Row = Menu_Column = 0)) : isMouseHoveredCenter(40, 184, 48, 24) && (centeredText(Large_Text, 40, 184, "BOOK", 16711680, 13800762), Clicked && (Sequence_Step = 54, Menu_Entry = Menu_Row = Menu_Column = 0));
     else if (53 == Sequence_Step) {
         drawStage(0);
         town_stage = Sign_Touched_Mode = 0;
@@ -1504,8 +1499,7 @@ function townScreens() {
         Display_Mode = 1;
         filledRect(shop_left - 4, shop_top - 4, 243, 168, 2147483648);
         Display_Mode = 0;
-        outlineRect(shop_left + 0, shop_top +
-            0, 236, 161, 16777215);
+        outlineRect(shop_left + 0, shop_top + 0, 236, 161, 16777215);
         isMouseHovered(shop_left + 8, shop_top + 4, 16 * shop_item[town_stage].length, 12) && (b = floor((Mouse_Xpos - (shop_left + 8)) / 16), Clicked && (Menu_Column = b, Menu_Row = clamp(Menu_Row, 0, floor(Shop_Items[town_stage][Menu_Column].length / 3) - 1)), filledRect(shop_left + 8 + 16 * b, shop_top + 4, 12, 12, 10027008));
         Display_Mode2 = 2;
         for (a = 0; a < shop_item[town_stage].length; a++) dispItem(Drop_Img, shop_left + 8 + 16 * a, shop_top + 4, 12, 12, 12 * shop_item[town_stage][a], 0, 12, 12, 16777215);
@@ -1516,8 +1510,7 @@ function townScreens() {
         b = (3 * Menu_Row + Menu_Entry) % Shop_Items[town_stage][Menu_Column].length;
         shop_item = Shop_Items[town_stage][Menu_Column][b];
         g = 1;
-        for (a = 0; a < Stage_Count; a++) 0 < (Stage_Status[a] &
-            Beaten) && g < Shop_Reqs[a] && (g = Shop_Reqs[a]);
+        for (a = 0; a < Stage_Count; a++) 0 < (Stage_Status[a] & Beaten) && g < Shop_Reqs[a] && (g = Shop_Reqs[a]);
         !Current_Stage && g <= b && (shop_item = 0);
         itemText(shop_left + 8, shop_top + 24, Item_Catalogue[shop_item][0] + " " + (Item_Catalogue[shop_item][1] ? Item_Catalogue[shop_item][1] : ""), -1, 2631720, -2);
         itemText(shop_left + 8, shop_top + 24, Item_Catalogue[shop_item][0] + " " + (Item_Catalogue[shop_item][1] ? Item_Catalogue[shop_item][1] : ""), 16777215, -1, -2);
@@ -1526,8 +1519,7 @@ function townScreens() {
         else {
             TXoutputB(Large_Text, shop_left + 8, shop_top + 40, "AT " + Item_Catalogue[shop_item][10] + "-" + Item_Catalogue[shop_item][11], 16777215, 0);
             TXoutputB(Large_Text, shop_left + 8, shop_top + 52, "AGI " + Item_Catalogue[shop_item][14] + "-" + Item_Catalogue[shop_item][15], 16777215, 0);
-            TXoutputB(Large_Text, shop_left + 8, shop_top + 64, "RANGE " + Item_Catalogue[shop_item][16],
-                16777215, 0);
+            TXoutputB(Large_Text, shop_left + 8, shop_top + 64, "RANGE " + Item_Catalogue[shop_item][16], 16777215, 0);
             var q = getVal(shop_item, 34),
                 m = getVal(shop_item, 35),
                 l = maxOf(getVal(shop_item, 36), 0),
@@ -1538,8 +1530,7 @@ function townScreens() {
             6 == a ? TXoutputB(Large_Text, shop_left + 8, shop_top + 104, "$$ " + l, 16777215, 0) : TXoutputB(Large_Text, shop_left + 8, shop_top + 104, "MP " + l, 16777215, 0);
             2 == q ? TXoutputB(Large_Text, shop_left + 8, shop_top + 116, "SLOW " + m + "%", 16777215, 0) : 4 == q ? TXoutputB(Large_Text, shop_left + 8, shop_top + 116, "TIME " + m / 50 + "s", 16777215, 0) : 5 == q && TXoutputB(Large_Text, shop_left + 8, shop_top + 116, "TIME " + m / 50 + "s", 16777215, 0)
         }
-        for (a = 0; 9 > a; a++) q = (3 * Menu_Row + a) % Shop_Items[town_stage][Menu_Column].length, !Current_Stage && g <= q || (Display_Mode2 = 2, dispItem(Item_Img, shop_left + 120 + a % 3 * 28, shop_top + 24 + 28 *
-            floor(a / 3), 24, 24, 24 * getVal(Shop_Items[town_stage][Menu_Column][q], 4), 0, 24, 24, getVal(Shop_Items[town_stage][Menu_Column][q], 6)), Display_Mode2 = 0, Item_Catalogue[Shop_Items[town_stage][Menu_Column][q]][1] && TXoutputB(Small_Text, shop_left + 120 + a % 3 * 28 + 19, shop_top + 24 + 28 * floor(a / 3) + 17, "" + Item_Catalogue[Shop_Items[town_stage][Menu_Column][q]][1], 16777215, -1));
+        for (a = 0; 9 > a; a++) q = (3 * Menu_Row + a) % Shop_Items[town_stage][Menu_Column].length, !Current_Stage && g <= q || (Display_Mode2 = 2, dispItem(Item_Img, shop_left + 120 + a % 3 * 28, shop_top + 24 + 28 * floor(a / 3), 24, 24, 24 * getVal(Shop_Items[town_stage][Menu_Column][q], 4), 0, 24, 24, getVal(Shop_Items[town_stage][Menu_Column][q], 6)), Display_Mode2 = 0, Item_Catalogue[Shop_Items[town_stage][Menu_Column][q]][1] && TXoutputB(Small_Text, shop_left + 120 + a % 3 * 28 + 19, shop_top + 24 + 28 * floor(a / 3) + 17, "" + Item_Catalogue[Shop_Items[town_stage][Menu_Column][q]][1], 16777215, -1));
         outlineRect(shop_left + 120 + Menu_Entry % 3 * 28, shop_top + 24 + 28 * floor(Menu_Entry / 3), 24, 24, 10027008);
         g = getVal(shop_item, 2);
         2 == town_stage && 1 == b && (g *= 10);
@@ -1557,8 +1548,7 @@ function townScreens() {
         centeredText(Large_Text, shop_left + 176, shop_top + 120, "" + g + "$ BUY", 16777215, 0);
         outlineRect(shop_left + 176 - 56, shop_top + 120 - 10, 108, 20, 10027008);
         shop_item = 16777215;
-        isMouseHovered(shop_left + 216 - 12, shop_top + 36 - 12,
-            24, 24) && (Clicked && (Menu_Row = cycle(Menu_Row - 1, 0, floor(Shop_Items[town_stage][Menu_Column].length / 3) - 1)), shop_item = 10027008);
+        isMouseHovered(shop_left + 216 - 12, shop_top + 36 - 12, 24, 24) && (Clicked && (Menu_Row = cycle(Menu_Row - 1, 0, floor(Shop_Items[town_stage][Menu_Column].length / 3) - 1)), shop_item = 10027008);
         outlineRect(shop_left + 216 - 12, shop_top + 36 - 12, 24, 24, 16777215);
         filledRect(shop_left + 216 - 1, shop_top + 36 - 8, 2, 2, shop_item);
         filledRect(shop_left + 216 - 2, shop_top + 36 - 6, 4, 2, shop_item);
@@ -1574,16 +1564,14 @@ function townScreens() {
         filledRect(shop_left + 216 - 8, shop_top + 92 - 8, 16, 2, shop_item);
         filledRect(shop_left + 216 - 7, shop_top + 92 - 6, 14, 2, shop_item);
         filledRect(shop_left + 216 - 6, shop_top + 92 - 4, 12, 2, shop_item);
-        filledRect(shop_left + 216 -
-            5, shop_top + 92 - 2, 10, 2, shop_item);
+        filledRect(shop_left + 216 - 5, shop_top + 92 - 2, 10, 2, shop_item);
         filledRect(shop_left + 216 - 4, shop_top + 92, 8, 2, shop_item);
         filledRect(shop_left + 216 - 3, shop_top + 94, 6, 2, shop_item);
         filledRect(shop_left + 216 - 2, shop_top + 96, 4, 2, shop_item);
         filledRect(shop_left + 216 - 1, shop_top + 98, 2, 2, shop_item);
         drawLine(shop_left + 0, shop_top + 136 - 1, shop_left + 235, shop_top + 136 - 1, 16777215);
         drawLine(shop_left + 120, shop_top + 136 - 1, shop_left + 120, shop_top + 160, 16777215);
-        isMouseHovered(shop_left + 1, shop_top + 136, 120, 24) && 0 != Item_Inv[40] ? (g = floor(getVal(Item_Inv[40], 2) / 8), Clicked && (antiCheatCheck(), Drops.add(40, 200, 1, g, 0), Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0, antiCheatSet()), filledRect(shop_left + 1, shop_top + 136, 119, 24, 10027008), centeredText(Large_Text, shop_left + 60, shop_top + 148, "" + g + "$ SELL", 16777215, 0)) : isMouseHovered(shop_left + 1, shop_top + 136, 120, 24) && 0 == Item_Inv[40] && !Click_To_Sell_Mode ? (Clicked && (Click_To_Sell_Mode = 1), filledRect(shop_left + 1, shop_top + 136, 119, 24, 10027008), centeredText(Large_Text, shop_left + 60, shop_top + 148, "CLICK TO SELL", 16777215, 0)) : isMouseHovered(shop_left + 1, shop_top + 136,
-            120, 24) && 0 == Item_Inv[40] && 1 == Click_To_Sell_Mode ? (Clicked && (Click_To_Sell_Mode = 0), filledRect(shop_left + 1, shop_top + 136, 119, 24, 10027008), centeredText(Large_Text, shop_left + 60, shop_top + 148, "CANCEL", 16777215, 0)) : 1 == Click_To_Sell_Mode ? centeredText(Large_Text, shop_left + 60, shop_top + 148, "CANCEL", 16777215, 0) : centeredText(Large_Text, shop_left + 60, shop_top + 148, "DRAG TO SELL", 16777215, 0);
+        isMouseHovered(shop_left + 1, shop_top + 136, 120, 24) && 0 != Item_Inv[40] ? (g = floor(getVal(Item_Inv[40], 2) / 8), Clicked && (antiCheatCheck(), Drops.add(40, 200, 1, g, 0), Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0, antiCheatSet()), filledRect(shop_left + 1, shop_top + 136, 119, 24, 10027008), centeredText(Large_Text, shop_left + 60, shop_top + 148, "" + g + "$ SELL", 16777215, 0)) : isMouseHovered(shop_left + 1, shop_top + 136, 120, 24) && 0 == Item_Inv[40] && !Click_To_Sell_Mode ? (Clicked && (Click_To_Sell_Mode = 1), filledRect(shop_left + 1, shop_top + 136, 119, 24, 10027008), centeredText(Large_Text, shop_left + 60, shop_top + 148, "CLICK TO SELL", 16777215, 0)) : isMouseHovered(shop_left + 1, shop_top + 136, 120, 24) && 0 == Item_Inv[40] && 1 == Click_To_Sell_Mode ? (Clicked && (Click_To_Sell_Mode = 0), filledRect(shop_left + 1, shop_top + 136, 119, 24, 10027008), centeredText(Large_Text, shop_left + 60, shop_top + 148, "CANCEL", 16777215, 0)) : 1 == Click_To_Sell_Mode ? centeredText(Large_Text, shop_left + 60, shop_top + 148, "CANCEL", 16777215, 0) : centeredText(Large_Text, shop_left + 60, shop_top + 148, "DRAG TO SELL", 16777215, 0);
         isMouseHovered(shop_left + 121, shop_top + 136, 114, 24) && (Clicked && (Click_To_Sell_Mode = 0, Sequence_Step = 52), filledRect(shop_left + 121, shop_top + 136, 114, 24, 10027008));
         centeredText(Large_Text, shop_left + 176, shop_top + 148, "EXIT", 16777215, 0);
         drawUI(1)
@@ -1598,8 +1586,7 @@ function townScreens() {
         Display_Mode = 0;
         outlineRect(shop_left + 0, shop_top + 0, 321, 161, 16777215);
         drawLine(shop_left + 160, shop_top + 0, shop_left + 160, shop_top + 160, 16777215);
-        town_stage = "WORLD MAP " + (100 >
-            Menu_Column ? " " : "");
+        town_stage = "WORLD MAP " + (100 > Menu_Column ? " " : "");
         town_stage += "" + floor(Menu_Column / shop_item + 1) + "/" + floor((Stage_In_Book.length - 1) / shop_item + 1);
         TXoutputB(Large_Text, shop_left + 20, shop_top + 4, town_stage, -1, 32768);
         isMouseHovered(shop_left + 8, shop_top + 16, 144, 12 * shop_item) && (a = floor((Mouse_Ypos - (shop_top + 16)) / 12), Clicked && (Menu_Row = a), filledRect(shop_left + 8, shop_top + 16 + 12 * a, 144, 12, 10027008));
@@ -1607,8 +1594,7 @@ function townScreens() {
         town_stage = Stage_In_Book[Menu_Column + Menu_Row];
         0 != town_stage && (0 < (Stage_Status[town_stage] & Beaten) ? TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * Menu_Row, Stage_Names[town_stage], 16711680, 0) : TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * Menu_Row, "???", 16711680, 0));
         drawLine(shop_left + 0, shop_top + 140, shop_left + 160, shop_top + 140, 16777215);
-        isMouseHovered(shop_left + 8, shop_top + 144 - 2, 48, 17) && (Clicked && (Menu_Column = cycle(floor(Menu_Column / shop_item) - 1, 0, floor((Stage_In_Book.length - 1) / shop_item)) * shop_item), filledRect(shop_left +
-            8, shop_top + 144 - 2, 48, 17, 10027008));
+        isMouseHovered(shop_left + 8, shop_top + 144 - 2, 48, 17) && (Clicked && (Menu_Column = cycle(floor(Menu_Column / shop_item) - 1, 0, floor((Stage_In_Book.length - 1) / shop_item)) * shop_item), filledRect(shop_left + 8, shop_top + 144 - 2, 48, 17, 10027008));
         TXoutputB(Large_Text, shop_left + 16, shop_top + 145, "Prev", 16777215, 0);
         isMouseHovered(shop_left + 56, shop_top + 144 - 2, 48, 17) && (Clicked && (Menu_Column = cycle(floor(Menu_Column / shop_item) + 1, 0, floor((Stage_In_Book.length - 1) / shop_item)) * shop_item), filledRect(shop_left + 56, shop_top + 144 - 2, 48, 17, 10027008));
         TXoutputB(Large_Text, shop_left + 64, shop_top + 145, "Next", 16777215, 0);
@@ -1620,8 +1606,7 @@ function townScreens() {
                 for (a = shop_item - 1; 0 <= a; a--) shop_item -= EN_Info[Book_Indexer[town_stage] + a][En_2nd_Att];
                 g = shop_left + 80 - 16 * shop_item;
                 isMouseHovered(g + 160, shop_top + 0, 32 * shop_item, 52) && (b = floor((Mouse_Xpos - (g + 160)) / 32), Clicked && (Menu_Entry = b), filledRect(g + 160 + 32 * b + 2, shop_top + 2, 28, 52, 10027008));
-                filledRect(g + 160 + 32 * Menu_Entry + 2,
-                    shop_top + 50, 28, 4, 10027008);
+                filledRect(g + 160 + 32 * Menu_Entry + 2, shop_top + 50, 28, 4, 10027008);
                 Menu_Entry = clamp(Menu_Entry, 0, shop_item - 1);
                 for (a = 0; a < shop_item; a++) drawItem(Terrain_Textures[Stage_Spawns[town_stage][Stage_Spawns[town_stage].length - 1][0]], g + 164 + 32 * a, shop_top + 44, 24, 8, 0, 0, 24, 8);
                 shop_item = Book_Indexer[town_stage + 1] - Book_Indexer[town_stage];
@@ -1632,8 +1617,7 @@ function townScreens() {
                 TXoutputB(Large_Text, shop_left + 164, shop_top + 80, "GOLD " + EN_Info[town_stage][En_Gold], 16777215, 0);
                 TXoutputB(Large_Text, shop_left + 164, shop_top + 92, "EXP  " + EN_Info[town_stage][EN_EXP], 16777215, 0);
                 TXoutputB(Large_Text, shop_left + 164, shop_top + 108, "Drop Item", 16777215, 0);
-                for (b = a = 0; 6 > a; a += 2) shop_item = EN_Info[town_stage][En_Drop1 + a], 0 != shop_item && (Display_Mode2 = 2, dispItem(Drop_Img, shop_left + 164, shop_top + 4 * (30 + 3 * b), 12,
-                    12, 12 * getVal(shop_item, 3), 0, 12, 12, getVal(shop_item, 6)), Display_Mode2 = 0, itemText(shop_left + 164, shop_top + 4 * (30 + 3 * b), "  " + Item_Catalogue[shop_item][0] + " " + (Item_Catalogue[shop_item][1] ? Item_Catalogue[shop_item][1] : ""), 16777215, 0, -1), b++);
+                for (b = a = 0; 6 > a; a += 2) shop_item = EN_Info[town_stage][En_Drop1 + a], 0 != shop_item && (Display_Mode2 = 2, dispItem(Drop_Img, shop_left + 164, shop_top + 4 * (30 + 3 * b), 12, 12, 12 * getVal(shop_item, 3), 0, 12, 12, getVal(shop_item, 6)), Display_Mode2 = 0, itemText(shop_left + 164, shop_top + 4 * (30 + 3 * b), "  " + Item_Catalogue[shop_item][0] + " " + (Item_Catalogue[shop_item][1] ? Item_Catalogue[shop_item][1] : ""), 16777215, 0, -1), b++);
                 TXoutputB(Large_Text, shop_left + 256, shop_top + 56, "strong", 16777215, 0);
                 0 < EN_Info[town_stage][Ph_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 70, "Ph          ", 8421504, 0);
                 0 < EN_Info[town_stage][Fi_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 70, "  Fi        ", 16711680, 0);
@@ -1641,16 +1625,14 @@ function townScreens() {
                 0 < EN_Info[town_stage][Th_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 70, "      Th    ", 16777024, 0);
                 0 < EN_Info[town_stage][Po_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 70, "        Po  ", 65280, 0);
                 0 < EN_Info[town_stage][Fr_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 70, "          Fr", 12632319, 0);
-                TXoutputB(Large_Text, shop_left + 256, shop_top + 80, "weak", 16777215,
-                    0);
+                TXoutputB(Large_Text, shop_left + 256, shop_top + 80, "weak", 16777215, 0);
                 0 > EN_Info[town_stage][Ph_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 94, "Ph          ", 8421504, 0);
                 0 > EN_Info[town_stage][Fi_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 94, "  Fi        ", 16711680, 0);
                 0 > EN_Info[town_stage][Ic_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 94, "    Ic      ", 2105599, 0);
                 0 > EN_Info[town_stage][Th_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 94, "      Th    ", 16777024, 0);
                 0 > EN_Info[town_stage][Po_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 94, "        Po  ", 65280, 0);
                 0 > EN_Info[town_stage][Fr_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 94, "          Fr", 12632319, 0)
-            } else 0 < (Stage_Status[town_stage] & Beaten) ? (centeredText(Large_Text, shop_left + 240, shop_top + 40, "Information fee", 16777215, 0), g = 1E3 * (Menu_Column + Menu_Row + 1), isMouseHoveredCenter(shop_left + 240, shop_top + 80, 160, 160) && (g <= Team_Gold && Clicked && (antiCheatCheck(), Stage_Status[town_stage] |= Bookede, Team_Gold -= g, antiCheatSet()), filledRectCentered(shop_left + 240, shop_top + 80, 120, 32, 10027008)),
-                centeredText(Large_Text, shop_left + 240, shop_top + 80, "" + g + "$ BUY", 16777215, 0)) : (centeredText(Large_Text, shop_left + 240, shop_top + 40, "?????", 16777215, 0), centeredText(Large_Text, shop_left + 240, shop_top + 80, "???", 16777215, 0));
+            } else 0 < (Stage_Status[town_stage] & Beaten) ? (centeredText(Large_Text, shop_left + 240, shop_top + 40, "Information fee", 16777215, 0), g = 1E3 * (Menu_Column + Menu_Row + 1), isMouseHoveredCenter(shop_left + 240, shop_top + 80, 160, 160) && (g <= Team_Gold && Clicked && (antiCheatCheck(), Stage_Status[town_stage] |= Bookede, Team_Gold -= g, antiCheatSet()), filledRectCentered(shop_left + 240, shop_top + 80, 120, 32, 10027008)), centeredText(Large_Text, shop_left + 240, shop_top + 80, "" + g + "$ BUY", 16777215, 0)) : (centeredText(Large_Text, shop_left + 240, shop_top + 40, "?????", 16777215, 0), centeredText(Large_Text, shop_left + 240, shop_top + 80, "???", 16777215, 0));
         drawUI(1)
     } else if (55 == Sequence_Step) {
         drawStage(0);
@@ -1681,8 +1663,7 @@ function townScreens() {
         isMouseHovered(shop_left + 56, shop_top + 144 - 2, 48, 17) && (Clicked && (Sequence_Step = 52), filledRect(shop_left + 56, shop_top + 144 - 2, 48, 17, 10027008));
         TXoutputB(Large_Text, shop_left + 64, shop_top + 145, "EXIT", 16777215, 0);
         g = 1E3 * (LP_SP[Menu_Column] + STR_SP[Menu_Column] + DEX_SP[Menu_Column] + MAG_SP[Menu_Column]);
-        isMouseHoveredCenter(shop_left + 240, shop_top + 80, 120, 32) && 0 < g && (g <= Team_Gold && Clicked &&
-            (antiCheatCheck(), SP[Menu_Column] += LP_SP[Menu_Column] + STR_SP[Menu_Column] + DEX_SP[Menu_Column] + MAG_SP[Menu_Column], LP_SP[Menu_Column] = 0, STR_SP[Menu_Column] = 0, DEX_SP[Menu_Column] = 0, MAG_SP[Menu_Column] = 0, Team_Gold -= g, antiCheatSet()), filledRectCentered(shop_left + 240, shop_top + 80, 120, 32, 10027008));
+        isMouseHoveredCenter(shop_left + 240, shop_top + 80, 120, 32) && 0 < g && (g <= Team_Gold && Clicked && (antiCheatCheck(), SP[Menu_Column] += LP_SP[Menu_Column] + STR_SP[Menu_Column] + DEX_SP[Menu_Column] + MAG_SP[Menu_Column], LP_SP[Menu_Column] = 0, STR_SP[Menu_Column] = 0, DEX_SP[Menu_Column] = 0, MAG_SP[Menu_Column] = 0, Team_Gold -= g, antiCheatSet()), filledRectCentered(shop_left + 240, shop_top + 80, 120, 32, 10027008));
         centeredText(Large_Text, shop_left + 240, shop_top + 72, "Forget", 16777215, 0);
         centeredText(Large_Text, shop_left + 240, shop_top + 88, "" + g + "$ BUY", 16777215, 0);
         drawUI(1)
@@ -1694,9 +1675,7 @@ function PvPscreens() {
     var a, b, c;
     if (70 == Sequence_Step) Current_Stage = 0, Current_Screen = 1, Terrain.o(Current_Stage) && (Players.set(0, 26, Terrain.b[0]), Players.set(1, 30, Terrain.b[1]), Players.set(2, 34, Terrain.b[2]), Players.set(3, 38, Terrain.b[3]), Enemies.o(1), Projectiles.a = 0, Indicators.a = 0, Drops.a = 0, Text_Fade = Sign_Touched_Mode = Target_Array_ID = En_Count_From_Max = Target_HP_Max = Target_HP_Current = Drops.f = 0, Sequence_Step++);
     else if (71 == Sequence_Step || 72 == Sequence_Step || 73 == Sequence_Step || 74 == Sequence_Step)
-        if (TRdrawTerrain(), Players.G(), DPmain(), INmain(), PJmain(), DPrenderDrops(), Players.B(), PJrenderProjectiles(), INoutput(), drawUI(0), 71 == Sequence_Step) VS_Upload_Errors ? Game_Language ? 100 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f") : 1 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "\u30e6\u30fc\u30b6\u30fc\u767b\u9332\u304c\u5fc5\u8981\u3067\u3059") : 2 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "1\u65e5\u306b1\u56de\u306e\u307f\u3067\u3059") :
-            3 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "10\u4ef6\u4ee5\u4e0a\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u51fa\u6765\u307e\u305b\u3093") : doVSModeText(VSMODECODE11, "\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u51fa\u6765\u307e\u305b\u3093") : 100 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "The upload has been completed.") : 1 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "User registration is required.") : 2 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "1 time in 1 day only.") : 3 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "Cannot upload more than 10 posts.") : doVSModeText(VSMODECODE11, "Cannot upload.") : Game_Language ? doVSModeText(VSMODECODE11, "\u30b3\u30e1\u30f3\u30c8\u3092\u8a18\u5165\u3057\u3066\uff2f\uff2b\u3092\u62bc\u3057\u3066\u4e0b\u3055\u3044") :
-            doVSModeText(VSMODECODE11, "Enter comments and click OK."), Sequence_Step++;
+        if (TRdrawTerrain(), Players.G(), DPmain(), INmain(), PJmain(), DPrenderDrops(), Players.B(), PJrenderProjectiles(), INoutput(), drawUI(0), 71 == Sequence_Step) VS_Upload_Errors ? Game_Language ? 100 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f") : 1 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "\u30e6\u30fc\u30b6\u30fc\u767b\u9332\u304c\u5fc5\u8981\u3067\u3059") : 2 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "1\u65e5\u306b1\u56de\u306e\u307f\u3067\u3059") : 3 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "10\u4ef6\u4ee5\u4e0a\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u51fa\u6765\u307e\u305b\u3093") : doVSModeText(VSMODECODE11, "\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\u51fa\u6765\u307e\u305b\u3093") : 100 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "The upload has been completed.") : 1 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "User registration is required.") : 2 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "1 time in 1 day only.") : 3 == VS_Upload_Errors ? doVSModeText(VSMODECODE11, "Cannot upload more than 10 posts.") : doVSModeText(VSMODECODE11, "Cannot upload.") : Game_Language ? doVSModeText(VSMODECODE11, "\u30b3\u30e1\u30f3\u30c8\u3092\u8a18\u5165\u3057\u3066\uff2f\uff2b\u3092\u62bc\u3057\u3066\u4e0b\u3055\u3044") : doVSModeText(VSMODECODE11, "Enter comments and click OK."), Sequence_Step++;
         else if (72 == Sequence_Step) {
         if (filledRectCentered(256, 100, 300, 100, 8421504), centeredText(Large_Text, 256, 70, "UPLOAD", 16752800, 0), dispItemCentered(VSMODECODE11, 256, 90, VSMODECODE11.a, 16, 0, 0, VSMODECODE11.a, 16, 0), !VS_Upload_Errors) {
             b = prompt_res;
@@ -1704,7 +1683,9 @@ function PvPscreens() {
             outlineRect(135, 107, 242, 18, 0);
             if (isMouseHovered(136, 108, 240, 16) && (outlineRect(135, 107, 242, 18, 16711680), Released)) {
                 c = null;
-                try { c = prompt("UPLOAD", b) } catch (g) {}
+                try {
+                    c = prompt("UPLOAD", b)
+                } catch (g) {}
                 null != c && (b = c)
             }
             doVSModeText(VS_Image, b);
@@ -1713,8 +1694,7 @@ function PvPscreens() {
             b = isMouseHoveredCenter(256, 140, 16, 12);
             centeredText(Large_Text, 256, 140, "OK", b ? 16711680 : 16777215, 0);
             if (b && Released)
-                if (2 > prompt_res.length) Game_Language ? doVSModeText(VSMODECODE11, "\u30b3\u30e1\u30f3\u30c8\u3092\uff12\u6587\u5b57\u4ee5\u4e0a\u8a18\u5165\u3057\u3066\u4e0b\u3055\u3044") :
-                    doVSModeText(VSMODECODE11, "The comment must be longer than 2 characters.");
+                if (2 > prompt_res.length) Game_Language ? doVSModeText(VSMODECODE11, "\u30b3\u30e1\u30f3\u30c8\u3092\uff12\u6587\u5b57\u4ee5\u4e0a\u8a18\u5165\u3057\u3066\u4e0b\u3055\u3044") : doVSModeText(VSMODECODE11, "The comment must be longer than 2 characters.");
                 else {
                     b = prompt_res;
                     c = 0;
@@ -1726,16 +1706,14 @@ function PvPscreens() {
                     20 < c ? Game_Language ? doVSModeText(VSMODECODE11, "\u30b3\u30e1\u30f3\u30c8\u3092\uff11\uff10\u6587\u5b57\u4ee5\u4e0b\u3067\u8a18\u5165\u3057\u3066\u4e0b\u3055\u3044") : doVSModeText(VSMODECODE11, "The comment must be shorter than 10 characters.") : Sequence_Step++
                 }
         }
-    } else 73 == Sequence_Step ? (b = encodeURIComponent(prompt_res), b.length ? 0 == Item_Inv[4] || 0 == Item_Inv[5] || 0 == Item_Inv[6] || 0 == Item_Inv[7] ? (Game_Language ? doVSModeText(VSMODECODE11, "\u6b66\u5668\u3092\u88c5\u5099\u3057\u3066\u4e0b\u3055\u3044") :
-        doVSModeText(VSMODECODE11, "Equip a weapon."), Sequence_Step = 72) : (antiCheatCheck(), Save_Code3 = genSaveCode(1), c = chrCode(47, 115, 99, 111, 114, 101, 47, 114, 97, 110, 103, 101, 114, 95, 101, 110, 116, 114, 121, 46, 112, 104, 112, 63, 97, 61), c += Game_ID_1, c += chr_and_b_equal + (Game_Language ? "0" : "1"), c += chr_and_c_equal + b, c += chr_and_d_equal + Save_Code3, logCopyright(c), funct_Dg(c), Sequence_Step++) : (Game_Language ? doVSModeText(VSMODECODE11, "\u30a8\u30e9\u30fc") : doVSModeText(VSMODECODE11, "Error"), Sequence_Step = 72)) : 74 == Sequence_Step && Global_Eg && (VS_Upload_Errors = "ok" == VS_result[0] ? 100 : "err1" == VS_result[0] ? 1 : "err2" == VS_result[0] ? 2 : "err3" == VS_result[0] ? 3 : "err4" == VS_result[0] ? 4 : "err5" == VS_result[0] ? 5 : 6, Sequence_Step = 71);
+    } else 73 == Sequence_Step ? (b = encodeURIComponent(prompt_res), b.length ? 0 == Item_Inv[4] || 0 == Item_Inv[5] || 0 == Item_Inv[6] || 0 == Item_Inv[7] ? (Game_Language ? doVSModeText(VSMODECODE11, "\u6b66\u5668\u3092\u88c5\u5099\u3057\u3066\u4e0b\u3055\u3044") : doVSModeText(VSMODECODE11, "Equip a weapon."), Sequence_Step = 72) : (antiCheatCheck(), Save_Code3 = genSaveCode(1), c = chrCode(47, 115, 99, 111, 114, 101, 47, 114, 97, 110, 103, 101, 114, 95, 101, 110, 116, 114, 121, 46, 112, 104, 112, 63, 97, 61), c += Game_ID_1, c += chr_and_b_equal + (Game_Language ? "0" : "1"), c += chr_and_c_equal + b, c += chr_and_d_equal + Save_Code3, logCopyright(c), funct_Dg(c), Sequence_Step++) : (Game_Language ? doVSModeText(VSMODECODE11, "\u30a8\u30e9\u30fc") : doVSModeText(VSMODECODE11, "Error"), Sequence_Step = 72)) : 74 == Sequence_Step && Global_Eg && (VS_Upload_Errors = "ok" == VS_result[0] ? 100 : "err1" == VS_result[0] ? 1 : "err2" == VS_result[0] ? 2 : "err3" == VS_result[0] ? 3 : "err4" == VS_result[0] ? 4 : "err5" == VS_result[0] ? 5 : 6, Sequence_Step = 71);
     else if (60 == Sequence_Step) {
         if (Current_Stage = 0, Current_Screen = 1, Terrain.o(Current_Stage)) {
             Players.set(0, 10, Terrain.b[0]);
             Players.set(1, 11, Terrain.b[1]);
             Players.set(2, 12, Terrain.b[2]);
             Players.set(3, 13, Terrain.b[3]);
-            Players.set(4, 53,
-                Terrain.b[0]);
+            Players.set(4, 53, Terrain.b[0]);
             Players.set(5, 52, Terrain.b[1]);
             Players.set(6, 51, Terrain.b[2]);
             Players.set(7, 50, Terrain.b[3]);
@@ -1753,13 +1731,7 @@ function PvPscreens() {
             Sequence_Step++
         }
     } else if (61 == Sequence_Step || 62 == Sequence_Step || 63 == Sequence_Step || 64 == Sequence_Step)
-        for (TRdrawTerrain(), 61 == Sequence_Step && (Players.N = 1), Players.G(), INmain(), PJmain(), Players.N = 0, Players.B(), PJrenderProjectiles(), INoutput(), setRangersUI(), 61 == Sequence_Step ? (Text_Fade = clamp(Text_Fade + 1, 0, 30), a = floor(255 * Text_Fade / 30), drawLine(0, 110, floor(512 * Text_Fade / 30), 110, 8421504), drawLine(512 - floor(512 * Text_Fade / 30), 143, 512, 143, 8421504), isMouseHoveredCenter(256, 127, 512, 32) && 30 == Text_Fade ? (Clicked && (Sequence_Step++, Text_Fade = 0), filledRectCentered(256, 127, 512, 32, 8388608), largeMessage(Large_Text, 256, 128, "FIGHT",
-                255, 255, 255, 255, 0, 0, 0, 255, 16, 24)) : largeMessage(Large_Text, 256, 128, "READY", 255, 255, 255, a, 0, 0, 0, a, 16, 24), Display_Mode = 1, b = 110, c = 120, doVSModeText(VSMODECODE11, Player_Name), dispItemCentered(VSMODECODE11, b, c + 0 - 2, VSMODECODE11.a, 16, 0, 0, VSMODECODE11.a, 16, a << 24 | 16777215), doVSModeText(VSMODECODE12, VS_Player_Team_Name), dispItemCentered(VSMODECODE12, b, c + 16 - 2, VSMODECODE12.a, 16, 0, 0, VSMODECODE12.a, 16, a << 24 | 16777215), b = 402, doVSModeText(VSMODECODE13, VS_Opponent_Name), dispItemCentered(VSMODECODE13, b, c + 0 - 2, VSMODECODE13.a, 16, 0, 0, VSMODECODE13.a, 16, a << 24 | 16777215), doVSModeText(VSMODECODE14, VS_Opponent_Team_Name), dispItemCentered(VSMODECODE14, b, c + 16 - 2, VSMODECODE14.a, 16, 0, 0, VSMODECODE14.a, 16, a << 24 | 16777215), Display_Mode = 0) : 62 == Sequence_Step ? 0 == LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] ? (VSMODECODE8 = 2, Sequence_Step++) : 0 == LP_Current[4] + LP_Current[5] + LP_Current[6] + LP_Current[7] && (VSMODECODE8 = 1, Sequence_Step++) : 63 == Sequence_Step ? (VS_Upload_Errors || (VS_Upload_Errors = 1, c = chrCode(47, 115, 99, 111, 114, 101, 47, 114, 97, 110, 103, 101, 114, 95, 118,
-                115, 46, 112, 104, 112, 63, 97, 61), c += Game_ID_1, c += chr_and_b_equal + (Game_Language ? "0" : "1"), c += chr_and_c_equal + VS_Player_Team_ID, c += chr_and_d_equal + VS_Opponent_Team_ID, 0 != Item_Inv[4] && 0 != Item_Inv[5] && 0 != Item_Inv[6] && 0 != Item_Inv[7] && (c += chr_and_e_equal + vsUploadCode(VSMODECODE8)), logCopyright(c), funct_Dg(c)), Sequence_Step++) : 64 == Sequence_Step && (Text_Fade = clamp(Text_Fade + 1, 0, 50), a = floor(255 * Text_Fade / 50), isMouseHoveredCenter(256, 128, 96, 32) && 50 == Text_Fade && (Clicked && (Sequence_Step = 60), filledRectCentered(256, 128, 96, 32, 8388608)), outlineRectCentered(256, 128, 96, 32, 0 | floor(a / 2) << 16), largeMessage(Large_Text, 256, 129, "RETRY", 255, 255, 255, a, 0, 0, 0, a, 16, 24), b = 60, c = 72, Display_Mode = 1, dispItem(VSMODECODE11, b, c + 0 - 2, VSMODECODE11.a, 16, 0, 0, VSMODECODE11.a, 16, a << 24 | 16777215), Display_Mode = 0, largeMessage(Large_Text, b + 60, c + 40, 1 == VSMODECODE8 ? "WIN" : "LOSE", 255, 255, 255, a, 1 == VSMODECODE8 ? 255 : 0, 0, 1 == VSMODECODE8 ? 0 : 255, a, 32, 48), Global_Eg && ("ok" == VS_result[0] ? (TXoutputM(Large_Text,
-                b, c + 64, "" + VS_result[1] + " win " + VS_result[2] + " lose", 255, 255, 255, a, 0, 0, 0, a, 8, 12), TXoutputM(Large_Text, b, c + 80, "Winning per " + VS_result[3] + "%", 255, 255, 255, a, 0, 0, 0, a, 8, 12)) : TXoutputM(Large_Text, b, c + 64, " RANKING ERROR", 255, 255, 255, a, 0, 0, 0, a, 8, 12)), b = 332, Display_Mode = 1, dispItem(VSMODECODE13, b, c + 0 - 2, VSMODECODE13.a, 16, 0, 0, VSMODECODE13.a, 16, a << 24 | 16777215), Display_Mode = 0, largeMessage(Large_Text, b + 60, c + 40, 2 == VSMODECODE8 ? "WIN" : "LOSE", 255, 255, 255, a, 2 == VSMODECODE8 ? 255 : 0, 0, 2 == VSMODECODE8 ? 0 : 255, a, 32, 48), Global_Eg && ("ok" == VS_result[0] ? (TXoutputM(Large_Text, b, c + 64, "" + VS_result[4] + " win " + VS_result[5] + " lose", 255, 255, 255, a, 0, 0, 0, a, 8, 12), TXoutputM(Large_Text, b, c + 80, "Winning per " + VS_result[6] + "%", 255, 255, 255, a, 0, 0, 0, a, 8, 12)) : TXoutputM(Large_Text, b,
-                c + 64, " RANKING ERROR", 255, 255, 255, a, 0, 0, 0, a, 8, 12))), filledRect(0, 257, 512, 126, [13407305, 9480368, 7241784, 10993609, 11302740, 24586, 7297069, 7297069, 10053120][Stage_Spawns[Current_Stage][Current_Screen][0]]), TXoutputM(Small_Text, 10, 374, chr_C_DAN_BALL, 0, 0, 0, 0, 0, 0, 0, 128, 5, 7), largeMessage(Large_Text, 256, 328, "VS", 255, 255, 255, 255, 0, 0, 0, 255, 16, 24), b = 40, c = 268, dispItem(VSMODECODE11, b, c + 0 - 2, VSMODECODE11.a, 16, 0, 0, VSMODECODE11.a, 16, 0), TXoutputB(Large_Text, b, c + 16, "LV " + LV[0], 16777215, 0), TXoutputB(Large_Text, b, c + 16, "        FP " + FP[0], 16777215, 0), doVSModeText(VSMODECODE15, "\u300c " + VS_Player_Team_Name + " \u300d"), dispItemCentered(VSMODECODE15, b + 60, c + 88, VSMODECODE15.a, 16, 0, 0, VSMODECODE15.a, 16, 0), b = 206, largeMessage(Large_Text, b, c + 22, "Rank", 0, 0, 0, 0, 0, 0, 0, 128, 8, 12), largeMessage(Large_Text, b, c +
-                60, "" + Rank_List[Rank[0]], 0, 0, 0, 0, 0, 0, 0, 80, 32, 48), b = 352, dispItem(VSMODECODE13, b, c + 0 - 2, VSMODECODE13.a, 16, 0, 0, VSMODECODE13.a, 16, 0), TXoutputB(Large_Text, b, c + 16, "LV " + LV[1], 16777215, 0), TXoutputB(Large_Text, b, c + 16, "        FP " + FP[1], 16777215, 0), doVSModeText(VSMODECODE16, "\u300c " + VS_Opponent_Team_Name + " \u300d"), dispItemCentered(VSMODECODE16, b + 60, c + 88, VSMODECODE16.a, 16, 0, 0, VSMODECODE16.a, 16, 0), b = 306, largeMessage(Large_Text, b, c + 22, "Rank", 0, 0, 0, 0, 0, 0, 0, 128, 8, 12), largeMessage(Large_Text, b, c + 60, "" + Rank_List[Rank[1]], 0, 0, 0, 0, 0, 0, 0, 80, 32, 48), b = 40, c = 316, a = 0; 8 > a; a++) 4 <= a && (b = 224), filledRect(b + 32 * a, c - 12, floor(24 * LP_Current[a] / LP_Max[a]), 4, 8388608), d = maxOf(getVal(Item_Inv[4 + a], 36), 1), e = getVal(Item_Inv[4 + a], 5), 4 != e && 5 != e && 6 != e && filledRect(b + 32 * a, c - 6, floor(23 * MP_Bar[a] / d) + 1, 2, 128), filledRect(b + 32 *
-            a, c + 0, 24, 24, 0), dispItem(Player_Img, b + 32 * a, c, 24, 24, 24 * getVal(Item_Inv[4 + a], 5), 0, 24, 24, 16777215), colorPortraitWeap(b + 32 * a, c, 24 * getVal(Item_Inv[4 + a], 5), getVal(Item_Inv[4 + a], 6))
+        for (TRdrawTerrain(), 61 == Sequence_Step && (Players.N = 1), Players.G(), INmain(), PJmain(), Players.N = 0, Players.B(), PJrenderProjectiles(), INoutput(), setRangersUI(), 61 == Sequence_Step ? (Text_Fade = clamp(Text_Fade + 1, 0, 30), a = floor(255 * Text_Fade / 30), drawLine(0, 110, floor(512 * Text_Fade / 30), 110, 8421504), drawLine(512 - floor(512 * Text_Fade / 30), 143, 512, 143, 8421504), isMouseHoveredCenter(256, 127, 512, 32) && 30 == Text_Fade ? (Clicked && (Sequence_Step++, Text_Fade = 0), filledRectCentered(256, 127, 512, 32, 8388608), largeMessage(Large_Text, 256, 128, "FIGHT", 255, 255, 255, 255, 0, 0, 0, 255, 16, 24)) : largeMessage(Large_Text, 256, 128, "READY", 255, 255, 255, a, 0, 0, 0, a, 16, 24), Display_Mode = 1, b = 110, c = 120, doVSModeText(VSMODECODE11, Player_Name), dispItemCentered(VSMODECODE11, b, c + 0 - 2, VSMODECODE11.a, 16, 0, 0, VSMODECODE11.a, 16, a << 24 | 16777215), doVSModeText(VSMODECODE12, VS_Player_Team_Name), dispItemCentered(VSMODECODE12, b, c + 16 - 2, VSMODECODE12.a, 16, 0, 0, VSMODECODE12.a, 16, a << 24 | 16777215), b = 402, doVSModeText(VSMODECODE13, VS_Opponent_Name), dispItemCentered(VSMODECODE13, b, c + 0 - 2, VSMODECODE13.a, 16, 0, 0, VSMODECODE13.a, 16, a << 24 | 16777215), doVSModeText(VSMODECODE14, VS_Opponent_Team_Name), dispItemCentered(VSMODECODE14, b, c + 16 - 2, VSMODECODE14.a, 16, 0, 0, VSMODECODE14.a, 16, a << 24 | 16777215), Display_Mode = 0) : 62 == Sequence_Step ? 0 == LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] ? (VSMODECODE8 = 2, Sequence_Step++) : 0 == LP_Current[4] + LP_Current[5] + LP_Current[6] + LP_Current[7] && (VSMODECODE8 = 1, Sequence_Step++) : 63 == Sequence_Step ? (VS_Upload_Errors || (VS_Upload_Errors = 1, c = chrCode(47, 115, 99, 111, 114, 101, 47, 114, 97, 110, 103, 101, 114, 95, 118, 115, 46, 112, 104, 112, 63, 97, 61), c += Game_ID_1, c += chr_and_b_equal + (Game_Language ? "0" : "1"), c += chr_and_c_equal + VS_Player_Team_ID, c += chr_and_d_equal + VS_Opponent_Team_ID, 0 != Item_Inv[4] && 0 != Item_Inv[5] && 0 != Item_Inv[6] && 0 != Item_Inv[7] && (c += chr_and_e_equal + vsUploadCode(VSMODECODE8)), logCopyright(c), funct_Dg(c)), Sequence_Step++) : 64 == Sequence_Step && (Text_Fade = clamp(Text_Fade + 1, 0, 50), a = floor(255 * Text_Fade / 50), isMouseHoveredCenter(256, 128, 96, 32) && 50 == Text_Fade && (Clicked && (Sequence_Step = 60), filledRectCentered(256, 128, 96, 32, 8388608)), outlineRectCentered(256, 128, 96, 32, 0 | floor(a / 2) << 16), largeMessage(Large_Text, 256, 129, "RETRY", 255, 255, 255, a, 0, 0, 0, a, 16, 24), b = 60, c = 72, Display_Mode = 1, dispItem(VSMODECODE11, b, c + 0 - 2, VSMODECODE11.a, 16, 0, 0, VSMODECODE11.a, 16, a << 24 | 16777215), Display_Mode = 0, largeMessage(Large_Text, b + 60, c + 40, 1 == VSMODECODE8 ? "WIN" : "LOSE", 255, 255, 255, a, 1 == VSMODECODE8 ? 255 : 0, 0, 1 == VSMODECODE8 ? 0 : 255, a, 32, 48), Global_Eg && ("ok" == VS_result[0] ? (TXoutputM(Large_Text, b, c + 64, "" + VS_result[1] + " win " + VS_result[2] + " lose", 255, 255, 255, a, 0, 0, 0, a, 8, 12), TXoutputM(Large_Text, b, c + 80, "Winning per " + VS_result[3] + "%", 255, 255, 255, a, 0, 0, 0, a, 8, 12)) : TXoutputM(Large_Text, b, c + 64, " RANKING ERROR", 255, 255, 255, a, 0, 0, 0, a, 8, 12)), b = 332, Display_Mode = 1, dispItem(VSMODECODE13, b, c + 0 - 2, VSMODECODE13.a, 16, 0, 0, VSMODECODE13.a, 16, a << 24 | 16777215), Display_Mode = 0, largeMessage(Large_Text, b + 60, c + 40, 2 == VSMODECODE8 ? "WIN" : "LOSE", 255, 255, 255, a, 2 == VSMODECODE8 ? 255 : 0, 0, 2 == VSMODECODE8 ? 0 : 255, a, 32, 48), Global_Eg && ("ok" == VS_result[0] ? (TXoutputM(Large_Text, b, c + 64, "" + VS_result[4] + " win " + VS_result[5] + " lose", 255, 255, 255, a, 0, 0, 0, a, 8, 12), TXoutputM(Large_Text, b, c + 80, "Winning per " + VS_result[6] + "%", 255, 255, 255, a, 0, 0, 0, a, 8, 12)) : TXoutputM(Large_Text, b, c + 64, " RANKING ERROR", 255, 255, 255, a, 0, 0, 0, a, 8, 12))), filledRect(0, 257, 512, 126, [13407305, 9480368, 7241784, 10993609, 11302740, 24586, 7297069, 7297069, 10053120][Stage_Spawns[Current_Stage][Current_Screen][0]]), TXoutputM(Small_Text, 10, 374, chr_C_DAN_BALL, 0, 0, 0, 0, 0, 0, 0, 128, 5, 7), largeMessage(Large_Text, 256, 328, "VS", 255, 255, 255, 255, 0, 0, 0, 255, 16, 24), b = 40, c = 268, dispItem(VSMODECODE11, b, c + 0 - 2, VSMODECODE11.a, 16, 0, 0, VSMODECODE11.a, 16, 0), TXoutputB(Large_Text, b, c + 16, "LV " + LV[0], 16777215, 0), TXoutputB(Large_Text, b, c + 16, "        FP " + FP[0], 16777215, 0), doVSModeText(VSMODECODE15, "\u300c " + VS_Player_Team_Name + " \u300d"), dispItemCentered(VSMODECODE15, b + 60, c + 88, VSMODECODE15.a, 16, 0, 0, VSMODECODE15.a, 16, 0), b = 206, largeMessage(Large_Text, b, c + 22, "Rank", 0, 0, 0, 0, 0, 0, 0, 128, 8, 12), largeMessage(Large_Text, b, c + 60, "" + Rank_List[Rank[0]], 0, 0, 0, 0, 0, 0, 0, 80, 32, 48), b = 352, dispItem(VSMODECODE13, b, c + 0 - 2, VSMODECODE13.a, 16, 0, 0, VSMODECODE13.a, 16, 0), TXoutputB(Large_Text, b, c + 16, "LV " + LV[1], 16777215, 0), TXoutputB(Large_Text, b, c + 16, "        FP " + FP[1], 16777215, 0), doVSModeText(VSMODECODE16, "\u300c " + VS_Opponent_Team_Name + " \u300d"), dispItemCentered(VSMODECODE16, b + 60, c + 88, VSMODECODE16.a, 16, 0, 0, VSMODECODE16.a, 16, 0), b = 306, largeMessage(Large_Text, b, c + 22, "Rank", 0, 0, 0, 0, 0, 0, 0, 128, 8, 12), largeMessage(Large_Text, b, c + 60, "" + Rank_List[Rank[1]], 0, 0, 0, 0, 0, 0, 0, 80, 32, 48), b = 40, c = 316, a = 0; 8 > a; a++) 4 <= a && (b = 224), filledRect(b + 32 * a, c - 12, floor(24 * LP_Current[a] / LP_Max[a]), 4, 8388608), d = maxOf(getVal(Item_Inv[4 + a], 36), 1), e = getVal(Item_Inv[4 + a], 5), 4 != e && 5 != e && 6 != e && filledRect(b + 32 * a, c - 6, floor(23 * MP_Bar[a] / d) + 1, 2, 128), filledRect(b + 32 * a, c + 0, 24, 24, 0), dispItem(Player_Img, b + 32 * a, c, 24, 24, 24 * getVal(Item_Inv[4 + a], 5), 0, 24, 24, 16777215), colorPortraitWeap(b + 32 * a, c, 24 * getVal(Item_Inv[4 + a], 5), getVal(Item_Inv[4 + a], 6))
 }
 
 function menuCredits() {
@@ -1772,8 +1744,7 @@ function drawStage(a) {
     var b;
     TRdrawTerrain();
     if (!Current_Stage && 1 == Current_Screen || 20 == Current_Stage && 1 == Current_Screen || 47 == Current_Stage && 1 == Current_Screen || 77 == Current_Stage && 1 == Current_Screen) dispItemCentered(Hut_Img, 400, 183, 117, 84, 0, 0, 78, 56, 16777215), dispItemCentered(Hut_Img, 40, 170, 156, 112, 0, 0, 78, 56, 16777215), centeredText(Large_Text, 400, 168, "INN", 16777215, 13800762), Current_Stage ? 20 == Current_Stage ? centeredText(Large_Text, 40, 152, " COMPO SHOP", 16777215, 13800762) : 47 == Current_Stage ? centeredText(Large_Text, 40, 152, " JUNK SHOP", 16777215, 13800762) : 77 == Current_Stage && centeredText(Large_Text, 40, 152, " COMPO SHOP", 16777215, 13800762) : centeredText(Large_Text, 40, 152, "SHOP", 16777215, 13800762), centeredText(Large_Text, 40, 184, "BOOK", 16777215, 13800762);
-    70 == Current_Stage && 1 == Current_Screen && (dispItem(Forget_Tree_Img, 0, -288, 512, 512, 0, 0, 64, 64, 16777215), 52 == Sequence_Step && (centeredText(Large_Text, 256,
-        128, "FORGET", 16777215, 1054740), centeredText(Large_Text, 256, 160, "INN", 16777215, 1054740), centeredText(Large_Text, 256, 184, "BOOK", 16777215, 1054740)));
+    70 == Current_Stage && 1 == Current_Screen && (dispItem(Forget_Tree_Img, 0, -288, 512, 512, 0, 0, 64, 64, 16777215), 52 == Sequence_Step && (centeredText(Large_Text, 256, 128, "FORGET", 16777215, 1054740), centeredText(Large_Text, 256, 160, "INN", 16777215, 1054740), centeredText(Large_Text, 256, 184, "BOOK", 16777215, 1054740)));
     0 == a && (Players.G(), Enemies.L(), DPmain(), INmain(), PJmain());
     b = Terrain;
     if (55 != b.c && 89 != b.c && Current_Screen != Stage_Spawns[b.c].length - 1 || 0 == Enemies.i) {
@@ -1800,8 +1771,7 @@ function drawStage(a) {
         case 67:
         case 68:
         case 69:
-            Display_Mode =
-                1;
+            Display_Mode = 1;
             Display_Mode2 = 3;
             Game_Canvas = Stage_Eff_Canvas.l;
             b = randomRange(1.7, 3.69);
@@ -1827,8 +1797,7 @@ function drawStage(a) {
             for (b = 0; b < e; b++) Game_Canvas[b] = 255;
             Display_Mode = Display_Mode2 = 3;
             for (b = 0; 4 > b; b++) dispItemCentered(Projectiles_Img, Players.a[b][0].x, Players.a[b][0].y, 80, 80, 33, 1, 14, 14, 3238002687);
-            for (b =
-                0; b < Projectiles.a; b++) 1 != Projectiles.g[b] && dispItemCentered(Projectiles_Img, Projectiles.b[b].x, Projectiles.b[b].y, 32, 32, 33, 1, 14, 14, 2164260863);
+            for (b = 0; b < Projectiles.a; b++) 1 != Projectiles.g[b] && dispItemCentered(Projectiles_Img, Projectiles.b[b].x, Projectiles.b[b].y, 32, 32, 33, 1, 14, 14, 2164260863);
             for (b = 0; 4 > b; b++)
                 if (8 == Players.f[b])
                     for (c = 0; 6 > c; c++) 0 != Players.s[b][c] && dispItemCentered(Projectiles_Img, Players.a[b][15 + c].x, Players.a[b][15 + c].y, 32, 32, 33, 1, 14, 14, 2164260863);
@@ -1847,8 +1816,7 @@ function drawStage(a) {
         case 40:
         case 41:
         case 43:
-            b =
-                1 * Time_Desert_Haze & 511;
+            b = 1 * Time_Desert_Haze & 511;
             for (g = 0; 256 > g; g++) {
                 c = 512 * g;
                 h = ~~(4 * Xe_arr[b][1] + .5);
@@ -1869,8 +1837,7 @@ function drawStage(a) {
             e = 1;
             57 == d.c ? e = 2 : 58 == d.c ? e = 2 : 59 == d.c ? e = 2 : 60 == d.c ? e = 3 : 61 == d.c && (e = 3);
             for (b = 0; b < e; b++) Stage_Eff_Canvas.l[floor(random(24576))] = 1;
-            for (b = 114687; 0 <= b; b--) 1 == Stage_Eff_Canvas.l[b] && ((g = Terrain.a[b >> 12][(b & 511) >> 3], -1 == g || 0 == g && 3 > (b & 7) && 3 > (b >> 9 & 7) || 2 == g && 4 < (b & 7) && 3 > (b >> 9 & 7)) ? !(50 > random(100)) && (c = 57 == d.c || 58 == d.c || 61 == d.c ? b + 512 + floor(random(4)) -
-                2 : b + 512 + floor(random(3)) - 1, 1 != Stage_Eff_Canvas.l[c] && (g = Terrain.a[c >> 12][(c & 511) >> 3], -1 == g || 0 == g && 3 > (c & 7) && 3 > (c >> 9 & 7) || 2 == g && 4 < (c & 7) && 3 > (c >> 9 & 7))) && (Stage_Eff_Canvas.l[c] = Stage_Eff_Canvas.l[b], Stage_Eff_Canvas.l[b] = 0) : Stage_Eff_Canvas.l[b] = 0);
+            for (b = 114687; 0 <= b; b--) 1 == Stage_Eff_Canvas.l[b] && ((g = Terrain.a[b >> 12][(b & 511) >> 3], -1 == g || 0 == g && 3 > (b & 7) && 3 > (b >> 9 & 7) || 2 == g && 4 < (b & 7) && 3 > (b >> 9 & 7)) ? !(50 > random(100)) && (c = 57 == d.c || 58 == d.c || 61 == d.c ? b + 512 + floor(random(4)) - 2 : b + 512 + floor(random(3)) - 1, 1 != Stage_Eff_Canvas.l[c] && (g = Terrain.a[c >> 12][(c & 511) >> 3], -1 == g || 0 == g && 3 > (c & 7) && 3 > (c >> 9 & 7) || 2 == g && 4 < (c & 7) && 3 > (c >> 9 & 7))) && (Stage_Eff_Canvas.l[c] = Stage_Eff_Canvas.l[b], Stage_Eff_Canvas.l[b] = 0) : Stage_Eff_Canvas.l[b] = 0);
             Game_Canvas = Stage_Eff_Canvas.l;
             for (b = 0; 4 > b; b++) 0 != LP_Current[b] && (filledRectCentered(Players.a[b][0].x, Players.a[b][0].y, 3, 3, 0), filledRectCentered(Players.a[b][9].x, Players.a[b][9].y, 1, 1, 0), filledRectCentered(Players.a[b][10].x, Players.a[b][10].y, 1, 1, 0));
             for (b = 0; b < Projectiles.a; b++) 1 == Projectiles.i[b] && filledRectCentered(Projectiles.b[b].x, Projectiles.b[b].y, 3, 3, 0);
@@ -1881,8 +1848,7 @@ function drawStage(a) {
     Display_Mode = 1;
     filledRect(4, 4, 8 * (Stage_Names[Current_Stage].length + 6) + 8, 20, 2151694400);
     Display_Mode = 0;
-    !Current_Stage && 1 == Current_Screen || 20 == Current_Stage && 1 == Current_Screen || 47 == Current_Stage && 1 ==
-        Current_Screen || 70 == Current_Stage && 1 == Current_Screen || 77 == Current_Stage && 1 == Current_Screen ? TXoutputB(Large_Text, 8, 8, Stage_Names[Current_Stage], 16777215, 0) : Current_Screen + 1 == Stage_Spawns[Current_Stage].length ? TXoutputB(Large_Text, 8, 8, Stage_Names[Current_Stage] + ": BOSS", 16777215, 0) : TXoutputB(Large_Text, 8, 8, Stage_Names[Current_Stage] + ": " + (Current_Screen + 1), 16777215, 0);
+    !Current_Stage && 1 == Current_Screen || 20 == Current_Stage && 1 == Current_Screen || 47 == Current_Stage && 1 == Current_Screen || 70 == Current_Stage && 1 == Current_Screen || 77 == Current_Stage && 1 == Current_Screen ? TXoutputB(Large_Text, 8, 8, Stage_Names[Current_Stage], 16777215, 0) : Current_Screen + 1 == Stage_Spawns[Current_Stage].length ? TXoutputB(Large_Text, 8, 8, Stage_Names[Current_Stage] + ": BOSS", 16777215, 0) : TXoutputB(Large_Text, 8, 8, Stage_Names[Current_Stage] + ": " + (Current_Screen + 1), 16777215, 0);
     Display_Mode = 1;
     filledRect(364, 4, 56, 20, 2151694400);
     Display_Mode = 0;
@@ -1895,8 +1861,7 @@ function drawStage(a) {
         centeredText(Small_Text, 256, 16, "" + Target_HP_Current + "/" + Target_HP_Max, 16777215, 0);
         ENdrawIcon(Target_Array_ID, 206, 33, 1);
         TXoutputB(Small_Text, 216, 25, "DROP", 16777215, 0);
-        for (b = a = 0; 6 > a; a += 2) c = EN_Info[Target_Array_ID][En_Drop1 + a], 0 !=
-            c && (Display_Mode2 = 2, dispItem(Drop_Img, 236 + 12 * b, 23, 12, 12, 12 * getVal(c, 3), 0, 12, 12, getVal(c, 6)), Display_Mode2 = 0, b++);
+        for (b = a = 0; 6 > a; a += 2) c = EN_Info[Target_Array_ID][En_Drop1 + a], 0 != c && (Display_Mode2 = 2, dispItem(Drop_Img, 236 + 12 * b, 23, 12, 12, 12 * getVal(c, 3), 0, 12, 12, getVal(c, 6)), Display_Mode2 = 0, b++);
         a = enemyDeath(Enemies, Target_Array_ID, 1);
         TXoutputB(Small_Text, 276, 25, "EXP " + a, 16777215, 0)
     }
@@ -1926,15 +1891,11 @@ function setRangersUI() {
             e = getVal(Item_Inv[4 + a], 14),
             g = getVal(Item_Inv[4 + a], 15),
             h = getVal(Item_Inv[4 + a], 16);
-        1 == Ranger_Class[a] ? (AT_Min[a] = b + floor(STR[a] / 2), AT_Max[a] = d + floor(STR[a] / 2), Agi_Min[a] = minOf(e, maxOf(e - DEX[a], 5)), Agi_Max[a] = minOf(g, maxOf(g - DEX[a], 10)), RANGE[a] = h, LP_Max[a] = 50 + 10 * LP_SP[a] + 4 * STR[a] + 3 * DEX[a] + 2 * MAG[a]) : 2 == Ranger_Class[a] ? (AT_Max[a] = d + STR[a], AT_Min[a] = minOf(b + DEX[a], AT_Max[a]), Agi_Min[a] = e, Agi_Max[a] = g, RANGE[a] = h, checkEff(4 + a, 22) && (RANGE[a] += getEff(4 + a, 8)), checkEff(4 + a, 45) && (RANGE[a] += getEff(4 + a, 9)), LP_Max[a] = 50 + 10 * LP_SP[a] + 4 * STR[a] + 4 * DEX[a] + 2 * MAG[a]) : 3 == Ranger_Class[a] ? (AT_Min[a] = b + floor(DEX[a] / 4), AT_Max[a] = d + floor(DEX[a] / 3), Agi_Min[a] = e, Agi_Max[a] = g, RANGE[a] = h + 2 * STR[a], checkEff(4 + a, 23) && (RANGE[a] += getEff(4 + a, 8)), LP_Max[a] = 50 + 8 * LP_SP[a] + 2 * STR[a] + 3 * DEX[a] + 2 * MAG[a]) :
-            4 == Ranger_Class[a] ? (AT_Min[a] = b + floor(MAG[a] / 4), AT_Max[a] = d + floor(MAG[a] / 3), Agi_Min[a] = maxOf(e - DEX[a], 50), Agi_Max[a] = maxOf(g - DEX[a], 60), RANGE[a] = h + 2 * STR[a], checkEff(4 + a, 23) && (RANGE[a] += getEff(4 + a, 8)), LP_Max[a] = 50 + 8 * LP_SP[a] + 2 * STR[a] + 2 * DEX[a] + 2 * MAG[a]) : 5 == Ranger_Class[a] ? (AT_Min[a] = b, AT_Max[a] = d, Agi_Min[a] = e, Agi_Max[a] = g, RANGE[a] = h + 2 * MAG[a], checkEff(4 + a, 23) && (RANGE[a] += getEff(4 + a, 8)), LP_Max[a] = 50 + 8 * LP_SP[a] + 2 * STR[a] + 2 * DEX[a] + 2 * MAG[a]) : 6 == Ranger_Class[a] ? (AT_Min[a] = b + floor(b * STR[a] / 50), AT_Max[a] = d + floor(d * STR[a] / 50), Agi_Min[a] = maxOf(floor(50 * e / (DEX[a] + 50)), 5), Agi_Max[a] = maxOf(floor(50 * g / (DEX[a] + 50)), 10), RANGE[a] = h, checkEff(4 + a, 23) && (RANGE[a] += getEff(4 + a, 8)), LP_Max[a] = 50 + 8 * LP_SP[a] + 2 * STR[a] + 2 * DEX[a] + 2 * MAG[a]) :
-            7 == Ranger_Class[a] ? (AT_Min[a] = b + floor(STR[a] / 2), AT_Max[a] = d + floor(STR[a] / 2), Agi_Min[a] = e, Agi_Max[a] = g, RANGE[a] = h, LP_Max[a] = 50 + 10 * LP_SP[a] + 3 * STR[a] + 3 * DEX[a] + 2 * MAG[a]) : 8 == Ranger_Class[a] && (AT_Min[a] = b + floor(STR[a] / 4), AT_Max[a] = d + floor(STR[a] / 3), Agi_Min[a] = e, Agi_Max[a] = g, RANGE[a] = h, checkEff(4 + a, 23) && (RANGE[a] += getEff(4 + a, 8)), LP_Max[a] = 50 + 10 * LP_SP[a] + 4 * STR[a] + 2 * DEX[a] + 2 * MAG[a]);
+        1 == Ranger_Class[a] ? (AT_Min[a] = b + floor(STR[a] / 2), AT_Max[a] = d + floor(STR[a] / 2), Agi_Min[a] = minOf(e, maxOf(e - DEX[a], 5)), Agi_Max[a] = minOf(g, maxOf(g - DEX[a], 10)), RANGE[a] = h, LP_Max[a] = 50 + 10 * LP_SP[a] + 4 * STR[a] + 3 * DEX[a] + 2 * MAG[a]) : 2 == Ranger_Class[a] ? (AT_Max[a] = d + STR[a], AT_Min[a] = minOf(b + DEX[a], AT_Max[a]), Agi_Min[a] = e, Agi_Max[a] = g, RANGE[a] = h, checkEff(4 + a, 22) && (RANGE[a] += getEff(4 + a, 8)), checkEff(4 + a, 45) && (RANGE[a] += getEff(4 + a, 9)), LP_Max[a] = 50 + 10 * LP_SP[a] + 4 * STR[a] + 4 * DEX[a] + 2 * MAG[a]) : 3 == Ranger_Class[a] ? (AT_Min[a] = b + floor(DEX[a] / 4), AT_Max[a] = d + floor(DEX[a] / 3), Agi_Min[a] = e, Agi_Max[a] = g, RANGE[a] = h + 2 * STR[a], checkEff(4 + a, 23) && (RANGE[a] += getEff(4 + a, 8)), LP_Max[a] = 50 + 8 * LP_SP[a] + 2 * STR[a] + 3 * DEX[a] + 2 * MAG[a]) : 4 == Ranger_Class[a] ? (AT_Min[a] = b + floor(MAG[a] / 4), AT_Max[a] = d + floor(MAG[a] / 3), Agi_Min[a] = maxOf(e - DEX[a], 50), Agi_Max[a] = maxOf(g - DEX[a], 60), RANGE[a] = h + 2 * STR[a], checkEff(4 + a, 23) && (RANGE[a] += getEff(4 + a, 8)), LP_Max[a] = 50 + 8 * LP_SP[a] + 2 * STR[a] + 2 * DEX[a] + 2 * MAG[a]) : 5 == Ranger_Class[a] ? (AT_Min[a] = b, AT_Max[a] = d, Agi_Min[a] = e, Agi_Max[a] = g, RANGE[a] = h + 2 * MAG[a], checkEff(4 + a, 23) && (RANGE[a] += getEff(4 + a, 8)), LP_Max[a] = 50 + 8 * LP_SP[a] + 2 * STR[a] + 2 * DEX[a] + 2 * MAG[a]) : 6 == Ranger_Class[a] ? (AT_Min[a] = b + floor(b * STR[a] / 50), AT_Max[a] = d + floor(d * STR[a] / 50), Agi_Min[a] = maxOf(floor(50 * e / (DEX[a] + 50)), 5), Agi_Max[a] = maxOf(floor(50 * g / (DEX[a] + 50)), 10), RANGE[a] = h, checkEff(4 + a, 23) && (RANGE[a] += getEff(4 + a, 8)), LP_Max[a] = 50 + 8 * LP_SP[a] + 2 * STR[a] + 2 * DEX[a] + 2 * MAG[a]) : 7 == Ranger_Class[a] ? (AT_Min[a] = b + floor(STR[a] / 2), AT_Max[a] = d + floor(STR[a] / 2), Agi_Min[a] = e, Agi_Max[a] = g, RANGE[a] = h, LP_Max[a] = 50 + 10 * LP_SP[a] + 3 * STR[a] + 3 * DEX[a] + 2 * MAG[a]) : 8 == Ranger_Class[a] && (AT_Min[a] = b + floor(STR[a] / 4), AT_Max[a] = d + floor(STR[a] / 3), Agi_Min[a] = e, Agi_Max[a] = g, RANGE[a] = h, checkEff(4 + a, 23) && (RANGE[a] += getEff(4 + a, 8)), LP_Max[a] = 50 + 10 * LP_SP[a] + 4 * STR[a] + 2 * DEX[a] + 2 * MAG[a]);
         checkEff(4 + a, 1) && (LP_Max[a] += getEff(4 + a, 8));
         checkEff(4 + a, 32) && (LP_Max[a] += floor(getEff(4 + a, 8) * LP_Max[a] / 100));
         checkEff(4 + a, 47) && (LP_Max[a] += getEff(4 + a, 9));
-        1 == getVal(Item_Inv[4 + a], 5) || 2 == getVal(Item_Inv[4 + a], 5) || 3 == getVal(Item_Inv[4 + a], 5) || 7 == getVal(Item_Inv[4 + a], 5) || 8 == getVal(Item_Inv[4 + a], 5) ? (checkEff(4 + a, 6) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 7) && (AT_Min[a] +=
-            floor(getEff(4 + a, 8) * AT_Min[a] / 100), AT_Max[a] += floor(getEff(4 + a, 8) * AT_Max[a] / 100)), checkEff(4 + a, 45) && (AT_Min[a] += floor(getEff(4 + a, 8) * AT_Min[a] / 100), AT_Max[a] += floor(getEff(4 + a, 8) * AT_Max[a] / 100))) : 4 == getVal(Item_Inv[4 + a], 5) || 5 == getVal(Item_Inv[4 + a], 5) ? (checkEff(4 + a, 13) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 15) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 17) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 18) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9))) : 6 == getVal(Item_Inv[4 + a], 5) && (checkEff(4 + a, 6) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 7) && (AT_Min[a] += floor(getEff(4 + a, 8) * AT_Min[a] / 100), AT_Max[a] += floor(getEff(4 + a, 8) * AT_Max[a] / 100)), 0 == getVal(Item_Inv[4 + a], 37) && (checkEff(4 + a, 13) && (AT_Min[a] +=
-            getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 15) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 17) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 18) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9))));
+        1 == getVal(Item_Inv[4 + a], 5) || 2 == getVal(Item_Inv[4 + a], 5) || 3 == getVal(Item_Inv[4 + a], 5) || 7 == getVal(Item_Inv[4 + a], 5) || 8 == getVal(Item_Inv[4 + a], 5) ? (checkEff(4 + a, 6) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 7) && (AT_Min[a] += floor(getEff(4 + a, 8) * AT_Min[a] / 100), AT_Max[a] += floor(getEff(4 + a, 8) * AT_Max[a] / 100)), checkEff(4 + a, 45) && (AT_Min[a] += floor(getEff(4 + a, 8) * AT_Min[a] / 100), AT_Max[a] += floor(getEff(4 + a, 8) * AT_Max[a] / 100))) : 4 == getVal(Item_Inv[4 + a], 5) || 5 == getVal(Item_Inv[4 + a], 5) ? (checkEff(4 + a, 13) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 15) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 17) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 18) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9))) : 6 == getVal(Item_Inv[4 + a], 5) && (checkEff(4 + a, 6) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 7) && (AT_Min[a] += floor(getEff(4 + a, 8) * AT_Min[a] / 100), AT_Max[a] += floor(getEff(4 + a, 8) * AT_Max[a] / 100)), 0 == getVal(Item_Inv[4 + a], 37) && (checkEff(4 + a, 13) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 15) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 17) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9)), checkEff(4 + a, 18) && (AT_Min[a] += getEff(4 + a, 8), AT_Max[a] += getEff(4 + a, 9))));
         checkEff(4 + a, 21) && (b = getEff(4 + a, 8), Agi_Min[a] -= floor(Agi_Min[a] * b / 100), Agi_Max[a] -= floor(Agi_Max[a] * b / 100));
         AT_Min[a] += floor(AT_Min[a] * STR_Aura[a] / 100);
         AT_Max[a] += floor(AT_Max[a] * STR_Aura[a] / 100);
@@ -1944,8 +1905,7 @@ function setRangersUI() {
     for (a = 0; a < c; a++) STR_Aura[a] = 0, DEX_Aura[a] = 0, MAG_Aura[a] = 0;
     for (a = 0; a < c; a++)
         if (5 == Ranger_Class[a] && 5 == getVal(Item_Inv[4 + a], 5) && 0 != LP_Current[a])
-            for (d = floor(floor(Players.a[a][9].x + Players.a[a][10].x) / 2), e = floor(floor(Players.a[a][9].y +
-                    Players.a[a][10].y) / 2), b = a >> 2 << 2; b < (a >> 2 << 2) + 4; b++) 0 != LP_Current[b] && (g = floor(floor(Players.a[b][9].y + Players.a[b][10].y) / 2), absVal(d - floor(floor(Players.a[b][9].x + Players.a[b][10].x) / 2)) < RANGE[a] && absVal(e - g) < RANGE[a] && (STR_Aura[b] += STR[a], DEX_Aura[b] += DEX[a], MAG_Aura[b] += MAG[a]));
+            for (d = floor(floor(Players.a[a][9].x + Players.a[a][10].x) / 2), e = floor(floor(Players.a[a][9].y + Players.a[a][10].y) / 2), b = a >> 2 << 2; b < (a >> 2 << 2) + 4; b++) 0 != LP_Current[b] && (g = floor(floor(Players.a[b][9].y + Players.a[b][10].y) / 2), absVal(d - floor(floor(Players.a[b][9].x + Players.a[b][10].x) / 2)) < RANGE[a] && absVal(e - g) < RANGE[a] && (STR_Aura[b] += STR[a], DEX_Aura[b] += DEX[a], MAG_Aura[b] += MAG[a]));
     for (a = 0; a < c; a++) 0 != LP_Current[a] && checkEff(4 + a, 28) && (STR_Aura[a] += getEff(4 + a, 8));
     antiCheatSet()
 }
@@ -1976,12 +1936,10 @@ function drawUI(a) {
         d = "STR " + STR[Displayed_Object];
         var q = "DEX " + DEX[Displayed_Object],
             m = "MAG " + MAG[Displayed_Object];
-        TXoutputB(Large_Text, e,
-            g + 0, Class_Name_List[getVal(Item_Inv[4 + Displayed_Object], 5)], 16777215, 0);
+        TXoutputB(Large_Text, e, g + 0, Class_Name_List[getVal(Item_Inv[4 + Displayed_Object], 5)], 16777215, 0);
         TXoutputB(Large_Text, e, g + 16, b, 16777215, 0);
         if (Players.f[Displayed_Object] != Class_Dead)
-            if (TXoutputB(Large_Text, e, g + 28, d, 16777215, 0), TXoutputB(Large_Text, e, g + 40, q, 16777215, 0), TXoutputB(Large_Text, e, g + 52, m, 16777215, 0), TXoutputB(Small_Text, e, g + 30, "              AT ", -1, 0), TXoutputB(Small_Text, e, g + 42, "              AGI ", -1, 0), TXoutputB(Small_Text, e, g + 54, "              RANGE ", -1, 0), TXoutputB(Small_Text, e, g + 30, "                 " + AT_Min[Displayed_Object] + "-" + AT_Max[Displayed_Object], 0, -1), TXoutputB(Small_Text, e, g + 42, "                  " + Agi_Min[Displayed_Object] + "-" + Agi_Max[Displayed_Object], 0, -1), TXoutputB(Small_Text, e, g + 54, "                    " + RANGE[Displayed_Object], 0, -1), 5 == Ranger_Class[Displayed_Object]) TXoutputB(Small_Text, e, g + 66, "AURA          AURA", -1, 0), TXoutputB(Small_Text, e, g + 66, "     (AT)" + STR[Displayed_Object] +
-                "%", 0, -1), TXoutputB(Small_Text, e, g + 66, "                   (DF)" + DEX[Displayed_Object] / 5, 0, -1);
+            if (TXoutputB(Large_Text, e, g + 28, d, 16777215, 0), TXoutputB(Large_Text, e, g + 40, q, 16777215, 0), TXoutputB(Large_Text, e, g + 52, m, 16777215, 0), TXoutputB(Small_Text, e, g + 30, "              AT ", -1, 0), TXoutputB(Small_Text, e, g + 42, "              AGI ", -1, 0), TXoutputB(Small_Text, e, g + 54, "              RANGE ", -1, 0), TXoutputB(Small_Text, e, g + 30, "                 " + AT_Min[Displayed_Object] + "-" + AT_Max[Displayed_Object], 0, -1), TXoutputB(Small_Text, e, g + 42, "                  " + Agi_Min[Displayed_Object] + "-" + Agi_Max[Displayed_Object], 0, -1), TXoutputB(Small_Text, e, g + 54, "                    " + RANGE[Displayed_Object], 0, -1), 5 == Ranger_Class[Displayed_Object]) TXoutputB(Small_Text, e, g + 66, "AURA          AURA", -1, 0), TXoutputB(Small_Text, e, g + 66, "     (AT)" + STR[Displayed_Object] + "%", 0, -1), TXoutputB(Small_Text, e, g + 66, "                   (DF)" + DEX[Displayed_Object] / 5, 0, -1);
             else if (7 == Ranger_Class[Displayed_Object]) TXoutputB(Small_Text, e, g + 66, "              BULLET", -1, 0), TXoutputB(Small_Text, e, g + 66, "                     +" + DEX[Displayed_Object] / 5, 0, -1);
         else if (8 == Ranger_Class[Displayed_Object]) {
             var l;
@@ -1991,14 +1949,11 @@ function drawUI(a) {
         }
         TXoutputB(Large_Text, e, g + 76, "LV  " + LV[0], 16777215, 0);
         TXoutputB(Large_Text, e, g + 76, "        SP " + SP[Displayed_Object], 16777215, 0);
-        TXoutputB(Large_Text,
-            e, g + 88, "EXP " + Team_EXP + "(" + floor(100 * (Team_EXP - h) / (c - h)) + "%)", 16777215, 0);
+        TXoutputB(Large_Text, e, g + 88, "EXP " + Team_EXP + "(" + floor(100 * (Team_EXP - h) / (c - h)) + "%)", 16777215, 0);
         TXoutputB(Large_Text, e, g + 100, "$$$ " + Team_Gold, 16777215, 0);
         TXoutputB(Small_Text, e + 105, g + 102, "FP " + FP[0], -1, 0);
-        Players.f[Displayed_Object] == Class_Dead ? (h = maxOf(floor(Team_Gold / 10), 10 * LV[0]), b = "Revival $ " + h, TXoutputB(Large_Text, e, g + 40, b, 8421504, 0), isMouseHovered(e, g + 40, 8 * b.length, 12) && Mouse_Up && (h <= Team_Gold && Clicked && 0 != LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] && (antiCheatCheck(), LP_Current[Displayed_Object] += floor(LP_Max[Displayed_Object] / 4), Team_Gold -= h, Players.set(Displayed_Object, floor(Players.a[Displayed_Object][0].x / 8), floor(Players.a[Displayed_Object][0].y / 8)), antiCheatSet()), TXoutputB(Large_Text, e, g + 40, b, 16711680, 0))) : 0 < SP[Displayed_Object] && (h = Clicked, antiCheatCheck(), isMouseHovered(e, g + 16, 8 * b.length + 16, 12) && Mouse_Up ? (h && (LP_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 16, b, 16711680, 0)) : isMouseHovered(e, g + 28, 8 * d.length + 16, 12) &&
-            Mouse_Up ? (h && (STR_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 28, d, 16711680, 0)) : isMouseHovered(e, g + 40, 8 * q.length + 16, 12) && Mouse_Up ? (h && (DEX_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 40, q, 16711680, 0)) : isMouseHovered(e, g + 52, 8 * m.length + 16, 12) && Mouse_Up && (h && (MAG_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 52, m, 16711680, 0)), antiCheatSet(), TXoutputB(Large_Text, e + 8 * b.length, g + 16, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * d.length, g + 28, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * q.length, g + 40, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * m.length, g + 52, " +", 16711680, 0))
-    } else if (m = Item_Inv[Displayed_Object], 8 <= Displayed_Object && 11 >= Displayed_Object && (m = Comp1_Inv[4 + Displayed_Object - 8]), 12 <= Displayed_Object && 15 >= Displayed_Object && (m = Comp2_Inv[4 + Displayed_Object - 12]), itemText(e, g + 0, Item_Catalogue[m][0] + " " + (Item_Catalogue[m][1] ? Item_Catalogue[m][1] : ""), 16777215, 0, -1),
-        0 != m && 59 != m)
+        Players.f[Displayed_Object] == Class_Dead ? (h = maxOf(floor(Team_Gold / 10), 10 * LV[0]), b = "Revival $ " + h, TXoutputB(Large_Text, e, g + 40, b, 8421504, 0), isMouseHovered(e, g + 40, 8 * b.length, 12) && Mouse_Up && (h <= Team_Gold && Clicked && 0 != LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] && (antiCheatCheck(), LP_Current[Displayed_Object] += floor(LP_Max[Displayed_Object] / 4), Team_Gold -= h, Players.set(Displayed_Object, floor(Players.a[Displayed_Object][0].x / 8), floor(Players.a[Displayed_Object][0].y / 8)), antiCheatSet()), TXoutputB(Large_Text, e, g + 40, b, 16711680, 0))) : 0 < SP[Displayed_Object] && (h = Clicked, antiCheatCheck(), isMouseHovered(e, g + 16, 8 * b.length + 16, 12) && Mouse_Up ? (h && (LP_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 16, b, 16711680, 0)) : isMouseHovered(e, g + 28, 8 * d.length + 16, 12) && Mouse_Up ? (h && (STR_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 28, d, 16711680, 0)) : isMouseHovered(e, g + 40, 8 * q.length + 16, 12) && Mouse_Up ? (h && (DEX_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 40, q, 16711680, 0)) : isMouseHovered(e, g + 52, 8 * m.length + 16, 12) && Mouse_Up && (h && (MAG_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 52, m, 16711680, 0)), antiCheatSet(), TXoutputB(Large_Text, e + 8 * b.length, g + 16, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * d.length, g + 28, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * q.length, g + 40, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * m.length, g + 52, " +", 16711680, 0))
+    } else if (m = Item_Inv[Displayed_Object], 8 <= Displayed_Object && 11 >= Displayed_Object && (m = Comp1_Inv[4 + Displayed_Object - 8]), 12 <= Displayed_Object && 15 >= Displayed_Object && (m = Comp2_Inv[4 + Displayed_Object - 12]), itemText(e, g + 0, Item_Catalogue[m][0] + " " + (Item_Catalogue[m][1] ? Item_Catalogue[m][1] : ""), 16777215, 0, -1), 0 != m && 59 != m)
         if (b = getVal(m, 5), 9 == b) TXoutputB(Large_Text, e, g + 16, "Compo Item", -1, 0), itemText(e, g + 32, Item_Catalogue[m][10], 16777215, 0, -1), itemText(e, g + 44, Item_Catalogue[m][11], 16777215, 0, -1);
         else {
             TXoutputB(Large_Text, e, g + 16, "AT " + Item_Catalogue[m][10] + "-" + Item_Catalogue[m][11], 16777215, 0);
@@ -2009,8 +1964,7 @@ function drawUI(a) {
             h = maxOf(getVal(m, 36), 0);
             q = getVal(m, 39);
             m = getVal(m, 40);
-            if (1 == c || 2 == c || 3 == c || 4 == c || 5 == c) checkEff(Displayed_Object, 13) && (q += getEff(Displayed_Object, 8), m += getEff(Displayed_Object, 9)), checkEff(Displayed_Object, 15) && (q += getEff(Displayed_Object, 8), m += getEff(Displayed_Object, 9)), checkEff(Displayed_Object, 17) && (q += getEff(Displayed_Object, 8), m += getEff(Displayed_Object, 9)), checkEff(Displayed_Object, 18) && (q += getEff(Displayed_Object, 8), m += getEff(Displayed_Object, 9)), checkEff(Displayed_Object, 16) && (d +=
-                getEff(Displayed_Object, 8)), checkEff(Displayed_Object, 19) && (d += getEff(Displayed_Object, 8)), checkEff(Displayed_Object, 20) && (d += getEff(Displayed_Object, 8));
+            if (1 == c || 2 == c || 3 == c || 4 == c || 5 == c) checkEff(Displayed_Object, 13) && (q += getEff(Displayed_Object, 8), m += getEff(Displayed_Object, 9)), checkEff(Displayed_Object, 15) && (q += getEff(Displayed_Object, 8), m += getEff(Displayed_Object, 9)), checkEff(Displayed_Object, 17) && (q += getEff(Displayed_Object, 8), m += getEff(Displayed_Object, 9)), checkEff(Displayed_Object, 18) && (q += getEff(Displayed_Object, 8), m += getEff(Displayed_Object, 9)), checkEff(Displayed_Object, 16) && (d += getEff(Displayed_Object, 8)), checkEff(Displayed_Object, 19) && (d += getEff(Displayed_Object, 8)), checkEff(Displayed_Object, 20) && (d += getEff(Displayed_Object, 8));
             TXoutputB(Large_Text, e, g + 56, "TYPE " + "physical fire ice thunder poison freeze".split(" ")[c], 16777215, 0);
             TXoutputB(Large_Text, e, g + 68, "AT " + q + "-" + m, 16777215, 0);
             6 == b ? TXoutputB(Large_Text, e, g + 80, "$$ " + h, 16777215, 0) : TXoutputB(Large_Text, e, g + 80, "MP " + h, 16777215, 0);
@@ -2019,8 +1973,7 @@ function drawUI(a) {
             filledRect(e + 75, g + 96, 12, 12, 0);
             Display_Mode2 = 2;
             dispItem(Drop_Img, e + 0, g + 96, 12, 12, 12 * getVal(Comp1_Inv[Displayed_Object], 3), 0, 12, 12, getVal(Comp1_Inv[Displayed_Object], 6));
-            dispItem(Drop_Img,
-                e + 75, g + 96, 12, 12, 12 * getVal(Comp2_Inv[Displayed_Object], 3), 0, 12, 12, getVal(Comp2_Inv[Displayed_Object], 6));
+            dispItem(Drop_Img, e + 75, g + 96, 12, 12, 12 * getVal(Comp2_Inv[Displayed_Object], 3), 0, 12, 12, getVal(Comp2_Inv[Displayed_Object], 6));
             Display_Mode2 = 0;
             TXoutputB(Small_Text, e + 16, g + 99, Item_Catalogue[Comp1_Inv[Displayed_Object]][0].substring(0, minOf(8, Item_Catalogue[Comp1_Inv[Displayed_Object]][0].length)) + " " + Item_Catalogue[Comp1_Inv[Displayed_Object]][1], -1, 0);
             TXoutputB(Small_Text, e + 91, g + 99, Item_Catalogue[Comp2_Inv[Displayed_Object]][0].substring(0, minOf(8, Item_Catalogue[Comp2_Inv[Displayed_Object]][0].length)) + " " + Item_Catalogue[Comp2_Inv[Displayed_Object]][1], -1, 0)
@@ -2032,16 +1985,13 @@ function drawUI(a) {
     largeMessage(Small_Text, e - 15, g + 36, "WEA  ", 0, 0, 0, 0, 0, 0, 0, 128, 5, 7);
     largeMessage(Small_Text, e - 15, g + 44, "  PON", 0, 0, 0, 0, 0, 0, 0, 128, 5, 7);
     largeMessage(Small_Text, e - 15, g + 68, "COMPO", 0, 0, 0, 0, 0, 0, 0, 128, 5, 7);
-    largeMessage(Small_Text, e - 15, g + 96, "COMPO", 0,
-        0, 0, 0, 0, 0, 0, 128, 5, 7);
-    for (b = 0; 4 > b; b++) filledRect(e + 32 * b, g - 12, 24, 4, 0), filledRect(e + 32 * b, g - 12, floor(24 * LP_Current[b] / LP_Max[b]), 4, 10027008), h = maxOf(getVal(Item_Inv[4 + b], 36), 1), c = getVal(Item_Inv[4 + b], 5), 4 != c && 5 != c && 6 != c && filledRect(e + 32 * b, g - 6, floor(23 * MP_Bar[b] / h) + 1, 2, 128), filledRect(e + 32 * b, g + 0, 24, 24, 0), filledRect(e + 32 * b, g + 28, 24, 24, 0), restrictSlots(b, 0) && filledRect(e + 32 * b, g + 56, 24, 24, 0), restrictSlots(b, 1) && filledRect(e + 32 * b, g + 84, 24, 24, 0), dispItem(Player_Img, e + 32 * b, g, 24, 24, 24 * getVal(Item_Inv[4 + b], 5), 0, 24, 24, 16777215), colorPortraitWeap(e + 32 * b, g, 24 * getVal(Item_Inv[4 + b], 5), getVal(Item_Inv[4 + b], 6)), Display_Mode2 = 2, dispItem(Item_Img, e + 32 * b, g + 28, 24, 24, 24 * getVal(Item_Inv[4 + b], 4), 0, 24, 24, getVal(Item_Inv[4 + b], 6)), restrictSlots(b, 0) && dispItem(Item_Img, e + 32 * b, g + 56, 24, 24, 24 * getVal(Comp1_Inv[4 +
-        b], 4), 0, 24, 24, getVal(Comp1_Inv[4 + b], 6)), restrictSlots(b, 1) && dispItem(Item_Img, e + 32 * b, g + 84, 24, 24, 24 * getVal(Comp2_Inv[4 + b], 4), 0, 24, 24, getVal(Comp2_Inv[4 + b], 6)), Display_Mode2 = 0, Item_Catalogue[Item_Inv[4 + b]][1] && TXoutputB(Small_Text, e + 32 * b + 19, g + 45, "" + Item_Catalogue[Item_Inv[4 + b]][1], 16777215, -1), Item_Catalogue[Comp1_Inv[4 + b]][1] && restrictSlots(b, 0) && TXoutputB(Small_Text, e + 32 * b + 19, g + 73, "" + Item_Catalogue[Comp1_Inv[4 + b]][1], 16777215, -1), Item_Catalogue[Comp2_Inv[4 + b]][1] && restrictSlots(b, 1) && TXoutputB(Small_Text, e + 32 * b + 19, g + 101, "" + Item_Catalogue[Comp2_Inv[4 + b]][1], 16777215, -1);
+    largeMessage(Small_Text, e - 15, g + 96, "COMPO", 0, 0, 0, 0, 0, 0, 0, 128, 5, 7);
+    for (b = 0; 4 > b; b++) filledRect(e + 32 * b, g - 12, 24, 4, 0), filledRect(e + 32 * b, g - 12, floor(24 * LP_Current[b] / LP_Max[b]), 4, 10027008), h = maxOf(getVal(Item_Inv[4 + b], 36), 1), c = getVal(Item_Inv[4 + b], 5), 4 != c && 5 != c && 6 != c && filledRect(e + 32 * b, g - 6, floor(23 * MP_Bar[b] / h) + 1, 2, 128), filledRect(e + 32 * b, g + 0, 24, 24, 0), filledRect(e + 32 * b, g + 28, 24, 24, 0), restrictSlots(b, 0) && filledRect(e + 32 * b, g + 56, 24, 24, 0), restrictSlots(b, 1) && filledRect(e + 32 * b, g + 84, 24, 24, 0), dispItem(Player_Img, e + 32 * b, g, 24, 24, 24 * getVal(Item_Inv[4 + b], 5), 0, 24, 24, 16777215), colorPortraitWeap(e + 32 * b, g, 24 * getVal(Item_Inv[4 + b], 5), getVal(Item_Inv[4 + b], 6)), Display_Mode2 = 2, dispItem(Item_Img, e + 32 * b, g + 28, 24, 24, 24 * getVal(Item_Inv[4 + b], 4), 0, 24, 24, getVal(Item_Inv[4 + b], 6)), restrictSlots(b, 0) && dispItem(Item_Img, e + 32 * b, g + 56, 24, 24, 24 * getVal(Comp1_Inv[4 + b], 4), 0, 24, 24, getVal(Comp1_Inv[4 + b], 6)), restrictSlots(b, 1) && dispItem(Item_Img, e + 32 * b, g + 84, 24, 24, 24 * getVal(Comp2_Inv[4 + b], 4), 0, 24, 24, getVal(Comp2_Inv[4 + b], 6)), Display_Mode2 = 0, Item_Catalogue[Item_Inv[4 + b]][1] && TXoutputB(Small_Text, e + 32 * b + 19, g + 45, "" + Item_Catalogue[Item_Inv[4 + b]][1], 16777215, -1), Item_Catalogue[Comp1_Inv[4 + b]][1] && restrictSlots(b, 0) && TXoutputB(Small_Text, e + 32 * b + 19, g + 73, "" + Item_Catalogue[Comp1_Inv[4 + b]][1], 16777215, -1), Item_Catalogue[Comp2_Inv[4 + b]][1] && restrictSlots(b, 1) && TXoutputB(Small_Text, e + 32 * b + 19, g + 101, "" + Item_Catalogue[Comp2_Inv[4 + b]][1], 16777215, -1);
     outlineRect(e + 32 * Selected_Player - 1, g - 1, 26, 26, 16711680);
     e = 344;
     g = 271;
     TXoutputB(Large_Text, e, g + -12, "ITEM", 16777215, 0);
-    for (b = 0; 24 > b; b++) filledRect(e + b % 6 * 28, g + 28 * floor(b / 6), 24, 24, 0), Display_Mode2 = 2, dispItem(Item_Img, e + b % 6 * 28, g + 28 * floor(b / 6), 24, 24, 24 * getVal(Item_Inv[16 + b], 4), 0, 24, 24,
-        getVal(Item_Inv[16 + b], 6)), Display_Mode2 = 0, Item_Catalogue[Item_Inv[16 + b]][1] && TXoutputB(Small_Text, e + b % 6 * 28 + 19, g + 28 * floor(b / 6) + 17, "" + Item_Catalogue[Item_Inv[16 + b]][1], 16777215, -1);
+    for (b = 0; 24 > b; b++) filledRect(e + b % 6 * 28, g + 28 * floor(b / 6), 24, 24, 0), Display_Mode2 = 2, dispItem(Item_Img, e + b % 6 * 28, g + 28 * floor(b / 6), 24, 24, 24 * getVal(Item_Inv[16 + b], 4), 0, 24, 24, getVal(Item_Inv[16 + b], 6)), Display_Mode2 = 0, Item_Catalogue[Item_Inv[16 + b]][1] && TXoutputB(Small_Text, e + b % 6 * 28 + 19, g + 28 * floor(b / 6) + 17, "" + Item_Catalogue[Item_Inv[16 + b]][1], 16777215, -1);
     b = -1;
     e = 192;
     g = 271;
@@ -2054,27 +2004,85 @@ function drawUI(a) {
     else if (4 <= b && 8 > b && Clicked) {
         if (0 == Item_Inv[40] || getVal(Item_Inv[40], 5) == Ranger_Class[b - 4]) a = Item_Inv[b], Item_Inv[b] = Item_Inv[40], Item_Inv[40] = a, a = Comp1_Inv[b], Comp1_Inv[b] = Comp1_Inv[40], Comp1_Inv[40] = a, a = Comp2_Inv[b], Comp2_Inv[b] = Comp2_Inv[40],
             Comp2_Inv[40] = a, MP_Bar[b - 4] = 0, Players.I[b - 4] = 0
-    } else 8 <= b && 11 >= b && Clicked ? 9 == getVal(Item_Inv[40], 5) && restrictSlots(b - 8, 0) && (Comp1_Inv[4 + b - 8] = Item_Inv[40], Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0, MP_Bar[b - 8] = 0) : 12 <= b && 15 >= b && Clicked ? 9 == getVal(Item_Inv[40], 5) && restrictSlots(b - 12, 1) && (Comp2_Inv[4 + b - 12] = Item_Inv[40], Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0, MP_Bar[b - 12] = 0) : 16 <= b && 40 > b && Clicked ? 1 == Click_To_Sell_Mode && 0 != Item_Inv[b] ? (h = floor(getVal(Item_Inv[b], 2) / 8), Clicked && (Drops.add(40, 200, 1, h, 0), Item_Inv[b] = 0, Comp1_Inv[b] = 0, Comp2_Inv[b] = 0)) : (a = Item_Inv[b], Item_Inv[b] = Item_Inv[40], Item_Inv[40] = a, a = Comp1_Inv[b], Comp1_Inv[b] = Comp1_Inv[40], Comp1_Inv[40] = a, a = Comp2_Inv[b], Comp2_Inv[b] = Comp2_Inv[40], Comp2_Inv[40] = a) : -1 == b && 0 != Item_Inv[40] && Clicked && 256 > Mouse_Ypos && 0 == a && (Drops.add(Players.a[Selected_Player][0].x, Players.a[Selected_Player][0].y, Item_Inv[40], Comp1_Inv[40],
-        Comp2_Inv[40]), Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0);
+    } else 8 <= b && 11 >= b && Clicked ? 9 == getVal(Item_Inv[40], 5) && restrictSlots(b - 8, 0) && (Comp1_Inv[4 + b - 8] = Item_Inv[40], Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0, MP_Bar[b - 8] = 0) : 12 <= b && 15 >= b && Clicked ? 9 == getVal(Item_Inv[40], 5) && restrictSlots(b - 12, 1) && (Comp2_Inv[4 + b - 12] = Item_Inv[40], Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0, MP_Bar[b - 12] = 0) : 16 <= b && 40 > b && Clicked ? 1 == Click_To_Sell_Mode && 0 != Item_Inv[b] ? (h = floor(getVal(Item_Inv[b], 2) / 8), Clicked && (Drops.add(40, 200, 1, h, 0), Item_Inv[b] = 0, Comp1_Inv[b] = 0, Comp2_Inv[b] = 0)) : (a = Item_Inv[b], Item_Inv[b] = Item_Inv[40], Item_Inv[40] = a, a = Comp1_Inv[b], Comp1_Inv[b] = Comp1_Inv[40], Comp1_Inv[40] = a, a = Comp2_Inv[b], Comp2_Inv[b] = Comp2_Inv[40], Comp2_Inv[40] = a) : -1 == b && 0 != Item_Inv[40] && Clicked && 256 > Mouse_Ypos && 0 == a && (Drops.add(Players.a[Selected_Player][0].x, Players.a[Selected_Player][0].y, Item_Inv[40], Comp1_Inv[40], Comp2_Inv[40]), Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0);
     antiCheatSet();
     Displayed_Object = -1 == b ? Selected_Player : b;
     0 != Item_Inv[40] && (Display_Mode2 = 2, dispItemCentered(Item_Img, Mouse_Xpos, Mouse_Ypos, 24, 24, 24 * getVal(Item_Inv[40], 4), 0, 24, 24, getVal(Item_Inv[40], 6)), Display_Mode2 = 0);
     1 == Click_To_Sell_Mode && (c = clamp(Mouse_Xpos, 56, 456), d = clamp(Mouse_Ypos - 8, 10, 374), 16 <= b && 40 > b ? (h = floor(getVal(Item_Inv[b], 2) / 8), centeredText(Large_Text, c, d, "" + h + "$ SELL", 16777215, 0)) : centeredText(Large_Text, c, d, "CLICK TO SELL", 16777215, 0))
 }
 
-function restrictSlots(a, b) { if (0 == Item_Inv[40] || 9 != getVal(Item_Inv[40], 5)) return !0; if (0 == Item_Inv[4 + a] || 0 == b && 59 == Comp1_Inv[4 + a] || 1 == b && 59 == Comp2_Inv[4 + a]) return !1; var c = getVal(Item_Inv[40], 7); return 0 == b && c == getVal(Comp2_Inv[4 + a], 7) || 1 == b && c == getVal(Comp1_Inv[4 + a], 7) ? !1 : compRestrCheck(c, getVal(Item_Inv[4 + a], 5), getVal(Item_Inv[4 + a], 34), getVal(Item_Inv[4 + a], 12)) }
+function restrictSlots(a, b) {
+    if (0 == Item_Inv[40] || 9 != getVal(Item_Inv[40], 5)) return !0;
+    if (0 == Item_Inv[4 + a] || 0 == b && 59 == Comp1_Inv[4 + a] || 1 == b && 59 == Comp2_Inv[4 + a]) return !1;
+    var c = getVal(Item_Inv[40], 7);
+    return 0 == b && c == getVal(Comp2_Inv[4 + a], 7) || 1 == b && c == getVal(Comp1_Inv[4 + a], 7) ? !1 : compRestrCheck(c, getVal(Item_Inv[4 + a], 5), getVal(Item_Inv[4 + a], 34), getVal(Item_Inv[4 + a], 12))
+}
 
 function compRestrCheck(a, b, c, d) {
     if (1 == a || 2 == a || 3 == a || 4 == a || 5 == a) return !0;
-    if (6 == a) { if (1 == b || 2 == b || 3 == b || 6 == b || 7 == b || 8 == b) return !0 } else if (7 == a) { if (1 == b || 2 == b || 3 == b || 6 == b || 7 == b || 8 == b) return !0 } else {
+    if (6 == a) {
+        if (1 == b || 2 == b || 3 == b || 6 == b || 7 == b || 8 == b) return !0
+    } else if (7 == a) {
+        if (1 == b || 2 == b || 3 == b || 6 == b || 7 == b || 8 == b) return !0
+    } else {
         if (8 == a || 9 == a || 10 == a) return !0;
-        if (11 == a) { if (1 == b || 2 == b || 7 == b) return !0 } else if (12 == a) { if (1 == b || 2 == b || 7 == b) return !0 } else if (37 == a) { if (1 == b || 2 == b || 7 == b) return !0 } else if (13 == a) { if (1 == c) return !0 } else if (14 == a) { if (1 == c) return !0 } else if (15 == a) { if (2 == c) return !0 } else if (16 == a) { if (2 == c) return !0 } else if (17 == a) { if (3 == c) return !0 } else if (18 ==
-            a) { if (4 == c) return !0 } else if (19 == a) { if (4 == c) return !0 } else if (20 == a) { if (5 == c) return !0 } else {
+        if (11 == a) {
+            if (1 == b || 2 == b || 7 == b) return !0
+        } else if (12 == a) {
+            if (1 == b || 2 == b || 7 == b) return !0
+        } else if (37 == a) {
+            if (1 == b || 2 == b || 7 == b) return !0
+        } else if (13 == a) {
+            if (1 == c) return !0
+        } else if (14 == a) {
+            if (1 == c) return !0
+        } else if (15 == a) {
+            if (2 == c) return !0
+        } else if (16 == a) {
+            if (2 == c) return !0
+        } else if (17 == a) {
+            if (3 == c) return !0
+        } else if (18 == a) {
+            if (4 == c) return !0
+        } else if (19 == a) {
+            if (4 == c) return !0
+        } else if (20 == a) {
+            if (5 == c) return !0
+        } else {
             if (21 == a) return !0;
-            if (22 == a) { if (2 == b) return !0 } else if (23 == a) { if (3 == b || 4 == b || 5 == b || 6 == b || 8 == b) return !0 } else if (24 == a) { if (3 == b || 4 == b || 6 == b) return !0 } else if (25 == a) { if (3 == b || 4 == b || 6 == b) return !0 } else if (26 == a) { if (2 <= d) return !0 } else if (27 == a) { if (1 == b || 3 == b || 6 == b || 8 == b) return !0 } else if (43 == a) { if (1 == b || 3 == b || 4 == b || 6 == b || 7 == b) return !0 } else if (29 == a) { if (1 == b || 2 == b || 3 == b || 6 == b || 7 == b || 8 == b) return !0 } else if (28 == a) {
-                if (1 == b ||
-                    2 == b || 7 == b) return !0
-            } else if (44 == a) { if (3 == b || 4 == b || 6 == b || 7 == b || 8 == b) return !0 } else { if (32 == a || 33 == a || 34 == a || 35 == a || 36 == a || 38 == a || 39 == a || 40 == a || 41 == a) return !0; if (42 == a) { if (1 == b || 7 == b) return !0 } else if (45 == a) { if (2 == b) return !0 } else { if (46 == a) return !0; if (47 == a) { if (8 == b) return !0 } else if (48 == a || 49 == a) return !0 } }
+            if (22 == a) {
+                if (2 == b) return !0
+            } else if (23 == a) {
+                if (3 == b || 4 == b || 5 == b || 6 == b || 8 == b) return !0
+            } else if (24 == a) {
+                if (3 == b || 4 == b || 6 == b) return !0
+            } else if (25 == a) {
+                if (3 == b || 4 == b || 6 == b) return !0
+            } else if (26 == a) {
+                if (2 <= d) return !0
+            } else if (27 == a) {
+                if (1 == b || 3 == b || 6 == b || 8 == b) return !0
+            } else if (43 == a) {
+                if (1 == b || 3 == b || 4 == b || 6 == b || 7 == b) return !0
+            } else if (29 == a) {
+                if (1 == b || 2 == b || 3 == b || 6 == b || 7 == b || 8 == b) return !0
+            } else if (28 == a) {
+                if (1 == b || 2 == b || 7 == b) return !0
+            } else if (44 == a) {
+                if (3 == b || 4 == b || 6 == b || 7 == b || 8 == b) return !0
+            } else {
+                if (32 == a || 33 == a || 34 == a || 35 == a || 36 == a || 38 == a || 39 == a || 40 == a || 41 == a) return !0;
+                if (42 == a) {
+                    if (1 == b || 7 == b) return !0
+                } else if (45 == a) {
+                    if (2 == b) return !0
+                } else {
+                    if (46 == a) return !0;
+                    if (47 == a) {
+                        if (8 == b) return !0
+                    } else if (48 == a || 49 == a) return !0
+                }
+            }
         }
     }
     return !1
@@ -2190,8 +2198,7 @@ function PLtakeDamage(a, b, c, d, e, g, h, q, m, l) {
             if (2 == b) checkEff(4 + l, 38) && random(100) < getEff(4 + l, 8) && (ia = 1), ia || (A.w[l] = 500, A.M[l] = c, checkEff(4 + l, 9) && (A.w[l] -= floor(A.w[l] * getEff(4 + l, 8) / 100)));
             else if (4 == b) {
                 checkEff(4 + l, 39) && random(100) < getEff(4 + l, 8) && (ia = 1);
-                ia ||
-                    (A.A[l] = c, A.F[l] = B, checkEff(4 + l, 9) && (A.A[l] -= floor(A.A[l] * getEff(4 + l, 8) / 100), A.F[l] -= floor(A.F[l] * getEff(4 + l, 8) / 100)));
+                ia || (A.A[l] = c, A.F[l] = B, checkEff(4 + l, 9) && (A.A[l] -= floor(A.A[l] * getEff(4 + l, 8) / 100), A.F[l] -= floor(A.F[l] * getEff(4 + l, 8) / 100)));
                 z = l;
                 continue
             } else 5 == b && (checkEff(4 + l, 40) && random(100) < getEff(4 + l, 8) && (ia = 1), ia || (A.v[l] = floor(c / 10), checkEff(4 + l, 9) && (A.v[l] -= floor(A.v[l] * getEff(4 + l, 8) / 100))));
@@ -2270,8 +2277,7 @@ function PLprojectileAttack(a, b, c, d, e) {
         Pb = getVal(h, 50),
         Qb = getVal(h, 51),
         sb = getVal(h, 52),
-        Rb =
-        getVal(h, 53),
+        Rb = getVal(h, 53),
         Sb = getVal(h, 54),
         Tb = getVal(h, 55),
         Ub = getVal(h, 56),
@@ -2284,12 +2290,7 @@ function PLprojectileAttack(a, b, c, d, e) {
         zb = Ca;
     if (8 > b) {
         var tb = getVal(Item_Inv[4 + b], 5);
-        1 == tb || 2 == tb || 7 == tb ? (Aa = getVal(Item_Inv[4 + b], 39), ka = getVal(Item_Inv[4 + b], 40), checkEff(4 + b, 13) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 14) && (T += getEff(4 + b, 8)), checkEff(4 + b, 15) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 16) && (Ca += getEff(4 + b, 8)), checkEff(4 + b, 17) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 18) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 19) && (Ca += getEff(4 + b, 8)), checkEff(4 + b, 20) && (Ca += getEff(4 + b, 8)), Aa += floor(Aa * STR_Aura[b] / 100), ka += floor(ka * STR_Aura[b] / 100), 7 == tb && (ab += floor(DEX[b] /
-                5))) : 3 == tb ? (402 != h && (Ca = Wa = 0), antiCheatCheck(), h = getVal(Item_Inv[4 + b], 36), MP_Bar[b] = minOf(MP_Bar[b] + MAG[b], h), MP_Bar[b] == h && 0 < h ? MP_Bar[b] = 0 : yb = 0, antiCheatSet(), checkEff(4 + b, 13) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 14) && (sb += getEff(4 + b, 8)), checkEff(4 + b, 15) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 16) && (zb += getEff(4 + b, 8)), checkEff(4 + b, 17) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 18) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 19) && (zb += getEff(4 + b, 8)), checkEff(4 + b, 20) && (zb += getEff(4 + b, 8)), ca += floor(ca * STR_Aura[b] / 100), Ba += floor(Ba * STR_Aura[b] / 100), checkEff(4 + b, 24) && random(100) < getEff(4 + b, 8) && (Va = 1), checkEff(4 + b, 25) && (pa += getEff(4 + b, 8)), checkEff(4 + b, 27) && random(100) < getEff(4 + b, 8) && (rb = 1),
-                checkEff(4 + b, 29) && random(100) < getEff(4 + b, 8) && (Aa += floor(getEff(4 + b, 9) * Aa / 100), ka += floor(getEff(4 + b, 9) * ka / 100))) : 4 == tb || 5 == tb ? (checkEff(4 + b, 13) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 14) && (T += getEff(4 + b, 8), sb += getEff(4 + b, 8)), checkEff(4 + b, 15) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 16) && (Ca += getEff(4 + b, 8), zb += getEff(4 + b, 8)), checkEff(4 + b, 17) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 18) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 19) && (Ca += getEff(4 + b, 8), zb += getEff(4 + b, 8)), checkEff(4 + b, 20) && (Ca += getEff(4 + b, 8), zb += getEff(4 + b, 8)), ca += floor(ca * STR_Aura[b] / 100), Ba += floor(Ba * STR_Aura[b] / 100), checkEff(4 + b, 24) && random(100) < getEff(4 + b, 8) && (Va = 1), checkEff(4 + b, 25) && (pa += getEff(4 + b, 8))) :
-            6 == tb ? (0 != yb && (Ca = Wa = 0), checkEff(4 + b, 13) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 14) && (sb += getEff(4 + b, 8)), checkEff(4 + b, 15) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 16) && (zb += getEff(4 + b, 8)), checkEff(4 + b, 17) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 18) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 19) && (zb += getEff(4 + b, 8)), checkEff(4 + b, 20) && (zb += getEff(4 + b, 8)), ca += floor(ca * STR_Aura[b] / 100), Ba += floor(Ba * STR_Aura[b] / 100), checkEff(4 + b, 24) && random(100) < getEff(4 + b, 8) && (Va = 1), checkEff(4 + b, 25) && (pa += getEff(4 + b, 8)), checkEff(4 + b, 27) && random(100) < getEff(4 + b, 8) && (rb = 1), checkEff(4 + b, 29) && random(100) < getEff(4 + b, 8) && (Aa += floor(getEff(4 + b, 9) * Aa / 100), ka += floor(getEff(4 + b, 9) * ka / 100))) : 8 == tb &&
-            (Aa = getVal(Item_Inv[4 + b], 39), ka = getVal(Item_Inv[4 + b], 40), checkEff(4 + b, 13) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 13) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 14) && (T += getEff(4 + b, 8), sb += getEff(4 + b, 8)), checkEff(4 + b, 15) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 15) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 16) && (Ca += getEff(4 + b, 8), zb += getEff(4 + b, 8)), checkEff(4 + b, 17) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 17) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 18) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 18) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 19) && (Ca += getEff(4 + b, 8), zb += getEff(4 + b, 8)), checkEff(4 + b, 20) && (Ca += getEff(4 + b, 8), zb += getEff(4 + b, 8)), Aa +=
-                floor(Aa * STR_Aura[b] / 100), ka += floor(ka * STR_Aura[b] / 100), ca += floor(ca * STR_Aura[b] / 100), Ba += floor(Ba * STR_Aura[b] / 100));
+        1 == tb || 2 == tb || 7 == tb ? (Aa = getVal(Item_Inv[4 + b], 39), ka = getVal(Item_Inv[4 + b], 40), checkEff(4 + b, 13) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 14) && (T += getEff(4 + b, 8)), checkEff(4 + b, 15) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 16) && (Ca += getEff(4 + b, 8)), checkEff(4 + b, 17) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 18) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 19) && (Ca += getEff(4 + b, 8)), checkEff(4 + b, 20) && (Ca += getEff(4 + b, 8)), Aa += floor(Aa * STR_Aura[b] / 100), ka += floor(ka * STR_Aura[b] / 100), 7 == tb && (ab += floor(DEX[b] / 5))) : 3 == tb ? (402 != h && (Ca = Wa = 0), antiCheatCheck(), h = getVal(Item_Inv[4 + b], 36), MP_Bar[b] = minOf(MP_Bar[b] + MAG[b], h), MP_Bar[b] == h && 0 < h ? MP_Bar[b] = 0 : yb = 0, antiCheatSet(), checkEff(4 + b, 13) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 14) && (sb += getEff(4 + b, 8)), checkEff(4 + b, 15) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 16) && (zb += getEff(4 + b, 8)), checkEff(4 + b, 17) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 18) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 19) && (zb += getEff(4 + b, 8)), checkEff(4 + b, 20) && (zb += getEff(4 + b, 8)), ca += floor(ca * STR_Aura[b] / 100), Ba += floor(Ba * STR_Aura[b] / 100), checkEff(4 + b, 24) && random(100) < getEff(4 + b, 8) && (Va = 1), checkEff(4 + b, 25) && (pa += getEff(4 + b, 8)), checkEff(4 + b, 27) && random(100) < getEff(4 + b, 8) && (rb = 1), checkEff(4 + b, 29) && random(100) < getEff(4 + b, 8) && (Aa += floor(getEff(4 + b, 9) * Aa / 100), ka += floor(getEff(4 + b, 9) * ka / 100))) : 4 == tb || 5 == tb ? (checkEff(4 + b, 13) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 14) && (T += getEff(4 + b, 8), sb += getEff(4 + b, 8)), checkEff(4 + b, 15) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 16) && (Ca += getEff(4 + b, 8), zb += getEff(4 + b, 8)), checkEff(4 + b, 17) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 18) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 19) && (Ca += getEff(4 + b, 8), zb += getEff(4 + b, 8)), checkEff(4 + b, 20) && (Ca += getEff(4 + b, 8), zb += getEff(4 + b, 8)), ca += floor(ca * STR_Aura[b] / 100), Ba += floor(Ba * STR_Aura[b] / 100), checkEff(4 + b, 24) && random(100) < getEff(4 + b, 8) && (Va = 1), checkEff(4 + b, 25) && (pa += getEff(4 + b, 8))) : 6 == tb ? (0 != yb && (Ca = Wa = 0), checkEff(4 + b, 13) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 14) && (sb += getEff(4 + b, 8)), checkEff(4 + b, 15) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 16) && (zb += getEff(4 + b, 8)), checkEff(4 + b, 17) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 18) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 19) && (zb += getEff(4 + b, 8)), checkEff(4 + b, 20) && (zb += getEff(4 + b, 8)), ca += floor(ca * STR_Aura[b] / 100), Ba += floor(Ba * STR_Aura[b] / 100), checkEff(4 + b, 24) && random(100) < getEff(4 + b, 8) && (Va = 1), checkEff(4 + b, 25) && (pa += getEff(4 + b, 8)), checkEff(4 + b, 27) && random(100) < getEff(4 + b, 8) && (rb = 1), checkEff(4 + b, 29) && random(100) < getEff(4 + b, 8) && (Aa += floor(getEff(4 + b, 9) * Aa / 100), ka += floor(getEff(4 + b, 9) * ka / 100))) : 8 == tb && (Aa = getVal(Item_Inv[4 + b], 39), ka = getVal(Item_Inv[4 + b], 40), checkEff(4 + b, 13) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 13) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 14) && (T += getEff(4 + b, 8), sb += getEff(4 + b, 8)), checkEff(4 + b, 15) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 15) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 16) && (Ca += getEff(4 + b, 8), zb += getEff(4 + b, 8)), checkEff(4 + b, 17) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 17) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 18) && (Aa += getEff(4 + b, 8), ka += getEff(4 + b, 9)), checkEff(4 + b, 18) && (ca += getEff(4 + b, 8), Ba += getEff(4 + b, 9)), checkEff(4 + b, 19) && (Ca += getEff(4 + b, 8), zb += getEff(4 + b, 8)), checkEff(4 + b, 20) && (Ca += getEff(4 + b, 8), zb += getEff(4 + b, 8)), Aa += floor(Aa * STR_Aura[b] / 100), ka += floor(ka * STR_Aura[b] / 100), ca += floor(ca * STR_Aura[b] / 100), Ba += floor(Ba * STR_Aura[b] / 100));
         checkEff(4 + b, 26) && (ab += getEff(4 + b, 8) + floor(ab * getEff(4 + b, 9) / 100));
         (3 == tb || 4 == tb || 6 == tb) && checkEff(4 + b, 43) && random(100) < getEff(4 + b, 8) && (Ha = getEff(4 + b, 9));
         checkEff(4 + b, 44) && random(100) < getEff(4 + b, 8) && (ua = 2)
@@ -2297,8 +2298,7 @@ function PLprojectileAttack(a, b, c, d, e) {
     tb = 0;
     1 != Game_Mode ? 6 == q ? (h = Enemies.a[e][0].x, e = Enemies.a[e][0].y) : (h = Enemies.a[e][20].x, e = Enemies.a[e][20].y) : (tb = 1 - (e >> 2), h = a.a[e][2].x, e = a.a[e][2].y);
     if (q)
-        if (1 == q) q = c + 10 * g.x, a = d + 10 * g.y, Projectiles.add(tb, q, a, 0, 0, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb,
-            Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb);
+        if (1 == q) q = c + 10 * g.x, a = d + 10 * g.y, Projectiles.add(tb, q, a, 0, 0, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb);
         else if (2 == q) {
         g = h - c;
         g /= absVal(g);
@@ -2318,8 +2318,7 @@ function PLprojectileAttack(a, b, c, d, e) {
             a = d + 10 * g.y;
             var ac = g.x * Pa * .1,
                 de = g.y * Pa * .1;
-            Projectiles.add(tb, q, a, ac, de, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha,
-                rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb);
+            Projectiles.add(tb, q, a, ac, de, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb);
             m += Hd
         }
     } else if (4 == q)
@@ -2338,23 +2337,19 @@ function PLprojectileAttack(a, b, c, d, e) {
             de = (g.y - .5 * Pa * Pa * Ua * .01) / Pa;
             Projectiles.add(tb, q, a, ac, de, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb)
         } else if (5 == q)
-            for (b = 0; b < ab; b++) 0 == m ? (q = c + randomRange(-40, 40), a = d + randomRange(-60, 0)) : (q = c + randomRange(-10 * (m - 1),
-                10 * (m - 1)), a = d + randomRange(-60, -50)), assignVector2D(g, h - q, e - a), normalize(g), scaleVector2D(g, Pa), Projectiles.add(tb, q, a, g.x, g.y, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb);
+            for (b = 0; b < ab; b++) 0 == m ? (q = c + randomRange(-40, 40), a = d + randomRange(-60, 0)) : (q = c + randomRange(-10 * (m - 1), 10 * (m - 1)), a = d + randomRange(-60, -50)), assignVector2D(g, h - q, e - a), normalize(g), scaleVector2D(g, Pa), Projectiles.add(tb, q, a, g.x, g.y, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb);
         else if (6 == q)
         for (b = 0; b < ab; b++) q = h + randomRange(-Pa, Pa), a = e + randomRange(-Pa, Pa), Projectiles.add(tb, q, a, 0, 0, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb);
     else if (7 == q || 10 == q)
-        for (g.x = c - a.a[b][5].x, g.y = d - a.a[b][5].y, 10 == q && 0 < g.y && (g.y = -g.y), q = a.a[b][5].x +
-            .5 * g.x, a = a.a[b][5].y + .5 * g.y, normalize(g), scaleVector2D(g, .1 * Pa), b = 0; b < ab; b++) Projectiles.add(tb, q, a, g.x, g.y, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb);
+        for (g.x = c - a.a[b][5].x, g.y = d - a.a[b][5].y, 10 == q && 0 < g.y && (g.y = -g.y), q = a.a[b][5].x + .5 * g.x, a = a.a[b][5].y + .5 * g.y, normalize(g), scaleVector2D(g, .1 * Pa), b = 0; b < ab; b++) Projectiles.add(tb, q, a, g.x, g.y, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb);
     else if (12 == q)
         for (g = c - a.a[b][0].x, g /= absVal(g), q = a.a[b][0].x, a = a.a[b][0].y, ac = g * Pa * .1, b = 0; b < ab; b++) Projectiles.add(tb, q, a, ac, 0, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb);
     else if (8 == q)
-        for (b = 0; b < ab; b++) q = 0 == m ? h + randomRange(-40, 40) :
-            h + randomRange(-10 * (m - 1), 10 * (m - 1)), a = e + randomRange(-30, -60), Projectiles.add(tb, q, a, 0, 0, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb);
+        for (b = 0; b < ab; b++) q = 0 == m ? h + randomRange(-40, 40) : h + randomRange(-10 * (m - 1), 10 * (m - 1)), a = e + randomRange(-30, -60), Projectiles.add(tb, q, a, 0, 0, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb);
     else if (9 == q)
         for (0 == m ? (q = h, a = e) : (q = c, a = d), c = floor(512 / ab), ac = floor(random(c)), b = 0; b < ab; b++) g.x = Xe_arr[ac][0] * Pa, g.y = Xe_arr[ac][1] * Pa, Projectiles.add(tb, q, a, g.x, g.y, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb), ac += c;
     else if (11 == q)
-        for (assignVector2D(g, h - c, e - d), ee = normalize(g), Hd =
-            0 < m ? m : 0, b = 0; b < ab; b++) ac = randomRange(-Hd, Hd), q = c + g.x * ee / 2 + g.y * ac, a = d + g.y * ee / 2 - g.x * ac, ac = Pa * (b + 1) / ab * g.x, de = Pa * (b + 1) / ab * g.y, Projectiles.add(tb, q, a, ac, de, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb)
+        for (assignVector2D(g, h - c, e - d), ee = normalize(g), Hd = 0 < m ? m : 0, b = 0; b < ab; b++) ac = randomRange(-Hd, Hd), q = c + g.x * ee / 2 + g.y * ac, a = d + g.y * ee / 2 - g.x * ac, ac = Pa * (b + 1) / ab * g.x, de = Pa * (b + 1) / ab * g.y, Projectiles.add(tb, q, a, ac, de, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, ca, Ba, Oc, Pc, zb)
 }
 
 function Walk(a, b) {
@@ -2365,8 +2360,7 @@ function Walk(a, b) {
             d = .5 * (a.a[b][9].y + a.a[b][10].y),
             e = RANGE[b],
             g;
-        g = 1 != Game_Mode ? ENfindEnemy(c - 200 - e, d - 20 - e, c + 200 + e, d + 100 + e) : PLfindPlayer(c - 600, d - 300, c + 600, d + 300, 1 - (b >> 2) << 2); - 1 != g && (a.L[b] = 15, e = .6, c < (1 != Game_Mode ? Enemies.a[g][20].x : a.a[g][2].x) ? (c = floor(clamp(c + 14, 0, 511) / 8), d = floor(clamp(d - 6, 8, 383) / 8), 0 <= Terrain.a[d][c] && 8 >= Terrain.a[d][c] && (e = 2), 0 <= Terrain.a[d - 1][c] && 8 >= Terrain.a[d - 1][c] && (e = 4), a.a[b][9].x < a.a[b][10].x ? (a.a[b][7].x += 4, a.a[b][7].y -= 3 * e) : (a.a[b][8].x +=
-            4, a.a[b][8].y -= 3 * e)) : (c = floor(clamp(c - 14, 0, 511) / 8), d = floor(clamp(d - 6, 8, 383) / 8), 0 <= Terrain.a[d][c] && 8 >= Terrain.a[d][c] && (e = 2), 0 <= Terrain.a[d - 1][c] && 8 >= Terrain.a[d - 1][c] && (e = 4), a.a[b][9].x > a.a[b][10].x ? (a.a[b][7].x -= 4, a.a[b][7].y -= 3 * e) : (a.a[b][8].x -= 4, a.a[b][8].y -= 3 * e)))
+        g = 1 != Game_Mode ? ENfindEnemy(c - 200 - e, d - 20 - e, c + 200 + e, d + 100 + e) : PLfindPlayer(c - 600, d - 300, c + 600, d + 300, 1 - (b >> 2) << 2); - 1 != g && (a.L[b] = 15, e = .6, c < (1 != Game_Mode ? Enemies.a[g][20].x : a.a[g][2].x) ? (c = floor(clamp(c + 14, 0, 511) / 8), d = floor(clamp(d - 6, 8, 383) / 8), 0 <= Terrain.a[d][c] && 8 >= Terrain.a[d][c] && (e = 2), 0 <= Terrain.a[d - 1][c] && 8 >= Terrain.a[d - 1][c] && (e = 4), a.a[b][9].x < a.a[b][10].x ? (a.a[b][7].x += 4, a.a[b][7].y -= 3 * e) : (a.a[b][8].x += 4, a.a[b][8].y -= 3 * e)) : (c = floor(clamp(c - 14, 0, 511) / 8), d = floor(clamp(d - 6, 8, 383) / 8), 0 <= Terrain.a[d][c] && 8 >= Terrain.a[d][c] && (e = 2), 0 <= Terrain.a[d - 1][c] && 8 >= Terrain.a[d - 1][c] && (e = 4), a.a[b][9].x > a.a[b][10].x ? (a.a[b][7].x -= 4, a.a[b][7].y -= 3 * e) : (a.a[b][8].x -= 4, a.a[b][8].y -= 3 * e)))
     }
 }
 
@@ -2375,8 +2369,7 @@ function Swim(a, b) {
         var c = .5 * (a.a[b][9].x + a.a[b][10].x),
             d = .5 * (a.a[b][9].y + a.a[b][10].y),
             e = RANGE[b],
-            e = 1 != Game_Mode ? ENfindEnemy(c - 200 - e, d - 100 - e, c + 200 + e, d + 100 + e) : PLfindPlayer(c - 600, d - 300, c + 600, d + 300, 1 - (b >> 2) << 2); - 1 != e && 9 == Terrain.a[floor(clamp(d, 8, 383) / 8)][floor(clamp(c, 0, 511) / 8)] && (c < (1 != Game_Mode ? Enemies.a[e][20].x : a.a[e][2].x) ? (a.a[b][0].x += .25, a.a[b][1].x += .25) : (a.a[b][0].x -= .25, a.a[b][1].x -= .25), d < (1 != Game_Mode ? Enemies.a[e][20].y : a.a[e][2].y) ? (a.a[b][0].y += .25, a.a[b][1].y += .25) : (a.a[b][0].y -= .25, a.a[b][1].y -= .25), a.a[b][0].x +=
-            randomRange(-.25, .25), a.a[b][0].y += randomRange(-.25, .25), a.a[b][1].x += randomRange(-.25, .25), a.a[b][1].y += randomRange(-.25, .25))
+            e = 1 != Game_Mode ? ENfindEnemy(c - 200 - e, d - 100 - e, c + 200 + e, d + 100 + e) : PLfindPlayer(c - 600, d - 300, c + 600, d + 300, 1 - (b >> 2) << 2); - 1 != e && 9 == Terrain.a[floor(clamp(d, 8, 383) / 8)][floor(clamp(c, 0, 511) / 8)] && (c < (1 != Game_Mode ? Enemies.a[e][20].x : a.a[e][2].x) ? (a.a[b][0].x += .25, a.a[b][1].x += .25) : (a.a[b][0].x -= .25, a.a[b][1].x -= .25), d < (1 != Game_Mode ? Enemies.a[e][20].y : a.a[e][2].y) ? (a.a[b][0].y += .25, a.a[b][1].y += .25) : (a.a[b][0].y -= .25, a.a[b][1].y -= .25), a.a[b][0].x += randomRange(-.25, .25), a.a[b][0].y += randomRange(-.25, .25), a.a[b][1].x += randomRange(-.25, .25), a.a[b][1].y += randomRange(-.25, .25))
     }
 }
 WIN.fff = SR_Player.prototype.G;
@@ -2394,16 +2387,14 @@ SR_Player.prototype.G = function() {
                 c = (this.a[a][9].y + this.a[a][10].y) / 2;
                 var e = Terrain.g[63];
                 7 == Stage_Spawns[Current_Stage][Current_Screen][1] && (e = Terrain.b[63]);
-                500 < b && 10 > absVal(8 * e - c) &&
-                    (Sign_Touched_Mode = Current_Screen != Stage_Spawns[Current_Stage].length - 1 ? 1 : 2)
+                500 < b && 10 > absVal(8 * e - c) && (Sign_Touched_Mode = Current_Screen != Stage_Spawns[Current_Stage].length - 1 ? 1 : 2)
             }
             this.K[a]++;
             if (0 == LP_Current[a])
                 for (b = 0; 11 > b; b++) moveJoint(this.a[a][b], this.g[a][b], .05, .99);
             else if (2 == this.i[a])
                 for (b = 0; 11 > b; b++) moveJoint(this.a[a][b], this.g[a][b], .01, .99);
-            else if (10 > this.K[a]) moveJoint(this.a[a][0], this.g[a][0], -.2, .99), moveJoint(this.a[a][1], this.g[a][1], 0, .99), moveJoint(this.a[a][2], this.g[a][2], -.1, .99), moveJoint(this.a[a][3], this.g[a][3], 0, .99), moveJoint(this.a[a][4], this.g[a][4], 0, .99), moveJoint(this.a[a][5], this.g[a][5], 0, .99), moveJoint(this.a[a][6], this.g[a][6], 0, .99), moveJoint(this.a[a][7], this.g[a][7], 0, .99), moveJoint(this.a[a][8], this.g[a][8],
-                0, .99), moveJoint(this.a[a][9], this.g[a][9], .3, .99), moveJoint(this.a[a][10], this.g[a][10], .3, .99);
+            else if (10 > this.K[a]) moveJoint(this.a[a][0], this.g[a][0], -.2, .99), moveJoint(this.a[a][1], this.g[a][1], 0, .99), moveJoint(this.a[a][2], this.g[a][2], -.1, .99), moveJoint(this.a[a][3], this.g[a][3], 0, .99), moveJoint(this.a[a][4], this.g[a][4], 0, .99), moveJoint(this.a[a][5], this.g[a][5], 0, .99), moveJoint(this.a[a][6], this.g[a][6], 0, .99), moveJoint(this.a[a][7], this.g[a][7], 0, .99), moveJoint(this.a[a][8], this.g[a][8], 0, .99), moveJoint(this.a[a][9], this.g[a][9], .3, .99), moveJoint(this.a[a][10], this.g[a][10], .3, .99);
             else
                 for (b = 0; 11 > b; b++) moveJoint(this.a[a][b], this.g[a][b], .05, .99);
             if (0 == LP_Current[a] && this.f[a] != Class_Dead) {
@@ -2412,10 +2403,8 @@ SR_Player.prototype.G = function() {
                 if (1 == Game_Mode)
                     for (e = 1 - (a >> 2) << 2, b = 0; 4 > b; b++) checkEff(4 + e + b, 41) && random(100) < getEff(4 + e + b, 8) && (c = PLfindPlayer(this.a[a][0].x - 600, this.a[a][0].y - 300, this.a[a][0].x + 600, this.a[a][0].y + 300, a >> 2 << 2), -1 != c && PLprojectileAttack(Players, getEff(4 + e + b, 9), this.a[a][0].x, this.a[a][0].y, c))
             }
-            this.h == a && 1 != Game_Mode && (this.a[this.h][this.u].x +=
-                (Mouse_Xpos - this.a[this.h][this.u].x) * (0 == LP_Current[a] ? .04 : .2), this.a[this.h][this.u].y += (Mouse_Ypos - this.a[this.h][this.u].y) * (0 == LP_Current[a] ? .04 : .2));
-            this.f[a] && 1 != this.f[a] ? 2 == this.f[a] ? this.P(a) : 3 == this.f[a] ? this.R(a) : 4 == this.f[a] ? this.S(a) : 5 == this.f[a] ? this.T(a) : 6 == this.f[a] ? this.U(a) : 7 == this.f[a] ? this.V(a) : 8 == this.f[a] ? this.W(a) : this.f[a] == Class_Dead && (pullJoints(this.a[a][1], this.a[a][2], 3.6, .5, .5), pullJoints(this.a[a][3], this.a[a][5], 4.8, .5, .5), pullJoints(this.a[a][4], this.a[a][6], 4.8, .5, .5), pullJoints(this.a[a][7], this.a[a][9], 4.8, .5, .5), pullJoints(this.a[a][8], this.a[a][10],
-                4.8, .5, .5)) : this.O(a);
+            this.h == a && 1 != Game_Mode && (this.a[this.h][this.u].x += (Mouse_Xpos - this.a[this.h][this.u].x) * (0 == LP_Current[a] ? .04 : .2), this.a[this.h][this.u].y += (Mouse_Ypos - this.a[this.h][this.u].y) * (0 == LP_Current[a] ? .04 : .2));
+            this.f[a] && 1 != this.f[a] ? 2 == this.f[a] ? this.P(a) : 3 == this.f[a] ? this.R(a) : 4 == this.f[a] ? this.S(a) : 5 == this.f[a] ? this.T(a) : 6 == this.f[a] ? this.U(a) : 7 == this.f[a] ? this.V(a) : 8 == this.f[a] ? this.W(a) : this.f[a] == Class_Dead && (pullJoints(this.a[a][1], this.a[a][2], 3.6, .5, .5), pullJoints(this.a[a][3], this.a[a][5], 4.8, .5, .5), pullJoints(this.a[a][4], this.a[a][6], 4.8, .5, .5), pullJoints(this.a[a][7], this.a[a][9], 4.8, .5, .5), pullJoints(this.a[a][8], this.a[a][10], 4.8, .5, .5)) : this.O(a);
             0 < (this.i[a] & 1) && (this.K[a] = 0);
             for (b = this.i[a] = 0; 11 > b; b++) this.Y(a, b)
         }
@@ -2435,8 +2424,7 @@ SR_Player.prototype.O = function(a) {
         c = 1 != Game_Mode ? ENfindEnemy(q - c, m - c, q + c, m) : PLfindPlayer(q - c, m - c, q + c, m, e);
         if (!this.c[a] && -1 != c) {
             this.c[a] = h;
-            q < (1 != Game_Mode ? Enemies.a[c][20].x : this.a[c][2].x) ? this.a[a][5].x < this.a[a][6].x ? (this.a[a][5].x += 4, this.a[a][4].x -= 4, this.a[a][2].y += 1, this.b[a] = 5) : (this.a[a][6].x += 4, this.a[a][3].x -=
-                4, this.a[a][2].y += 1, this.b[a] = 6) : this.a[a][5].x > this.a[a][6].x ? (this.a[a][5].x -= 4, this.a[a][4].x += 4, this.a[a][2].y += 1, this.b[a] = 5) : (this.a[a][6].x -= 4, this.a[a][3].x += 4, this.a[a][2].y += 1, this.b[a] = 6);
+            q < (1 != Game_Mode ? Enemies.a[c][20].x : this.a[c][2].x) ? this.a[a][5].x < this.a[a][6].x ? (this.a[a][5].x += 4, this.a[a][4].x -= 4, this.a[a][2].y += 1, this.b[a] = 5) : (this.a[a][6].x += 4, this.a[a][3].x -= 4, this.a[a][2].y += 1, this.b[a] = 6) : this.a[a][5].x > this.a[a][6].x ? (this.a[a][5].x -= 4, this.a[a][4].x += 4, this.a[a][2].y += 1, this.b[a] = 5) : (this.a[a][6].x -= 4, this.a[a][3].x += 4, this.a[a][2].y += 1, this.b[a] = 6);
             antiCheatCheck();
             h = getVal(Item_Inv[4 + a], 36);
             MP_Bar[a] = minOf(MP_Bar[a] + MAG[a], h);
@@ -2446,12 +2434,10 @@ SR_Player.prototype.O = function(a) {
         } - 1 == c && Walk(this, a);
         Swim(this, a)
     }
-    if (-1 != this.b[a] && this.f[a] && this.h != a &&
-        (c = getVal(Item_Inv[4 + a], 9), checkEff(4 + a, 27) && random(100) < getEff(4 + a, 8) && (c = 1), checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (b += floor(getEff(4 + a, 9) * b / 100), g += floor(getEff(4 + a, 9) * g / 100)), h = 12, q = 8, checkEff(4 + a, 42) && (h += floor(12 * getEff(4 + a, 8) / 100), q += floor(8 * getEff(4 + a, 8) / 100)), e = 1 != Game_Mode ? ENtakeDamage(c, 0, 0, b, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, q) : PLtakeDamage(c, 0, 0, b, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, q, e), -1 != e)) {
+    if (-1 != this.b[a] && this.f[a] && this.h != a && (c = getVal(Item_Inv[4 + a], 9), checkEff(4 + a, 27) && random(100) < getEff(4 + a, 8) && (c = 1), checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (b += floor(getEff(4 + a, 9) * b / 100), g += floor(getEff(4 + a, 9) * g / 100)), h = 12, q = 8, checkEff(4 + a, 42) && (h += floor(12 * getEff(4 + a, 8) / 100), q += floor(8 * getEff(4 + a, 8) / 100)), e = 1 != Game_Mode ? ENtakeDamage(c, 0, 0, b, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, q) : PLtakeDamage(c, 0, 0, b, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, q, e), -1 != e)) {
         this.b[a] = -1;
         checkEff(4 + a, 11) && (h = maxOf(1, floor(this.j * getEff(4 + a, 8) / 100)), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280));
-        checkEff(4 + a, 12) && !Game_Mode && random(100) < getEff(4 + a, 8) &&
-            Drops.add(this.a[a][0].x, this.a[a][0].y, 2, 0, 0);
+        checkEff(4 + a, 12) && !Game_Mode && random(100) < getEff(4 + a, 8) && Drops.add(this.a[a][0].x, this.a[a][0].y, 2, 0, 0);
         if (checkEff(4 + a, 37) && !Game_Mode && random(100) < getEff(4 + a, 8)) {
             g = 100;
             for (b = 0; 4 > b; b++) checkEff(4 + b, 35) && (g += getEff(4 + b, 8));
@@ -2461,8 +2447,7 @@ SR_Player.prototype.O = function(a) {
     }
     pullJoints(this.a[a][0], this.a[a][1], 3.6, .5, .5);
     pullJoints(this.a[a][1], this.a[a][2], 3.6, .5, .5);
-    pullJoints(this.a[a][1], this.a[a][3],
-        4.8, .5, .5);
+    pullJoints(this.a[a][1], this.a[a][3], 4.8, .5, .5);
     pullJoints(this.a[a][1], this.a[a][4], 4.8, .5, .5);
     pullJoints(this.a[a][3], this.a[a][5], 4.8, .5, .5);
     pullJoints(this.a[a][4], this.a[a][6], 4.8, .5, .5);
@@ -2485,18 +2470,15 @@ SR_Player.prototype.P = function(a) {
         var m = .5 * (this.a[a][9].x + this.a[a][10].x),
             l = .5 * (this.a[a][9].y + this.a[a][10].y);
         c = 1 != Game_Mode ? ENfindEnemy(m - q, l - q, m + q, l) : PLfindPlayer(m - q, l - q, m + q, l, e);
-        this.c[a] || -1 == c || (this.c[a] = h, m < (1 != Game_Mode ? Enemies.a[c][20].x : this.a[c][2].x) ? (this.a[a][5].x += 3, this.a[a][5].y += .2 * (l - 2 - this.a[a][5].y), this.a[a][6].x = this.a[a][5].x - 2, this.a[a][6].y = this.a[a][5].y, this.a[a][1].x -= 3) : (this.a[a][5].x -=
-            3, this.a[a][5].y += .2 * (l - 2 - this.a[a][5].y), this.a[a][6].x = this.a[a][5].x + 2, this.a[a][6].y = this.a[a][5].y, this.a[a][1].x += 3), this.b[a] = 5, antiCheatCheck(), h = getVal(Item_Inv[4 + a], 36), MP_Bar[a] = minOf(MP_Bar[a] + MAG[a], h), MP_Bar[a] == h && 0 < h && (MP_Bar[a] = 0, this.I[a] = getVal(Item_Inv[4 + a], 41)), checkEff(4 + a, 46) && (h = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), antiCheatSet()); - 1 == c && Walk(this, a);
+        this.c[a] || -1 == c || (this.c[a] = h, m < (1 != Game_Mode ? Enemies.a[c][20].x : this.a[c][2].x) ? (this.a[a][5].x += 3, this.a[a][5].y += .2 * (l - 2 - this.a[a][5].y), this.a[a][6].x = this.a[a][5].x - 2, this.a[a][6].y = this.a[a][5].y, this.a[a][1].x -= 3) : (this.a[a][5].x -= 3, this.a[a][5].y += .2 * (l - 2 - this.a[a][5].y), this.a[a][6].x = this.a[a][5].x + 2, this.a[a][6].y = this.a[a][5].y, this.a[a][1].x += 3), this.b[a] = 5, antiCheatCheck(), h = getVal(Item_Inv[4 + a], 36), MP_Bar[a] = minOf(MP_Bar[a] + MAG[a], h), MP_Bar[a] == h && 0 < h && (MP_Bar[a] = 0, this.I[a] = getVal(Item_Inv[4 + a], 41)), checkEff(4 + a, 46) && (h = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), antiCheatSet()); - 1 == c && Walk(this, a);
         Swim(this, a)
     }
-    if (-1 != this.b[a] && (checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (b += floor(getEff(4 + a, 9) * b / 100), g += floor(getEff(4 + a, 9) * g / 100)), Vdistance(d, this.a[a][5], this.a[a][6]), normalize(d), scaleVector2D(d, q), c = this.a[a][6].x +
-            d.x / 2, h = this.a[a][6].y + d.y / 2, -1 != (1 != Game_Mode ? ENtakeDamage(1, 0, 0, b, g, c, h, absVal(d.x), absVal(d.y)) : PLtakeDamage(1, 0, 0, b, g, c, h, absVal(d.x), absVal(d.y), e)) && (this.b[a] = -1, checkEff(4 + a, 11) && (h = maxOf(1, floor(this.j * getEff(4 + a, 8) / 100)), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), checkEff(4 + a, 12) && !Game_Mode && random(100) < getEff(4 + a, 8) && Drops.add(this.a[a][0].x, this.a[a][0].y, 2, 0, 0), checkEff(4 + a, 37) && !Game_Mode && random(100) < getEff(4 + a, 8)))) {
+    if (-1 != this.b[a] && (checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (b += floor(getEff(4 + a, 9) * b / 100), g += floor(getEff(4 + a, 9) * g / 100)), Vdistance(d, this.a[a][5], this.a[a][6]), normalize(d), scaleVector2D(d, q), c = this.a[a][6].x + d.x / 2, h = this.a[a][6].y + d.y / 2, -1 != (1 != Game_Mode ? ENtakeDamage(1, 0, 0, b, g, c, h, absVal(d.x), absVal(d.y)) : PLtakeDamage(1, 0, 0, b, g, c, h, absVal(d.x), absVal(d.y), e)) && (this.b[a] = -1, checkEff(4 + a, 11) && (h = maxOf(1, floor(this.j * getEff(4 + a, 8) / 100)), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), checkEff(4 + a, 12) && !Game_Mode && random(100) < getEff(4 + a, 8) && Drops.add(this.a[a][0].x, this.a[a][0].y, 2, 0, 0), checkEff(4 + a, 37) && !Game_Mode && random(100) < getEff(4 + a, 8)))) {
         g = 100;
         for (b = 0; 4 > b; b++) checkEff(4 + b, 35) && (g += getEff(4 + b, 8));
         Drops.add(this.a[a][0].x, this.a[a][0].y, 1, floor(this.j * g / 100), 0)
     }
-    pullJoints(this.a[a][0], this.a[a][1], 3.6, .5,
-        .5);
+    pullJoints(this.a[a][0], this.a[a][1], 3.6, .5, .5);
     pullJoints(this.a[a][1], this.a[a][2], 3.6, .5, .5);
     pullJoints(this.a[a][1], this.a[a][3], 4.8, .5, .5);
     pullJoints(this.a[a][1], this.a[a][4], 4.8, .5, .5);
@@ -2509,8 +2491,7 @@ SR_Player.prototype.P = function(a) {
     pullJoints(this.a[a][7], this.a[a][9], 4.8, .5, .5);
     pullJoints(this.a[a][8], this.a[a][10], 4.8, .5, .5);
     pullJoints(this.a[a][7], this.a[a][8], 6, .1, .1);
-    0 < this.I[a] && (this.I[a]--, Vdistance(d,
-        this.a[a][5], this.a[a][6]), normalize(d), scaleVector2D(d, q), d.add(this.a[a][6]), 1 != Game_Mode ? PLprojectileAttack(this, a, d.x, d.y, 0) : PLprojectileAttack(this, a, d.x, d.y, e))
+    0 < this.I[a] && (this.I[a]--, Vdistance(d, this.a[a][5], this.a[a][6]), normalize(d), scaleVector2D(d, q), d.add(this.a[a][6]), 1 != Game_Mode ? PLprojectileAttack(this, a, d.x, d.y, 0) : PLprojectileAttack(this, a, d.x, d.y, e))
 };
 WIN.fff = SR_Player.prototype.R;
 SR_Player.prototype.R = function(a) {
@@ -2521,16 +2502,14 @@ SR_Player.prototype.R = function(a) {
         e = .5 * (this.a[a][9].x + this.a[a][10].x),
         g = .5 * (this.a[a][9].y + this.a[a][10].y);
     b = 1 != Game_Mode ? ENfindEnemy(e - d, g - d, e + d, g + d) : PLfindPlayer(e - d, g - d, e + d, g + d, b); - 1 != b && (e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (this.a[a][6].x += .2, this.a[a][6].y -= .2, this.a[a][5].x -= .2) : (this.a[a][6].x -= .2, this.a[a][6].y -= .2, this.a[a][5].x += .2), this.a[a][5].y += .2);
-    this.i[a] && this.h != a && (0 < this.c[a] && this.c[a]--, this.c[a] || (-1 != b && (this.c[a] = c, pullJoints(this.a[a][5], this.a[a][6],
-        2, .2, .2), this.b[a] = 6), -1 != this.b[a] && (PLprojectileAttack(this, a, this.a[a][6].x, this.a[a][6].y, b), this.b[a] = -1, checkEff(4 + a, 46) && (c = getEff(4 + a, 8), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + c, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, c, 65280)))), -1 == b && (Walk(this, a), Swim(this, a)));
+    this.i[a] && this.h != a && (0 < this.c[a] && this.c[a]--, this.c[a] || (-1 != b && (this.c[a] = c, pullJoints(this.a[a][5], this.a[a][6], 2, .2, .2), this.b[a] = 6), -1 != this.b[a] && (PLprojectileAttack(this, a, this.a[a][6].x, this.a[a][6].y, b), this.b[a] = -1, checkEff(4 + a, 46) && (c = getEff(4 + a, 8), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + c, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, c, 65280)))), -1 == b && (Walk(this, a), Swim(this, a)));
     pullJoints(this.a[a][0], this.a[a][1], 3.6, .5, .5);
     pullJoints(this.a[a][1], this.a[a][2], 3.6, .5, .5);
     pullJoints(this.a[a][1], this.a[a][3], 4.8, .5, .5);
     pullJoints(this.a[a][1], this.a[a][4], 4.8, .5, .5);
     pullJoints(this.a[a][3], this.a[a][5], 4.8, .5, .5);
     pullJoints(this.a[a][4], this.a[a][6], 4.8, .5, .5);
-    pullJoints(this.a[a][5], this.a[a][6], 9.6, .02,
-        .02);
+    pullJoints(this.a[a][5], this.a[a][6], 9.6, .02, .02);
     pullJoints(this.a[a][2], this.a[a][7], 4.8, .5, .5);
     pullJoints(this.a[a][2], this.a[a][8], 4.8, .5, .5);
     pullJoints(this.a[a][7], this.a[a][9], 4.8, .5, .5);
@@ -2546,15 +2525,13 @@ SR_Player.prototype.S = function(a) {
         e = .5 * (this.a[a][9].x + this.a[a][10].x),
         g = .5 * (this.a[a][9].y + this.a[a][10].y);
     b = 1 != Game_Mode ? ENfindEnemy(e - d, g - d, e + d, g + d) : PLfindPlayer(e - d, g - d, e + d, g + d, b); - 1 != b && (e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (this.a[a][5].x += .1, this.a[a][6].x += .1, this.a[a][1].x -= .2) : (this.a[a][5].x -= .1, this.a[a][6].x -= .1, this.a[a][1].x += .2));
-    this.i[a] && this.h != a && (0 < this.c[a] && this.c[a]--, this.c[a] || (-1 != b && (this.c[a] = c, e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (pullJoints(this.a[a][5],
-        this.a[a][6], 0, .1, .1), this.b[a] = 6) : (pullJoints(this.a[a][5], this.a[a][6], 0, .1, .1), this.b[a] = 5)), -1 != this.b[a] && (PLprojectileAttack(this, a, this.a[a][6].x, this.a[a][6].y, b), this.b[a] = -1, checkEff(4 + a, 46) && (c = getEff(4 + a, 8), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + c, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, c, 65280)))), -1 == b && (Walk(this, a), Swim(this, a)));
+    this.i[a] && this.h != a && (0 < this.c[a] && this.c[a]--, this.c[a] || (-1 != b && (this.c[a] = c, e < (1 != Game_Mode ? Enemies.a[b][20].x : this.a[b][2].x) ? (pullJoints(this.a[a][5], this.a[a][6], 0, .1, .1), this.b[a] = 6) : (pullJoints(this.a[a][5], this.a[a][6], 0, .1, .1), this.b[a] = 5)), -1 != this.b[a] && (PLprojectileAttack(this, a, this.a[a][6].x, this.a[a][6].y, b), this.b[a] = -1, checkEff(4 + a, 46) && (c = getEff(4 + a, 8), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + c, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, c, 65280)))), -1 == b && (Walk(this, a), Swim(this, a)));
     pullJoints(this.a[a][0], this.a[a][1], 3.6, .5, .5);
     pullJoints(this.a[a][1], this.a[a][2], 3.6, .5, .5);
     pullJoints(this.a[a][1], this.a[a][3], 4.8, .5, .5);
     pullJoints(this.a[a][1], this.a[a][4], 4.8, .5, .5);
     pullJoints(this.a[a][3], this.a[a][5], 4.8, .5, .5);
-    pullJoints(this.a[a][4],
-        this.a[a][6], 4.8, .5, .5);
+    pullJoints(this.a[a][4], this.a[a][6], 4.8, .5, .5);
     pullJoints(this.a[a][5], this.a[a][6], 10.8, .01, .01);
     pullJoints(this.a[a][2], this.a[a][7], 4.8, .5, .5);
     pullJoints(this.a[a][2], this.a[a][8], 4.8, .5, .5);
@@ -2596,8 +2573,7 @@ SR_Player.prototype.T = function(a) {
     pullJoints(this.a[a][4], this.a[a][6], 4.8, .5, .5);
     pullJoints(this.a[a][2], this.a[a][7], 4.8, .5, .5);
     pullJoints(this.a[a][2], this.a[a][8], 4.8, .5, .5);
-    pullJoints(this.a[a][7],
-        this.a[a][9], 4.8, .5, .5);
+    pullJoints(this.a[a][7], this.a[a][9], 4.8, .5, .5);
     pullJoints(this.a[a][8], this.a[a][10], 4.8, .5, .5);
     pullJoints(this.a[a][7], this.a[a][8], 6, .1, .1)
 };
@@ -2622,8 +2598,7 @@ SR_Player.prototype.U = function(a) {
                 for (b = 0; b < g; b++) Indicators.add(this.a[a][6].x, this.a[a][6].y, 0 > d.x ? .5 : -.5, e, 16776960);
                 e = 0
             }
-            0 == e && (PLprojectileAttack(this, a, this.a[a][6].x, this.a[a][6].y, c), checkEff(4 + a, 46) && (d = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + d, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y,
-                0, d, 65280)));
+            0 == e && (PLprojectileAttack(this, a, this.a[a][6].x, this.a[a][6].y, c), checkEff(4 + a, 46) && (d = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + d, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, d, 65280)));
             antiCheatSet();
             this.b[a] = -1
         } - 1 == c && (Walk(this, a), Swim(this, a))
@@ -2639,8 +2614,7 @@ SR_Player.prototype.U = function(a) {
     pullJoints(this.a[a][2], this.a[a][8], 4.8, .5, .5);
     pullJoints(this.a[a][7], this.a[a][9], 4.8, .5, .5);
     pullJoints(this.a[a][8], this.a[a][10], 4.8, .5, .5);
-    pullJoints(this.a[a][7],
-        this.a[a][8], 6, .1, .1)
+    pullJoints(this.a[a][7], this.a[a][8], 6, .1, .1)
 };
 WIN.fff = SR_Player.prototype.V;
 SR_Player.prototype.V = function(a) {
@@ -2656,23 +2630,20 @@ SR_Player.prototype.V = function(a) {
         b = .5 * (this.a[a][9].x + this.a[a][10].x);
         var m = .5 * (this.a[a][9].y + this.a[a][10].y);
         b = 1 != Game_Mode ? ENfindEnemy(b - q, m - q - 20, b + q, m + 20) : PLfindPlayer(b - q, m - q - 20, b + q, m + 20, d);
-        this.c[a] || -1 == b || (this.c[a] = h, this.a[a][5].x < this.a[a][6].x ? (this.a[a][5].x += 4, this.a[a][4].x -= 4) : (this.a[a][6].x += 4, this.a[a][3].x -= 4), this.a[a][2].y +=
-            1, this.b[a] = 14, antiCheatCheck(), h = getVal(Item_Inv[4 + a], 36), MP_Bar[a] = minOf(MP_Bar[a] + MAG[a], h), checkEff(4 + a, 46) && (h = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), antiCheatSet()); - 1 == b && Walk(this, a);
+        this.c[a] || -1 == b || (this.c[a] = h, this.a[a][5].x < this.a[a][6].x ? (this.a[a][5].x += 4, this.a[a][4].x -= 4) : (this.a[a][6].x += 4, this.a[a][3].x -= 4), this.a[a][2].y += 1, this.b[a] = 14, antiCheatCheck(), h = getVal(Item_Inv[4 + a], 36), MP_Bar[a] = minOf(MP_Bar[a] + MAG[a], h), checkEff(4 + a, 46) && (h = getEff(4 + a, 8), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280)), antiCheatSet()); - 1 == b && Walk(this, a);
         Swim(this, a)
     }
     if (-1 != this.b[a] && (checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (e += floor(getEff(4 + a, 9) * e / 100), g += floor(getEff(4 + a, 9) * g / 100)), h = 20, checkEff(4 + a, 42) && (h += floor(20 * getEff(4 + a, 8) / 100)), d = 1 != Game_Mode ? ENtakeDamage(1, 0, 0, e, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, h) : PLtakeDamage(1, 0, 0, e, g, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, h, h, d), -1 != d)) {
         antiCheatCheck();
         h = getVal(Item_Inv[4 + a], 36);
-        if (MP_Bar[a] == h && 0 <
-            h || -1 == h) MP_Bar[a] = 0, e = this.a[a][this.b[a]].y, g = floor(clamp(this.a[a][this.b[a]].x, 0, 511) / 8), h = floor(clamp(this.a[a][this.b[a]].y, 0, 255) / 8), 0 <= h - Terrain.b[g] ? e = 8 * Terrain.b[g] + 7 : 3 >= absVal(h - Terrain.g[g]) && (e = 8 * Terrain.g[g] + 7), PLprojectileAttack(this, a, this.a[a][this.b[a]].x, e, d);
+        if (MP_Bar[a] == h && 0 < h || -1 == h) MP_Bar[a] = 0, e = this.a[a][this.b[a]].y, g = floor(clamp(this.a[a][this.b[a]].x, 0, 511) / 8), h = floor(clamp(this.a[a][this.b[a]].y, 0, 255) / 8), 0 <= h - Terrain.b[g] ? e = 8 * Terrain.b[g] + 7 : 3 >= absVal(h - Terrain.g[g]) && (e = 8 * Terrain.g[g] + 7), PLprojectileAttack(this, a, this.a[a][this.b[a]].x, e, d);
         antiCheatSet();
         this.b[a] = -1;
         checkEff(4 + a, 11) && (h = maxOf(1, floor(this.j * getEff(4 + a, 8) / 100)), antiCheatCheck(), LP_Current[a] = clamp(LP_Current[a] + h, 0, LP_Max[a]), antiCheatSet(), Indicators.add(this.a[a][0].x, this.a[a][0].y, 0, h, 65280));
         checkEff(4 + a, 12) && !Game_Mode && random(100) < getEff(4 + a, 8) && Drops.add(this.a[a][0].x, this.a[a][0].y, 2, 0, 0);
         if (checkEff(4 + a, 37) && !Game_Mode && random(100) < getEff(4 + a, 8)) {
             e = 100;
-            for (b = 0; 4 > b; b++) checkEff(4 + b, 35) &&
-                (e += getEff(4 + b, 8));
+            for (b = 0; 4 > b; b++) checkEff(4 + b, 35) && (e += getEff(4 + b, 8));
             Drops.add(this.a[a][0].x, this.a[a][0].y, 1, floor(this.j * e / 100), 0)
         }
         checkEff(4 + a, 43) && random(100) < getEff(4 + a, 8) && (e = getEff(4 + a, 9), 1 != Game_Mode ? Vdistance(c, Enemies.a[d][0], this.a[a][1]) : Vdistance(c, Players.a[d][1], this.a[a][1]), normalize(c), scaleVector2D(c, .2 * e), 1 != Game_Mode ? scaleVector2D(c, Text_Spacing[EN_Info[Enemies.f[d]][EN_Species]] / EN_Info[Enemies.f[d]][EN_Size]) : scaleVector2D(c, .1), 1 != Game_Mode ? Enemies.c[d][0].sub(c) : Players.g[d][0].sub(c))
@@ -2682,8 +2653,7 @@ SR_Player.prototype.V = function(a) {
     pullJoints(this.a[a][1], this.a[a][3], 4.8, .5, .5);
     pullJoints(this.a[a][1], this.a[a][4], 4.8, .5, .5);
     pullJoints(this.a[a][3], this.a[a][5], 4.8, .5, .5);
-    pullJoints(this.a[a][4],
-        this.a[a][6], 4.8, .5, .5);
+    pullJoints(this.a[a][4], this.a[a][6], 4.8, .5, .5);
     pullJoints(this.a[a][5], this.a[a][6], 14.4, .02, .02);
     pullJoints(this.a[a][5], this.a[a][11], 4.8, 0, .3);
     pullJoints(this.a[a][11], this.a[a][12], 4.8, 0, .3);
@@ -2718,17 +2688,14 @@ SR_Player.prototype.W = function(a) {
     this.a[a][14].y += .1;
     if (this.i[a] && this.h != a) {
         0 < this.c[a] && this.c[a]--;
-        b = .5 * (this.a[a][9].x +
-            this.a[a][10].x);
+        b = .5 * (this.a[a][9].x + this.a[a][10].x);
         c = .5 * (this.a[a][9].y + this.a[a][10].y);
         c = 1 != Game_Mode ? ENfindEnemy(b - m, c - m, b + m, c + m) : PLfindPlayer(b - m, c - m, b + m, c + m, e);
         for (b = 0; b < l && 0 != this.s[a][b]; b++);
-        this.c[a] || -1 == c || b == l || (this.c[a] = q, this.s[a][b] = 1, this.C[a][b] = floor(m / 2) + 20, this.D[a][b] = 0, this.a[a][12].x -= 2, this.a[a][14].x += 2, this.b[a] = 15 + b, this.a[a][this.b[a]].set(this.a[a][0]), this.a[a][this.b[a]].y -= 5, this.g[a][this.b[a]].set(this.a[a][this.b[a]]), 1 != Game_Mode ? Vdistance(d, Enemies.a[c][20], this.a[a][this.b[a]]) : Vdistance(d, this.a[c][1], this.a[a][this.b[a]]), normalize(d), scaleVector2D(d, 2), this.a[a][this.b[a]].add(d)); -
-        1 == c && (Walk(this, a), Swim(this, a))
+        this.c[a] || -1 == c || b == l || (this.c[a] = q, this.s[a][b] = 1, this.C[a][b] = floor(m / 2) + 20, this.D[a][b] = 0, this.a[a][12].x -= 2, this.a[a][14].x += 2, this.b[a] = 15 + b, this.a[a][this.b[a]].set(this.a[a][0]), this.a[a][this.b[a]].y -= 5, this.g[a][this.b[a]].set(this.a[a][this.b[a]]), 1 != Game_Mode ? Vdistance(d, Enemies.a[c][20], this.a[a][this.b[a]]) : Vdistance(d, this.a[c][1], this.a[a][this.b[a]]), normalize(d), scaleVector2D(d, 2), this.a[a][this.b[a]].add(d)); - 1 == c && (Walk(this, a), Swim(this, a))
     }
     for (b = 0; b < l; b++)
-        if (0 != this.s[a][b] && (this.b[a] = 15 + b, this.C[a][b]--, 0 >= this.C[a][b] && (1 == this.s[a][b] ? (this.s[a][b]++, d.set(this.a[a][0]), d.y -= 5, this.g[a][this.b[a]].set(this.a[a][this.b[a]]), Vdistance(d, d, this.a[a][this.b[a]]), q = normalize(d), scaleVector2D(d, 2), this.a[a][this.b[a]].add(d), this.C[a][b] = floor(q / 2)) : (this.s[a][b] = 0, this.C[a][b] = 0, this.D[a][b] = 0)), this.D[a][b]--, !(0 < this.D[a][b]) && (q = 0, checkEff(4 + a, 27) && random(100) < getEff(4 + a, 8) && (q = 1), checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (g += floor(getEff(4 + a, 9) * g / 100), h += floor(getEff(4 + a, 9) *
-                h / 100)), q = 1 != Game_Mode ? ENtakeDamage(q, 0, 0, g, h, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, 10, 10) : PLtakeDamage(q, 0, 0, g, h, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, 10, 10, e), -1 != q))) {
+        if (0 != this.s[a][b] && (this.b[a] = 15 + b, this.C[a][b]--, 0 >= this.C[a][b] && (1 == this.s[a][b] ? (this.s[a][b]++, d.set(this.a[a][0]), d.y -= 5, this.g[a][this.b[a]].set(this.a[a][this.b[a]]), Vdistance(d, d, this.a[a][this.b[a]]), q = normalize(d), scaleVector2D(d, 2), this.a[a][this.b[a]].add(d), this.C[a][b] = floor(q / 2)) : (this.s[a][b] = 0, this.C[a][b] = 0, this.D[a][b] = 0)), this.D[a][b]--, !(0 < this.D[a][b]) && (q = 0, checkEff(4 + a, 27) && random(100) < getEff(4 + a, 8) && (q = 1), checkEff(4 + a, 29) && random(100) < getEff(4 + a, 8) && (g += floor(getEff(4 + a, 9) * g / 100), h += floor(getEff(4 + a, 9) * h / 100)), q = 1 != Game_Mode ? ENtakeDamage(q, 0, 0, g, h, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, 10, 10) : PLtakeDamage(q, 0, 0, g, h, this.a[a][this.b[a]].x, this.a[a][this.b[a]].y, 10, 10, e), -1 != q))) {
             antiCheatCheck();
             m = getVal(Item_Inv[4 + a], 36);
             MP_Bar[a] = minOf(MP_Bar[a] + MAG[a], m);
@@ -2739,8 +2706,7 @@ SR_Player.prototype.W = function(a) {
         }
     pullJoints(this.a[a][0], this.a[a][1], 3.6, .5, .5);
     pullJoints(this.a[a][1], this.a[a][2], 3.6, .5, .5);
-    pullJoints(this.a[a][1],
-        this.a[a][3], 4.8, .5, .5);
+    pullJoints(this.a[a][1], this.a[a][3], 4.8, .5, .5);
     pullJoints(this.a[a][1], this.a[a][4], 4.8, .5, .5);
     pullJoints(this.a[a][3], this.a[a][5], 4.8, .5, .5);
     pullJoints(this.a[a][4], this.a[a][6], 4.8, .5, .5);
@@ -2753,8 +2719,7 @@ SR_Player.prototype.W = function(a) {
     pullJoints(this.a[a][1], this.a[a][12], 12, 0, .1);
     pullJoints(this.a[a][11], this.a[a][12], 9.6, .5, .5);
     pullJoints(this.a[a][1], this.a[a][13], 3.6, 0, .1);
-    pullJoints(this.a[a][1],
-        this.a[a][14], 12, 0, .1);
+    pullJoints(this.a[a][1], this.a[a][14], 12, 0, .1);
     pullJoints(this.a[a][13], this.a[a][14], 9.6, .5, .5)
 };
 WIN.fff = SR_Player.prototype.B;
@@ -2776,21 +2741,18 @@ SR_Player.prototype.B = function() {
                 Anger_Crown_Lightning--;
                 var l = minOf(Anger_Crown_Lightning, 64);
                 for (b = 0; 11 > b; b++) dispItemCentered(Effect_Img, floor(this.a[a][b].x), floor(this.a[a][b].y), 24, 24, 0, 0, 12, 12, l << 24 | 16777062);
-                120 < Anger_Crown_Lightning && (b = randInt(11), PLprojectileAttack(Players, 563, Players.a[a][b].x, Players.a[a][b].y,
-                    0))
+                120 < Anger_Crown_Lightning && (b = randInt(11), PLprojectileAttack(Players, 563, Players.a[a][b].x, Players.a[a][b].y, 0))
             } else
                 for (b = 0; 11 > b; b++) dispItemCentered(Effect_Img, floor(this.a[a][b].x), floor(this.a[a][b].y), 12, 12, 0, 0, 12, 12, 1073741824);
         else
             for (b = 0; 11 > b; b++) dispItemCentered(Effect_Img, floor(this.a[a][b].x), floor(this.a[a][b].y), 12, 12, 0, 0, 12, 12, 1358888960);
         Display_Mode = Display_Mode2 = 0;
-        8 == this.f[a] && (b = (h & 16711680) >> 17 << 16 | (h & 65280) >> 9 << 8 | (h & 255) >> 1, drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][11].x, this.a[a][11].y, b), drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][12].x, this.a[a][12].y, b), drawLine(this.a[a][11].x, this.a[a][11].y, this.a[a][12].x, this.a[a][12].y, b), drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][13].x,
-            this.a[a][13].y, b), drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][14].x, this.a[a][14].y, b), drawLine(this.a[a][13].x, this.a[a][13].y, this.a[a][14].x, this.a[a][14].y, b));
+        8 == this.f[a] && (b = (h & 16711680) >> 17 << 16 | (h & 65280) >> 9 << 8 | (h & 255) >> 1, drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][11].x, this.a[a][11].y, b), drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][12].x, this.a[a][12].y, b), drawLine(this.a[a][11].x, this.a[a][11].y, this.a[a][12].x, this.a[a][12].y, b), drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][13].x, this.a[a][13].y, b), drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][14].x, this.a[a][14].y, b), drawLine(this.a[a][13].x, this.a[a][13].y, this.a[a][14].x, this.a[a][14].y, b));
         drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][2].x, this.a[a][2].y, m);
         this.f[a] != Class_Dead && (drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][3].x, this.a[a][3].y, m), drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][4].x, this.a[a][4].y, m));
         drawLine(this.a[a][3].x, this.a[a][3].y, this.a[a][5].x, this.a[a][5].y, m);
         drawLine(this.a[a][4].x, this.a[a][4].y, this.a[a][6].x, this.a[a][6].y, m);
-        this.f[a] !=
-            Class_Dead && (drawLine(this.a[a][2].x, this.a[a][2].y, this.a[a][7].x, this.a[a][7].y, m), drawLine(this.a[a][2].x, this.a[a][2].y, this.a[a][8].x, this.a[a][8].y, m));
+        this.f[a] != Class_Dead && (drawLine(this.a[a][2].x, this.a[a][2].y, this.a[a][7].x, this.a[a][7].y, m), drawLine(this.a[a][2].x, this.a[a][2].y, this.a[a][8].x, this.a[a][8].y, m));
         drawLine(this.a[a][7].x, this.a[a][7].y, this.a[a][9].x, this.a[a][9].y, m);
         drawLine(this.a[a][8].x, this.a[a][8].y, this.a[a][10].x, this.a[a][10].y, m);
         outlineRect(floor(this.a[a][0].x) - 2, floor(this.a[a][0].y) - 2, 5, 5, q);
@@ -2800,15 +2762,11 @@ SR_Player.prototype.B = function() {
         Display_Mode2 = 0;
         if (1 == this.f[a]) g = 3, checkEff(4 + a, 42) && (g = 5), filledRect(floor(this.a[a][5].x) - 1, floor(this.a[a][5].y) - 1, g, g, h), filledRect(floor(this.a[a][6].x) - 1, floor(this.a[a][6].y) - 1, g, g, h);
         else if (2 == this.f[a]) checkEff(4 + a, 22) && (g += getEff(4 + a, 8)), checkEff(4 + a, 45) && (g += getEff(4 + a, 9)), Vdistance(c, this.a[a][5], this.a[a][6]), normalize(c), scaleVector2D(c, g), c.add(this.a[a][6]), drawLine(this.a[a][6].x, this.a[a][6].y, c.x, c.y, h);
-        else if (3 == this.f[a]) Vdistance(c, this.a[a][6], this.a[a][5]), normalize(c), d.set(c), setPerpendicular(d), scaleVector2D(c, 18), c.add(this.a[a][5]), drawLine(this.a[a][5].x, this.a[a][5].y, c.x, c.y, h), scaleVector2D(d, 8), sumVector2D(c, this.a[a][6], d), drawLine(this.a[a][5].x,
-            this.a[a][5].y, c.x, c.y, 8421504), Vdistance(d, this.a[a][6], d), drawLine(this.a[a][5].x, this.a[a][5].y, d.x, d.y, 8421504), drawLine(c.x, c.y, d.x, d.y, 12632256);
+        else if (3 == this.f[a]) Vdistance(c, this.a[a][6], this.a[a][5]), normalize(c), d.set(c), setPerpendicular(d), scaleVector2D(c, 18), c.add(this.a[a][5]), drawLine(this.a[a][5].x, this.a[a][5].y, c.x, c.y, h), scaleVector2D(d, 8), sumVector2D(c, this.a[a][6], d), drawLine(this.a[a][5].x, this.a[a][5].y, c.x, c.y, 8421504), Vdistance(d, this.a[a][6], d), drawLine(this.a[a][5].x, this.a[a][5].y, d.x, d.y, 8421504), drawLine(c.x, c.y, d.x, d.y, 12632256);
         else if (4 == this.f[a]) sumVector2D(c, this.a[a][5], this.a[a][6]), scaleVector2D(c, .5), filledRect(floor(c.x) - 1, floor(c.y) - 1, 3, 3, h);
         else if (5 == this.f[a]) c.x = this.a[a][0].x + randomRange(-10, 10), c.y = this.a[a][0].y + randomRange(-10, 0), Vdistance(c, this.a[a][6], this.a[a][4]), normalize(c), setPerpendicular(c), scaleVector2D(c, 8), drawLine(this.a[a][6].x - c.x, this.a[a][6].y - c.y, this.a[a][6].x + c.x, this.a[a][6].y + c.y, 8421504), filledRect(floor(this.a[a][6].x + c.x) - 1, floor(this.a[a][6].y + c.y) - 1, 3, 3, h);
-        else if (6 ==
-            this.f[a]) g = floor(clamp(floor(this.a[a][6].x) - floor(this.a[a][1].x), -8, 8) / 2), -4 == g ? filledRect(floor(this.a[a][6].x) - 5, floor(this.a[a][6].y) - 2, 7, 2, h) : -3 == g ? filledRect(floor(this.a[a][6].x) - 4, floor(this.a[a][6].y) - 2, 6, 2, h) : -2 == g ? filledRect(floor(this.a[a][6].x) - 3, floor(this.a[a][6].y) - 2, 5, 2, h) : -1 == g ? filledRect(floor(this.a[a][6].x) - 2, floor(this.a[a][6].y) - 2, 3, 2, h) : 0 == g ? filledRect(floor(this.a[a][6].x) - 1, floor(this.a[a][6].y) - 3, 2, 2, h) : 1 == g ? filledRect(floor(this.a[a][6].x) - 1, floor(this.a[a][6].y) - 2, 3, 2, h) : 2 == g ? filledRect(floor(this.a[a][6].x) - 2, floor(this.a[a][6].y) - 2, 5, 2, h) : 3 == g ? filledRect(floor(this.a[a][6].x) - 2, floor(this.a[a][6].y) - 2, 6, 2, h) : 4 == g &&
-            filledRect(floor(this.a[a][6].x) - 2, floor(this.a[a][6].y) - 2, 7, 2, h), filledRect(floor(this.a[a][6].x) - 1, floor(this.a[a][6].y) - 2, 2, 4, h);
-        else if (7 == this.f[a]) g = 3, checkEff(4 + a, 42) && (g = 5), b = (h & 16711680) >> 17 << 16 | (h & 65280) >> 9 << 8 | (h & 255) >> 1, drawLine(this.a[a][5].x, this.a[a][5].y, this.a[a][11].x, this.a[a][11].y, b), drawLine(this.a[a][11].x, this.a[a][11].y, this.a[a][12].x, this.a[a][12].y, b), drawLine(this.a[a][12].x, this.a[a][12].y, this.a[a][13].x, this.a[a][13].y, b), drawLine(this.a[a][13].x, this.a[a][13].y, this.a[a][14].x, this.a[a][14].y, b), filledRect(floor(this.a[a][14].x) - 1, floor(this.a[a][14].y) -
-            1, g, g, h);
+        else if (6 == this.f[a]) g = floor(clamp(floor(this.a[a][6].x) - floor(this.a[a][1].x), -8, 8) / 2), -4 == g ? filledRect(floor(this.a[a][6].x) - 5, floor(this.a[a][6].y) - 2, 7, 2, h) : -3 == g ? filledRect(floor(this.a[a][6].x) - 4, floor(this.a[a][6].y) - 2, 6, 2, h) : -2 == g ? filledRect(floor(this.a[a][6].x) - 3, floor(this.a[a][6].y) - 2, 5, 2, h) : -1 == g ? filledRect(floor(this.a[a][6].x) - 2, floor(this.a[a][6].y) - 2, 3, 2, h) : 0 == g ? filledRect(floor(this.a[a][6].x) - 1, floor(this.a[a][6].y) - 3, 2, 2, h) : 1 == g ? filledRect(floor(this.a[a][6].x) - 1, floor(this.a[a][6].y) - 2, 3, 2, h) : 2 == g ? filledRect(floor(this.a[a][6].x) - 2, floor(this.a[a][6].y) - 2, 5, 2, h) : 3 == g ? filledRect(floor(this.a[a][6].x) - 2, floor(this.a[a][6].y) - 2, 6, 2, h) : 4 == g && filledRect(floor(this.a[a][6].x) - 2, floor(this.a[a][6].y) - 2, 7, 2, h), filledRect(floor(this.a[a][6].x) - 1, floor(this.a[a][6].y) - 2, 2, 4, h);
+        else if (7 == this.f[a]) g = 3, checkEff(4 + a, 42) && (g = 5), b = (h & 16711680) >> 17 << 16 | (h & 65280) >> 9 << 8 | (h & 255) >> 1, drawLine(this.a[a][5].x, this.a[a][5].y, this.a[a][11].x, this.a[a][11].y, b), drawLine(this.a[a][11].x, this.a[a][11].y, this.a[a][12].x, this.a[a][12].y, b), drawLine(this.a[a][12].x, this.a[a][12].y, this.a[a][13].x, this.a[a][13].y, b), drawLine(this.a[a][13].x, this.a[a][13].y, this.a[a][14].x, this.a[a][14].y, b), filledRect(floor(this.a[a][14].x) - 1, floor(this.a[a][14].y) - 1, g, g, h);
         else if (8 == this.f[a]) {
             g = 10 > DEX[a] ? 1 : 30 > DEX[a] ? 2 : 60 > DEX[a] ? 3 : 100 > DEX[a] ? 4 : 5;
             checkEff(4 + a, 47) && (g += 1);
@@ -2816,9 +2774,7 @@ SR_Player.prototype.B = function() {
             b != g && dispItemCentered(Effect_Img, floor(this.a[a][0].x), floor(this.a[a][0].y) - 5, 7, 3, 33, 0, 7, 3, h);
             for (b = 0; b < g; b++) 0 != this.s[a][b] && dispItemCentered(Effect_Img, floor(this.a[a][15 + b].x), floor(this.a[a][15 + b].y), 7, 3, 33, 0, 7, 3, h)
         }
-        40 != Sequence_Step && (0 < STR_Aura[a] + DEX_Aura[a] && (Display_Mode = 2, Display_Mode2 = 1, h = STR_Aura[a], h < DEX_Aura[a] && (h = DEX_Aura[a]), h < MAG_Aura[a] && (h = MAG_Aura[a]), h = 4278190080 | 255 * STR_Aura[a] / h << 16 | 255 * DEX_Aura[a] / h << 8 | 255 * MAG_Aura[a] / h, dispItemCentered(Effect_Img, floor(floor(this.a[a][9].x + this.a[a][10].x) / 2), floor(floor(this.a[a][9].y + this.a[a][10].y) /
-            2), 20, 12, 12, 0, 20, 12, h), Display_Mode = Display_Mode2 = 0), 0 < (Sett_LP_Bar_Disp & 1) && 0 < LP_Current[a] && (filledRect(floor(this.a[a][0].x) - 6, floor(this.a[a][0].y) - 6, 13, 2, 10027008), filledRect(floor(this.a[a][0].x) - 6, floor(this.a[a][0].y) - 6, floor(13 * LP_Current[a] / LP_Max[a]), 2, 52224)), a != Selected_Player || Game_Mode || (0 == Sett_PL_Symbol ? filledRect(floor(this.a[a][0].x) - 1, floor(this.a[a][0].y) - 8, 3, 3, 16776960) : 1 == Sett_PL_Symbol && (drawLine(floor(this.a[a][0].x) - 3, floor(this.a[a][0].y) - 14, floor(this.a[a][0].x) + 3, floor(this.a[a][0].y) - 14, 16776960), drawLine(floor(this.a[a][0].x) - 3, floor(this.a[a][0].y) - 14, floor(this.a[a][0].x) + .5, floor(this.a[a][0].y) - 7, 16776960), drawLine(floor(this.a[a][0].x) + 3.5, floor(this.a[a][0].y) - 14, floor(this.a[a][0].x) +
-            .5, floor(this.a[a][0].y) - 7, 16776960))))
+        40 != Sequence_Step && (0 < STR_Aura[a] + DEX_Aura[a] && (Display_Mode = 2, Display_Mode2 = 1, h = STR_Aura[a], h < DEX_Aura[a] && (h = DEX_Aura[a]), h < MAG_Aura[a] && (h = MAG_Aura[a]), h = 4278190080 | 255 * STR_Aura[a] / h << 16 | 255 * DEX_Aura[a] / h << 8 | 255 * MAG_Aura[a] / h, dispItemCentered(Effect_Img, floor(floor(this.a[a][9].x + this.a[a][10].x) / 2), floor(floor(this.a[a][9].y + this.a[a][10].y) / 2), 20, 12, 12, 0, 20, 12, h), Display_Mode = Display_Mode2 = 0), 0 < (Sett_LP_Bar_Disp & 1) && 0 < LP_Current[a] && (filledRect(floor(this.a[a][0].x) - 6, floor(this.a[a][0].y) - 6, 13, 2, 10027008), filledRect(floor(this.a[a][0].x) - 6, floor(this.a[a][0].y) - 6, floor(13 * LP_Current[a] / LP_Max[a]), 2, 52224)), a != Selected_Player || Game_Mode || (0 == Sett_PL_Symbol ? filledRect(floor(this.a[a][0].x) - 1, floor(this.a[a][0].y) - 8, 3, 3, 16776960) : 1 == Sett_PL_Symbol && (drawLine(floor(this.a[a][0].x) - 3, floor(this.a[a][0].y) - 14, floor(this.a[a][0].x) + 3, floor(this.a[a][0].y) - 14, 16776960), drawLine(floor(this.a[a][0].x) - 3, floor(this.a[a][0].y) - 14, floor(this.a[a][0].x) + .5, floor(this.a[a][0].y) - 7, 16776960), drawLine(floor(this.a[a][0].x) + 3.5, floor(this.a[a][0].y) - 14, floor(this.a[a][0].x) + .5, floor(this.a[a][0].y) - 7, 16776960))))
     }
 };
 var Book_Indexer = [0, 0, 5, 9, 14, 19, 23, 27, 31, 35, 39, 41, 45, 49, 53, 57, 61, 65, 70, 75, 80, 80, 85, 90, 94, 98, 102, 106, 110, 114, 116, 120, 124, 128, 130, 134, 138, 142, 146, 150, 154, 158, 162, 164, 168, 172, 176, 180, 180, 185, 190, 195, 199, 203, 207, 211, 215, 219, 223, 227, 231, 235, 239, 243, 245, 249, 253, 257, 260, 264, 268, 268, 270, 274, 278, 282, 286, 290, 290, 294, 298, 302, 306, 310, 315, 320, 324, 328, 332, 338, 339],
@@ -3478,7 +3434,9 @@ function SR_Enemy() {
     for (a = 0; 300 > a; a++)
         for (b = 0; 21 > b; b++) this.c[a][b] = new Vector2D
 }
-SR_Enemy.prototype.o = function() { this.I = this.i = 0 };
+SR_Enemy.prototype.o = function() {
+    this.I = this.i = 0
+};
 SR_Enemy.prototype.add = function(a, b, c) {
     var d;
     d = floor(100 * Enemy_Spawn_Scale / 100);
@@ -3519,8 +3477,7 @@ SR_Enemy.prototype.sub = function(a) {
     this.F[a] = this.F[this.i - 1];
     this.B[a] = this.B[this.i - 1];
     this.C[a] = this.C[this.i - 1];
-    this.w[a] = this.w[this.i -
-        1];
+    this.w[a] = this.w[this.i - 1];
     this.i--
 };
 
@@ -3533,7 +3490,10 @@ function ENgroundCollision(a, b, c, d) {
     for (var h, q, m, l = 0; l < g; l++) h = a.a[b][c].y + e.y, q = clamp(a.a[b][c].x, 0, 511) >> 3, m = clamp(h, 0, 255) >> 3, q = Terrain.a[m][q], 0 > h || 256 <= h || (0 <= q && 8 >= q ? (0 < e.y && (a.g[b] |= 2), e.x *= d, e.y = -e.y) : a.a[b][c].y = h), h = a.a[b][c].x + e.x, q = clamp(h, 0, 511) >> 3, m = clamp(a.a[b][c].y, 0, 255) >> 3, q = Terrain.a[m][q], 0 > h || 512 <= h || (0 <= q && 8 >= q ? (e.y *= d, e.x = -e.x, a.g[b] |= 1) : a.a[b][c].x = h)
 }
 
-function ENfindEnemy(a, b, c, d) { for (var e = Enemies, g = .5 * (a + c), h = 1E3, q = -1, m, l, A, z = 0; z < e.i; z++) m = EN_Info[e.f[z]][EN_Size], l = EN_Info[e.f[z]][EN_Species], A = (Hitboxvar1[l] >> 1) * ((m >> 1) + 1), m = (Hitboxvar2[l] >> 1) * m, e.D[z] = 0, l = e.a[z][20], !e.j[z] || l.x - A > c || l.x + A < a || l.y - m > d || l.y + m < b || (e.D[z] = 1, absVal(l.x - g) < h && (h = absVal(l.x - g), q = z)); return q }
+function ENfindEnemy(a, b, c, d) {
+    for (var e = Enemies, g = .5 * (a + c), h = 1E3, q = -1, m, l, A, z = 0; z < e.i; z++) m = EN_Info[e.f[z]][EN_Size], l = EN_Info[e.f[z]][EN_Species], A = (Hitboxvar1[l] >> 1) * ((m >> 1) + 1), m = (Hitboxvar2[l] >> 1) * m, e.D[z] = 0, l = e.a[z][20], !e.j[z] || l.x - A > c || l.x + A < a || l.y - m > d || l.y + m < b || (e.D[z] = 1, absVal(l.x - g) < h && (h = absVal(l.x - g), q = z));
+    return q
+}
 
 function ENtakeDamage(a, b, c, d, e, g, h, q, m) {
     var l = Enemies,
@@ -3542,8 +3502,7 @@ function ENtakeDamage(a, b, c, d, e, g, h, q, m) {
     Players.j = 0;
     q *= .5;
     m *= .5;
-    for (var S = 0; S < l.i && (z = EN_Info[l.f[S]][EN_Size], Z = EN_Info[l.f[S]][EN_Species], B = floor(Hitboxvar1[Z] / 2) * floor(z / 2 + 1), z = floor(Hitboxvar2[Z] / 2) * z, !l.j[S] || l.a[S][20].x - B > g + q || l.a[S][20].x + B < g - q || l.a[S][20].y - z > h + m || l.a[S][20].y + z < h - m || (B = d + floor(random(e - d + 1)), 4 == b ? (l.B[S] = c - floor(c * EN_Info[l.f[S]][Po_Resist] / 100), l.C[S] = B, 0 > EN_Info[l.f[S]][Po_Resist] && (l.C[S] = maxOf(1, B - floor(B * EN_Info[l.f[S]][Po_Resist] / 100)))) : (0 == b ? B = maxOf(1, B - EN_Info[l.f[S]][Ph_Resist]) : 1 == b ? B = maxOf(1, B - floor(B * EN_Info[l.f[S]][Fi_Resist] / 100)) : 2 == b ? B = maxOf(1, B - floor(B * EN_Info[l.f[S]][Ic_Resist] / 100)) : 3 == b && (B = maxOf(1, B - floor(B * EN_Info[l.f[S]][Th_Resist] /
-            100))), l.j[S] = maxOf(l.j[S] - B, 0), Sett_Dmg_Indicators & 1 || Indicators.add(l.a[S][20].x, l.a[S][20].y - z, 1, B, 12632256), l.u[S] = B), 2 == b ? (l.A[S] = 500 - floor(500 * EN_Info[l.f[S]][Ic_Resist] / 100), l.F[S] = c) : 5 == b && (l.w[S] = c - floor(c * EN_Info[l.f[S]][Fr_Resist] / 100)), A = S, Players.j += B, Target_HP_Current = l.j[S], Target_HP_Max = EN_Info[l.f[S]][EN_LP], En_Count_From_Max = 100, Target_Array_ID = l.f[S], 0 != a)); S++);
+    for (var S = 0; S < l.i && (z = EN_Info[l.f[S]][EN_Size], Z = EN_Info[l.f[S]][EN_Species], B = floor(Hitboxvar1[Z] / 2) * floor(z / 2 + 1), z = floor(Hitboxvar2[Z] / 2) * z, !l.j[S] || l.a[S][20].x - B > g + q || l.a[S][20].x + B < g - q || l.a[S][20].y - z > h + m || l.a[S][20].y + z < h - m || (B = d + floor(random(e - d + 1)), 4 == b ? (l.B[S] = c - floor(c * EN_Info[l.f[S]][Po_Resist] / 100), l.C[S] = B, 0 > EN_Info[l.f[S]][Po_Resist] && (l.C[S] = maxOf(1, B - floor(B * EN_Info[l.f[S]][Po_Resist] / 100)))) : (0 == b ? B = maxOf(1, B - EN_Info[l.f[S]][Ph_Resist]) : 1 == b ? B = maxOf(1, B - floor(B * EN_Info[l.f[S]][Fi_Resist] / 100)) : 2 == b ? B = maxOf(1, B - floor(B * EN_Info[l.f[S]][Ic_Resist] / 100)) : 3 == b && (B = maxOf(1, B - floor(B * EN_Info[l.f[S]][Th_Resist] / 100))), l.j[S] = maxOf(l.j[S] - B, 0), Sett_Dmg_Indicators & 1 || Indicators.add(l.a[S][20].x, l.a[S][20].y - z, 1, B, 12632256), l.u[S] = B), 2 == b ? (l.A[S] = 500 - floor(500 * EN_Info[l.f[S]][Ic_Resist] / 100), l.F[S] = c) : 5 == b && (l.w[S] = c - floor(c * EN_Info[l.f[S]][Fr_Resist] / 100)), A = S, Players.j += B, Target_HP_Current = l.j[S], Target_HP_Max = EN_Info[l.f[S]][EN_LP], En_Count_From_Max = 100, Target_Array_ID = l.f[S], 0 != a)); S++);
     return A
 }
 
@@ -3600,14 +3559,12 @@ function ENattack(a, b, c) {
         $b = g[58],
         g = g[59];
     if (0 < a.s[b]) a.s[b]--;
-    else if (!(random(1E3) >
-            ab) && (ab = PLfindPlayer(a.a[b][0].x - Pa, a.a[b][0].y - Pa, a.a[b][0].x + Pa, a.a[b][0].y + Pa, 0), -1 != ab && (a.s[b] = ka, h)))
+    else if (!(random(1E3) > ab) && (ab = PLfindPlayer(a.a[b][0].x - Pa, a.a[b][0].y - Pa, a.a[b][0].x + Pa, a.a[b][0].y + Pa, 0), -1 != ab && (a.s[b] = ka, h)))
         if (1 == h) {
             var h = a.a[b][0].x + 10 * d.x,
                 ca = a.a[b][0].y + 10 * d.y;
             Projectiles.add(1, h, ca, 0, 0, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca)
-        } else if (2 == h) d = Players.a[ab][2].x - a.a[b][0].x, d /= absVal(d), h = a.a[b][0].x + 10 * d, ca = a.a[b][0].y, Projectiles.add(1, h, ca, d * Aa * .1, 0, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb,
-        Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
+        } else if (2 == h) d = Players.a[ab][2].x - a.a[b][0].x, d /= absVal(d), h = a.a[b][0].x + 10 * d, ca = a.a[b][0].y, Projectiles.add(1, h, ca, d * Aa * .1, 0, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
     else if (3 == h || 6 == h)
         for (3 == h ? assignVector2D(d, Players.a[ab][2].x - a.a[b][0].x, Players.a[ab][2].y - a.a[b][0].y) : 6 == h && assignVector2D(d, 0, -1), e = 0 < q ? q : 16, q = floor(512 * angleToXAxis(d) / TwoPi), q -= floor((rb - 1) * e / 2), ka = 0; ka < rb; ka++) {
             d.x = Xe_arr[q & 511][0];
@@ -3619,23 +3576,23 @@ function ENattack(a, b, c) {
             Projectiles.add(1, h, ca, Pa, Ba, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
             q += e
         } else if (4 == h)
-            for (ka = 0; ka < rb; ka++) assignVector2D(d, Players.a[ab][2].x - a.a[b][0].x,
-                Players.a[ab][2].y - a.a[b][0].y), e = 0 < q ? q : rb, 0 < rb && (ca = floor(random(512)), h = random(10) * e, d.x += Xe_arr[ca][0] * h, d.y += Xe_arr[ca][1] * h), h = a.a[b][0].x, ca = a.a[b][0].y, Pa = d.x / Aa, Ba = (d.y - .5 * Aa * Aa * T * .01) / Aa, Projectiles.add(1, h, ca, Pa, Ba, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
+            for (ka = 0; ka < rb; ka++) assignVector2D(d, Players.a[ab][2].x - a.a[b][0].x, Players.a[ab][2].y - a.a[b][0].y), e = 0 < q ? q : rb, 0 < rb && (ca = floor(random(512)), h = random(10) * e, d.x += Xe_arr[ca][0] * h, d.y += Xe_arr[ca][1] * h), h = a.a[b][0].x, ca = a.a[b][0].y, Pa = d.x / Aa, Ba = (d.y - .5 * Aa * Aa * T * .01) / Aa, Projectiles.add(1, h, ca, Pa, Ba, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
         else if (5 == h)
-        for (ka = 0; ka < rb; ka++) h = a.a[b][0].x + randomRange(-Pa, Pa), ca = a.a[b][0].y + randomRange(-Pa, 0), Projectiles.add(1, h, ca, 0, 0, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb,
-            Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
+        for (ka = 0; ka < rb; ka++) h = a.a[b][0].x + randomRange(-Pa, Pa), ca = a.a[b][0].y + randomRange(-Pa, 0), Projectiles.add(1, h, ca, 0, 0, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
     else if (7 == h)
         for (ka = 0; ka < rb; ka++) h = floor(a.a[b][0].x / 8), ca = floor(a.a[b][0].y / 8), a.add(h, ca, e + pa);
     else if (8 == h)
         for (ka = 0; ka < rb; ka++) ca = randInt(4), h = Players.a[ca][2].x, ca = Players.a[ca][2].y, Projectiles.add(1, h, ca, 0, 0, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
     else if (9 == h)
-        for (ka = 0; ka < rb; ka++) ca = randInt(4), assignVector2D(d, Players.a[ca][0].x - a.a[b][0].x, Players.a[ca][0].y - a.a[b][0].y), normalize(d), h = a.a[b][0].x + 10 * d.x, ca = a.a[b][0].y + 10 * d.y, Pa = d.x * Aa * .1, Ba = d.y *
-            Aa * .1, Projectiles.add(1, h, ca, Pa, Ba, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca)
+        for (ka = 0; ka < rb; ka++) ca = randInt(4), assignVector2D(d, Players.a[ca][0].x - a.a[b][0].x, Players.a[ca][0].y - a.a[b][0].y), normalize(d), h = a.a[b][0].x + 10 * d.x, ca = a.a[b][0].y + 10 * d.y, Pa = d.x * Aa * .1, Ba = d.y * Aa * .1, Projectiles.add(1, h, ca, Pa, Ba, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca)
 }
 
 function enemyDeath(a, b, c) {
     for (var d, e = 0, g = 0; g < Stage_Count; g++)
-        if (Stage_Status[g] & Unlocked) { var h = Book_Indexer[g + 1] - Book_Indexer[g]; for (d = 0; d < h; d++) e < EN_Info[Book_Indexer[g] + d][EN_Lvl] && (e = EN_Info[Book_Indexer[g] + d][EN_Lvl]), d += EN_Info[Book_Indexer[g] + d][En_2nd_Att] }
+        if (Stage_Status[g] & Unlocked) {
+            var h = Book_Indexer[g + 1] - Book_Indexer[g];
+            for (d = 0; d < h; d++) e < EN_Info[Book_Indexer[g] + d][EN_Lvl] && (e = EN_Info[Book_Indexer[g] + d][EN_Lvl]), d += EN_Info[Book_Indexer[g] + d][En_2nd_Att]
+        }
     d = 1 == c ? b : a.f[b];
     h = absVal(LV[0] - EN_Info[d][EN_Lvl]);
     g = 0;
@@ -3666,10 +3623,11 @@ function enemyDeath(a, b, c) {
     h = g = e = 100;
     for (d = 0; 4 > d; d++) checkEff(4 + d, 33) && (e += getEff(4 + d, 8)), checkEff(4 + d, 34) && (g += getEff(4 + d, 8)), checkEff(4 + d, 35) && (h += getEff(4 + d, 8));
     for (d = 0; 4 > d; d++)
-        if (checkEff(4 + d, 41) && random(100) < getEff(4 + d, 8)) { var q = ENfindEnemy(a.a[b][0].x - 600, a.a[b][0].y - 300, a.a[b][0].x + 600, a.a[b][0].y + 300); - 1 != q && PLprojectileAttack(Players, getEff(4 + d, 9), a.a[b][0].x, a.a[b][0].y, q) }
+        if (checkEff(4 + d, 41) && random(100) < getEff(4 + d, 8)) {
+            var q = ENfindEnemy(a.a[b][0].x - 600, a.a[b][0].y - 300, a.a[b][0].x + 600, a.a[b][0].y + 300); - 1 != q && PLprojectileAttack(Players, getEff(4 + d, 9), a.a[b][0].x, a.a[b][0].y, q)
+        }
     q = 0;
-    17 == a.v[b] && (q = a.b[b] -
-        1);
+    17 == a.v[b] && (q = a.b[b] - 1);
     for (d = En_Drop1; d < En_Drop1 + 6; d += 2) 0 != EN_Info[a.f[b]][d] && Math.random() * EN_Info[a.f[b]][d + 1] * 100 < e && Drops.add(a.a[b][q].x, a.a[b][q].y, EN_Info[a.f[b]][d], 0, 0);
     1 > 3 * Math.random() && Drops.add(a.a[b][q].x, a.a[b][q].y, 1, floor(c * h / 100), 0);
     500 * Math.random() < g && Drops.add(a.a[b][q].x, a.a[b][q].y, 2, 0, 0);
@@ -3684,8 +3642,7 @@ SR_Enemy.prototype.L = function() {
         if (0 < this.w[a] && 0 < this.j[a]) this.w[a]--;
         else {
             if (0 < this.A[a] && 0 < this.j[a] && (this.A[a]--, random(100) < this.F[a])) continue;
-            b ? 1 == b ? a = this.M(a) : 2 == b ? a = this.N(a) : 3 == b ? a = this.O(a) : 4 == b ? a = this.G(a, b) : 5 == b ? a = this.H(a, b) : 6 == b ? a = this.P(a) : 7 == b ? a = this.R(a) : 8 == b ? a = this.S(a) : 9 == b ? a = this.J(a, b) : 10 == b ? a = this.U(a) : 11 == b ? a = this.V(a) :
-                12 == b ? a = this.G(a, b) : 13 == b ? a = this.J(a, b) : 14 == b ? a = this.W(a) : 15 == b ? a = this.X(a) : 16 == b ? a = this.Y(a) : 17 == b ? a = this.Z(a) : 18 == b && (a = this.H(a, b)) : a = this.T(a)
+            b ? 1 == b ? a = this.M(a) : 2 == b ? a = this.N(a) : 3 == b ? a = this.O(a) : 4 == b ? a = this.G(a, b) : 5 == b ? a = this.H(a, b) : 6 == b ? a = this.P(a) : 7 == b ? a = this.R(a) : 8 == b ? a = this.S(a) : 9 == b ? a = this.J(a, b) : 10 == b ? a = this.U(a) : 11 == b ? a = this.V(a) : 12 == b ? a = this.G(a, b) : 13 == b ? a = this.J(a, b) : 14 == b ? a = this.W(a) : 15 == b ? a = this.X(a) : 16 == b ? a = this.Y(a) : 17 == b ? a = this.Z(a) : 18 == b && (a = this.H(a, b)) : a = this.T(a)
         }
     }
 };
@@ -3709,8 +3666,7 @@ SR_Enemy.prototype.T = function(a) {
             pullJoints(this.a[a][0], this.a[a][2], 9 * b, .2, .2);
             pullJoints(this.a[a][1], this.a[a][2], 11 * b, .2, .2);
             ENattack(this, a, 0);
-            for (b = this.g[a] = 0; 3 > b; b++) ENgroundCollision(this,
-                a, b, .5);
+            for (b = this.g[a] = 0; 3 > b; b++) ENgroundCollision(this, a, b, .5);
             this.a[a][20].set(this.a[a][0]);
             if (0 >= this.j[a]) {
                 this.b[a] = 3;
@@ -3747,8 +3703,7 @@ SR_Enemy.prototype.M = function(a) {
                 var c = 0; - 1 != b ? c = Players.a[b][2].x < this.a[a][0].x ? -1 : 1 : c = fiftyfifty(-1, 1);
                 10 > random(100) && (this.a[a][0].x += randomRange(.4, .6) * c, this.a[a][0].y += randomRange(-1.5, -2))
             }
-            pullJoints(this.a[a][0], this.a[a][1],
-                0, 0, .01);
+            pullJoints(this.a[a][0], this.a[a][1], 0, 0, .01);
             pullJoints(this.a[a][1], this.a[a][2], 0, 0, .01);
             ENattack(this, a, 0);
             this.g[a] = 0;
@@ -3791,8 +3746,7 @@ SR_Enemy.prototype.N = function(a) {
             moveJoint(this.a[a][5], this.c[a][5], 0, .99);
             moveJoint(this.a[a][6], this.c[a][6], 0, .99);
             assignVector2D(c, 0, 0);
-            var d = PLfindPlayer(this.a[a][0].x - 150, this.a[a][0].y - 150, this.a[a][0].x + 150, this.a[a][0].y + 150, 0); - 1 != d && (Vdistance(c, Players.a[d][2], this.a[a][0]), d = normalize(c), d -= EN_Info[this.f[a]][32] -
-                10, 0 > d ? scaleVector2D(c, -.05) : scaleVector2D(c, .05));
+            var d = PLfindPlayer(this.a[a][0].x - 150, this.a[a][0].y - 150, this.a[a][0].x + 150, this.a[a][0].y + 150, 0); - 1 != d && (Vdistance(c, Players.a[d][2], this.a[a][0]), d = normalize(c), d -= EN_Info[this.f[a]][32] - 10, 0 > d ? scaleVector2D(c, -.05) : scaleVector2D(c, .05));
             this.a[a][0].add(c);
             10 > random(100) && (this.a[a][0].x += randomRange(-1, 1), this.a[a][0].y += randomRange(-1, 1));
             this.a[a][2].x += randomRange(0, -.1);
@@ -3827,8 +3781,7 @@ SR_Enemy.prototype.N = function(a) {
             pullJoints(this.a[a][4], this.a[a][5], d, c, c);
             pullJoints(this.a[a][4], this.a[a][6], d, c, c);
             pullJoints(this.a[a][5], this.a[a][6], d, c, c);
-            for (b = this.g[a] =
-                0; 7 > b; b++) ENgroundCollision(this, a, b, .5);
+            for (b = this.g[a] = 0; 7 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else {
@@ -3863,8 +3816,7 @@ SR_Enemy.prototype.O = function(a) {
             b = PLfindPlayer(this.a[a][0].x - 200, this.a[a][0].y - 200, this.a[a][0].x + 200, this.a[a][0].y + 200, 0); - 1 != b && (Vdistance(c, Players.a[b][2], this.a[a][0]), b = normalize(c), b -= EN_Info[this.f[a]][32] / 2 - 10, 0 > b ? scaleVector2D(c, -.01) : scaleVector2D(c, .01));
             b = Terrain.a[floor(clamp(this.a[a][0].y + 24, 0, 255) / 8)][floor(clamp(this.a[a][0].x, 0, 511) / 8)];
             0 <= b && 8 >= b && (c.y -= .02);
-            2 > random(100) && (c.x += randomRange(-.5, .5), c.y +=
-                randomRange(-.5, .5));
+            2 > random(100) && (c.x += randomRange(-.5, .5), c.y += randomRange(-.5, .5));
             this.a[a][0].add(c);
             c = .02;
             d = 5 * d;
@@ -3884,8 +3836,7 @@ SR_Enemy.prototype.O = function(a) {
             pullJoints(this.a[a][1], this.a[a][2], d, c, c);
             pullJoints(this.a[a][2], this.a[a][3], d, c, c);
             pullJoints(this.a[a][3], this.a[a][4], d, c, c);
-            for (b = this.g[a] =
-                0; 6 > b; b++) ENgroundCollision(this, a, b, .5);
+            for (b = this.g[a] = 0; 6 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
     else this.b[a] = 1;
@@ -3897,11 +3848,9 @@ SR_Enemy.prototype.G = function(a, b) {
     c = EN_Info[this.f[a]][EN_Size];
     if (this.b[a])
         if (1 == this.b[a] || 2 == this.b[a]) {
-            4 == b ? (moveJoint(this.a[a][0], this.c[a][0], -.2, .99), moveJoint(this.a[a][1], this.c[a][1], 0, .99), moveJoint(this.a[a][2], this.c[a][2], -.1, .99), moveJoint(this.a[a][3], this.c[a][3], 0, .99), moveJoint(this.a[a][4], this.c[a][4], 0, .99), moveJoint(this.a[a][5], this.c[a][5], 0, .99), moveJoint(this.a[a][6], this.c[a][6], 0, .99), moveJoint(this.a[a][7], this.c[a][7], 0, .99), moveJoint(this.a[a][8], this.c[a][8], 0, .99), moveJoint(this.a[a][9], this.c[a][9], .3, .99), moveJoint(this.a[a][10], this.c[a][10], .3, .99)) : 12 ==
-                b && (moveJoint(this.a[a][0], this.c[a][0], -.02, .99), moveJoint(this.a[a][1], this.c[a][1], 0, .99), moveJoint(this.a[a][2], this.c[a][2], -.01, .99), moveJoint(this.a[a][3], this.c[a][3], 0, .99), moveJoint(this.a[a][4], this.c[a][4], 0, .99), moveJoint(this.a[a][5], this.c[a][5], 0, .99), moveJoint(this.a[a][6], this.c[a][6], 0, .99), moveJoint(this.a[a][7], this.c[a][7], 0, .99), moveJoint(this.a[a][8], this.c[a][8], 0, .99), moveJoint(this.a[a][9], this.c[a][9], .1, .99), moveJoint(this.a[a][10], this.c[a][10], .1, .99));
+            4 == b ? (moveJoint(this.a[a][0], this.c[a][0], -.2, .99), moveJoint(this.a[a][1], this.c[a][1], 0, .99), moveJoint(this.a[a][2], this.c[a][2], -.1, .99), moveJoint(this.a[a][3], this.c[a][3], 0, .99), moveJoint(this.a[a][4], this.c[a][4], 0, .99), moveJoint(this.a[a][5], this.c[a][5], 0, .99), moveJoint(this.a[a][6], this.c[a][6], 0, .99), moveJoint(this.a[a][7], this.c[a][7], 0, .99), moveJoint(this.a[a][8], this.c[a][8], 0, .99), moveJoint(this.a[a][9], this.c[a][9], .3, .99), moveJoint(this.a[a][10], this.c[a][10], .3, .99)) : 12 == b && (moveJoint(this.a[a][0], this.c[a][0], -.02, .99), moveJoint(this.a[a][1], this.c[a][1], 0, .99), moveJoint(this.a[a][2], this.c[a][2], -.01, .99), moveJoint(this.a[a][3], this.c[a][3], 0, .99), moveJoint(this.a[a][4], this.c[a][4], 0, .99), moveJoint(this.a[a][5], this.c[a][5], 0, .99), moveJoint(this.a[a][6], this.c[a][6], 0, .99), moveJoint(this.a[a][7], this.c[a][7], 0, .99), moveJoint(this.a[a][8], this.c[a][8], 0, .99), moveJoint(this.a[a][9], this.c[a][9], .1, .99), moveJoint(this.a[a][10], this.c[a][10], .1, .99));
             if (50 > random(100) && 0 < (this.g[a] & 3)) {
-                var d = PLfindPlayer(this.a[a][0].x - 200, this.a[a][0].y - 50, this.a[a][0].x + 200, this.a[a][0].y +
-                    50, 0); - 1 != d ? this.b[a] = Players.a[d][2].x < this.a[a][0].x ? 1 : 2 : 10 > random(100) && (this.b[a] = fiftyfifty(1, 2));
+                var d = PLfindPlayer(this.a[a][0].x - 200, this.a[a][0].y - 50, this.a[a][0].x + 200, this.a[a][0].y + 50, 0); - 1 != d ? this.b[a] = Players.a[d][2].x < this.a[a][0].x ? 1 : 2 : 10 > random(100) && (this.b[a] = fiftyfifty(1, 2));
                 var e = d = 1,
                     g = 0;
                 12 == b && (d = .25, e = .3, g = .25);
@@ -3910,8 +3859,7 @@ SR_Enemy.prototype.G = function(a, b) {
             d = .5;
             e = 1.2 * c;
             12 == b && (d = .02, e = 1 * c);
-            pullJoints(this.a[a][0],
-                this.a[a][1], 3 * e, d, d);
+            pullJoints(this.a[a][0], this.a[a][1], 3 * e, d, d);
             pullJoints(this.a[a][1], this.a[a][2], 3 * e, d, d);
             pullJoints(this.a[a][1], this.a[a][3], 4 * e, d, d);
             pullJoints(this.a[a][1], this.a[a][4], 4 * e, d, d);
@@ -3923,8 +3871,7 @@ SR_Enemy.prototype.G = function(a, b) {
             pullJoints(this.a[a][8], this.a[a][10], 4 * e, d, d);
             pullJoints(this.a[a][7], this.a[a][8], 5 * e, d, d);
             332 == this.f[a] ? ENattack(this, a, randInt(6)) : (ENattack(this, a, 0), 0 != EN_Info[this.f[a]][En_2nd_Att] && ENattack(this, a, 1));
-            for (c = this.g[a] = 0; 11 > c; c++) ENgroundCollision(this,
-                a, c, .5);
+            for (c = this.g[a] = 0; 11 > c; c++) ENgroundCollision(this, a, c, .5);
             this.a[a][20].set(this.a[a][1]);
             if (0 >= this.j[a]) {
                 this.b[a] = 3;
@@ -3943,8 +3890,7 @@ SR_Enemy.prototype.G = function(a, b) {
             for (c = this.g[a] = 0; 11 > c; c++) ENgroundCollision(this, a, c, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
-    else this.b[a] =
-        1;
+    else this.b[a] = 1;
     return a
 };
 WIN.fff = SR_Enemy.prototype.H;
@@ -3963,8 +3909,7 @@ SR_Enemy.prototype.H = function(a, b) {
             pullJoints(this.a[a][0], this.a[a][1], 8 * d, .2, .2);
             for (c = 1; c < this.b[a] - 2; c++) pullJoints(this.a[a][c], this.a[a][c + 1], 6 * d, .2, .2);
             pullJoints(this.a[a][c], this.a[a][c + 1], 6 * d, .2, 0);
-            ENattack(this, a,
-                0);
+            ENattack(this, a, 0);
             for (c = this.g[a] = 0; c < this.b[a]; c++) ENgroundCollision(this, a, c, .5);
             this.a[a][20].x = .5 * (this.a[a][0].x + this.a[a][this.b[a] - 1].x);
             this.a[a][20].y = .5 * (this.a[a][0].y + this.a[a][this.b[a] - 1].y);
@@ -3993,8 +3938,7 @@ SR_Enemy.prototype.P = function(a) {
                 c = 1.2 * c;
             for (b = 1; 4 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 3], 20 * c, d, d);
             for (b = 1; 5 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 2], 17 * c, d, d);
-            pullJoints(this.a[a][b + 0], this.a[a][1],
-                17 * c, d, d);
+            pullJoints(this.a[a][b + 0], this.a[a][1], 17 * c, d, d);
             pullJoints(this.a[a][b + 1], this.a[a][2], 17 * c, d, d);
             for (b = 1; 6 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 1], 10 * c, d, d);
             pullJoints(this.a[a][b], this.a[a][1], 10 * c, d, d);
@@ -4011,8 +3955,7 @@ SR_Enemy.prototype.P = function(a) {
             for (b = 0; 7 > b; b++) moveJoint(this.a[a][b], this.c[a][b], .05, .99);
             d = .5;
             c = 1.2 * c * (150 - this.h[a]) / 150;
-            for (b =
-                1; 6 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 1], 10 * c, d, d);
+            for (b = 1; 6 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 1], 10 * c, d, d);
             for (b = this.g[a] = 0; 7 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
@@ -4067,8 +4010,7 @@ SR_Enemy.prototype.R = function(a) {
             for (b = 0; 5 > b; b++) moveJoint(this.a[a][b], this.c[a][b], .05, .99);
             c = .5;
             d = 7 * d * (150 - this.h[a]) / 150;
-            pullJoints(this.a[a][2], this.a[a][3],
-                d, c, c);
+            pullJoints(this.a[a][2], this.a[a][3], d, c, c);
             pullJoints(this.a[a][2], this.a[a][4], d, c, c);
             pullJoints(this.a[a][3], this.a[a][4], d, c, c);
             for (b = this.g[a] = 0; 5 > b; b++) ENgroundCollision(this, a, b, .5);
@@ -4117,16 +4059,14 @@ SR_Enemy.prototype.J = function(a, b) {
                 assignVector2D(d, 0, 0);
                 c = PLfindPlayer(this.a[a][0].x - 150, this.a[a][0].y - 50, this.a[a][0].x + 150, this.a[a][0].y + 50, 0); - 1 != c && (Vdistance(d, Players.a[c][2], this.a[a][0]), c = normalize(d), c -= EN_Info[this.f[a]][32] / 2 - 10, 0 > c ? (scaleVector2D(d, -.05), 384 < this.a[a][0].x && setPerpendicular(d), 128 > this.a[a][0].x && (setPerpendicular(d), scaleVector2D(d, -1))) : scaleVector2D(d, .01));
                 c = floor(clamp(this.a[a][0].x, 0, 511) / 8);
-                var g = floor(clamp(this.a[a][0].y -
-                    7, 0, 255) / 8);
+                var g = floor(clamp(this.a[a][0].y - 7, 0, 255) / 8);
                 c = Terrain.a[g][c];
                 0 > c && (d.y += .05);
                 c = floor(clamp(this.a[a][0].x + d.x, 0, 511) / 8);
                 g = floor(clamp(this.a[a][0].y + d.y, 0, 255) / 8);
                 c = Terrain.a[g][c];
                 0 <= c && 8 >= c && setPerpendicular(d)
-            } else assignVector2D(d, 0, 0), c = PLfindPlayer(this.a[a][0].x - 500, this.a[a][0].y - 500, this.a[a][0].x + 500, this.a[a][0].y + 500, 0), -1 != c && (Vdistance(d, Players.a[c][2], this.a[a][0]), c = normalize(d), c -= EN_Info[this.f[a]][32] / 2 - 10, 0 > c ? (1 == this.b[a] ? scaleVector2D(d, -.05) : scaleVector2D(d, .05), setPerpendicular(d)) : scaleVector2D(d, .02)), c = floor(clamp(this.a[a][0].x + d.x, 0, 511) / 8), g = floor(clamp(this.a[a][0].y + d.y, 0, 255) / 8), c = Terrain.a[g][c], 0 <= c && 8 >= c && (setPerpendicular(d), 2 == this.b[a] && scaleVector2D(d, -1)), c = floor(clamp(this.a[a][0].x +
-                d.x, 0, 511) / 8), g = floor(clamp(this.a[a][0].y + d.y, 0, 255) / 8), c = Terrain.a[g][c], 0 <= c && 8 >= c && (setPerpendicular(d), 2 == this.b[a] && scaleVector2D(d, -1));
+            } else assignVector2D(d, 0, 0), c = PLfindPlayer(this.a[a][0].x - 500, this.a[a][0].y - 500, this.a[a][0].x + 500, this.a[a][0].y + 500, 0), -1 != c && (Vdistance(d, Players.a[c][2], this.a[a][0]), c = normalize(d), c -= EN_Info[this.f[a]][32] / 2 - 10, 0 > c ? (1 == this.b[a] ? scaleVector2D(d, -.05) : scaleVector2D(d, .05), setPerpendicular(d)) : scaleVector2D(d, .02)), c = floor(clamp(this.a[a][0].x + d.x, 0, 511) / 8), g = floor(clamp(this.a[a][0].y + d.y, 0, 255) / 8), c = Terrain.a[g][c], 0 <= c && 8 >= c && (setPerpendicular(d), 2 == this.b[a] && scaleVector2D(d, -1)), c = floor(clamp(this.a[a][0].x + d.x, 0, 511) / 8), g = floor(clamp(this.a[a][0].y + d.y, 0, 255) / 8), c = Terrain.a[g][c], 0 <= c && 8 >= c && (setPerpendicular(d), 2 == this.b[a] && scaleVector2D(d, -1));
             2 > random(100) && (d.x += randomRange(-.5, .5), d.y += randomRange(-.5, .5));
             this.a[a][0].add(d);
             for (c = 0; 6 > c; c++) pullJoints(this.a[a][c], this.a[a][c + 1], 6 * e, 0, .5);
@@ -4139,8 +4079,7 @@ SR_Enemy.prototype.J = function(a, b) {
                 enemyDeath(this, a, 0)
             }
         } else {
-            for (c = 0; 6 > c; c++) moveJoint(this.a[a][c],
-                this.c[a][c], .05, .99);
+            for (c = 0; 6 > c; c++) moveJoint(this.a[a][c], this.c[a][c], .05, .99);
             d = 6 * (150 - this.h[a]) / 150;
             for (c = 1; 5 > c; c++) pullJoints(this.a[a][c], this.a[a][c + 1], d * e, 0, .5);
             for (c = this.g[a] = 0; 6 > c; c++) ENgroundCollision(this, a, c, .5);
@@ -4165,10 +4104,8 @@ SR_Enemy.prototype.U = function(a) {
             moveJoint(this.a[a][7], this.c[a][7], -.1, .99);
             moveJoint(this.a[a][8], this.c[a][8], .8, .99);
             if (50 > random(100) && 0 < (this.g[a] & 3)) {
-                var c = PLfindPlayer(this.a[a][0].x - 500, this.a[a][0].y - 25,
-                    this.a[a][0].x + 500, this.a[a][0].y + 25, 0); - 1 != c ? this.b[a] = Players.a[c][2].x < this.a[a][0].x ? 1 : 2 : 10 > random(100) && (this.b[a] = fiftyfifty(1, 2));
-                1 == this.b[a] ? (this.a[a][2].x < this.a[a][6].x ? (this.a[a][6].x += random(-1), this.a[a][6].y += randomRange(-1, -1)) : (this.a[a][2].x += random(-1), this.a[a][2].y += randomRange(-1, -1)), this.a[a][4].x < this.a[a][8].x ? (this.a[a][8].x += random(-1), this.a[a][8].y += randomRange(-1, -1)) : (this.a[a][4].x += random(-1), this.a[a][4].y += randomRange(-1, -1)), 1 > random(100) && (--this.a[a][0].x, this.a[a][0].y -= 3)) : (this.a[a][2].x < this.a[a][6].x ? (this.a[a][2].x += random(1), this.a[a][2].y +=
-                    randomRange(-1, -1)) : (this.a[a][6].x += random(1), this.a[a][6].y += randomRange(-1, -1)), this.a[a][4].x < this.a[a][8].x ? (this.a[a][4].x += random(1), this.a[a][4].y += randomRange(-1, -1)) : (this.a[a][8].x += random(1), this.a[a][8].y += randomRange(-1, -1)), 1 > random(100) && (this.a[a][0].x += 1, this.a[a][0].y -= 3))
+                var c = PLfindPlayer(this.a[a][0].x - 500, this.a[a][0].y - 25, this.a[a][0].x + 500, this.a[a][0].y + 25, 0); - 1 != c ? this.b[a] = Players.a[c][2].x < this.a[a][0].x ? 1 : 2 : 10 > random(100) && (this.b[a] = fiftyfifty(1, 2));
+                1 == this.b[a] ? (this.a[a][2].x < this.a[a][6].x ? (this.a[a][6].x += random(-1), this.a[a][6].y += randomRange(-1, -1)) : (this.a[a][2].x += random(-1), this.a[a][2].y += randomRange(-1, -1)), this.a[a][4].x < this.a[a][8].x ? (this.a[a][8].x += random(-1), this.a[a][8].y += randomRange(-1, -1)) : (this.a[a][4].x += random(-1), this.a[a][4].y += randomRange(-1, -1)), 1 > random(100) && (--this.a[a][0].x, this.a[a][0].y -= 3)) : (this.a[a][2].x < this.a[a][6].x ? (this.a[a][2].x += random(1), this.a[a][2].y += randomRange(-1, -1)) : (this.a[a][6].x += random(1), this.a[a][6].y += randomRange(-1, -1)), this.a[a][4].x < this.a[a][8].x ? (this.a[a][4].x += random(1), this.a[a][4].y += randomRange(-1, -1)) : (this.a[a][8].x += random(1), this.a[a][8].y += randomRange(-1, -1)), 1 > random(100) && (this.a[a][0].x += 1, this.a[a][0].y -= 3))
             }
             c = .3;
             b = 2.2 * b;
@@ -4178,8 +4115,7 @@ SR_Enemy.prototype.U = function(a) {
             pullJoints(this.a[a][5], this.a[a][6], 2 * b, .2 * c, .2 * c);
             pullJoints(this.a[a][0], this.a[a][8], 3 * b, .1 * c, c);
             pullJoints(this.a[a][7], this.a[a][8], 2 * b, .2 * c, .2 * c);
-            pullJoints(this.a[a][0],
-                this.a[a][1], 4 * b, .1 * c, c);
+            pullJoints(this.a[a][0], this.a[a][1], 4 * b, .1 * c, c);
             pullJoints(this.a[a][0], this.a[a][3], 4 * b, .1 * c, c);
             pullJoints(this.a[a][0], this.a[a][2], 4 * b, .1 * c, c);
             pullJoints(this.a[a][1], this.a[a][2], 3 * b, .2 * c, .2 * c);
@@ -4194,8 +4130,7 @@ SR_Enemy.prototype.U = function(a) {
             if (0 >= this.j[a]) {
                 this.b[a] = 3;
                 this.h[a] = 0;
-                for (b = 1; 9 > b; b++) this.a[a][b].x +=
-                    randomRange(-1, 1), this.a[a][b].y -= randomRange(1, 2);
+                for (b = 1; 9 > b; b++) this.a[a][b].x += randomRange(-1, 1), this.a[a][b].y -= randomRange(1, 2);
                 enemyDeath(this, a, 0)
             }
         } else {
@@ -4217,8 +4152,7 @@ SR_Enemy.prototype.U = function(a) {
         this.a[a][2].x += 0;
         this.a[a][2].y += 7.99;
         this.a[a][3].x += 7.99;
-        this.a[a][3].y +=
-            0;
+        this.a[a][3].y += 0;
         this.a[a][4].x += 7.99;
         this.a[a][4].y += 7.99;
         this.a[a][5].x += 0;
@@ -4247,8 +4181,7 @@ SR_Enemy.prototype.V = function(a) {
             this.a[a][0].x = this.a[a][3].x;
             this.a[a][1].x = this.a[a][3].x - 8 * c;
             this.a[a][2].x = this.a[a][3].x + 8 * c;
-            0 < this.s[a] ? this.s[a]-- : 0 < this.u[a] && (this.a[a][0].y += randomRange(0, 1), this.a[a][1].y += randomRange(0, 1), this.a[a][2].y += randomRange(0, 1), ENattack(this,
-                a, 0));
+            0 < this.s[a] ? this.s[a]-- : 0 < this.u[a] && (this.a[a][0].y += randomRange(0, 1), this.a[a][1].y += randomRange(0, 1), this.a[a][2].y += randomRange(0, 1), ENattack(this, a, 0));
             this.u[a] = 0;
             for (b = this.g[a] = 0; 4 > b; b++) ENgroundCollision(this, a, b, .5);
             this.a[a][20].x = this.a[a][0].x;
@@ -4263,8 +4196,7 @@ SR_Enemy.prototype.V = function(a) {
             for (b = this.g[a] = 0; 4 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
-    else this.a[a][0].x += 1, this.a[a][0].y += 0, this.a[a][1].x += 0, this.a[a][1].y += 1, this.a[a][2].x += 2, this.a[a][2].y += 1, this.a[a][3].x +=
-        1, this.a[a][3].y += 2, this.b[a]++;
+    else this.a[a][0].x += 1, this.a[a][0].y += 0, this.a[a][1].x += 0, this.a[a][1].y += 1, this.a[a][2].x += 2, this.a[a][2].y += 1, this.a[a][3].x += 1, this.a[a][3].y += 2, this.b[a]++;
     return a
 };
 WIN.fff = SR_Enemy.prototype.W;
@@ -4297,8 +4229,7 @@ SR_Enemy.prototype.W = function(a) {
                 enemyDeath(this, a, 0)
             }
         } else {
-            for (b = 0; 4 > b; b++) moveJoint(this.a[a][b],
-                this.c[a][b], .05, .99);
+            for (b = 0; 4 > b; b++) moveJoint(this.a[a][b], this.c[a][b], .05, .99);
             c = .3;
             b = (150 - this.h[a]) / 150;
             pullJoints(this.a[a][1], this.a[a][2], 8 * b, c, c);
@@ -4356,8 +4287,7 @@ SR_Enemy.prototype.X = function(a) {
             for (b = 0; 4 > b; b++) moveJoint(this.a[a][b], this.c[a][b], .05, .99);
             c = .01;
             b = (150 - this.h[a]) / 150;
-            pullJoints(this.a[a][0], this.a[a][1],
-                5 * b, c, c);
+            pullJoints(this.a[a][0], this.a[a][1], 5 * b, c, c);
             pullJoints(this.a[a][0], this.a[a][2], 5 * b, c, c);
             pullJoints(this.a[a][1], this.a[a][2], 6 * b, c, c);
             for (b = this.g[a] = 0; 4 > b; b++) ENgroundCollision(this, a, b, .5);
@@ -4382,8 +4312,7 @@ SR_Enemy.prototype.Y = function(a) {
     if (this.b[a])
         if (1 == this.b[a]) {
             for (b = 0; 10 > b; b++) moveJoint(this.a[a][b], this.c[a][b], 0, .98);
-            0 >= this.h[a] && 5 > random(100) && (b = floor(random(3)), 0 == b ? (c.x = (this.a[a][8].x + this.a[a][9].x) / 2 - this.a[a][7].x, c.y = (this.a[a][8].y + this.a[a][9].y) / 2 - this.a[a][7].y, normalize(c), scaleVector2D(c, d), this.a[a][7].add(c)) : 1 == b ? (c.x = (this.a[a][9].x + this.a[a][7].x) / 2 - this.a[a][8].x, c.y = (this.a[a][9].y + this.a[a][7].y) / 2 - this.a[a][8].y, normalize(c), scaleVector2D(c, d), this.a[a][8].add(c)) : 2 == b && (c.x = (this.a[a][7].x + this.a[a][8].x) /
-                2 - this.a[a][9].x, c.y = (this.a[a][7].y + this.a[a][8].y) / 2 - this.a[a][9].y, normalize(c), scaleVector2D(c, d), this.a[a][9].add(c)), this.h[a] = 25 * d);
+            0 >= this.h[a] && 5 > random(100) && (b = floor(random(3)), 0 == b ? (c.x = (this.a[a][8].x + this.a[a][9].x) / 2 - this.a[a][7].x, c.y = (this.a[a][8].y + this.a[a][9].y) / 2 - this.a[a][7].y, normalize(c), scaleVector2D(c, d), this.a[a][7].add(c)) : 1 == b ? (c.x = (this.a[a][9].x + this.a[a][7].x) / 2 - this.a[a][8].x, c.y = (this.a[a][9].y + this.a[a][7].y) / 2 - this.a[a][8].y, normalize(c), scaleVector2D(c, d), this.a[a][8].add(c)) : 2 == b && (c.x = (this.a[a][7].x + this.a[a][8].x) / 2 - this.a[a][9].x, c.y = (this.a[a][7].y + this.a[a][8].y) / 2 - this.a[a][9].y, normalize(c), scaleVector2D(c, d), this.a[a][9].add(c)), this.h[a] = 25 * d);
             assignVector2D(c, 0, 0);
             b = PLfindPlayer(this.a[a][0].x - 200, this.a[a][0].y - 200, this.a[a][0].x + 200, this.a[a][0].y + 200, 0);
             if (-1 != b)
@@ -4392,8 +4321,7 @@ SR_Enemy.prototype.Y = function(a) {
             for (b = 1; 4 > b; b++) pullJoints(this.a[a][0], this.a[a][b], 3 * d, c, c);
             for (b = 1; 4 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 3], 3 * d, c, c);
             for (b = 4; 7 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 3], 3 * d, c, .01);
-            5 > this.h[a]-- &&
-                (c = .01 / d, pullJoints(this.a[a][7], this.a[a][8], 20 * d, c, c), pullJoints(this.a[a][8], this.a[a][9], 20 * d, c, c), pullJoints(this.a[a][9], this.a[a][7], 20 * d, c, c));
+            5 > this.h[a]-- && (c = .01 / d, pullJoints(this.a[a][7], this.a[a][8], 20 * d, c, c), pullJoints(this.a[a][8], this.a[a][9], 20 * d, c, c), pullJoints(this.a[a][9], this.a[a][7], 20 * d, c, c));
             ENattack(this, a, 0);
             for (b = this.g[a] = 0; 10 > b; b++) ENgroundCollision(this, a, b, .9);
             this.a[a][20].set(this.a[a][0]);
@@ -4407,8 +4335,7 @@ SR_Enemy.prototype.Y = function(a) {
             var c = .05,
                 e = (150 - this.h[a]) / 150;
             for (b = 1; 4 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 3], 3 * d * e, c, c);
-            for (b = 4; 7 > b; b++) pullJoints(this.a[a][b],
-                this.a[a][b + 3], 3 * d * e, c, c);
+            for (b = 4; 7 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 3], 3 * d * e, c, c);
             for (b = this.g[a] = 0; 10 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
@@ -4428,8 +4355,7 @@ SR_Enemy.prototype.Z = function(a) {
             600 < this.h[a] && (this.h[a] = floor(random(400)));
             pullJoints(this.a[a][0], this.a[a][1], 8 * c, .2, .2);
             for (b = 1; b < this.b[a] - 2; b++) pullJoints(this.a[a][b], this.a[a][b + 1], 6 * c, .2, .2);
-            pullJoints(this.a[a][b], this.a[a][b + 1], 6 *
-                c, .2, 0);
+            pullJoints(this.a[a][b], this.a[a][b + 1], 6 * c, .2, 0);
             ENattack(this, a, 0);
             this.g[a] = 0;
             for (b = this.b[a] - 1; b < this.b[a]; b++) ENgroundCollision(this, a, b, .5);
@@ -4465,8 +4391,7 @@ SR_Enemy.prototype.K = function() {
                 dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 1:
-                dispItemCentered(Enemy_Head_Img,
-                    floor(this.a[a][2].x), floor(this.a[a][2].y - 2 * h), floor(8 * h), floor(8 * h), 16 * c, 0, 16, 16, e);
+                dispItemCentered(Enemy_Head_Img, floor(this.a[a][2].x), floor(this.a[a][2].y - 2 * h), floor(8 * h), floor(8 * h), 16 * c, 0, 16, 16, e);
                 dispItemCentered(Enemy_Head_Img, floor(this.a[a][1].x), floor(this.a[a][1].y - 3 * h), floor(12 * h), floor(12 * h), 16 * c, 0, 16, 16, e);
                 dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y - 4 * h), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d);
                 break;
@@ -4475,8 +4400,7 @@ SR_Enemy.prototype.K = function() {
                 drawLine(this.a[a][2].x, this.a[a][2].y, this.a[a][3].x, this.a[a][3].y, e);
                 drawLine(this.a[a][3].x, this.a[a][3].y, this.a[a][1].x, this.a[a][1].y, e);
                 drawLine(this.a[a][4].x, this.a[a][4].y, this.a[a][5].x, this.a[a][5].y, e);
-                drawLine(this.a[a][5].x,
-                    this.a[a][5].y, this.a[a][6].x, this.a[a][6].y, e);
+                drawLine(this.a[a][5].x, this.a[a][5].y, this.a[a][6].x, this.a[a][6].y, e);
                 drawLine(this.a[a][6].x, this.a[a][6].y, this.a[a][4].x, this.a[a][4].y, e);
                 dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d);
                 break;
@@ -4484,8 +4408,7 @@ SR_Enemy.prototype.K = function() {
                 3 > this.b[a] && (drawLine(this.a[a][0].x, this.a[a][0].y, this.a[a][1].x, this.a[a][1].y, e), drawLine(this.a[a][4].x, this.a[a][4].y, this.a[a][5].x, this.a[a][5].y, e));
                 drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][2].x, this.a[a][2].y, e);
                 drawLine(this.a[a][2].x, this.a[a][2].y, this.a[a][3].x, this.a[a][3].y, e);
-                drawLine(this.a[a][3].x, this.a[a][3].y,
-                    this.a[a][4].x, this.a[a][4].y, e);
+                drawLine(this.a[a][3].x, this.a[a][3].y, this.a[a][4].x, this.a[a][4].y, e);
                 filledRectCentered(floor(this.a[a][5].x), floor(this.a[a][5].y), floor(2 * h), floor(2 * h), d);
                 dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d);
                 break;
@@ -4494,8 +4417,7 @@ SR_Enemy.prototype.K = function() {
                 drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][2].x, this.a[a][2].y, e);
                 3 > this.b[a] && (drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][3].x, this.a[a][3].y, e), drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][4].x, this.a[a][4].y, e));
                 drawLine(this.a[a][3].x, this.a[a][3].y, this.a[a][5].x, this.a[a][5].y, e);
-                drawLine(this.a[a][4].x, this.a[a][4].y, this.a[a][6].x,
-                    this.a[a][6].y, e);
+                drawLine(this.a[a][4].x, this.a[a][4].y, this.a[a][6].x, this.a[a][6].y, e);
                 3 > this.b[a] && (drawLine(this.a[a][2].x, this.a[a][2].y, this.a[a][7].x, this.a[a][7].y, e), drawLine(this.a[a][2].x, this.a[a][2].y, this.a[a][8].x, this.a[a][8].y, e));
                 drawLine(this.a[a][7].x, this.a[a][7].y, this.a[a][9].x, this.a[a][9].y, e);
                 drawLine(this.a[a][8].x, this.a[a][8].y, this.a[a][10].x, this.a[a][10].y, e);
@@ -4504,16 +4426,14 @@ SR_Enemy.prototype.K = function() {
                 break;
             case 5:
             case 18:
-                var q = 5 == this.v[a] ?
-                    -2 : 2;
+                var q = 5 == this.v[a] ? -2 : 2;
                 for (b = 10 > this.b[a] ? this.b[a] - 1 : this.b[a] - 11; 0 < b; b--) outlineRectCentered(floor(this.a[a][b].x), floor(this.a[a][b].y + q * h), floor(4 * h) + 1, floor(4 * h) + 1, e);
                 5 == this.v[a] ? dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d) : dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 * h), 16 * c, 15, 16, -16, d);
                 break;
             case 6:
                 for (b = 1; 6 > b; b++) drawLine(this.a[a][b].x, this.a[a][b].y, this.a[a][b + 1].x, this.a[a][b + 1].y, e);
                 3 > this.b[a] && drawLine(this.a[a][b].x, this.a[a][b].y, this.a[a][1].x, this.a[a][1].y, e);
-                dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 *
-                    h), floor(16 * h), 16 * c, 0, 16, 16, d);
+                dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 7:
                 drawLine(this.a[a][2].x, this.a[a][2].y, this.a[a][3].x, this.a[a][3].y, e);
@@ -4524,8 +4444,7 @@ SR_Enemy.prototype.K = function() {
                 break;
             case 8:
                 outlineRectCentered(floor(this.a[a][2].x) + floor(1 * h), floor(this.a[a][2].y - 2 * h), floor(8 * h) + 1, floor(4 * h) + 1, e);
-                outlineRectCentered(floor(this.a[a][1].x), floor(this.a[a][1].y - 2 * h), floor(4 * h) +
-                    1, floor(4 * h) + 1, e);
+                outlineRectCentered(floor(this.a[a][1].x), floor(this.a[a][1].y - 2 * h), floor(4 * h) + 1, floor(4 * h) + 1, e);
                 dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 9:
@@ -4535,16 +4454,14 @@ SR_Enemy.prototype.K = function() {
                 dispItemCentered(Enemy_Head_Img, floor(this.a[a][3].x), floor(this.a[a][3].y), floor(10 * h), floor(10 * h), 16 * c, 0, 16, 16, e);
                 dispItemCentered(Enemy_Head_Img, floor(this.a[a][2].x), floor(this.a[a][2].y), floor(12 * h), floor(12 * h), 16 * c, 0, 16, 16, e);
                 dispItemCentered(Enemy_Head_Img, floor(this.a[a][1].x), floor(this.a[a][1].y), floor(14 * h), floor(14 * h), 16 * c, 0, 16, 16, e);
-                dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h),
-                    floor(16 * h), 16 * c, 0, 16, 16, d);
+                dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 10:
                 drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][2].x, this.a[a][2].y, e);
                 3 > this.b[a] && (drawLine(this.a[a][0].x, this.a[a][0].y, this.a[a][1].x, this.a[a][1].y, e), drawLine(this.a[a][0].x, this.a[a][0].y, this.a[a][3].x, this.a[a][3].y, e));
                 drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][2].x, this.a[a][2].y, e);
                 drawLine(this.a[a][3].x, this.a[a][3].y, this.a[a][4].x, this.a[a][4].y, e);
-                3 > this.b[a] && (drawLine(this.a[a][0].x, this.a[a][0].y, this.a[a][5].x, this.a[a][5].y, e), drawLine(this.a[a][0].x, this.a[a][0].y, this.a[a][7].x,
-                    this.a[a][7].y, e));
+                3 > this.b[a] && (drawLine(this.a[a][0].x, this.a[a][0].y, this.a[a][5].x, this.a[a][5].y, e), drawLine(this.a[a][0].x, this.a[a][0].y, this.a[a][7].x, this.a[a][7].y, e));
                 drawLine(this.a[a][5].x, this.a[a][5].y, this.a[a][6].x, this.a[a][6].y, e);
                 drawLine(this.a[a][7].x, this.a[a][7].y, this.a[a][8].x, this.a[a][8].y, e);
                 dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d);
@@ -4565,8 +4482,7 @@ SR_Enemy.prototype.K = function() {
                 drawLine(this.a[a][0].x, this.a[a][0].y, this.a[a][1].x, this.a[a][1].y, e);
                 drawLine(this.a[a][0].x, this.a[a][0].y, this.a[a][2].x, this.a[a][2].y, e);
                 drawLine(this.a[a][1].x, this.a[a][1].y, this.a[a][2].x, this.a[a][2].y, e);
-                2 > this.b[a] ? dispItemCentered(Enemy_Head_Img,
-                    floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d) : dispItemCentered(Enemy_Head_Img, floor(this.a[a][3].x), floor(this.a[a][3].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d);
+                2 > this.b[a] ? dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d) : dispItemCentered(Enemy_Head_Img, floor(this.a[a][3].x), floor(this.a[a][3].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 16:
                 if (2 > this.b[a])
@@ -4575,8 +4491,7 @@ SR_Enemy.prototype.K = function() {
                 if (2 > this.b[a])
                     for (b = 7; 10 > b; b++) filledRectCentered(floor(this.a[a][b].x), floor(this.a[a][b].y), floor(2 * g), floor(2 * g), d);
                 else
-                    for (b = 7; 10 > b; b++) filledRectCentered(floor(this.a[a][b].x) + 1, floor(this.a[a][b].y) + 1, floor(2 * h), floor(2 *
-                        h), d);
+                    for (b = 7; 10 > b; b++) filledRectCentered(floor(this.a[a][b].x) + 1, floor(this.a[a][b].y) + 1, floor(2 * h), floor(2 * h), d);
                 2 > this.b[a] ? dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * g), floor(16 * g), 16 * c, 0, 16, 16, d) : dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d);
                 break;
             case 17:
@@ -4585,8 +4500,7 @@ SR_Enemy.prototype.K = function() {
                     dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * g), floor(16 * g), 16 * c, 0, 16, 16, d)
                 } else {
                     for (b = this.b[a] - 11; 0 < b; b--) outlineRectCentered(floor(this.a[a][b].x), floor(this.a[a][b].y - 2 * h), floor(4 * h) + 1, floor(4 * h) + 1, e);
-                    dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 *
-                        h), 16 * c, 0, 16, 16, d)
+                    dispItemCentered(Enemy_Head_Img, floor(this.a[a][0].x), floor(this.a[a][0].y), floor(16 * h), floor(16 * h), 16 * c, 0, 16, 16, d)
                 }
         }
         0 < (Sett_LP_Bar_Disp & 2) && 0 < this.j[a] && (filledRect(floor(this.a[a][0].x) - 6 * g, floor(this.a[a][0].y) - 10 * g, 12 * g, 1, 10027008), filledRect(floor(this.a[a][0].x) - 6 * g, floor(this.a[a][0].y) - 10 * g, floor(12 * g * this.j[a] / EN_Info[this.f[a]][EN_LP]), 1, 52224))
@@ -4636,8 +4550,7 @@ function ENdrawIcon(a, b, c, d) {
             joint_Ypos[6] = c - 4 * d;
             break;
         case 3:
-            joint_Xpos[0] =
-                b - 3 * d;
+            joint_Xpos[0] = b - 3 * d;
             joint_Ypos[0] = c - 10 * d;
             joint_Xpos[1] = b + 1 * d;
             joint_Ypos[1] = c - 10 * d;
@@ -4685,8 +4598,7 @@ function ENdrawIcon(a, b, c, d) {
             joint_Ypos[3] = c - 0 * d;
             break;
         case 18:
-            d =
-                clamp(d, 1, 2);
+            d = clamp(d, 1, 2);
             joint_Xpos[0] = b + 0 * d;
             joint_Ypos[0] = c + 20 * d - 40;
             joint_Xpos[1] = b + 0 * d;
@@ -4734,8 +4646,7 @@ function ENdrawIcon(a, b, c, d) {
             break;
         case 9:
         case 13:
-            joint_Xpos[0] =
-                b - 4 * d;
+            joint_Xpos[0] = b - 4 * d;
             joint_Ypos[0] = c - 20 * d;
             joint_Xpos[1] = b + 2 * d;
             joint_Ypos[1] = c - 16 * d;
@@ -4782,8 +4693,7 @@ function ENdrawIcon(a, b, c, d) {
             joint_Xpos[0] = b + 0 * d;
             joint_Ypos[0] = c - 16 * d;
             joint_Xpos[1] = b + 0 * d;
-            joint_Ypos[1] = c -
-                10 * d;
+            joint_Ypos[1] = c - 10 * d;
             joint_Xpos[2] = b + 2 * d;
             joint_Ypos[2] = c - 7 * d;
             joint_Xpos[3] = b - 2 * d;
@@ -4830,8 +4740,7 @@ function ENdrawIcon(a, b, c, d) {
             joint_Ypos[4] = c - 12 * d;
             joint_Xpos[7] = b - 9 * d;
             joint_Ypos[7] = c - 13 * d;
-            joint_Xpos[2] =
-                b + 3 * d;
+            joint_Xpos[2] = b + 3 * d;
             joint_Ypos[2] = c - 11 * d;
             joint_Xpos[5] = b + 6 * d;
             joint_Ypos[5] = c - 12 * d;
@@ -4855,8 +4764,7 @@ function ENdrawIcon(a, b, c, d) {
             break;
         case 1:
             dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[2]), floor(joint_Ypos[2] - 2 * d), floor(8 * d), floor(8 * d), 16 * e, 0, 16, 16, h);
-            dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[1]), floor(joint_Ypos[1] - 3 * d), floor(12 *
-                d), floor(12 * d), 16 * e, 0, 16, 16, h);
+            dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[1]), floor(joint_Ypos[1] - 3 * d), floor(12 * d), floor(12 * d), 16 * e, 0, 16, 16, h);
             dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[0]), floor(joint_Ypos[0] - 4 * d), floor(16 * d), floor(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 2:
@@ -4875,8 +4783,7 @@ function ENdrawIcon(a, b, c, d) {
             drawLine(joint_Xpos[2], joint_Ypos[2], joint_Xpos[3], joint_Ypos[3], h);
             drawLine(joint_Xpos[3], joint_Ypos[3], joint_Xpos[4], joint_Ypos[4], h);
             filledRectCentered(floor(joint_Xpos[5]), floor(joint_Ypos[5]), floor(2 * d), floor(2 * d), g);
-            dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[0]), floor(joint_Ypos[0]), floor(16 * d),
-                floor(16 * d), 16 * e, 0, 16, 16, g);
+            dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[0]), floor(joint_Ypos[0]), floor(16 * d), floor(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 4:
         case 12:
@@ -4894,8 +4801,7 @@ function ENdrawIcon(a, b, c, d) {
             break;
         case 5:
             for (a = 3; 0 < a; a--) outlineRectCentered(floor(joint_Xpos[a]), floor(joint_Ypos[a] - 2 * d), floor(4 * d) + 1, floor(4 * d) + 1, h);
-            dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[0]), floor(joint_Ypos[0]), floor(16 * d), floor(16 *
-                d), 16 * e, 0, 16, 16, g);
+            dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[0]), floor(joint_Ypos[0]), floor(16 * d), floor(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 18:
             d = clamp(d, 1, 2);
@@ -4915,8 +4821,7 @@ function ENdrawIcon(a, b, c, d) {
             dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[0]), floor(joint_Ypos[0]), floor(16 * d), floor(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 8:
-            outlineRectCentered(floor(joint_Xpos[2]) + floor(1 *
-                d), floor(joint_Ypos[2] - 2 * d), floor(8 * d) + 1, floor(4 * d) + 1, h);
+            outlineRectCentered(floor(joint_Xpos[2]) + floor(1 * d), floor(joint_Ypos[2] - 2 * d), floor(8 * d) + 1, floor(4 * d) + 1, h);
             outlineRectCentered(floor(joint_Xpos[1]), floor(joint_Ypos[1] - 2 * d), floor(4 * d) + 1, floor(4 * d) + 1, h);
             dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[0]), floor(joint_Ypos[0]), floor(16 * d), floor(16 * d), 16 * e, 0, 16, 16, g);
             break;
@@ -4930,8 +4835,7 @@ function ENdrawIcon(a, b, c, d) {
             dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[0]), floor(joint_Ypos[0]), floor(16 * d), floor(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 10:
-            drawLine(floor(joint_Xpos[0]), floor(joint_Ypos[0]), floor(joint_Xpos[1]), floor(joint_Ypos[1]),
-                h);
+            drawLine(floor(joint_Xpos[0]), floor(joint_Ypos[0]), floor(joint_Xpos[1]), floor(joint_Ypos[1]), h);
             drawLine(floor(joint_Xpos[0]), floor(joint_Ypos[0]), floor(joint_Xpos[3]), floor(joint_Ypos[3]), h);
             drawLine(floor(joint_Xpos[1]), floor(joint_Ypos[1]), floor(joint_Xpos[2]), floor(joint_Ypos[2]), h);
             drawLine(floor(joint_Xpos[3]), floor(joint_Ypos[3]), floor(joint_Xpos[4]), floor(joint_Ypos[4]), h);
@@ -4945,8 +4849,7 @@ function ENdrawIcon(a, b, c, d) {
             outlineRectCentered(floor(joint_Xpos[3]), floor(joint_Ypos[3] - 7 * d), floor(4 * d) + 1, floor(14 * d) + 1, h);
             outlineRectCentered(floor(joint_Xpos[2]) + 0, floor(joint_Ypos[2]), floor(4 * d) + 1, floor(9 * d) + 1, h);
             outlineRectCentered(floor(joint_Xpos[1]) + 1, floor(joint_Ypos[1]), floor(4 * d) + 1, floor(8 * d) + 1, h);
-            dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[0]) + 1, floor(joint_Ypos[0]), floor(16 * d), floor(16 * d), 16 * e,
-                0, 16, 16, g);
+            dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[0]) + 1, floor(joint_Ypos[0]), floor(16 * d), floor(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 14:
             drawLine(floor(joint_Xpos[1]), floor(joint_Ypos[1]), floor(joint_Xpos[2]), floor(joint_Ypos[2]), h);
@@ -4963,8 +4866,7 @@ function ENdrawIcon(a, b, c, d) {
         case 16:
             for (a = 1; 4 > a; a++) drawLine(floor(joint_Xpos[0]), floor(joint_Ypos[0]), floor(joint_Xpos[a]), floor(joint_Ypos[a]), h);
             for (a = 4; 10 > a; a++) drawLine(floor(joint_Xpos[a - 3]), floor(joint_Ypos[a - 3]), floor(joint_Xpos[a]), floor(joint_Ypos[a]), h);
-            for (a = 7; 10 >
-                a; a++) filledRectCentered(floor(joint_Xpos[a]), floor(joint_Ypos[a]), floor(2 * d), floor(2 * d), g);
+            for (a = 7; 10 > a; a++) filledRectCentered(floor(joint_Xpos[a]), floor(joint_Ypos[a]), floor(2 * d), floor(2 * d), g);
             dispItemCentered(Enemy_Head_Img, floor(joint_Xpos[0]), floor(joint_Ypos[0]), floor(16 * d), floor(16 * d), 16 * e, 0, 16, 16, g);
             break;
         case 17:
@@ -5842,8 +5744,7 @@ function SR_Projectile() {
     this.D = new Int32Array(1E3);
     this.ja = new Int32Array(1E3);
     this.m = new Int32Array(1E3);
-    this.K =
-        new Int32Array(1E3);
+    this.K = new Int32Array(1E3);
     this.s = new Int32Array(1E3);
     this.J = new Int32Array(1E3);
     this.H = new Int32Array(1E3);
@@ -5878,11 +5779,11 @@ function SR_Projectile() {
     for (a = this.a = 0; 1E3 > a; a++) this.b[a] = new Vector2D;
     for (a = 0; 1E3 > a; a++) this.c[a] = new Vector2D
 }
-SR_Projectile.prototype.o = function() { this.a = 0 };
+SR_Projectile.prototype.o = function() {
+    this.a = 0
+};
 SR_Projectile.prototype.add = function(a, b, c, d, e, g, h, q, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, ua, pa, Ha, rb, Aa, ka, ab, Pa, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb) {
-    1E3 != this.a && (this.g[this.a] = a, assignVector2D(this.b[this.a], b, c), assignVector2D(this.c[this.a], d, e), this.u[this.a] = 0, this.ia[this.a] = g, this.ka[this.a] = h, this.v[this.a] = q, this.la[this.a] = m, this.ga[this.a] = l, this.ha[this.a] = A, this.F[this.a] = z, this.G[this.a] = Z, this.C[this.a] = floor(random(B)), this.I[this.a] = S, this.h[this.a] = ia, this.D[this.a] = za, this.ja[this.a] = ta, this.m[this.a] =
-        X, this.K[this.a] = T, this.s[this.a] = Y, this.J[this.a] = Ua, this.H[this.a] = eb, this.B[this.a] = Va, this.w[this.a] = ua, this.A[this.a] = pa, this.i[this.a] = Ha, this.j[this.a] = rb, this.sub[this.a] = Aa, this.U[this.a] = ka, this.ea[this.a] = ab, this.R[this.a] = Pa, this.L[this.a] = Wa, this.$[this.a] = Ca, this.ca[this.a] = yb, this.Y[this.a] = Hb, this.Z[this.a] = Ib, this.T[this.a] = Jb, this.aa[this.a] = Kb, this.S[this.a] = Lb, this.V[this.a] = Mb, this.W[this.a] = Nb, this.fa[this.a] = Ob, this.ba[this.a] = Pb, this.X[this.a] = Qb, this.da[this.a] = sb, this.M[this.a] =
-        Rb, this.N[this.a] = Sb, this.f[this.a] = Tb, this.O[this.a] = Ub, this.P[this.a] = Vb, this.a++)
+    1E3 != this.a && (this.g[this.a] = a, assignVector2D(this.b[this.a], b, c), assignVector2D(this.c[this.a], d, e), this.u[this.a] = 0, this.ia[this.a] = g, this.ka[this.a] = h, this.v[this.a] = q, this.la[this.a] = m, this.ga[this.a] = l, this.ha[this.a] = A, this.F[this.a] = z, this.G[this.a] = Z, this.C[this.a] = floor(random(B)), this.I[this.a] = S, this.h[this.a] = ia, this.D[this.a] = za, this.ja[this.a] = ta, this.m[this.a] = X, this.K[this.a] = T, this.s[this.a] = Y, this.J[this.a] = Ua, this.H[this.a] = eb, this.B[this.a] = Va, this.w[this.a] = ua, this.A[this.a] = pa, this.i[this.a] = Ha, this.j[this.a] = rb, this.sub[this.a] = Aa, this.U[this.a] = ka, this.ea[this.a] = ab, this.R[this.a] = Pa, this.L[this.a] = Wa, this.$[this.a] = Ca, this.ca[this.a] = yb, this.Y[this.a] = Hb, this.Z[this.a] = Ib, this.T[this.a] = Jb, this.aa[this.a] = Kb, this.S[this.a] = Lb, this.V[this.a] = Mb, this.W[this.a] = Nb, this.fa[this.a] = Ob, this.ba[this.a] = Pb, this.X[this.a] = Qb, this.da[this.a] = sb, this.M[this.a] = Rb, this.N[this.a] = Sb, this.f[this.a] = Tb, this.O[this.a] = Ub, this.P[this.a] = Vb, this.a++)
 };
 
 function PJsub(a, b) {
@@ -5911,8 +5812,7 @@ function PJsub(a, b) {
     a.B[b] = a.B[a.a - 1];
     a.w[b] = a.w[a.a - 1];
     a.A[b] = a.A[a.a - 1];
-    a.i[b] = a.i[a.a -
-        1];
+    a.i[b] = a.i[a.a - 1];
     a.j[b] = a.j[a.a - 1];
     a.sub[b] = a.sub[a.a - 1];
     a.U[b] = a.U[a.a - 1];
@@ -5949,8 +5849,7 @@ function PJmain() {
         else if (0 < a.C[b]) a.C[b]--;
     else if (1 == a.u[b]) a.h[b]++, a.h[b] >= a.D[b] && PJsub(a, b--);
     else {
-        0 < a.J[b] && (e = a.J[b], e = 1 != Game_Mode ? a.g[b] ? PLfindPlayer(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e, 0) : ENfindEnemy(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e) : PLfindPlayer(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e, 1 - a.g[b] << 2), -1 != e && (1 != Game_Mode ? a.g[b] ? Vdistance(d, Players.a[e][0], a.b[b]) : Vdistance(d, Enemies.a[e][0], a.b[b]) : Vdistance(d, Players.a[e][0], a.b[b]), normalize(d), e = magnitudeOf(a.c[b]), a.c[b].x = .85 * a.c[b].x +
-            .15 * d.x + randomRange(-.1, .1), a.c[b].y = .85 * a.c[b].y + .15 * d.y + randomRange(-.1, .1), normalize(a.c[b]), scaleVector2D(a.c[b], maxOf(e, 1))));
+        0 < a.J[b] && (e = a.J[b], e = 1 != Game_Mode ? a.g[b] ? PLfindPlayer(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e, 0) : ENfindEnemy(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e) : PLfindPlayer(a.b[b].x - e, a.b[b].y - e, a.b[b].x + e, a.b[b].y + e, 1 - a.g[b] << 2), -1 != e && (1 != Game_Mode ? a.g[b] ? Vdistance(d, Players.a[e][0], a.b[b]) : Vdistance(d, Enemies.a[e][0], a.b[b]) : Vdistance(d, Players.a[e][0], a.b[b]), normalize(d), e = magnitudeOf(a.c[b]), a.c[b].x = .85 * a.c[b].x + .15 * d.x + randomRange(-.1, .1), a.c[b].y = .85 * a.c[b].y + .15 * d.y + randomRange(-.1, .1), normalize(a.c[b]), scaleVector2D(a.c[b], maxOf(e, 1))));
         a.c[b].y += .01 * a.ja[b];
         scaleVector2D(a.c[b], .01 * a.m[b]);
         e = a;
@@ -5960,21 +5859,17 @@ function PJmain() {
         c.set(e.c[g]);
         var q = floor(magnitudeOf(c) / 4) + 1;
         scaleVector2D(c, 1 / q);
-        for (var m, l, A, z = 0; z < q; z++) m = e.b[g].y + c.y, l = floor(clamp(e.b[g].x, 0, 511) / 8), A = floor(clamp(m, 0, 255) / 8), l = Terrain.a[A][l], 0 <= l && 8 >= l && !e.K[g] ? e.s[g] ? 2 == e.s[g] && (c.y *= -1, e.c[g].y *= -1) : h = 1 : e.b[g].y = m, m = e.b[g].x + c.x, l = floor(clamp(m, 0, 511) / 8), A = floor(clamp(e.b[g].y, 0, 255) / 8), l = Terrain.a[A][l], 0 <= l && 8 >= l && !e.K[g] ? (e.s[g] && 1 != e.s[g] || (h = 1), 2 == e.s[g] && (c.x *=
-            -1, e.c[g].x *= -1)) : e.b[g].x = m;
+        for (var m, l, A, z = 0; z < q; z++) m = e.b[g].y + c.y, l = floor(clamp(e.b[g].x, 0, 511) / 8), A = floor(clamp(m, 0, 255) / 8), l = Terrain.a[A][l], 0 <= l && 8 >= l && !e.K[g] ? e.s[g] ? 2 == e.s[g] && (c.y *= -1, e.c[g].y *= -1) : h = 1 : e.b[g].y = m, m = e.b[g].x + c.x, l = floor(clamp(m, 0, 511) / 8), A = floor(clamp(e.b[g].y, 0, 255) / 8), l = Terrain.a[A][l], 0 <= l && 8 >= l && !e.K[g] ? (e.s[g] && 1 != e.s[g] || (h = 1), 2 == e.s[g] && (c.x *= -1, e.c[g].x *= -1)) : e.b[g].x = m;
         e = h;
         c = 1;
         1 == a.i[b] && a.j[b] && random(1E3) > a.j[b] && (c = 0);
         0 < a.I[b] && (a.I[b]--, c = 0);
         g = -1;
-        1 == c && (g = 1 != Game_Mode ? a.g[b] ? PLtakeDamage(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b], 0) : ENtakeDamage(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b]) : PLtakeDamage(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b], 1 - a.g[b] << 2)); - 1 != g && a.H[b] && (1 != Game_Mode ? a.g[b] ? Vdistance(d, Players.a[g][0], a.b[b]) : Vdistance(d, Enemies.a[g][0], a.b[b]) : Vdistance(d, Players.a[g][0], a.b[b]), normalize(d), scaleVector2D(d, .1 * a.H[b]), 1 == Game_Mode || a.g[b] ? scaleVector2D(d, .1) :
-            scaleVector2D(d, Text_Spacing[EN_Info[Enemies.f[g]][EN_Species]] / EN_Info[Enemies.f[g]][EN_Size]), 1 != Game_Mode ? a.g[b] ? Players.g[g][0].sub(d) : Enemies.c[g][0].sub(d) : Players.g[g][0].sub(d), a.H[b] = 0);
+        1 == c && (g = 1 != Game_Mode ? a.g[b] ? PLtakeDamage(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b], 0) : ENtakeDamage(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b]) : PLtakeDamage(a.B[b], a.i[b], a.j[b], a.w[b], a.A[b], a.b[b].x, a.b[b].y, a.F[b], a.G[b], 1 - a.g[b] << 2)); - 1 != g && a.H[b] && (1 != Game_Mode ? a.g[b] ? Vdistance(d, Players.a[g][0], a.b[b]) : Vdistance(d, Enemies.a[g][0], a.b[b]) : Vdistance(d, Players.a[g][0], a.b[b]), normalize(d), scaleVector2D(d, .1 * a.H[b]), 1 == Game_Mode || a.g[b] ? scaleVector2D(d, .1) : scaleVector2D(d, Text_Spacing[EN_Info[Enemies.f[g]][EN_Species]] / EN_Info[Enemies.f[g]][EN_Size]), 1 != Game_Mode ? a.g[b] ? Players.g[g][0].sub(d) : Enemies.c[g][0].sub(d) : Players.g[g][0].sub(d), a.H[b] = 0);
         1 == a.i[b] && a.j[b] && (g = -1);
         if (1 == e || -1 != g)
             if (a.u[b] = 1, a.h[b] = 0, 1 == a.sub[b] || 3 == a.sub[b] || 4 == a.sub[b] || 5 == a.sub[b] || 6 == a.sub[b] || 7 == a.sub[b] || 8 == a.sub[b] || 9 == a.sub[b])
-                for (h = floor(random(512)), c = 0; c < a.f[b]; c++) 1 == a.sub[b] ? assignVector2D(d, 0, 0) : 3 == a.sub[b] ? (h = floor(random(512)), q = randomRange(.05, .1), d.x = a.f[b] * Xe_arr[h][0] * q, d.y = a.f[b] * Xe_arr[h][1] * q) : 4 == a.sub[b] ? (d.x = randomRange(.1 * -a.f[b], .1 * a.f[b]), d.y = randomRange(.2 * -a.f[b], .1 * -a.f[b])) : 5 == a.sub[b] ? (d.x =
-                    a.c[b].x, d.y = a.c[b].y) : 6 == a.sub[b] ? (d.x = randomRange(.01 * -a.f[b], .01 * a.f[b]), d.y = randomRange(.2 * -a.f[b], .05 * -a.f[b])) : 7 == a.sub[b] ? (q = floor(h + 512 * c / a.f[b]) & 511, d.x = a.f[b] * Xe_arr[q][0], d.y = a.f[b] * Xe_arr[q][1]) : 8 == a.sub[b] ? (h = floor(random(512)), q = randomRange(0, .1), d.x = a.f[b] * Xe_arr[h][0] * q, d.y = a.f[b] * Xe_arr[h][1] * q) : 9 == a.sub[b] && (d.x = a.c[b].x, d.y = a.c[b].y, normalize(d)), Projectiles.add(a.g[b], a.b[b].x, a.b[b].y, d.x, d.y, a.U[b], a.ea[b], a.R[b], a.L[b], a.$[b], a.ca[b], a.Y[b], a.Z[b], a.T[b], a.aa[b], a.S[b], a.V[b], a.W[b], a.fa[b], a.ba[b], a.X[b], 0, 0, a.da[b], a.M[b], a.N[b], a.O[b], a.P[b], 0,
-                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                for (h = floor(random(512)), c = 0; c < a.f[b]; c++) 1 == a.sub[b] ? assignVector2D(d, 0, 0) : 3 == a.sub[b] ? (h = floor(random(512)), q = randomRange(.05, .1), d.x = a.f[b] * Xe_arr[h][0] * q, d.y = a.f[b] * Xe_arr[h][1] * q) : 4 == a.sub[b] ? (d.x = randomRange(.1 * -a.f[b], .1 * a.f[b]), d.y = randomRange(.2 * -a.f[b], .1 * -a.f[b])) : 5 == a.sub[b] ? (d.x = a.c[b].x, d.y = a.c[b].y) : 6 == a.sub[b] ? (d.x = randomRange(.01 * -a.f[b], .01 * a.f[b]), d.y = randomRange(.2 * -a.f[b], .05 * -a.f[b])) : 7 == a.sub[b] ? (q = floor(h + 512 * c / a.f[b]) & 511, d.x = a.f[b] * Xe_arr[q][0], d.y = a.f[b] * Xe_arr[q][1]) : 8 == a.sub[b] ? (h = floor(random(512)), q = randomRange(0, .1), d.x = a.f[b] * Xe_arr[h][0] * q, d.y = a.f[b] * Xe_arr[h][1] * q) : 9 == a.sub[b] && (d.x = a.c[b].x, d.y = a.c[b].y, normalize(d)), Projectiles.add(a.g[b], a.b[b].x, a.b[b].y, d.x, d.y, a.U[b], a.ea[b], a.R[b], a.L[b], a.$[b], a.ca[b], a.Y[b], a.Z[b], a.T[b], a.aa[b], a.S[b], a.V[b], a.W[b], a.fa[b], a.ba[b], a.X[b], 0, 0, a.da[b], a.M[b], a.N[b], a.O[b], a.P[b], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         0 < a.h[b] && a.h[b]--;
         a.h[b] || (a.u[b] = 1);
         2 == a.sub[b] && (random(100) < a.f[b] || 1 == e || -1 != g) && (d.x = randomRange(-1, 1), d.y = randomRange(-1, 1), Projectiles.add(a.g[b], a.b[b].x, a.b[b].y, d.x, d.y, a.U[b], a.ea[b], a.R[b], a.L[b], a.$[b], a.ca[b], a.Y[b], a.Z[b], a.T[b], a.aa[b], a.S[b], a.V[b], a.W[b], a.fa[b], a.ba[b], a.X[b], 0, 0, a.da[b], a.M[b], a.N[b], a.O[b], a.P[b], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
@@ -6014,8 +5909,7 @@ function PJrenderProjectiles() {
                     ia = a.b[b].y - h.y,
                     za = c + 16,
                     ta = a.b[b].x - q.x,
-                    X = a.b[b].y -
-                    q.y,
+                    X = a.b[b].y - q.y,
                     T = c,
                     Y = 0,
                     Ua = 0,
@@ -6057,8 +5951,7 @@ function PJrenderProjectiles() {
                 drawRotation(m, l, A, Y, z, Z, B, Ua);
                 drawRotation(z, Z, B, Ua, S, ia, za, eb);
                 drawRotation(S, ia, za, eb, ta, X, T, Va);
-                drawRotation(ta, X, T, Va,
-                    m, l, A, Y);
+                drawRotation(ta, X, T, Va, m, l, A, Y);
                 z = d >> 24 & 255;
                 m = d >> 16 & 255;
                 l = d >> 8 & 255;
@@ -6081,8 +5974,12 @@ function SR_Animated_Indicator() {
     for (a = this.a = 0; 1E3 > a; a++) this.b[a] = new Vector2D;
     for (a = 0; 1E3 > a; a++) this.c[a] = new Vector2D
 }
-SR_Animated_Indicator.prototype.o = function() { this.a = 0 };
-SR_Animated_Indicator.prototype.add = function(a, b, c, d, e) { 1E3 != this.a && (a = clamp(a, 16, 495), b = clamp(b, 8, 247), assignVector2D(this.b[this.a], a, b), assignVector2D(this.c[this.a], c, -2), 0 != c && (this.c[this.a].x += randomRange(-.2, .2), this.c[this.a].y += randomRange(-.2, .2)), this.value[this.a] = d, this.f[this.a] = e, this.g[this.a] = 0, this.a++) };
+SR_Animated_Indicator.prototype.o = function() {
+    this.a = 0
+};
+SR_Animated_Indicator.prototype.add = function(a, b, c, d, e) {
+    1E3 != this.a && (a = clamp(a, 16, 495), b = clamp(b, 8, 247), assignVector2D(this.b[this.a], a, b), assignVector2D(this.c[this.a], c, -2), 0 != c && (this.c[this.a].x += randomRange(-.2, .2), this.c[this.a].y += randomRange(-.2, .2)), this.value[this.a] = d, this.f[this.a] = e, this.g[this.a] = 0, this.a++)
+};
 SR_Animated_Indicator.prototype.sub = function(a) {
     this.b[a].set(this.b[this.a - 1]);
     this.c[a].set(this.c[this.a - 1]);
@@ -6128,7 +6025,9 @@ function SR_Drop() {
     for (a = this.f = this.a = 0; 100 > a; a++) this.b[a] = new Vector2D;
     for (a = 0; 100 > a; a++) this.c[a] = new Vector2D
 }
-SR_Drop.prototype.o = function() { this.f = this.a = 0 };
+SR_Drop.prototype.o = function() {
+    this.f = this.a = 0
+};
 SR_Drop.prototype.add = function(a, b, c, d, e) {
     if (100 != this.a)
         for (a = clamp(a, 16, 495), b = clamp(b, 8, 247), assignVector2D(this.b[this.a], a, b), this.c[this.a].x = Mouse_Xpos < a ? randomRange(-.5, -1) : randomRange(.5, 1), this.c[this.a].y = randomRange(-1, -2), this.g[this.a] = c, this.value[this.a] = d, this.i[this.a] = e, this.h[this.a] = 0, this.a++, c = this.f = 0; c < this.a; c++) this.f += 7 * this.g[c] + 3 * this.value[c] + 11 * this.i[c]
@@ -6166,8 +6065,7 @@ function DPmain() {
         if (100 > a.h[b]) a.h[b]++;
         else if (c = PLfindPlayer(a.b[b].x - 12, a.b[b].y - 6 - 12, a.b[b].x + 12, a.b[b].y - 6 + 12, 0), -1 != c) {
             antiCheatCheck();
-            if (1 == a.g[b]) Team_Gold = clamp(Team_Gold + a.value[b], 0, 9999999), Indicators.add(a.b[b].x, a.b[b].y,
-                0, a.value[b], 16776960);
+            if (1 == a.g[b]) Team_Gold = clamp(Team_Gold + a.value[b], 0, 9999999), Indicators.add(a.b[b].x, a.b[b].y, 0, a.value[b], 16776960);
             else if (2 == a.g[b]) {
                 for (d = 0; 4 > d; d++) 0 != Players.H[d] && floor(100 * LP_Current[c] / LP_Max[c]) > floor(100 * LP_Current[d] / LP_Max[d]) && (c = d);
                 if (LP_Current[c] == LP_Max[c]) continue;
@@ -6235,22 +6133,32 @@ SR_Terrain.prototype.o = function(a) {
                 g = Stage_Terrain_Img.l[2 >= b || this.m - 4 <= b ? a : a + 1],
                 h = Stage_Terrain_Img.l[c ? a - Stage_Terrain_Img.m : a],
                 q = Stage_Terrain_Img.l[c == this.f - 1 ? a : a + Stage_Terrain_Img.m];
-            0 == Stage_Terrain_Img.l[a] ? 0 != e && 0 == g && 0 != h && 0 == q ? this.a[c][b] = 0 : 0 == e && 0 == g && 0 != h && 0 == q ? this.a[c][b] =
-                1 : 0 == e && 0 != g && 0 != h && 0 == q ? this.a[c][b] = 2 : 0 != e && 0 == g && 0 == h && 0 == q ? this.a[c][b] = 3 : 0 == e && 0 == g && 0 == h && 0 == q ? this.a[c][b] = 4 : 0 == e && 0 != g && 0 == h && 0 == q ? this.a[c][b] = 5 : 0 != e && 0 == g && 0 == h && 0 != q ? this.a[c][b] = 6 : 0 == e && 0 == g && 0 == h && 0 != q ? this.a[c][b] = 7 : 0 == e && 0 != g && 0 == h && 0 != q && (this.a[c][b] = 8) : 255 == Stage_Terrain_Img.l[a] && (this.a[c][b] = 9)
+            0 == Stage_Terrain_Img.l[a] ? 0 != e && 0 == g && 0 != h && 0 == q ? this.a[c][b] = 0 : 0 == e && 0 == g && 0 != h && 0 == q ? this.a[c][b] = 1 : 0 == e && 0 != g && 0 != h && 0 == q ? this.a[c][b] = 2 : 0 != e && 0 == g && 0 == h && 0 == q ? this.a[c][b] = 3 : 0 == e && 0 == g && 0 == h && 0 == q ? this.a[c][b] = 4 : 0 == e && 0 != g && 0 == h && 0 == q ? this.a[c][b] = 5 : 0 != e && 0 == g && 0 == h && 0 != q ? this.a[c][b] = 6 : 0 == e && 0 == g && 0 == h && 0 != q ? this.a[c][b] = 7 : 0 == e && 0 != g && 0 == h && 0 != q && (this.a[c][b] = 8) : 255 == Stage_Terrain_Img.l[a] && (this.a[c][b] = 9)
         }
     for (b = 0; b < this.m; b++)
         for (c = this.f - 1; 0 <= c; c--)
-            if (0 > this.a[c][b] || 8 < this.a[c][b]) { this.b[b] = c; break }
+            if (0 > this.a[c][b] || 8 < this.a[c][b]) {
+                this.b[b] = c;
+                break
+            }
     for (b = 0; b < this.m; b++)
         for (c = 1; c < this.f; c++)
-            if ((0 > this.a[c - 1][b] || 8 < this.a[c - 1][b]) && 0 <= this.a[c][b] && 8 >=
-                this.a[c][b]) { this.g[b] = c - 1; break }
+            if ((0 > this.a[c - 1][b] || 8 < this.a[c - 1][b]) && 0 <= this.a[c][b] && 8 >= this.a[c][b]) {
+                this.g[b] = c - 1;
+                break
+            }
     for (b = 0; b < this.m; b++)
         for (c = 0; c < this.f; c++)
-            if (0 > this.a[c][b] || 8 < this.a[c][b]) { this.h[b] = c; break }
+            if (0 > this.a[c][b] || 8 < this.a[c][b]) {
+                this.h[b] = c;
+                break
+            }
     for (b = 0; b < this.m; b++)
         for (this.u[b] = this.h[b], c = 1; c < this.f; c++)
-            if ((0 > this.a[c - 1][b] || 8 < this.a[c - 1][b]) && 0 <= this.a[c][b] && 9 >= this.a[c][b]) { this.u[b] = c - 1; break }
+            if ((0 > this.a[c - 1][b] || 8 < this.a[c - 1][b]) && 0 <= this.a[c][b] && 9 >= this.a[c][b]) {
+                this.u[b] = c - 1;
+                break
+            }
     this.i = 0;
     for (b = 12; 60 > b; b++)
         for (c = 1; c < this.f - 1; c++) 9 == this.a[c - 1][b] && 9 == this.a[c][b] && (this.s[this.i++] = c * this.m + b);
@@ -6268,8 +6176,7 @@ SR_Terrain.prototype.o = function(a) {
             case 67:
             case 68:
             case 69:
-                Display_Mode =
-                    1;
+                Display_Mode = 1;
                 Display_Mode2 = 3;
                 Game_Canvas = Stage_Eff_Canvas.l;
                 for (a = 0; 196608 > a; a++) Game_Canvas[a] = 0;
@@ -6287,7 +6194,9 @@ function TRdrawTerrain() {
         e = new Int32Array([0, 0, 0, 8, 8, 8, 16, 16, 16]),
         g = Terrain_Textures[Stage_Spawns[a.c][Current_Screen][0]];
     for (c = 0; c < a.f; c++)
-        for (b = 0; b < a.m; b++) { var h = a.a[c][b]; - 1 != h && (9 == h ? 82 == a.c ? -1 == a.a[c - 1][b] ? drawItem(Water_Red_Img, 8 * b, 8 * c, 8, 8, 0, 0, 8, 8) : backgroundFill(8 * b - 4, 8 * c, 16, 8, 5570560) : -1 == a.a[c - 1][b] ? drawItem(Water_Img, 8 * b, 8 * c, 8, 8, 0, 0, 8, 8) : backgroundFill(8 * b - 4, 8 * c, 16, 8, 21916) : drawItem(g, 8 * b, 8 * c, 8, 8, d[h], e[h], 8, 8)) }
+        for (b = 0; b < a.m; b++) {
+            var h = a.a[c][b]; - 1 != h && (9 == h ? 82 == a.c ? -1 == a.a[c - 1][b] ? drawItem(Water_Red_Img, 8 * b, 8 * c, 8, 8, 0, 0, 8, 8) : backgroundFill(8 * b - 4, 8 * c, 16, 8, 5570560) : -1 == a.a[c - 1][b] ? drawItem(Water_Img, 8 * b, 8 * c, 8, 8, 0, 0, 8, 8) : backgroundFill(8 * b - 4, 8 * c, 16, 8, 21916) : drawItem(g, 8 * b, 8 * c, 8, 8, d[h], e[h], 8, 8))
+        }
 }
 var WorldMap = new SR_map;
 
@@ -6317,12 +6226,10 @@ SR_map.prototype.o = function() {
                 d = Map_Elev_Index.l[a + d + h],
                 z = Map_Elev_Index.l[a + h],
                 e = Map_Elev_Index.l[a + e + h];
-            65535 == Map_Feature_Index.l[a] ? this.b[c][b] = 15 : 6684672 == Map_Feature_Index.l[a] ? this.b[c][b] = 17 : 0 != Map_Elev_Index.l[a] && (13209 == Map_Elev_Index.l[a] ? this.b[c][b] = 13 : 16764006 == Map_Feature_Index.l[a] ? this.b[c][b] = 14 : 6710886 == Map_Feature_Index.l[a] ? this.b[c][b] = 16 : (a = Map_Elev_Index.l[a], m >= a && l >=
-                a && A >= a && z >= a && e < a ? this.b[c][b] = 3 : m >= a && l >= a && A >= a && z >= a && d < a ? this.b[c][b] = 4 : m >= a && l >= a && A >= a && z >= a && g < a ? this.b[c][b] = 8 : m >= a && l >= a && A >= a && z >= a && q < a ? this.b[c][b] = 9 : l < a && A >= a && m < a && z >= a ? this.b[c][b] = 0 : l >= a && A >= a && m < a && z >= a ? this.b[c][b] = 1 : l >= a && A < a && m < a && z >= a ? this.b[c][b] = 2 : l < a && A >= a && m >= a && z >= a ? this.b[c][b] = 5 : l >= a && A < a && m >= a && z >= a ? this.b[c][b] = 7 : l < a && A >= a && m >= a && z < a ? this.b[c][b] = 10 : l >= a && A >= a && m >= a && z < a ? this.b[c][b] = 11 : l >= a && A < a && m >= a && z < a && (this.b[c][b] = 12)))
+            65535 == Map_Feature_Index.l[a] ? this.b[c][b] = 15 : 6684672 == Map_Feature_Index.l[a] ? this.b[c][b] = 17 : 0 != Map_Elev_Index.l[a] && (13209 == Map_Elev_Index.l[a] ? this.b[c][b] = 13 : 16764006 == Map_Feature_Index.l[a] ? this.b[c][b] = 14 : 6710886 == Map_Feature_Index.l[a] ? this.b[c][b] = 16 : (a = Map_Elev_Index.l[a], m >= a && l >= a && A >= a && z >= a && e < a ? this.b[c][b] = 3 : m >= a && l >= a && A >= a && z >= a && d < a ? this.b[c][b] = 4 : m >= a && l >= a && A >= a && z >= a && g < a ? this.b[c][b] = 8 : m >= a && l >= a && A >= a && z >= a && q < a ? this.b[c][b] = 9 : l < a && A >= a && m < a && z >= a ? this.b[c][b] = 0 : l >= a && A >= a && m < a && z >= a ? this.b[c][b] = 1 : l >= a && A < a && m < a && z >= a ? this.b[c][b] = 2 : l < a && A >= a && m >= a && z >= a ? this.b[c][b] = 5 : l >= a && A < a && m >= a && z >= a ? this.b[c][b] = 7 : l < a && A >= a && m >= a && z < a ? this.b[c][b] = 10 : l >= a && A >= a && m >= a && z < a ? this.b[c][b] = 11 : l >= a && A < a && m >= a && z < a && (this.b[c][b] = 12)))
         }
     for (c = 0; 16 > c; c++)
-        for (b = 0; b < this.m; b++) a =
-            c * Map_Feature_Index.m + b, this.c[c][b] = -1, 26112 == Map_Feature_Index.l[a] ? this.c[c][b] = 0 : 10066329 == Map_Feature_Index.l[a] ? this.c[c][b] = 1 : 8404992 == Map_Feature_Index.l[a] ? this.c[c][b] = 2 : 13434879 == Map_Feature_Index.l[a] ? this.c[c][b] = 5 : 12288 == Map_Feature_Index.l[a] && (this.c[c][b] = 6)
+        for (b = 0; b < this.m; b++) a = c * Map_Feature_Index.m + b, this.c[c][b] = -1, 26112 == Map_Feature_Index.l[a] ? this.c[c][b] = 0 : 10066329 == Map_Feature_Index.l[a] ? this.c[c][b] = 1 : 8404992 == Map_Feature_Index.l[a] ? this.c[c][b] = 2 : 13434879 == Map_Feature_Index.l[a] ? this.c[c][b] = 5 : 12288 == Map_Feature_Index.l[a] && (this.c[c][b] = 6)
 };
 var doc = document,
     cv = doc.getElementById("cv"),
@@ -6336,14 +6243,22 @@ var doc = document,
 Host_Name = 'dan-ball.jp';
 WIN.fff = putImageData;
 
-function putImageData(a, b, c) { try { cv = doc.getElementById("cv"), ctx = cv.getContext("2d"), ctx.putImageData(a, b, c) } catch (d) {} }
+function putImageData(a, b, c) {
+    try {
+        cv = doc.getElementById("cv"), ctx = cv.getContext("2d"), ctx.putImageData(a, b, c)
+    } catch (d) {}
+}
 WIN.fff = logCopyright;
 
-function logCopyright(a) { try { Win_Console.log(a) } catch (b) {} }
+function logCopyright(a) {
+    try {
+        Win_Console.log(a)
+    } catch (b) {}
+}
 WIN.Init = gameStartup;
 var chr_C_DAN_BALL = chrCode(40, 67, 41, 32, 50, 48, 48, 56, 32, 104, 97, 53, 53, 105, 105, 32, 68, 65, 78, 45, 66, 65, 76, 76, 46, 106, 112),
     chr_Copyright_DAN_BALL = chrCode(67, 111, 112, 121, 114, 105, 103, 104, 116, 32, 40, 67, 41, 32, 50, 48, 48, 56, 32, 104, 97, 53, 53, 105, 105, 32, 68, 65, 78, 45, 66, 65, 76, 76, 46, 106, 112),
-    chr_dot_data = chrCode(46, 47, 100, 97, 116, 97, 47);//'./data/'
+    chr_dot_data = chrCode(46, 47, 100, 97, 116, 97, 47); //'./data/'
 chrCode(102, 112, 115);
 var chr_canvas = chrCode(99, 97, 110, 118, 97, 115),
     chr_2d = chrCode(50, 100),
@@ -6380,7 +6295,7 @@ function mainSequence() {
     Left_Click_Is_Down ? Left_Click_Down_Time++ : Left_Click_Down_Time = 0;
     Mouse_Xpos = Mouse_Xpos2;
     Mouse_Ypos = Mouse_Ypos2;
-    for (game_ticks_passed = 0; 256 > game_ticks_passed; game_ticks_passed++) yd[game_ticks_passed] = zd[game_ticks_passed], zd[game_ticks_passed] = !1;
+    for (game_ticks_passed = 0; 256 > game_ticks_passed; game_ticks_passed++) Is_Key_Pressed1[game_ticks_passed] = Arr256_2[game_ticks_passed], Arr256_2[game_ticks_passed] = !1;
     Rand_EF = Rand_EF + floor(1024 * Math.random()) & 1023;
     Rand_FF = floor(512 * Math.random()) | 1;
     playSequence();
@@ -6431,7 +6346,9 @@ function setArea(a, b, c) {
     for (b = 0; 16 > b; b++);
     a.l = new Int32Array(a.m * a.c)
 }
-SR_Image.prototype.IGset = function(a) { this.i != a && (Tile_Counter1++, this.i = a, this.b = new Image, this.b.src = chr_dot_data + a + "?18.9", delete this.l, this.g = this.l = 0) };
+SR_Image.prototype.IGset = function(a) {
+    this.i != a && (Tile_Counter1++, this.i = a, this.b = new Image, this.b.src = chr_dot_data + a + "?18.9", delete this.l, this.g = this.l = 0)
+};
 
 function imgToArray(a) {
     if (!a.g && a.b.complete) {
@@ -6544,8 +6461,7 @@ function TXoutputM(a, b, c, d, e, g, h, q, m, l, A, z, Z, B) {
             T = X * a.c;
             ta = 512 * c + b;
             for (za = 0; za < B; za++, ta += Va)
-                for (Ua = floor(za * a.g / B) * a.f.m + T << 8, eb = floor((a.c << 8) / Z), ia = 0; ia < Z; ia++, ta++, Ua += eb) Y = a.f.l[Ua >> 8], Y == ua ? (Y = Game_Canvas[ta], Game_Canvas[ta] = e + ((Y >> 16 & 255) * q >> 8) << 16 | g + ((Y >> 8 & 255) * q >> 8) << 8 | h + ((Y &
-                    255) * q >> 8)) : Y == pa && (Y = Game_Canvas[ta], Game_Canvas[ta] = m + ((Y >> 16 & 255) * z >> 8) << 16 | l + ((Y >> 8 & 255) * z >> 8) << 8 | A + ((Y & 255) * z >> 8));
+                for (Ua = floor(za * a.g / B) * a.f.m + T << 8, eb = floor((a.c << 8) / Z), ia = 0; ia < Z; ia++, ta++, Ua += eb) Y = a.f.l[Ua >> 8], Y == ua ? (Y = Game_Canvas[ta], Game_Canvas[ta] = e + ((Y >> 16 & 255) * q >> 8) << 16 | g + ((Y >> 8 & 255) * q >> 8) << 8 | h + ((Y & 255) * q >> 8)) : Y == pa && (Y = Game_Canvas[ta], Game_Canvas[ta] = m + ((Y >> 16 & 255) * z >> 8) << 16 | l + ((Y >> 8 & 255) * z >> 8) << 8 | A + ((Y & 255) * z >> 8));
             0 != a.a && (b -= floor(PVE_Text_Spaces[a.a - 1][X] * Z / a.c))
         }
     a.a = 0
@@ -6568,8 +6484,7 @@ function colorBlend(a, b, c) {
         e = 0,
         g = 0,
         h = 0;
-    1 == d ? (d = a >> 16 & 255, e = (((b >> 16 & 255) - d) * c >> 8) + d, d = a >> 8 & 255, g = (((b >> 8 & 255) - d) * c >> 8) + d, d = a & 255, h = (((b & 255) - d) * c >> 8) + d) : 2 == d ? (e = ((b >> 16 & 255) * c >> 8) + (a >> 16 & 255), 255 < e && (e = 255), g = ((b >> 8 & 255) * c >> 8) + (a >> 8 & 255), 255 < g && (g = 255), h = ((b & 255) * c >> 8) + (a & 255), 255 < h && (h = 255)) : 3 == d ? (e = (a >> 16 & 255) - ((b >> 16 & 255) * c >> 8), 0 > e && (e = 0), g = (a >> 8 & 255) - ((b >> 8 & 255) * c >> 8), 0 > g && (g = 0), h = (a & 255) - ((b & 255) * c >> 8), 0 > h && (h = 0)) : 4 == d ? (e = (b >> 16 & 255) * (a >> 16 & 255) >> 8, g = (b >> 8 & 255) * (a >> 8 & 255) >> 8, h = (b & 255) * (a & 255) >>
-        8) : 5 == d ? (d = a >> 16 & 255, e = d + ((b >> 16 & 255) * d * c >> 16), 255 < e && (e = 255), d = a >> 8 & 255, g = d + ((b >> 8 & 255) * d * c >> 16), 255 < g && (g = 255), d = a & 255, h = d + ((b & 255) * d * c >> 16), 255 < h && (h = 255)) : 6 == d && (d = a >> 16 & 255, e = d + (c - (2 * d * c >> 8)), d = a >> 8 & 255, g = d + (c - (2 * d * c >> 8)), d = a & 255, h = d + (c - (2 * d * c >> 8)));
+    1 == d ? (d = a >> 16 & 255, e = (((b >> 16 & 255) - d) * c >> 8) + d, d = a >> 8 & 255, g = (((b >> 8 & 255) - d) * c >> 8) + d, d = a & 255, h = (((b & 255) - d) * c >> 8) + d) : 2 == d ? (e = ((b >> 16 & 255) * c >> 8) + (a >> 16 & 255), 255 < e && (e = 255), g = ((b >> 8 & 255) * c >> 8) + (a >> 8 & 255), 255 < g && (g = 255), h = ((b & 255) * c >> 8) + (a & 255), 255 < h && (h = 255)) : 3 == d ? (e = (a >> 16 & 255) - ((b >> 16 & 255) * c >> 8), 0 > e && (e = 0), g = (a >> 8 & 255) - ((b >> 8 & 255) * c >> 8), 0 > g && (g = 0), h = (a & 255) - ((b & 255) * c >> 8), 0 > h && (h = 0)) : 4 == d ? (e = (b >> 16 & 255) * (a >> 16 & 255) >> 8, g = (b >> 8 & 255) * (a >> 8 & 255) >> 8, h = (b & 255) * (a & 255) >> 8) : 5 == d ? (d = a >> 16 & 255, e = d + ((b >> 16 & 255) * d * c >> 16), 255 < e && (e = 255), d = a >> 8 & 255, g = d + ((b >> 8 & 255) * d * c >> 16), 255 < g && (g = 255), d = a & 255, h = d + ((b & 255) * d * c >> 16), 255 < h && (h = 255)) : 6 == d && (d = a >> 16 & 255, e = d + (c - (2 * d * c >> 8)), d = a >> 8 & 255, g = d + (c - (2 * d * c >> 8)), d = a & 255, h = d + (c - (2 * d * c >> 8)));
     return e << 16 | g << 8 | h
 }
 var Display_Mode2 = 0;
@@ -6592,7 +6507,9 @@ function outlineRect(a, b, c, d, e) {
     drawLine(a + c, b, a + c, b + d, e)
 }
 
-function outlineRectCentered(a, b, c, d, e) { outlineRect(a - (c >> 1), b - (d >> 1), c, d, e) }
+function outlineRectCentered(a, b, c, d, e) {
+    outlineRect(a - (c >> 1), b - (d >> 1), c, d, e)
+}
 
 function filledRect(a, b, c, d, e) {
     var g, h;
@@ -6610,7 +6527,9 @@ function filledRect(a, b, c, d, e) {
             for (; g < c; g++) Game_Canvas[g] = e
 }
 
-function filledRectCentered(a, b, c, d, e) { filledRect(a - (c >> 1), b - (d >> 1), c, d, e) }
+function filledRectCentered(a, b, c, d, e) {
+    filledRect(a - (c >> 1), b - (d >> 1), c, d, e)
+}
 
 function drawItem(a, b, c, d, e, g, h, q, m) {
     var l, A;
@@ -6640,17 +6559,14 @@ function dispItem(a, b, c, d, e, g, h, q, m, l) {
         if (!Display_Mode2)
             for (; c < e; c++, h += m)
                 for (z = 512 * c + b, Z = ((h >> 8) * a.m << 8) + g, A = b; A < d; A++, z++, Z += q) {
-                    if (B = a.l[Z >> 8], -1 != B)(X = ia * (B >> 16 & 255) >> 8, T = za * (B >> 8 & 255) >> 8, Y = ta * (B & 255) >> 8, Display_Mode) ? 1 == Display_Mode ? (B = Game_Canvas[z] >> 16 & 255, X = ((X - B) * S >> 8) + B, B = Game_Canvas[z] >> 8 & 255, T = ((T - B) * S >> 8) + B, B = Game_Canvas[z] & 255, Y = ((Y -
-                        B) * S >> 8) + B, Game_Canvas[z] = X << 16 | T << 8 | Y) : 2 == Display_Mode ? (X = (X * S >> 8) + (Game_Canvas[z] >> 16 & 255), 255 < X && (X = 255), T = (T * S >> 8) + (Game_Canvas[z] >> 8 & 255), 255 < T && (T = 255), Y = (Y * S >> 8) + (Game_Canvas[z] & 255), 255 < Y && (Y = 255), Game_Canvas[z] = X << 16 | T << 8 | Y) : 5 == Display_Mode && (B = Game_Canvas[z] >> 16 & 255, X = B + (X * B * S >> 16), 255 < X && (X = 255), B = Game_Canvas[z] >> 8 & 255, T = B + (T * B * S >> 16), 255 < T && (T = 255), B = Game_Canvas[z] & 255, Y = B + (Y * B * S >> 16), 255 < Y && (Y = 255), Game_Canvas[z] = X << 16 | T << 8 | Y) : Game_Canvas[z] = X << 16 | T << 8 | Y
+                    if (B = a.l[Z >> 8], -1 != B)(X = ia * (B >> 16 & 255) >> 8, T = za * (B >> 8 & 255) >> 8, Y = ta * (B & 255) >> 8, Display_Mode) ? 1 == Display_Mode ? (B = Game_Canvas[z] >> 16 & 255, X = ((X - B) * S >> 8) + B, B = Game_Canvas[z] >> 8 & 255, T = ((T - B) * S >> 8) + B, B = Game_Canvas[z] & 255, Y = ((Y - B) * S >> 8) + B, Game_Canvas[z] = X << 16 | T << 8 | Y) : 2 == Display_Mode ? (X = (X * S >> 8) + (Game_Canvas[z] >> 16 & 255), 255 < X && (X = 255), T = (T * S >> 8) + (Game_Canvas[z] >> 8 & 255), 255 < T && (T = 255), Y = (Y * S >> 8) + (Game_Canvas[z] & 255), 255 < Y && (Y = 255), Game_Canvas[z] = X << 16 | T << 8 | Y) : 5 == Display_Mode && (B = Game_Canvas[z] >> 16 & 255, X = B + (X * B * S >> 16), 255 < X && (X = 255), B = Game_Canvas[z] >> 8 & 255, T = B + (T * B * S >> 16), 255 < T && (T = 255), B = Game_Canvas[z] & 255, Y = B + (Y * B * S >> 16), 255 < Y && (Y = 255), Game_Canvas[z] = X << 16 | T << 8 | Y) : Game_Canvas[z] = X << 16 | T << 8 | Y
                 } else if (1 == Display_Mode2)
                     for (; c < e; c++, h += m)
                         for (z = 512 * c + b, Z = ((h >> 8) * a.m << 8) + g, A = b; A < d; A++, z++, Z += q) {
-                            if (B = S * (a.l[Z >> 8] & 255) >> 8) 1 == Display_Mode ? (X = Game_Canvas[z] >> 16 & 255, X = ((ia - X) * B >>
-                                8) + X, T = Game_Canvas[z] >> 8 & 255, T = ((za - T) * B >> 8) + T, Y = Game_Canvas[z] & 255, Y = ((ta - Y) * B >> 8) + Y, Game_Canvas[z] = X << 16 | T << 8 | Y) : 2 == Display_Mode ? (X = (Game_Canvas[z] >> 16 & 255) + (ia * B >> 8), 255 < X && (X = 255), T = (Game_Canvas[z] >> 8 & 255) + (za * B >> 8), 255 < T && (T = 255), Y = (Game_Canvas[z] & 255) + (ta * B >> 8), 255 < Y && (Y = 255), Game_Canvas[z] = X << 16 | T << 8 | Y) : 3 == Display_Mode ? (X = (Game_Canvas[z] >> 16 & 255) - B, 0 > X && (X = 0), T = (Game_Canvas[z] >> 8 & 255) - B, 0 > T && (T = 0), Y = (Game_Canvas[z] & 255) - B, 0 > Y && (Y = 0), Game_Canvas[z] = X << 16 | T << 8 | Y) : Game_Canvas[z] = colorBlend(Game_Canvas[z], l, B)
+                            if (B = S * (a.l[Z >> 8] & 255) >> 8) 1 == Display_Mode ? (X = Game_Canvas[z] >> 16 & 255, X = ((ia - X) * B >> 8) + X, T = Game_Canvas[z] >> 8 & 255, T = ((za - T) * B >> 8) + T, Y = Game_Canvas[z] & 255, Y = ((ta - Y) * B >> 8) + Y, Game_Canvas[z] = X << 16 | T << 8 | Y) : 2 == Display_Mode ? (X = (Game_Canvas[z] >> 16 & 255) + (ia * B >> 8), 255 < X && (X = 255), T = (Game_Canvas[z] >> 8 & 255) + (za * B >> 8), 255 < T && (T = 255), Y = (Game_Canvas[z] & 255) + (ta * B >> 8), 255 < Y && (Y = 255), Game_Canvas[z] = X << 16 | T << 8 | Y) : 3 == Display_Mode ? (X = (Game_Canvas[z] >> 16 & 255) - B, 0 > X && (X = 0), T = (Game_Canvas[z] >> 8 & 255) - B, 0 > T && (T = 0), Y = (Game_Canvas[z] & 255) - B, 0 > Y && (Y = 0), Game_Canvas[z] = X << 16 | T << 8 | Y) : Game_Canvas[z] = colorBlend(Game_Canvas[z], l, B)
                         } else if (2 == Display_Mode2)
                             for (; c < e; c++, h += m)
-                                for (z = 512 * c + b, Z = ((h >> 8) * a.m << 8) + g, A = b; A < d; A++, z++, Z += q) B = a.l[Z >> 8], 0 != B && (X = B >> 16 & 255, T = B >> 8 & 255, Y = B & 255, Game_Canvas[z] =
-                                    X == T && T == Y ? ia * X >> 8 << 16 | za * T >> 8 << 8 | ta * Y >> 8 : X << 16 | T << 8 | Y);
+                                for (z = 512 * c + b, Z = ((h >> 8) * a.m << 8) + g, A = b; A < d; A++, z++, Z += q) B = a.l[Z >> 8], 0 != B && (X = B >> 16 & 255, T = B >> 8 & 255, Y = B & 255, Game_Canvas[z] = X == T && T == Y ? ia * X >> 8 << 16 | za * T >> 8 << 8 | ta * Y >> 8 : X << 16 | T << 8 | Y);
                         else if (3 == Display_Mode2)
             for (; c < e; c++, h += m)
                 for (z = 512 * c + b, Z = ((h >> 8) * a.m << 8) + g, A = b; A < d; A++, z++, Z += q)
@@ -6658,7 +6574,9 @@ function dispItem(a, b, c, d, e, g, h, q, m, l) {
     }
 }
 
-function dispItemCentered(a, b, c, d, e, g, h, q, m, l) { dispItem(a, b - (d >> 1), c - (e >> 1), d, e, g, h, q, m, l) }
+function dispItemCentered(a, b, c, d, e, g, h, q, m, l) {
+    dispItem(a, b - (d >> 1), c - (e >> 1), d, e, g, h, q, m, l)
+}
 
 function backgroundFill(a, b, c, d, e) {
     var g, h;
@@ -6726,9 +6644,13 @@ var Clicked = !1,
     Mouse_Ypos2 = 0,
     Mouse_In_Window = 0;
 
-function isMouseHovered(a, b, c, d) { return Mouse_Xpos < a || a + c <= Mouse_Xpos || Mouse_Ypos < b || b + d <= Mouse_Ypos ? !1 : !0 }
+function isMouseHovered(a, b, c, d) {
+    return Mouse_Xpos < a || a + c <= Mouse_Xpos || Mouse_Ypos < b || b + d <= Mouse_Ypos ? !1 : !0
+}
 
-function isMouseHoveredCenter(a, b, c, d) { return isMouseHovered(a - c / 2, b - d / 2, c, d) }
+function isMouseHoveredCenter(a, b, c, d) {
+    return isMouseHovered(a - c / 2, b - d / 2, c, d)
+}
 
 function getMousePos(a) {
     var b = cv.getBoundingClientRect(),
@@ -6750,7 +6672,9 @@ doc.onmouseup = function(a) {
     0 == a.button && (Left_Click_Is_Down = !1);
     2 == a.button && (Right_Click_Is_Down = !1)
 };
-doc.oncontextmenu = function() { if (Mouse_In_Window) return !1 };
+doc.oncontextmenu = function() {
+    if (Mouse_In_Window) return !1
+};
 
 function ci(a) {
     var b = cv.getBoundingClientRect(),
@@ -6768,7 +6692,10 @@ cv.ontouchstart = function(a) {
     1 == Mouse_In_Window ? (Left_Click_Is_Down = !0, Mouse_Xpos = Mouse_Xpos2, Mouse_Ypos = Mouse_Ypos2) : 2 == Mouse_In_Window && (Left_Click_Is_Down = !1, Mouse_Xpos = Mouse_Xpos2, Mouse_Ypos = Mouse_Ypos2);
     return !1
 };
-cv.ontouchmove = function(a) { ci(a); return !1 };
+cv.ontouchmove = function(a) {
+    ci(a);
+    return !1
+};
 cv.ontouchend = function(a) {
     ci(a);
     0 == Mouse_In_Window ? Left_Click_Is_Down = !1 : 1 == Mouse_In_Window ? (Mouse_Xpos = Mouse_Xpos2, Mouse_Ypos = Mouse_Ypos2) : 2 == Mouse_In_Window && (Mouse_Xpos = Mouse_Xpos2, Mouse_Ypos = Mouse_Ypos2);
@@ -6778,21 +6705,21 @@ cv.ontouchcancel = function() {
     Mouse_In_Window = 0;
     Right_Click_Is_Down = Left_Click_Is_Down = !1
 };
-var yd = Array(256),
-    zd = Array(256),
-    Ad = Array(256),
+var Is_Key_Pressed1 = Array(256),
+    Arr256_2 = Array(256),
+    Is_Key_Held = Array(256),
     Arr256_4 = Array(256),
     Arr256_5 = Array(256);
 doc.onkeydown = function(a) {
     var b = a.keyCode;
     65 <= b & 90 >= b ? a.shiftKey || (b += 32) : b = a.shiftKey ? Arr256_5[b] : Arr256_4[b];
-    0 <= b && 256 > b && (Ad[b] = !0, zd[b] = !0);
+    0 <= b && 256 > b && (Is_Key_Held[b] = !0, Arr256_2[b] = !0);
     if (0 != b && Mouse_In_Window) return !1
 };
 doc.onkeyup = function(a) {
     var b = a.keyCode;
     65 <= b & 90 >= b ? a.shiftKey || (b += 32) : b = a.shiftKey ? Arr256_5[b] : Arr256_4[b];
-    0 <= b && 256 > b && (Ad[b] = !1);
+    0 <= b && 256 > b && (Is_Key_Held[b] = !1);
     if (0 != b && Mouse_In_Window) return !1
 };
 var Mouse_In_Window = !1,
@@ -6823,7 +6750,7 @@ function funct_Dg(a) {
     if (false) {
         try {
             var c = new XMLHttpRequest;
-            c.onreadystatechange = function () {
+            c.onreadystatechange = function() {
                 if (4 == c.readyState)
                     if (200 == c.status) {
                         var a, b, g = 0,
@@ -6844,7 +6771,9 @@ function funct_Dg(a) {
             c.open(chr_POST, a, !0);
             c.setRequestHeader(chr_Content_Type, chr_app_www);
             c.send("")
-        } catch (d) { Global_Eg = -2 }
+        } catch (d) {
+            Global_Eg = -2
+        }
     } else {
         VS_result[0] = "ok";
         VS_result[1] = "1";
@@ -6857,7 +6786,9 @@ function funct_Dg(a) {
     }
 }
 
-function Vector2D() { this.y = this.x = 0 }
+function Vector2D() {
+    this.y = this.x = 0
+}
 Vector2D.prototype.set = function(a) {
     this.x = a.x;
     this.y = a.y;
@@ -6900,7 +6831,9 @@ function setPerpendicular(a) {
     a.y = -b
 }
 
-function magnitudeOf(a) { return Math.sqrt(a.x * a.x + a.y * a.y) }
+function magnitudeOf(a) {
+    return Math.sqrt(a.x * a.x + a.y * a.y)
+}
 
 function normalize(a) {
     var b = magnitudeOf(a);
@@ -6946,14 +6879,26 @@ var Xe_arr = Array(513),
     Pi = 3.1415927,
     TwoPi = 6.2831855;
 
-function absVal(a) { return 0 > a ? -a : a }
+function absVal(a) {
+    return 0 > a ? -a : a
+}
 
-function maxOf(a, b) { return a > b ? a : b }
+function maxOf(a, b) {
+    return a > b ? a : b
+}
 
-function minOf(a, b) { return a < b ? a : b }
+function minOf(a, b) {
+    return a < b ? a : b
+}
 
-function clamp(a, b, c) { return a < b ? b : a > c ? c : a }
+function clamp(a, b, c) {
+    return a < b ? b : a > c ? c : a
+}
 
-function cycle(a, b, c) { return a < b ? c : a > c ? b : a }
+function cycle(a, b, c) {
+    return a < b ? c : a > c ? b : a
+}
 
-function floor(a) { return Math.floor(a) };
+function floor(a) {
+    return Math.floor(a)
+};
