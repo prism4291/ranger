@@ -911,7 +911,7 @@ function vsUploadCode(a) {
 }
 var Check_Var_Total = 0,
     Check_Var_Seed = 0,
-    Item_Attribute_Data = [],
+    Item_Attribute_Data,//=[]
     Enemy_Spawn_Data = 0,
     Monster_Data = 0,
     Shop_Item_Data = 0;
@@ -954,9 +954,9 @@ function antiCheatCheck() {
             9 != getVal(Comp1_Inv[4 + a], 5) && (Game_Canvas = null);
             getVal(Comp1_Inv[4 + a], 7) == getVal(Comp2_Inv[4 + a], 7) && (Game_Canvas = null);
             var e = getVal(Comp1_Inv[4 + a], 7);
-            0 == compRestrCheck(e, b, c, d) && (Game_Canvas = null)
+            false == compRestrCheck(e, b, c, d) && (Game_Canvas = null)//0==
         }
-        0 != Comp2_Inv[4 + a] && 59 != Comp2_Inv[4 + a] && (9 != getVal(Comp2_Inv[4 + a], 5) && (Game_Canvas = null), e = getVal(Comp2_Inv[4 + a], 7), 0 == compRestrCheck(e, b, c, d) && (Game_Canvas = null))
+        0 != Comp2_Inv[4 + a] && 59 != Comp2_Inv[4 + a] && (9 != getVal(Comp2_Inv[4 + a], 5) && (Game_Canvas = null), e = getVal(Comp2_Inv[4 + a], 7), false == compRestrCheck(e, b, c, d) && (Game_Canvas = null))
     }
     if (!Game_Mode || 2 == Game_Mode) {
         for (a = c = 0; a < Stage_Count; a++)
@@ -1282,8 +1282,8 @@ function menuAndMap() {
     } else if (4 == Sequence_Step) {
         antiCheatCheck();
         b = 100;
-        c = 0;
-        for (a = 4; 40 > a; a++) 48 == getVal(Item_Inv[a], 7) && (b += getVal(Item_Inv[a], 8)), 48 == getVal(Comp1_Inv[a], 7) && (b += getVal(Comp1_Inv[a], 8)), 48 == getVal(Comp2_Inv[a], 7) && (b += getVal(Comp2_Inv[a], 8)), 49 == getVal(Item_Inv[a], 7) && (c = 1), 49 == getVal(Comp1_Inv[a], 7) && (c = 1), 49 == getVal(Comp2_Inv[a], 7) && (c = 1);
+        var c2 = 0;
+        for (a = 4; 40 > a; a++) 48 == getVal(Item_Inv[a], 7) && (b += getVal(Item_Inv[a], 8)), 48 == getVal(Comp1_Inv[a], 7) && (b += getVal(Comp1_Inv[a], 8)), 48 == getVal(Comp2_Inv[a], 7) && (b += getVal(Comp2_Inv[a], 8)), 49 == getVal(Item_Inv[a], 7) && (c2 = 1), 49 == getVal(Comp1_Inv[a], 7) && (c2 = 1), 49 == getVal(Comp2_Inv[a], 7) && (c2 = 1);
         b = clamp(b, 100, 300);
         Current_Stage = 0;
         LV[0] = 1;
@@ -1297,8 +1297,8 @@ function menuAndMap() {
         Stage_Status[1] = Unlocked;
         for (a = 0; 4 > a; a++) Players.f[a] = 0;
         300 <= b ? Item_Inv[16] = 560 : 250 <= b ? Item_Inv[16] = 559 : 200 <= b ? Item_Inv[16] = 558 : 150 <= b && (Item_Inv[16] = 557);
-        1 == c && 100 == b && (Item_Inv[16] = 561);
-        1 == c && 100 != b && (Item_Inv[17] = 561);
+        1 == c2 && 100 == b && (Item_Inv[16] = 561);
+        1 == c2 && 100 != b && (Item_Inv[17] = 561);
         Current_Screen = WorldMap.a = 0;
         Sequence_Step = 6;
         antiCheatSet();
@@ -1315,7 +1315,7 @@ function menuAndMap() {
             if (Stage_Status[b] & Beaten)
                 for (e = 3; 4 >= e; e++)
                     if (!(0 >= Dot_Locations[b][e]) && 32 != b && 70 != b && 88 != b)
-                        for (d.x = 8 * Dot_Locations[b][0], d.y = 8 * Dot_Locations[b][1], h.x = 8 * (Dot_Locations[Dot_Locations[b][e]][0] - Dot_Locations[b][0]), h.y = 8 * (Dot_Locations[Dot_Locations[b][e]][1] - Dot_Locations[b][1]), g = normalize(h) / 8 - 1, scaleVector2D(h, 8), d.add(h), c = 0; c < g; c++) filledRectCentered(a.a + d.x, d.y, 2, 2, 13421772), d.add(h);
+                        for (d.x = 8 * Dot_Locations[b][0], d.y = 8 * Dot_Locations[b][1], h.x = 8 * (Dot_Locations[Dot_Locations[b][e]][0] - Dot_Locations[b][0]), h.y = 8 * (Dot_Locations[Dot_Locations[b][e]][1] - Dot_Locations[b][1]), g = normalize(h) / 8 - 1, scaleVector2D(h, 8), d.add(h), c2 = 0; c2 < g; c2++) filledRectCentered(a.a + d.x, d.y, 2, 2, 13421772), d.add(h);
         for (g = 0; 16 > g; g++)
             for (e = 0; e < a.m; e++) - 1 != a.c[g][e] && drawItem(Map_Features_Img, a.a + 16 * e + 8, 16 * g + 8, 16, 16, 16 * a.c[g][e], 0, 16, 16);
         dispItem(Map_Features_Img, a.a + 384 - 8, 124, 16, 16, 16, 0, 16, 16, 8421631);
@@ -1329,15 +1329,15 @@ function menuAndMap() {
         dispItem(Map_Features_Img, a.a + 1088 - 8, 100, 16, 16, 32, 0, 16, 16, 16777215);
         dispItem(Map_Features_Img, a.a + 1160 - 8, 84, 16, 16, 32, 0, 16, 16, 16777215);
         dispItem(Map_Features_Img, a.a + 1112 - 8, 44, 32, 16, 144, 0, 32, 16, 16777215);
-        for (b = 0; b < Stage_Count; b++) 0 != Stage_Status[b] && (e = 8 * Dot_Locations[b][0], g = 8 * Dot_Locations[b][1], c = b && 20 != b && 47 != b && 77 != b ? 33 == b ? 0 : 71 == b ? 0 : Stage_Status[b] & Beaten ? 10027008 : 13421568 : 16777215, 0 == Dot_Locations[b][2] && filledRectCentered(a.a + e, g, 6, 6, c), c = 71 == b ? 3 : 24, isMouseHoveredCenter(a.a + e, g, c, c) && outlineRectCentered(a.a + e, g, c, c, 13369344));
+        for (b = 0; b < Stage_Count; b++) 0 != Stage_Status[b] && (e = 8 * Dot_Locations[b][0], g = 8 * Dot_Locations[b][1], c2 = b && 20 != b && 47 != b && 77 != b ? 33 == b ? 0 : 71 == b ? 0 : Stage_Status[b] & Beaten ? 10027008 : 13421568 : 16777215, 0 == Dot_Locations[b][2] && filledRectCentered(a.a + e, g, 6, 6, c2), c2 = 71 == b ? 3 : 24, isMouseHoveredCenter(a.a + e, g, c2, c2) && outlineRectCentered(a.a + e, g, c2, c2, 13369344));
         e = 8 * Dot_Locations[Current_Stage][0];
         g = 8 * Dot_Locations[Current_Stage][1];
         drawItem(Player_Img, a.a + e + 1 - 12, g - 14 - 11, 24, 22, 0, 0, 24, 22);
-        for (b = 0; b < Stage_Count; b++) 0 != Stage_Status[b] && (e = 8 * Dot_Locations[b][0], g = 8 * Dot_Locations[b][1], c = 71 == b ? 3 : 24, isMouseHoveredCenter(a.a + e, g, c, c)) && (!Clicked || b && 20 != b && 47 != b && 70 != b && 77 != b ? Clicked && b && (Current_Stage = b, Current_Screen = 0, Sequence_Step = 10) : (Current_Stage = b, Current_Screen = 1, Sequence_Step = 50), e = clamp(Mouse_Xpos, 1 + 4 * Stage_Names[b].length, 510 - 4 * Stage_Names[b].length), g = clamp(Mouse_Ypos - 24, 8, 256), centeredText(Large_Text, e, g, Stage_Names[b], 16777215, 5263440));
-        b = Large_Text;
-        b.b = 4;
+        for (b = 0; b < Stage_Count; b++) 0 != Stage_Status[b] && (e = 8 * Dot_Locations[b][0], g = 8 * Dot_Locations[b][1], c2 = 71 == b ? 3 : 24, isMouseHoveredCenter(a.a + e, g, c2, c2)) && (!Clicked || b && 20 != b && 47 != b && 70 != b && 77 != b ? Clicked && b && (Current_Stage = b, Current_Screen = 0, Sequence_Step = 10) : (Current_Stage = b, Current_Screen = 1, Sequence_Step = 50), e = clamp(Mouse_Xpos, 1 + 4 * Stage_Names[b].length, 510 - 4 * Stage_Names[b].length), g = clamp(Mouse_Ypos - 24, 8, 256), centeredText(Large_Text, e, g, Stage_Names[b], 16777215, 5263440));
+        var b2 = Large_Text;
+        b2.b = 4;
         centeredText(b, 256, 16, "WORLD MAP", -1, 13158600);
-        b.b = 0;
+        b2.b = 0;
         0 > a.a && centeredText(Large_Text, 12, 16, "<<", 13158600, 5263440); - 720 < a.a && centeredText(Large_Text, 500, 16, ">>", 13158600, 5263440);
         drawUI(2)
     }
@@ -1508,23 +1508,23 @@ function townScreens() {
         drawLine(shop_left + 0, shop_top + 20 - 1, shop_left + 235, shop_top + 20 - 1, 16777215);
         isMouseHovered(shop_left + 120, shop_top + 24, 84, 84) && (b = floor((Mouse_Xpos - (shop_left + 120)) / 28), a = floor((Mouse_Ypos - (shop_top + 24)) / 28), Clicked && (Menu_Entry = 3 * a + b), filledRect(shop_left + 120 + 28 * b, shop_top + 24 + 28 * a, 24, 24, 10027008));
         b = (3 * Menu_Row + Menu_Entry) % Shop_Items[town_stage][Menu_Column].length;
-        shop_item = Shop_Items[town_stage][Menu_Column][b];
+        var shop_item2 = Shop_Items[town_stage][Menu_Column][b];
         g = 1;
         for (a = 0; a < Stage_Count; a++) 0 < (Stage_Status[a] & Beaten) && g < Shop_Reqs[a] && (g = Shop_Reqs[a]);
-        !Current_Stage && g <= b && (shop_item = 0);
-        itemText(shop_left + 8, shop_top + 24, Item_Catalogue[shop_item][0] + " " + (Item_Catalogue[shop_item][1] ? Item_Catalogue[shop_item][1] : ""), -1, 2631720, -2);
-        itemText(shop_left + 8, shop_top + 24, Item_Catalogue[shop_item][0] + " " + (Item_Catalogue[shop_item][1] ? Item_Catalogue[shop_item][1] : ""), 16777215, -1, -2);
-        a = getVal(shop_item, 5);
-        if (9 == a) TXoutputB(Large_Text, shop_left + 8, shop_top + 40, "Compo Item", -1, 5263440), itemText(shop_left + 8, shop_top + 56, Item_Catalogue[shop_item][10], -1, 2631720, -2), itemText(shop_left + 8, shop_top + 56, Item_Catalogue[shop_item][10], 16777215, -1, -2), itemText(shop_left + 8, shop_top + 68, Item_Catalogue[shop_item][11], -1, 2631720, -2), itemText(shop_left + 8, shop_top + 68, Item_Catalogue[shop_item][11], 16777215, -1, -2);
+        !Current_Stage && g <= b && (shop_item2 = 0);
+        itemText(shop_left + 8, shop_top + 24, Item_Catalogue[shop_item2][0] + " " + (Item_Catalogue[shop_item2][1] ? Item_Catalogue[shop_item2][1] : ""), -1, 2631720, -2);
+        itemText(shop_left + 8, shop_top + 24, Item_Catalogue[shop_item2][0] + " " + (Item_Catalogue[shop_item2][1] ? Item_Catalogue[shop_item2][1] : ""), 16777215, -1, -2);
+        a = getVal(shop_item2, 5);
+        if (9 == a) TXoutputB(Large_Text, shop_left + 8, shop_top + 40, "Compo Item", -1, 5263440), itemText(shop_left + 8, shop_top + 56, Item_Catalogue[shop_item2][10], -1, 2631720, -2), itemText(shop_left + 8, shop_top + 56, Item_Catalogue[shop_item2][10], 16777215, -1, -2), itemText(shop_left + 8, shop_top + 68, Item_Catalogue[shop_item2][11], -1, 2631720, -2), itemText(shop_left + 8, shop_top + 68, Item_Catalogue[shop_item2][11], 16777215, -1, -2);
         else {
-            TXoutputB(Large_Text, shop_left + 8, shop_top + 40, "AT " + Item_Catalogue[shop_item][10] + "-" + Item_Catalogue[shop_item][11], 16777215, 0);
-            TXoutputB(Large_Text, shop_left + 8, shop_top + 52, "AGI " + Item_Catalogue[shop_item][14] + "-" + Item_Catalogue[shop_item][15], 16777215, 0);
-            TXoutputB(Large_Text, shop_left + 8, shop_top + 64, "RANGE " + Item_Catalogue[shop_item][16], 16777215, 0);
-            var q = getVal(shop_item, 34),
-                m = getVal(shop_item, 35),
-                l = maxOf(getVal(shop_item, 36), 0),
-                A = getVal(shop_item, 39),
-                z = getVal(shop_item, 40);
+            TXoutputB(Large_Text, shop_left + 8, shop_top + 40, "AT " + Item_Catalogue[shop_item2][10] + "-" + Item_Catalogue[shop_item2][11], 16777215, 0);
+            TXoutputB(Large_Text, shop_left + 8, shop_top + 52, "AGI " + Item_Catalogue[shop_item2][14] + "-" + Item_Catalogue[shop_item2][15], 16777215, 0);
+            TXoutputB(Large_Text, shop_left + 8, shop_top + 64, "RANGE " + Item_Catalogue[shop_item2][16], 16777215, 0);
+            var q = getVal(shop_item2, 34),
+                m = getVal(shop_item2, 35),
+                l = maxOf(getVal(shop_item2, 36), 0),
+                A = getVal(shop_item2, 39),
+                z = getVal(shop_item2, 40);
             TXoutputB(Large_Text, shop_left + 8, shop_top + 80, "TYPE " + "physical fire ice thunder poison freeze".split(" ")[q], 16777215, 0);
             TXoutputB(Large_Text, shop_left + 8, shop_top + 92, "AT " + A + "-" + z, 16777215, 0);
             6 == a ? TXoutputB(Large_Text, shop_left + 8, shop_top + 104, "$$ " + l, 16777215, 0) : TXoutputB(Large_Text, shop_left + 8, shop_top + 104, "MP " + l, 16777215, 0);
@@ -1532,14 +1532,14 @@ function townScreens() {
         }
         for (a = 0; 9 > a; a++) q = (3 * Menu_Row + a) % Shop_Items[town_stage][Menu_Column].length, !Current_Stage && g <= q || (Display_Mode2 = 2, dispItem(Item_Img, shop_left + 120 + a % 3 * 28, shop_top + 24 + 28 * floor(a / 3), 24, 24, 24 * getVal(Shop_Items[town_stage][Menu_Column][q], 4), 0, 24, 24, getVal(Shop_Items[town_stage][Menu_Column][q], 6)), Display_Mode2 = 0, Item_Catalogue[Shop_Items[town_stage][Menu_Column][q]][1] && TXoutputB(Small_Text, shop_left + 120 + a % 3 * 28 + 19, shop_top + 24 + 28 * floor(a / 3) + 17, "" + Item_Catalogue[Shop_Items[town_stage][Menu_Column][q]][1], 16777215, -1));
         outlineRect(shop_left + 120 + Menu_Entry % 3 * 28, shop_top + 24 + 28 * floor(Menu_Entry / 3), 24, 24, 10027008);
-        g = getVal(shop_item, 2);
+        g = getVal(shop_item2, 2);
         2 == town_stage && 1 == b && (g *= 10);
         if (isMouseHovered(shop_left + 176 - 56, shop_top + 120 - 10, 108, 20)) {
-            if (0 != shop_item && g <= Team_Gold && Clicked) {
+            if (0 != shop_item2 && g <= Team_Gold && Clicked) {
                 antiCheatCheck();
                 a = 0;
                 if (!town_stage || 2 == town_stage && !b) a = 59;
-                Drops.add(40, 200, shop_item, 0, a);
+                Drops.add(40, 200, shop_item2, 0, a);
                 Team_Gold -= g;
                 antiCheatSet()
             }
@@ -1547,28 +1547,28 @@ function townScreens() {
         }
         centeredText(Large_Text, shop_left + 176, shop_top + 120, "" + g + "$ BUY", 16777215, 0);
         outlineRect(shop_left + 176 - 56, shop_top + 120 - 10, 108, 20, 10027008);
-        shop_item = 16777215;
-        isMouseHovered(shop_left + 216 - 12, shop_top + 36 - 12, 24, 24) && (Clicked && (Menu_Row = cycle(Menu_Row - 1, 0, floor(Shop_Items[town_stage][Menu_Column].length / 3) - 1)), shop_item = 10027008);
+        var shop_color = 16777215;
+        isMouseHovered(shop_left + 216 - 12, shop_top + 36 - 12, 24, 24) && (Clicked && (Menu_Row = cycle(Menu_Row - 1, 0, floor(Shop_Items[town_stage][Menu_Column].length / 3) - 1)), shop_color = 10027008);
         outlineRect(shop_left + 216 - 12, shop_top + 36 - 12, 24, 24, 16777215);
-        filledRect(shop_left + 216 - 1, shop_top + 36 - 8, 2, 2, shop_item);
-        filledRect(shop_left + 216 - 2, shop_top + 36 - 6, 4, 2, shop_item);
-        filledRect(shop_left + 216 - 3, shop_top + 36 - 4, 6, 2, shop_item);
-        filledRect(shop_left + 216 - 4, shop_top + 36 - 2, 8, 2, shop_item);
-        filledRect(shop_left + 216 - 5, shop_top + 36, 10, 2, shop_item);
-        filledRect(shop_left + 216 - 6, shop_top + 38, 12, 2, shop_item);
-        filledRect(shop_left + 216 - 7, shop_top + 40, 14, 2, shop_item);
-        filledRect(shop_left + 216 - 8, shop_top + 42, 16, 2, shop_item);
-        shop_item = 16777215;
-        isMouseHovered(shop_left + 216 - 12, shop_top + 92 - 12, 24, 24) && (Clicked && (Menu_Row = cycle(Menu_Row + 1, 0, floor(Shop_Items[town_stage][Menu_Column].length / 3) - 1)), shop_item = 10027008);
+        filledRect(shop_left + 216 - 1, shop_top + 36 - 8, 2, 2, shop_color);
+        filledRect(shop_left + 216 - 2, shop_top + 36 - 6, 4, 2, shop_color);
+        filledRect(shop_left + 216 - 3, shop_top + 36 - 4, 6, 2, shop_color);
+        filledRect(shop_left + 216 - 4, shop_top + 36 - 2, 8, 2, shop_color);
+        filledRect(shop_left + 216 - 5, shop_top + 36, 10, 2, shop_color);
+        filledRect(shop_left + 216 - 6, shop_top + 38, 12, 2, shop_color);
+        filledRect(shop_left + 216 - 7, shop_top + 40, 14, 2, shop_color);
+        filledRect(shop_left + 216 - 8, shop_top + 42, 16, 2, shop_color);
+        shop_color = 16777215;
+        isMouseHovered(shop_left + 216 - 12, shop_top + 92 - 12, 24, 24) && (Clicked && (Menu_Row = cycle(Menu_Row + 1, 0, floor(Shop_Items[town_stage][Menu_Column].length / 3) - 1)), shop_color = 10027008);
         outlineRect(shop_left + 216 - 12, shop_top + 92 - 12, 24, 24, 16777215);
-        filledRect(shop_left + 216 - 8, shop_top + 92 - 8, 16, 2, shop_item);
-        filledRect(shop_left + 216 - 7, shop_top + 92 - 6, 14, 2, shop_item);
-        filledRect(shop_left + 216 - 6, shop_top + 92 - 4, 12, 2, shop_item);
-        filledRect(shop_left + 216 - 5, shop_top + 92 - 2, 10, 2, shop_item);
-        filledRect(shop_left + 216 - 4, shop_top + 92, 8, 2, shop_item);
-        filledRect(shop_left + 216 - 3, shop_top + 94, 6, 2, shop_item);
-        filledRect(shop_left + 216 - 2, shop_top + 96, 4, 2, shop_item);
-        filledRect(shop_left + 216 - 1, shop_top + 98, 2, 2, shop_item);
+        filledRect(shop_left + 216 - 8, shop_top + 92 - 8, 16, 2, shop_color);
+        filledRect(shop_left + 216 - 7, shop_top + 92 - 6, 14, 2, shop_color);
+        filledRect(shop_left + 216 - 6, shop_top + 92 - 4, 12, 2, shop_color);
+        filledRect(shop_left + 216 - 5, shop_top + 92 - 2, 10, 2, shop_color);
+        filledRect(shop_left + 216 - 4, shop_top + 92, 8, 2, shop_color);
+        filledRect(shop_left + 216 - 3, shop_top + 94, 6, 2, shop_color);
+        filledRect(shop_left + 216 - 2, shop_top + 96, 4, 2, shop_color);
+        filledRect(shop_left + 216 - 1, shop_top + 98, 2, 2, shop_color);
         drawLine(shop_left + 0, shop_top + 136 - 1, shop_left + 235, shop_top + 136 - 1, 16777215);
         drawLine(shop_left + 120, shop_top + 136 - 1, shop_left + 120, shop_top + 160, 16777215);
         isMouseHovered(shop_left + 1, shop_top + 136, 120, 24) && 0 != Item_Inv[40] ? (g = floor(getVal(Item_Inv[40], 2) / 8), Clicked && (antiCheatCheck(), Drops.add(40, 200, 1, g, 0), Item_Inv[40] = 0, Comp1_Inv[40] = 0, Comp2_Inv[40] = 0, antiCheatSet()), filledRect(shop_left + 1, shop_top + 136, 119, 24, 10027008), centeredText(Large_Text, shop_left + 60, shop_top + 148, "" + g + "$ SELL", 16777215, 0)) : isMouseHovered(shop_left + 1, shop_top + 136, 120, 24) && 0 == Item_Inv[40] && !Click_To_Sell_Mode ? (Clicked && (Click_To_Sell_Mode = 1), filledRect(shop_left + 1, shop_top + 136, 119, 24, 10027008), centeredText(Large_Text, shop_left + 60, shop_top + 148, "CLICK TO SELL", 16777215, 0)) : isMouseHovered(shop_left + 1, shop_top + 136, 120, 24) && 0 == Item_Inv[40] && 1 == Click_To_Sell_Mode ? (Clicked && (Click_To_Sell_Mode = 0), filledRect(shop_left + 1, shop_top + 136, 119, 24, 10027008), centeredText(Large_Text, shop_left + 60, shop_top + 148, "CANCEL", 16777215, 0)) : 1 == Click_To_Sell_Mode ? centeredText(Large_Text, shop_left + 60, shop_top + 148, "CANCEL", 16777215, 0) : centeredText(Large_Text, shop_left + 60, shop_top + 148, "DRAG TO SELL", 16777215, 0);
@@ -1578,7 +1578,7 @@ function townScreens() {
     } else if (54 == Sequence_Step) {
         drawStage(0);
         Sign_Touched_Mode = 0;
-        shop_item = 10;
+        var some_num = 10;
         shop_left = 80;
         shop_top = 28;
         Display_Mode = 1;
@@ -1587,37 +1587,37 @@ function townScreens() {
         outlineRect(shop_left + 0, shop_top + 0, 321, 161, 16777215);
         drawLine(shop_left + 160, shop_top + 0, shop_left + 160, shop_top + 160, 16777215);
         town_stage = "WORLD MAP " + (100 > Menu_Column ? " " : "");
-        town_stage += "" + floor(Menu_Column / shop_item + 1) + "/" + floor((Stage_In_Book.length - 1) / shop_item + 1);
+        town_stage += "" + floor(Menu_Column / some_num + 1) + "/" + floor((Stage_In_Book.length - 1) / some_num + 1);
         TXoutputB(Large_Text, shop_left + 20, shop_top + 4, town_stage, -1, 32768);
-        isMouseHovered(shop_left + 8, shop_top + 16, 144, 12 * shop_item) && (a = floor((Mouse_Ypos - (shop_top + 16)) / 12), Clicked && (Menu_Row = a), filledRect(shop_left + 8, shop_top + 16 + 12 * a, 144, 12, 10027008));
-        for (a = 0; a < shop_item; a++) town_stage = Stage_In_Book[Menu_Column + a], 0 != town_stage && (0 < (Stage_Status[town_stage] & Beaten) ? TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * a, Stage_Names[town_stage], 16777215, 0) : TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * a, "???", 16777215, 0));
+        isMouseHovered(shop_left + 8, shop_top + 16, 144, 12 * some_num) && (a = floor((Mouse_Ypos - (shop_top + 16)) / 12), Clicked && (Menu_Row = a), filledRect(shop_left + 8, shop_top + 16 + 12 * a, 144, 12, 10027008));
+        for (a = 0; a < some_num; a++) town_stage = Stage_In_Book[Menu_Column + a], 0 != town_stage && (0 < (Stage_Status[town_stage] & Beaten) ? TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * a, Stage_Names[town_stage], 16777215, 0) : TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * a, "???", 16777215, 0));
         town_stage = Stage_In_Book[Menu_Column + Menu_Row];
         0 != town_stage && (0 < (Stage_Status[town_stage] & Beaten) ? TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * Menu_Row, Stage_Names[town_stage], 16711680, 0) : TXoutputB(Large_Text, shop_left + 8, shop_top + 16 + 12 * Menu_Row, "???", 16711680, 0));
         drawLine(shop_left + 0, shop_top + 140, shop_left + 160, shop_top + 140, 16777215);
-        isMouseHovered(shop_left + 8, shop_top + 144 - 2, 48, 17) && (Clicked && (Menu_Column = cycle(floor(Menu_Column / shop_item) - 1, 0, floor((Stage_In_Book.length - 1) / shop_item)) * shop_item), filledRect(shop_left + 8, shop_top + 144 - 2, 48, 17, 10027008));
+        isMouseHovered(shop_left + 8, shop_top + 144 - 2, 48, 17) && (Clicked && (Menu_Column = cycle(floor(Menu_Column / some_num) - 1, 0, floor((Stage_In_Book.length - 1) / some_num)) * some_num), filledRect(shop_left + 8, shop_top + 144 - 2, 48, 17, 10027008));
         TXoutputB(Large_Text, shop_left + 16, shop_top + 145, "Prev", 16777215, 0);
-        isMouseHovered(shop_left + 56, shop_top + 144 - 2, 48, 17) && (Clicked && (Menu_Column = cycle(floor(Menu_Column / shop_item) + 1, 0, floor((Stage_In_Book.length - 1) / shop_item)) * shop_item), filledRect(shop_left + 56, shop_top + 144 - 2, 48, 17, 10027008));
+        isMouseHovered(shop_left + 56, shop_top + 144 - 2, 48, 17) && (Clicked && (Menu_Column = cycle(floor(Menu_Column / some_num) + 1, 0, floor((Stage_In_Book.length - 1) / some_num)) * some_num), filledRect(shop_left + 56, shop_top + 144 - 2, 48, 17, 10027008));
         TXoutputB(Large_Text, shop_left + 64, shop_top + 145, "Next", 16777215, 0);
         isMouseHovered(shop_left + 104, shop_top + 144 - 2, 48, 17) && (Clicked && (Sequence_Step = 52), filledRect(shop_left + 104, shop_top + 144 - 2, 48, 17, 10027008));
         TXoutputB(Large_Text, shop_left + 112, shop_top + 145, "EXIT", 16777215, 0);
         if (0 != town_stage)
             if (0 < (Stage_Status[town_stage] & Bookede)) {
-                shop_item = Book_Indexer[town_stage + 1] - Book_Indexer[town_stage];
-                for (a = shop_item - 1; 0 <= a; a--) shop_item -= EN_Info[Book_Indexer[town_stage] + a][En_2nd_Att];
-                g = shop_left + 80 - 16 * shop_item;
-                isMouseHovered(g + 160, shop_top + 0, 32 * shop_item, 52) && (b = floor((Mouse_Xpos - (g + 160)) / 32), Clicked && (Menu_Entry = b), filledRect(g + 160 + 32 * b + 2, shop_top + 2, 28, 52, 10027008));
+                some_num = Book_Indexer[town_stage + 1] - Book_Indexer[town_stage];
+                for (a = some_num - 1; 0 <= a; a--) some_num -= EN_Info[Book_Indexer[town_stage] + a][En_2nd_Att];
+                g = shop_left + 80 - 16 * some_num;
+                isMouseHovered(g + 160, shop_top + 0, 32 * some_num, 52) && (b = floor((Mouse_Xpos - (g + 160)) / 32), Clicked && (Menu_Entry = b), filledRect(g + 160 + 32 * b + 2, shop_top + 2, 28, 52, 10027008));
                 filledRect(g + 160 + 32 * Menu_Entry + 2, shop_top + 50, 28, 4, 10027008);
-                Menu_Entry = clamp(Menu_Entry, 0, shop_item - 1);
-                for (a = 0; a < shop_item; a++) drawItem(Terrain_Textures[Stage_Spawns[town_stage][Stage_Spawns[town_stage].length - 1][0]], g + 164 + 32 * a, shop_top + 44, 24, 8, 0, 0, 24, 8);
-                shop_item = Book_Indexer[town_stage + 1] - Book_Indexer[town_stage];
-                for (b = a = 0; a < shop_item; a++, b++) ENdrawIcon(Book_Indexer[town_stage] + a, g + 176 + 32 * b, shop_top + 44 - 1, 0), a += EN_Info[Book_Indexer[town_stage] + a][En_2nd_Att];
+                Menu_Entry = clamp(Menu_Entry, 0, some_num - 1);
+                for (a = 0; a < some_num; a++) drawItem(Terrain_Textures[Stage_Spawns[town_stage][Stage_Spawns[town_stage].length - 1][0]], g + 164 + 32 * a, shop_top + 44, 24, 8, 0, 0, 24, 8);
+                some_num = Book_Indexer[town_stage + 1] - Book_Indexer[town_stage];
+                for (b = a = 0; a < some_num; a++, b++) ENdrawIcon(Book_Indexer[town_stage] + a, g + 176 + 32 * b, shop_top + 44 - 1, 0), a += EN_Info[Book_Indexer[town_stage] + a][En_2nd_Att];
                 town_stage = Book_Indexer[town_stage] + Menu_Entry;
                 TXoutputB(Large_Text, shop_left + 164, shop_top + 56, "Lv   " + EN_Info[town_stage][EN_Lvl], 16777215, 0);
                 TXoutputB(Large_Text, shop_left + 164, shop_top + 68, "LP   " + EN_Info[town_stage][EN_LP], 16777215, 0);
                 TXoutputB(Large_Text, shop_left + 164, shop_top + 80, "GOLD " + EN_Info[town_stage][En_Gold], 16777215, 0);
                 TXoutputB(Large_Text, shop_left + 164, shop_top + 92, "EXP  " + EN_Info[town_stage][EN_EXP], 16777215, 0);
                 TXoutputB(Large_Text, shop_left + 164, shop_top + 108, "Drop Item", 16777215, 0);
-                for (b = a = 0; 6 > a; a += 2) shop_item = EN_Info[town_stage][En_Drop1 + a], 0 != shop_item && (Display_Mode2 = 2, dispItem(Drop_Img, shop_left + 164, shop_top + 4 * (30 + 3 * b), 12, 12, 12 * getVal(shop_item, 3), 0, 12, 12, getVal(shop_item, 6)), Display_Mode2 = 0, itemText(shop_left + 164, shop_top + 4 * (30 + 3 * b), "  " + Item_Catalogue[shop_item][0] + " " + (Item_Catalogue[shop_item][1] ? Item_Catalogue[shop_item][1] : ""), 16777215, 0, -1), b++);
+                for (b = a = 0; 6 > a; a += 2) some_num = EN_Info[town_stage][En_Drop1 + a], 0 != some_num && (Display_Mode2 = 2, dispItem(Drop_Img, shop_left + 164, shop_top + 4 * (30 + 3 * b), 12, 12, 12 * getVal(some_num, 3), 0, 12, 12, getVal(some_num, 6)), Display_Mode2 = 0, itemText(shop_left + 164, shop_top + 4 * (30 + 3 * b), "  " + Item_Catalogue[some_num][0] + " " + (Item_Catalogue[some_num][1] ? Item_Catalogue[some_num][1] : ""), 16777215, 0, -1), b++);
                 TXoutputB(Large_Text, shop_left + 256, shop_top + 56, "strong", 16777215, 0);
                 0 < EN_Info[town_stage][Ph_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 70, "Ph          ", 8421504, 0);
                 0 < EN_Info[town_stage][Fi_Resist] && TXoutputB(Small_Text, shop_left + 256, shop_top + 70, "  Fi        ", 16711680, 0);
@@ -1931,15 +1931,16 @@ function drawUI(a) {
         for (b = 0; 4 > b; b++) STR_Aura[b] = 0, DEX_Aura[b] = 0, MAG_Aura[b] = 0;
         antiCheatSet()
     }
+    var m;
     if (4 > Displayed_Object) {
         b = "LP  " + LP_Current[Displayed_Object] + "/" + LP_Max[Displayed_Object];
         d = "STR " + STR[Displayed_Object];
         var q = "DEX " + DEX[Displayed_Object],
-            m = "MAG " + MAG[Displayed_Object];
+            m2 = "MAG " + MAG[Displayed_Object];
         TXoutputB(Large_Text, e, g + 0, Class_Name_List[getVal(Item_Inv[4 + Displayed_Object], 5)], 16777215, 0);
         TXoutputB(Large_Text, e, g + 16, b, 16777215, 0);
         if (Players.f[Displayed_Object] != Class_Dead)
-            if (TXoutputB(Large_Text, e, g + 28, d, 16777215, 0), TXoutputB(Large_Text, e, g + 40, q, 16777215, 0), TXoutputB(Large_Text, e, g + 52, m, 16777215, 0), TXoutputB(Small_Text, e, g + 30, "              AT ", -1, 0), TXoutputB(Small_Text, e, g + 42, "              AGI ", -1, 0), TXoutputB(Small_Text, e, g + 54, "              RANGE ", -1, 0), TXoutputB(Small_Text, e, g + 30, "                 " + AT_Min[Displayed_Object] + "-" + AT_Max[Displayed_Object], 0, -1), TXoutputB(Small_Text, e, g + 42, "                  " + Agi_Min[Displayed_Object] + "-" + Agi_Max[Displayed_Object], 0, -1), TXoutputB(Small_Text, e, g + 54, "                    " + RANGE[Displayed_Object], 0, -1), 5 == Ranger_Class[Displayed_Object]) TXoutputB(Small_Text, e, g + 66, "AURA          AURA", -1, 0), TXoutputB(Small_Text, e, g + 66, "     (AT)" + STR[Displayed_Object] + "%", 0, -1), TXoutputB(Small_Text, e, g + 66, "                   (DF)" + DEX[Displayed_Object] / 5, 0, -1);
+            if (TXoutputB(Large_Text, e, g + 28, d, 16777215, 0), TXoutputB(Large_Text, e, g + 40, q, 16777215, 0), TXoutputB(Large_Text, e, g + 52, m2, 16777215, 0), TXoutputB(Small_Text, e, g + 30, "              AT ", -1, 0), TXoutputB(Small_Text, e, g + 42, "              AGI ", -1, 0), TXoutputB(Small_Text, e, g + 54, "              RANGE ", -1, 0), TXoutputB(Small_Text, e, g + 30, "                 " + AT_Min[Displayed_Object] + "-" + AT_Max[Displayed_Object], 0, -1), TXoutputB(Small_Text, e, g + 42, "                  " + Agi_Min[Displayed_Object] + "-" + Agi_Max[Displayed_Object], 0, -1), TXoutputB(Small_Text, e, g + 54, "                    " + RANGE[Displayed_Object], 0, -1), 5 == Ranger_Class[Displayed_Object]) TXoutputB(Small_Text, e, g + 66, "AURA          AURA", -1, 0), TXoutputB(Small_Text, e, g + 66, "     (AT)" + STR[Displayed_Object] + "%", 0, -1), TXoutputB(Small_Text, e, g + 66, "                   (DF)" + DEX[Displayed_Object] / 5, 0, -1);
             else if (7 == Ranger_Class[Displayed_Object]) TXoutputB(Small_Text, e, g + 66, "              BULLET", -1, 0), TXoutputB(Small_Text, e, g + 66, "                     +" + DEX[Displayed_Object] / 5, 0, -1);
         else if (8 == Ranger_Class[Displayed_Object]) {
             var l;
@@ -1952,7 +1953,8 @@ function drawUI(a) {
         TXoutputB(Large_Text, e, g + 88, "EXP " + Team_EXP + "(" + floor(100 * (Team_EXP - h) / (c - h)) + "%)", 16777215, 0);
         TXoutputB(Large_Text, e, g + 100, "$$$ " + Team_Gold, 16777215, 0);
         TXoutputB(Small_Text, e + 105, g + 102, "FP " + FP[0], -1, 0);
-        Players.f[Displayed_Object] == Class_Dead ? (h = maxOf(floor(Team_Gold / 10), 10 * LV[0]), b = "Revival $ " + h, TXoutputB(Large_Text, e, g + 40, b, 8421504, 0), isMouseHovered(e, g + 40, 8 * b.length, 12) && Mouse_Up && (h <= Team_Gold && Clicked && 0 != LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] && (antiCheatCheck(), LP_Current[Displayed_Object] += floor(LP_Max[Displayed_Object] / 4), Team_Gold -= h, Players.set(Displayed_Object, floor(Players.a[Displayed_Object][0].x / 8), floor(Players.a[Displayed_Object][0].y / 8)), antiCheatSet()), TXoutputB(Large_Text, e, g + 40, b, 16711680, 0))) : 0 < SP[Displayed_Object] && (h = Clicked, antiCheatCheck(), isMouseHovered(e, g + 16, 8 * b.length + 16, 12) && Mouse_Up ? (h && (LP_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 16, b, 16711680, 0)) : isMouseHovered(e, g + 28, 8 * d.length + 16, 12) && Mouse_Up ? (h && (STR_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 28, d, 16711680, 0)) : isMouseHovered(e, g + 40, 8 * q.length + 16, 12) && Mouse_Up ? (h && (DEX_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 40, q, 16711680, 0)) : isMouseHovered(e, g + 52, 8 * m.length + 16, 12) && Mouse_Up && (h && (MAG_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 52, m, 16711680, 0)), antiCheatSet(), TXoutputB(Large_Text, e + 8 * b.length, g + 16, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * d.length, g + 28, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * q.length, g + 40, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * m.length, g + 52, " +", 16711680, 0))
+        var h2;
+        Players.f[Displayed_Object] == Class_Dead ? (h = maxOf(floor(Team_Gold / 10), 10 * LV[0]), b = "Revival $ " + h, TXoutputB(Large_Text, e, g + 40, b, 8421504, 0), isMouseHovered(e, g + 40, 8 * b.length, 12) && Mouse_Up && (h <= Team_Gold && Clicked && 0 != LP_Current[0] + LP_Current[1] + LP_Current[2] + LP_Current[3] && (antiCheatCheck(), LP_Current[Displayed_Object] += floor(LP_Max[Displayed_Object] / 4), Team_Gold -= h, Players.set(Displayed_Object, floor(Players.a[Displayed_Object][0].x / 8), floor(Players.a[Displayed_Object][0].y / 8)), antiCheatSet()), TXoutputB(Large_Text, e, g + 40, b, 16711680, 0))) : 0 < SP[Displayed_Object] && (h2 = Clicked, antiCheatCheck(), isMouseHovered(e, g + 16, 8 * b.length + 16, 12) && Mouse_Up ? (h2 && (LP_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 16, b, 16711680, 0)) : isMouseHovered(e, g + 28, 8 * d.length + 16, 12) && Mouse_Up ? (h2 && (STR_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 28, d, 16711680, 0)) : isMouseHovered(e, g + 40, 8 * q.length + 16, 12) && Mouse_Up ? (h2 && (DEX_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 40, q, 16711680, 0)) : isMouseHovered(e, g + 52, 8 * m.length + 16, 12) && Mouse_Up && (h2 && (MAG_SP[Displayed_Object]++, SP[Displayed_Object]--), TXoutputB(Large_Text, e, g + 52, m, 16711680, 0)), antiCheatSet(), TXoutputB(Large_Text, e + 8 * b.length, g + 16, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * d.length, g + 28, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * q.length, g + 40, " +", 16711680, 0), TXoutputB(Large_Text, e + 8 * m.length, g + 52, " +", 16711680, 0))
     } else if (m = Item_Inv[Displayed_Object], 8 <= Displayed_Object && 11 >= Displayed_Object && (m = Comp1_Inv[4 + Displayed_Object - 8]), 12 <= Displayed_Object && 15 >= Displayed_Object && (m = Comp2_Inv[4 + Displayed_Object - 12]), itemText(e, g + 0, Item_Catalogue[m][0] + " " + (Item_Catalogue[m][1] ? Item_Catalogue[m][1] : ""), 16777215, 0, -1), 0 != m && 59 != m)
         if (b = getVal(m, 5), 9 == b) TXoutputB(Large_Text, e, g + 16, "Compo Item", -1, 0), itemText(e, g + 32, Item_Catalogue[m][10], 16777215, 0, -1), itemText(e, g + 44, Item_Catalogue[m][11], 16777215, 0, -1);
         else {
@@ -3509,64 +3511,64 @@ function ENtakeDamage(a, b, c, d, e, g, h, q, m) {
 function ENattack(a, b, c) {
     var d = new Vector2D,
         e = a.f[b] + c,
-        g = EN_Info[e],
-        h = g[7] % 100,
-        q = floor(g[7] / 100);
-    c = g[8];
-    var m = g[9],
-        l = g[10],
-        A = g[11],
-        z = g[12],
-        Z = g[13],
-        B = g[14],
-        S = g[15],
-        ia = g[16],
-        za = g[17],
-        ta = g[18],
-        X = g[19],
-        T = g[20],
-        Y = g[21],
-        Ua = g[22],
-        eb = g[23],
-        Va = g[24],
-        ua = g[25],
-        pa = g[26],
-        Ha = g[27],
-        rb = g[28],
-        Aa = g[29],
-        ka = g[30],
-        ab = g[31],
-        Pa = g[32],
-        Wa = g[33],
-        Ca = g[34],
-        yb = g[41],
-        Hb = g[42],
-        Ib = g[43],
-        Jb = g[44],
-        Kb = g[45],
-        Lb = g[46],
-        Mb = g[47],
-        Nb = g[48],
-        Ob = g[49],
-        Pb = g[50],
-        Qb = g[51],
-        sb = g[52],
-        Rb = g[53],
-        Sb = g[54],
-        Tb = g[55],
-        Ub = g[56],
-        Vb = g[57],
-        $b = g[58],
-        g = g[59];
+        en = EN_Info[e],
+        h2 = en[7] % 100,
+        q = floor(en[7] / 100);
+    c = en[8];
+    var m = en[9],
+        l = en[10],
+        A = en[11],
+        z = en[12],
+        Z = en[13],
+        B = en[14],
+        S = en[15],
+        ia = en[16],
+        za = en[17],
+        ta = en[18],
+        X = en[19],
+        T = en[20],
+        Y = en[21],
+        Ua = en[22],
+        eb = en[23],
+        Va = en[24],
+        ua = en[25],
+        pa = en[26],
+        Ha = en[27],
+        rb = en[28],
+        Aa = en[29],
+        ka = en[30],
+        ab = en[31],
+        Pa = en[32],
+        Wa = en[33],
+        Ca = en[34],
+        yb = en[41],
+        Hb = en[42],
+        Ib = en[43],
+        Jb = en[44],
+        Kb = en[45],
+        Lb = en[46],
+        Mb = en[47],
+        Nb = en[48],
+        Ob = en[49],
+        Pb = en[50],
+        Qb = en[51],
+        sb = en[52],
+        Rb = en[53],
+        Sb = en[54],
+        Tb = en[55],
+        Ub = en[56],
+        Vb = en[57],
+        $b = en[58],
+        g = en[59];
     if (0 < a.s[b]) a.s[b]--;
     else if (!(random(1E3) > ab) && (ab = PLfindPlayer(a.a[b][0].x - Pa, a.a[b][0].y - Pa, a.a[b][0].x + Pa, a.a[b][0].y + Pa, 0), -1 != ab && (a.s[b] = ka, h)))
-        if (1 == h) {
+        if (1 == h2) {
             var h = a.a[b][0].x + 10 * d.x,
                 ca = a.a[b][0].y + 10 * d.y;
             Projectiles.add(1, h, ca, 0, 0, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca)
-        } else if (2 == h) d = Players.a[ab][2].x - a.a[b][0].x, d /= absVal(d), h = a.a[b][0].x + 10 * d, ca = a.a[b][0].y, Projectiles.add(1, h, ca, d * Aa * .1, 0, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
-    else if (3 == h || 6 == h)
-        for (3 == h ? assignVector2D(d, Players.a[ab][2].x - a.a[b][0].x, Players.a[ab][2].y - a.a[b][0].y) : 6 == h && assignVector2D(d, 0, -1), e = 0 < q ? q : 16, q = floor(512 * angleToXAxis(d) / TwoPi), q -= floor((rb - 1) * e / 2), ka = 0; ka < rb; ka++) {
+        } else if (2 == h2) d = Players.a[ab][2].x - a.a[b][0].x, d /= absVal(d), h = a.a[b][0].x + 10 * d, ca = a.a[b][0].y, Projectiles.add(1, h, ca, d * Aa * .1, 0, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
+    else if (3 == h2 || 6 == h2)
+        for (3 == h2 ? assignVector2D(d, Players.a[ab][2].x - a.a[b][0].x, Players.a[ab][2].y - a.a[b][0].y) : 6 == h && assignVector2D(d, 0, -1), e = 0 < q ? q : 16, q = floor(512 * angleToXAxis(d) / TwoPi), q -= floor((rb - 1) * e / 2), ka = 0; ka < rb; ka++) {
             d.x = Xe_arr[q & 511][0];
             d.y = -Xe_arr[q & 511][1];
             var h = a.a[b][0].x + 10 * d.x,
@@ -3575,15 +3577,15 @@ function ENattack(a, b, c) {
                 Ba = d.y * Aa * .1;
             Projectiles.add(1, h, ca, Pa, Ba, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
             q += e
-        } else if (4 == h)
+        } else if (4 == h2)
             for (ka = 0; ka < rb; ka++) assignVector2D(d, Players.a[ab][2].x - a.a[b][0].x, Players.a[ab][2].y - a.a[b][0].y), e = 0 < q ? q : rb, 0 < rb && (ca = floor(random(512)), h = random(10) * e, d.x += Xe_arr[ca][0] * h, d.y += Xe_arr[ca][1] * h), h = a.a[b][0].x, ca = a.a[b][0].y, Pa = d.x / Aa, Ba = (d.y - .5 * Aa * Aa * T * .01) / Aa, Projectiles.add(1, h, ca, Pa, Ba, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
-        else if (5 == h)
+        else if (5 == h2)
         for (ka = 0; ka < rb; ka++) h = a.a[b][0].x + randomRange(-Pa, Pa), ca = a.a[b][0].y + randomRange(-Pa, 0), Projectiles.add(1, h, ca, 0, 0, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
-    else if (7 == h)
+    else if (7 == h2)
         for (ka = 0; ka < rb; ka++) h = floor(a.a[b][0].x / 8), ca = floor(a.a[b][0].y / 8), a.add(h, ca, e + pa);
-    else if (8 == h)
+    else if (8 == h2)
         for (ka = 0; ka < rb; ka++) ca = randInt(4), h = Players.a[ca][2].x, ca = Players.a[ca][2].y, Projectiles.add(1, h, ca, 0, 0, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca);
-    else if (9 == h)
+    else if (9 == h2)
         for (ka = 0; ka < rb; ka++) ca = randInt(4), assignVector2D(d, Players.a[ca][0].x - a.a[b][0].x, Players.a[ca][0].y - a.a[b][0].y), normalize(d), h = a.a[b][0].x + 10 * d.x, ca = a.a[b][0].y + 10 * d.y, Pa = d.x * Aa * .1, Ba = d.y * Aa * .1, Projectiles.add(1, h, ca, Pa, Ba, c, m, l, A, z, Z, B, S, ia, za, ta, X, T, Y, Ua, eb, Va, 0, ua, pa, Ha, Wa, Ca, yb, Hb, Ib, Jb, Kb, Lb, Mb, Nb, Ob, 0, 0, Pb, Qb, sb, Rb, Sb, Tb, Ub, Vb, $b, g, Wa, Ca)
 }
 
@@ -4332,10 +4334,10 @@ SR_Enemy.prototype.Y = function(a) {
             }
         } else {
             for (b = 0; 10 > b; b++) moveJoint(this.a[a][b], this.c[a][b], .05, .98);
-            var c = .05,
+            var c2 = .05,
                 e = (150 - this.h[a]) / 150;
-            for (b = 1; 4 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 3], 3 * d * e, c, c);
-            for (b = 4; 7 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 3], 3 * d * e, c, c);
+            for (b = 1; 4 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 3], 3 * d * e, c2, c2);
+            for (b = 4; 7 > b; b++) pullJoints(this.a[a][b], this.a[a][b + 3], 3 * d * e, c2, c2);
             for (b = this.g[a] = 0; 10 > b; b++) ENgroundCollision(this, a, b, .5);
             150 < this.h[a]++ && this.sub(a--)
         }
@@ -5899,39 +5901,39 @@ function PJrenderProjectiles() {
                 scaleVector2D(g, a.ha[b] >> 1);
                 Vdistance(h, g, e);
                 sumVector2D(q, g, e);
-                var m = a.b[b].x + h.x,
-                    l = a.b[b].y + h.y,
-                    A = c,
-                    z = a.b[b].x + q.x,
-                    Z = a.b[b].y + q.y,
-                    B = c + 16,
-                    S = a.b[b].x - h.x,
-                    ia = a.b[b].y - h.y,
-                    za = c + 16,
-                    ta = a.b[b].x - q.x,
-                    X = a.b[b].y - q.y,
-                    T = c,
-                    Y = 0,
-                    Ua = 0,
-                    eb = 16,
-                    Va = 16;
+                var m0 = a.b[b].x + h.x,
+                    l0 = a.b[b].y + h.y,
+                    A0 = c,
+                    z0 = a.b[b].x + q.x,
+                    Z0 = a.b[b].y + q.y,
+                    B0 = c + 16,
+                    S0 = a.b[b].x - h.x,
+                    ia0 = a.b[b].y - h.y,
+                    za0 = c + 16,
+                    ta0 = a.b[b].x - q.x,
+                    X0 = a.b[b].y - q.y,
+                    T0 = c,
+                    Y0 = 0,
+                    Ua0 = 0,
+                    eb0 = 16,
+                    Va0 = 16;
                 c = Projectiles_Img;
-                var m = m << 16,
-                    l = l << 16,
-                    z = z << 16,
-                    Z = Z << 16,
-                    S = S << 16,
-                    ia = ia << 16,
-                    ta = ta << 16,
-                    X = X << 16,
-                    A = 65535 * A,
-                    Y = 65535 * Y,
-                    B = 65535 * B,
-                    Ua = 65535 * Ua,
-                    za = 65535 * za,
-                    eb = 65535 * eb,
-                    T = 65535 * T,
-                    Va = 65535 * Va,
+                var m = m0 << 16,
+                    l = l0 << 16,
+                    z = z0 << 16,
+                    Z = Z0 << 16,
+                    S = S0 << 16,
+                    ia = ia0 << 16,
+                    ta = ta0 << 16,
+                    X = X0 << 16,
+                    A = 65535 * A0,
+                    Y = 65535 * Y0,
+                    B = 65535 * B0,
+                    Ua = 65535 * Ua0,
+                    za = 65535 * za0,
+                    eb = 65535 * eb0,
+                    T = 65535 * T0,
+                    Va = 65535 * Va0,
                     ua, pa;
                 pa = 25165824;
                 var Ha = 0;
@@ -6284,13 +6286,13 @@ function mainSequence() {
         Frame_Counter++;
         Prev_Game_Ticks_Passed = game_ticks_passed
     }
-    Clicked = 0 == Left_Click_Was_Down && 1 == Left_Click_Is_Down;
-    Released = 1 == Left_Click_Was_Down && 0 == Left_Click_Is_Down;
-    Right_Click_Clicked = 0 == Right_Click_Was_Down && 1 == Right_Click_Is_Down;
-    Right_Click_Released = 1 == Right_Click_Was_Down && 0 == Right_Click_Is_Down;
+    Clicked = false == Left_Click_Was_Down && true == Left_Click_Is_Down;
+    Released = true == Left_Click_Was_Down && false == Left_Click_Is_Down;
+    Right_Click_Clicked = false == Right_Click_Was_Down && true == Right_Click_Is_Down;
+    Right_Click_Released = true == Right_Click_Was_Down && false == Right_Click_Is_Down;
     Left_Click_Was_Down = Left_Click_Is_Down;
     Right_Click_Was_Down = Right_Click_Is_Down;
-    Left_Click_Is_Up = !(Released | Left_Click_Was_Down | Right_Click_Released | Right_Click_Was_Down);
+    Left_Click_Is_Up = !(Released || Left_Click_Was_Down || Right_Click_Released || Right_Click_Was_Down);
     Sett_Change = Clicked ? 1 : Right_Click_Clicked ? -1 : 0;
     Left_Click_Is_Down ? Left_Click_Down_Time++ : Left_Click_Down_Time = 0;
     Mouse_Xpos = Mouse_Xpos2;
