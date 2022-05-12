@@ -1336,7 +1336,7 @@ function menuAndMap() {
         for (b = 0; b < Stage_Count; b++) 0 != Stage_Status[b] && (e = 8 * Dot_Locations[b][0], g = 8 * Dot_Locations[b][1], c2 = 71 == b ? 3 : 24, isMouseHoveredCenter(a.a + e, g, c2, c2)) && (!Clicked || b && 20 != b && 47 != b && 70 != b && 77 != b ? Clicked && b && (Current_Stage = b, Current_Screen = 0, Sequence_Step = 10) : (Current_Stage = b, Current_Screen = 1, Sequence_Step = 50), e = clamp(Mouse_Xpos, 1 + 4 * Stage_Names[b].length, 510 - 4 * Stage_Names[b].length), g = clamp(Mouse_Ypos - 24, 8, 256), centeredText(Large_Text, e, g, Stage_Names[b], 16777215, 5263440));
         var b2 = Large_Text;
         b2.b = 4;
-        centeredText(b, 256, 16, "WORLD MAP", -1, 13158600);
+        centeredText(b2, 256, 16, "WORLD MAP", -1, 13158600);
         b2.b = 0;
         0 > a.a && centeredText(Large_Text, 12, 16, "<<", 13158600, 5263440); - 720 < a.a && centeredText(Large_Text, 500, 16, ">>", 13158600, 5263440);
         drawUI(2)
